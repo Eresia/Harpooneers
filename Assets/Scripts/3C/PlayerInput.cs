@@ -14,9 +14,6 @@ public class PlayerInput : MonoBehaviour
 
     private Player player; // The Rewired Player
     
-    private Player player; // The Rewired Player
-
-    private MovementBehaviour movement;
     private Vector2 inputDir;
     private Rigidbody _myRigidbody;
 
