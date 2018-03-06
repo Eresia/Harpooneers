@@ -1,6 +1,9 @@
 ﻿// Modified by Augie Maddox from Joystick
 // Source: http://wiki.unity3d.com/index.php?title=button
 
+
+#pragma warning disable 0618
+
 namespace Rewired.Demos {
 
     using UnityEngine;
