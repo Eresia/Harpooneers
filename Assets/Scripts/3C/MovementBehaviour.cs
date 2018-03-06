@@ -59,7 +59,7 @@ public class MovementBehaviour : MonoBehaviour {
         rgbd.velocity = Vector3.ClampMagnitude(rgbd.velocity, maxSpeed);
 
 
-        Vector3 pos = Vector3.zero;
+        Vector3 pos = transform.position;
         float boundaryX = GameManager.instance.boundaries.size.x / 2;
         float boundaryZ = GameManager.instance.boundaries.size.z / 2;
 
