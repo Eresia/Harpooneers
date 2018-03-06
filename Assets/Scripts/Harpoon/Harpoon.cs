@@ -113,7 +113,7 @@ public class Harpoon : MonoBehaviour {
 
 	public void Cut(){
 		if(state < State.RETURN){
-			selfTransform.parent = launcher.selfTransform;
+			selfTransform.parent = launcher.directionObject;
 			state = State.RETURN;
 		}
 	}
