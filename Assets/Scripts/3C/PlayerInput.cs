@@ -83,35 +83,25 @@ public class PlayerInput : MonoBehaviour
 
     private void ReleaseRope(InputActionEventData data)
     {
-        if (data.GetButtonDown())
+        if (data.GetButton())
         {
-            Debug.Log("Start Release rope");
-        }
-
-        else if (data.GetButtonUp())
-        {
-            Debug.Log("Stop Release rope");
+            harpoon.Release();
         }
     }
 
     private void PullingOnRope(InputActionEventData data)
     {
-        if (data.GetButtonDown())
+        if (data.GetButton())
         {
-            Debug.Log("Start pulling on");
-        }
-
-        else if (data.GetButtonUp())
-        {
-            Debug.Log("Stop pulling on");
+            harpoon.Pull();
         }
     }
 
     private void HandleCutRope()
     {
         if (player.GetButtonDown("Pull On Rope") && player.GetButton("Release Rope")
-            || player.GetButtonDown("Release Rope") && player.GetButton("Release Rope")
-            || player.GetButtonDown("Release Rope") && player.GetButtonDown("Release Rope")
+            || player.GetButton("Pull On Rope") && player.GetButtonDown("Release Rope")
+            || player.GetButtonDown("Pull On Rope") && player.GetButtonDown("Release Rope")
             )
         {
             Debug.Log("Cut the rope");

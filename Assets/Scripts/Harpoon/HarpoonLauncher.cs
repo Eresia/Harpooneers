@@ -130,7 +130,23 @@ public class HarpoonLauncher : MonoBehaviour {
 		}
 	}
 
-	public void EndReturn(){
+    public void Release()
+    {
+        if(harpoon != null)
+        {
+            harpoon.Release();
+        }
+    }
+
+    public void Pull()
+    {
+        if (harpoon != null)
+        {
+            harpoon.Pull();
+        }
+    }
+
+    public void EndReturn(){
 		harpoon = null;
 	}
 
