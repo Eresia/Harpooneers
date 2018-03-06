@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class HarpoonLauncher : MonoBehaviour {
 
 	[SerializeField]
@@ -49,6 +50,8 @@ public class HarpoonLauncher : MonoBehaviour {
 
 	public Transform selfTransform {get; private set;}
 
+	public Rigidbody selfRigidbody {get; private set;}
+
 	private Harpoon harpoon;
 
 	private bool isLaunching;
@@ -62,6 +65,7 @@ public class HarpoonLauncher : MonoBehaviour {
 	private void Awake()
 	{
 		selfTransform = GetComponent<Transform>();
+		selfRigidbody = GetComponent<Rigidbody>();
 	}
 
 	private void Update() {
@@ -71,10 +75,10 @@ public class HarpoonLauncher : MonoBehaviour {
 				Vector3 direction = Input.mousePosition - boatPosition;
 				direction.z = direction.y;
 				direction.y = 0;
-				LaunchGrapnel(direction.normalized);
+				LaunchHarpoon(direction.normalized);
 			}
 			else{
-				LaunchGrapnel(Vector2.zero);
+				LaunchHarpoon(Vector2.zero);
 			}
 
 			if(Input.GetMouseButtonDown(1)){
@@ -83,7 +87,7 @@ public class HarpoonLauncher : MonoBehaviour {
 		}
 	}
 
-	private void LaunchGrapnel(Vector3 direction){
+	public void LaunchHarpoon(Vector3 direction){
 		if(harpoon == null){
 			if(direction.sqrMagnitude > joystixError){
 				if(!isLaunching){
