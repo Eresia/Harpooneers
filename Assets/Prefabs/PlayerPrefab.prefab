@@ -379,6 +379,7 @@ GameObject:
   - component: {fileID: 114238097148063314}
   - component: {fileID: 114732771670407888}
   - component: {fileID: 114576571596224756}
+  - component: {fileID: 114285114900107234}
   m_Layer: 0
   m_Name: Boat
   m_TagString: Untagged
@@ -4248,6 +4249,24 @@ MonoBehaviour:
   movement: {fileID: 114732771670407888}
   harpoon: {fileID: 114576571596224756}
   playerBomb: {fileID: 114476977556231496}
+--- !u!114 &114285114900107234
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1327248367258358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eec97649aef1cd46a5d98d16153ddb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthNeededForRez: 10
+  healthLossPerSec: 1
+  rezRadius: 5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  isDead: 0
 --- !u!114 &114318054212681704
 MonoBehaviour:
   m_ObjectHideFlags: 1

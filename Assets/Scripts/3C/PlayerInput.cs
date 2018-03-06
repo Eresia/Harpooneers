@@ -19,6 +19,7 @@ public class PlayerInput : MonoBehaviour
     public ExplosiveBarrel playerBomb;
     
     private Rigidbody _myRigidbody;
+    private PlayerDeath _deathScript;
 
     void Awake()
     {
@@ -26,6 +27,7 @@ public class PlayerInput : MonoBehaviour
         player = ReInput.players.GetPlayer(playerId);
 
         _myRigidbody = GetComponent<Rigidbody>();
+        _deathScript = GetComponent<PlayerDeath>();
 
         // Register delegates for specific actions.
         player.AddInputEventDelegate(DropBomb, UpdateLoopType.Update, InputActionEventType.ButtonPressed, "Drop Bomb");
@@ -81,7 +83,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (data.GetButtonDown())
         {
-            Debug.Log("Resurrect Ally");
+            _deathScript.ResurrectFriend();
         }
     }
 

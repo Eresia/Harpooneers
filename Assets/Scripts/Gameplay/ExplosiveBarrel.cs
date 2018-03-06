@@ -62,7 +62,7 @@ public class ExplosiveBarrel : MonoBehaviour {
 
     IEnumerator DeactiveGameObject()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.75f);
         _myRenderer.gameObject.SetActive(true);
         _myCollider.enabled = true;
         gameObject.SetActive(false);
