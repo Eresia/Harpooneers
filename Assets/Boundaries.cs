@@ -6,6 +6,11 @@ public class Boundaries : MonoBehaviour {
 
     public Vector3 size;
 
+    public void UpdateBoundaries(Vector3 newSize)
+    {
+        // Lerp size or apply directly new size ?
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;

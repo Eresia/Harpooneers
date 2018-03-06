@@ -5,7 +5,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
 	public bool debug;
-	public float actualPlayer;
+	public uint actualPlayer;
+
+    public Boundaries boundaries;
 
 	public static GameManager instance {get; private set;}
 

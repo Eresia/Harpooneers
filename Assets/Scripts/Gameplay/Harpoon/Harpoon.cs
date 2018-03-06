@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(LineRenderer))]
 public class Harpoon : MonoBehaviour {
 
 	public enum State{
@@ -26,6 +27,8 @@ public class Harpoon : MonoBehaviour {
 
 	private HarpoonLauncher launcher;
 
+	private LineRenderer lineRenderer;
+
 	private Transform selfTransform;
 
 	private Transform parentTransform;
@@ -41,11 +44,13 @@ public class Harpoon : MonoBehaviour {
 
 	private void Awake() {
 		selfTransform = GetComponent<Transform>();
+		lineRenderer = GetComponent<LineRenderer>();
 	}
 
 	private void Update() {
 		Vector3 selfPos = selfTransform.position;
 		Vector3 launcherPos = launcher.selfTransform.position;
+		float color = 0;
 		float distance = Vector3.Distance(selfPos, launcherPos);
 
 		switch(state){
@@ -68,6 +73,9 @@ public class Harpoon : MonoBehaviour {
 						launcher.selfRigidbody.AddForce(force, ForceMode.Acceleration);
 					}
 				}
+				else{
+					color = (actualDistance - distance) / actualDistance;
+				}
 				break;
 
 			case State.RETURN:
@@ -87,9 +95,9 @@ public class Harpoon : MonoBehaviour {
 				break;
 		}
 
-		if(GameManager.instance.debug){
-			Debug.DrawLine(launcherPos, selfPos, Color.red);
-		}
+		lineRenderer.SetPosition(0, selfPos);
+		lineRenderer.SetPosition(1, launcherPos);
+		lineRenderer.materials[0].color = new Color(color, color, color, 1f);
 	}
 
 	public void Launch(HarpoonLauncher launcher, Vector3 from, Vector3 direction, float maxDistance, float launchSpeed, float returnSpeed){
@@ -105,7 +113,7 @@ public class Harpoon : MonoBehaviour {
 
 	public void Cut(){
 		if(state < State.RETURN){
-			selfTransform.parent = launcher.selfTransform;
+			selfTransform.parent = launcher.boatFollower;
 			state = State.RETURN;
 		}
 	}
