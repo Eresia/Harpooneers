@@ -51,9 +51,10 @@ public class PlayerManager : MonoBehaviour {
         foreach(PlayerManager ally in _alliesList)
         {
             //Ignore self
-            if (transform.position != ally.gameObject.transform.position)
+            if (ally != this)
             {
                 float tempAllydistance = Vector3.Distance(transform.position, ally.gameObject.transform.position);
+
                 // Check if ally is within radius of resurrection
                 if (tempAllydistance < rezRadius)
                 {
@@ -65,6 +66,7 @@ public class PlayerManager : MonoBehaviour {
                 }
             }
         }
+
         if(_allyToRez != null)
         {
             if (_allyToRez.isDead)
@@ -81,6 +83,7 @@ public class PlayerManager : MonoBehaviour {
         {
             _rezAmount -= Time.deltaTime * healthLossPerSec;
         }
+
         else
         {
             _rezAmount = 0;
