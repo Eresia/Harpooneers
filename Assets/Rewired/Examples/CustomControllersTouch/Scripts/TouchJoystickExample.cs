@@ -3,6 +3,8 @@
 // Modified by Augie Maddox to include mouse support.
 // Source: http://wiki.unity3d.com/index.php?title=Joystick
 
+#pragma warning disable 0618
+
 namespace Rewired.Demos {
 
     using UnityEngine;
