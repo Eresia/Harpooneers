@@ -13,7 +13,12 @@ public class HarpoonLauncher : MonoBehaviour {
 	[SerializeField]
 	private Harpoon harpoonPrefab;
 
-	public Transform directionObject;
+	[Space]
+
+	public Transform boatFollower;
+
+	[SerializeField]
+	private Transform directionObject;
 
 	[Space]
 
