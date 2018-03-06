@@ -34,7 +34,9 @@ public class Harpoon : MonoBehaviour {
 	}
 
 	private void Update() {
-		float distance = Vector3.Distance(selfTransform.position, launcher.selfTransform.position);
+		Vector3 selfPos = selfTransform.position;
+		Vector3 launcherPos = launcher.selfTransform.position;
+		float distance = Vector3.Distance(selfPos, launcherPos);
 
 		switch(state){
 			case State.LAUNCHING:
@@ -45,7 +47,11 @@ public class Harpoon : MonoBehaviour {
 				break;
 
 			case State.GRIPPED:
-
+				if(distance > maxDistance){
+					Debug.Log("test");
+					Vector3 normal = selfPos - launcherPos;
+					launcher.selfRigidbody.AddForce((distance - maxDistance) * normal, ForceMode.Acceleration);
+				}
 				break;
 
 			case State.RETURN:
@@ -57,7 +63,8 @@ public class Harpoon : MonoBehaviour {
 					return ;
 				}
 				else{
-					selfTransform.position -= direction * movement;
+					Vector3 newDirection = launcherPos - selfPos;
+					selfTransform.position += newDirection.normalized * movement;
 				}
 				
 				break;
@@ -77,6 +84,7 @@ public class Harpoon : MonoBehaviour {
 
 	public void Cut(){
 		if(state < State.RETURN){
+			selfTransform.parent = null;
 			state = State.RETURN;
 		}
 	}
@@ -91,6 +99,7 @@ public class Harpoon : MonoBehaviour {
 			}
 			parentTransform = other.GetComponent<Transform>();
 			selfTransform.parent = parentTransform;
+			maxDistance = Vector3.Distance(selfTransform.position, launcher.selfTransform.position);
 			state = State.GRIPPED;
 		}
 		
