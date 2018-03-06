@@ -1,24 +1,27 @@
-﻿// MyCharacter.cs - A simple example showing how to get input from Rewired.Player
-
-using UnityEngine;
+﻿using UnityEngine;
 using Rewired;
 
+/// <summary>
+/// Handle Input associated to each player.
+/// </summary>
 [RequireComponent(typeof(MovementBehaviour))]
 public class PlayerInput : MonoBehaviour
 {
-    public int playerId = 0; // The Rewired player id of this character
+    [Tooltip("Rewired player id")]
+    public int playerId = 0;
 
+    [Header("Main components")]
     public MovementBehaviour movement;
     public HarpoonLauncher harpoon;
 
-    private Player player; // The Rewired Player
-    
-    private Vector2 inputDir;
-
-    // Bomb components.
+    [Header("Bomb components")]
     public ExplosiveBarrel playerBomb;
-    
+
     private Rigidbody _myRigidbody;
+    private Player player; // Rewired player.
+
+    public float timeBeforePause = 1f;
+    private bool doPause; // Do the pause if the delay is repected.
 
     void Awake()
     {
@@ -30,6 +33,7 @@ public class PlayerInput : MonoBehaviour
         // Register delegates for specific actions.
         player.AddInputEventDelegate(DropBomb, UpdateLoopType.Update, InputActionEventType.ButtonPressed, "Drop Bomb");
         player.AddInputEventDelegate(ResurrectAlly, UpdateLoopType.Update, InputActionEventType.ButtonPressed, "Resurrect");
+        player.AddInputEventDelegate(TogglePause, UpdateLoopType.Update, "Toggle Pause");
         player.AddInputEventDelegate(ReleaseRope, UpdateLoopType.Update, "Release Rope");
         player.AddInputEventDelegate(PullingOnRope, UpdateLoopType.Update, "Pull On Rope");
     }
@@ -42,6 +46,8 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
+        // TODO : Check if the player isn't dead.
+
         // Handle movement.
         {
             float moveX = player.GetAxis("Move Horizontal");
@@ -67,9 +73,34 @@ public class PlayerInput : MonoBehaviour
         HandleCutRope();
     }
 
+    private void TogglePause(InputActionEventData data)
+    {
+        // If game is unpaused.
+
+        // Use this to pause after a delay.
+        if (!doPause)
+        {
+            doPause = data.GetButtonTimePressed() > timeBeforePause;
+        }
+
+        if (data.GetButtonUp())
+        {
+            if(doPause)
+            {
+                Debug.Log("Toggle pause !");
+            }
+            
+            doPause = false;
+        }
+
+        // If game is paused : direct unpause.
+    }
+
     private void DropBomb(InputActionEventData data)
     {
-        if(data.GetButtonDown() && !playerBomb.gameObject.activeSelf)
+        // TODO : Check if the player isn't dead.
+
+        if (data.GetButtonDown() && !playerBomb.gameObject.activeSelf)
         {
             // Spawn the bomb behind the boat
             playerBomb.gameObject.SetActive(true);
@@ -87,6 +118,8 @@ public class PlayerInput : MonoBehaviour
 
     private void ReleaseRope(InputActionEventData data)
     {
+        // TODO : Check if the player isn't dead.
+
         if (data.GetButton())
         {
             harpoon.Release();
@@ -95,6 +128,8 @@ public class PlayerInput : MonoBehaviour
 
     private void PullingOnRope(InputActionEventData data)
     {
+        // TODO : Check if the player isn't dead.
+
         if (data.GetButton())
         {
             harpoon.Pull();
@@ -103,6 +138,8 @@ public class PlayerInput : MonoBehaviour
 
     private void HandleCutRope()
     {
+        // TODO : Check if the player isn't dead.
+
         if (player.GetButtonDown("Pull On Rope") && player.GetButton("Release Rope")
             || player.GetButton("Pull On Rope") && player.GetButtonDown("Release Rope")
             || player.GetButtonDown("Pull On Rope") && player.GetButtonDown("Release Rope")

@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class MovementBehaviour : MonoBehaviour {
 
-    public float moveSpeed = 5f;
-    public float maxSpeed = 10f;
-    public float rotationSpeed;
-
-    [Header("Metrics for boundaries")]
-    [Tooltip("Distance with boundaries.")]
-    public float offsetX = 1f;
-    public float offsetZ = 1f;
+    public float moveSpeed = 30f;
+    public float maxSpeed = 50f;
+    public float rotationSpeed = 9f;
 
     // Lerp progressif sur la direction du bateau. (Direction desiree (INPUT) et direction actuelle.
 
@@ -58,14 +53,14 @@ public class MovementBehaviour : MonoBehaviour {
         // Limit max speed.
         rgbd.velocity = Vector3.ClampMagnitude(rgbd.velocity, maxSpeed);
 
+        // Limit position in the boundaries of the screen.
+        Vector3 pos = transform.position;
 
-        Vector3 pos = Vector3.zero;
-        float boundaryX = GameManager.instance.boundaries.size.x / 2;
-        float boundaryZ = GameManager.instance.boundaries.size.z / 2;
+        Vector3 hitPoint = GameManager.instance.boundaries.InScreenPosition(pos);
 
-        pos.x = Mathf.Clamp(transform.position.x, -boundaryX + offsetX, boundaryX - offsetX);
-        pos.z = Mathf.Clamp(transform.position.z, -boundaryZ + offsetZ, boundaryZ - offsetZ);
-
+        pos.x = hitPoint.x;
+        pos.z = hitPoint.z;
+        
         transform.position = pos;
     }
 }
