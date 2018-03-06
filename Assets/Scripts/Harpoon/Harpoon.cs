@@ -13,6 +13,15 @@ public class Harpoon : MonoBehaviour {
 	[SerializeField]
 	private string hookLayer;
 
+	[SerializeField]
+	private float minDistance;
+
+	[SerializeField]
+	private float releaseSpeed;
+
+	[SerializeField]
+	private float forceBreak;
+
 	public State state {get; private set;}
 
 	private HarpoonLauncher launcher;
@@ -24,6 +33,7 @@ public class Harpoon : MonoBehaviour {
 	private Vector3 direction;
 
 	private float maxDistance;
+	private float actualDistance;
 
 	private float launchSpeed;
 	
@@ -40,17 +50,23 @@ public class Harpoon : MonoBehaviour {
 
 		switch(state){
 			case State.LAUNCHING:
-				selfTransform.position += direction * launchSpeed * Time.deltaTime;
+				selfPos += direction * launchSpeed * Time.deltaTime;
+				selfTransform.position = selfPos;
 				if(distance > maxDistance){
 					Cut();
 				}
 				break;
 
 			case State.GRIPPED:
-				if(distance > maxDistance){
-					Debug.Log("test");
+				if(distance > actualDistance){
 					Vector3 normal = selfPos - launcherPos;
-					launcher.selfRigidbody.AddForce((distance - maxDistance) * normal, ForceMode.Acceleration);
+					Vector3 force = (distance - actualDistance) * normal;
+					if(forceBreak < force.sqrMagnitude){
+						Cut();
+					}
+					else{
+						launcher.selfRigidbody.AddForce(force, ForceMode.Acceleration);
+					}
 				}
 				break;
 
@@ -64,10 +80,15 @@ public class Harpoon : MonoBehaviour {
 				}
 				else{
 					Vector3 newDirection = launcherPos - selfPos;
-					selfTransform.position += newDirection.normalized * movement;
+					selfPos += newDirection.normalized * movement;
+					selfTransform.position = selfPos;
 				}
 				
 				break;
+		}
+
+		if(GameManager.instance.debug){
+			Debug.DrawLine(launcherPos, selfPos, Color.red);
 		}
 	}
 
@@ -84,8 +105,26 @@ public class Harpoon : MonoBehaviour {
 
 	public void Cut(){
 		if(state < State.RETURN){
-			selfTransform.parent = null;
+			selfTransform.parent = launcher.selfTransform;
 			state = State.RETURN;
+		}
+	}
+
+	public void Release(){
+		if(state == State.GRIPPED){
+			actualDistance += releaseSpeed * Time.deltaTime;
+			if(actualDistance > maxDistance){
+				actualDistance = maxDistance;
+			}
+		}
+	}
+
+	public void Pull(){
+		if(state == State.GRIPPED){
+			actualDistance -= releaseSpeed * Time.deltaTime;
+			if(actualDistance < minDistance){
+				Cut();
+			}
 		}
 	}
 
@@ -100,6 +139,7 @@ public class Harpoon : MonoBehaviour {
 			parentTransform = other.GetComponent<Transform>();
 			selfTransform.parent = parentTransform;
 			maxDistance = Vector3.Distance(selfTransform.position, launcher.selfTransform.position);
+			actualDistance = maxDistance;
 			state = State.GRIPPED;
 		}
 		

@@ -6,7 +6,7 @@ using UnityEngine;
 public class HarpoonLauncher : MonoBehaviour {
 
 	[SerializeField]
-	private bool selectedPlayer;
+	private int playerId;
 
 	[Space]
 
@@ -69,7 +69,7 @@ public class HarpoonLauncher : MonoBehaviour {
 	}
 
 	private void Update() {
-		if(selectedPlayer){
+		if(GameManager.instance.actualPlayer == playerId){
 			if(Input.GetMouseButton(0)){
 				Vector3 boatPosition = Camera.main.WorldToScreenPoint(selfTransform.position);
 				Vector3 direction = Input.mousePosition - boatPosition;
@@ -83,6 +83,15 @@ public class HarpoonLauncher : MonoBehaviour {
 
 			if(Input.GetMouseButtonDown(1)){
 				Cut();
+			}
+
+			if(harpoon != null){
+				if(Input.GetKey(KeyCode.A)){
+					harpoon.Pull();
+				}
+				else if(Input.GetKey(KeyCode.Z)){
+					harpoon.Release();
+				}
 			}
 		}
 	}
@@ -139,7 +148,7 @@ public class HarpoonLauncher : MonoBehaviour {
 	private void EndLaunching(Vector3 direction){
 		isLaunching = false;
 		directionObject.gameObject.SetActive(false);
-		harpoon = Instantiate<Harpoon>(harpoonPrefab);
+		harpoon = Instantiate<Harpoon>(harpoonPrefab, selfTransform.position, Quaternion.identity);
 		harpoon.Launch(this, selfTransform.position, direction, launchDistanceMax, harpoonSpeed, harpoonReturnSpeed);
 	}
 }
