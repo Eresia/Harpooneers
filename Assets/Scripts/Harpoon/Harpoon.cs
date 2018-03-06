@@ -10,11 +10,16 @@ public class Harpoon : MonoBehaviour {
 		RETURN
 	}
 
+	[SerializeField]
+	private string hookLayer;
+
 	public State state {get; private set;}
 
-	private HarpoonLauncher parent;
+	private HarpoonLauncher launcher;
 
 	private Transform selfTransform;
+
+	private Transform parentTransform;
 
 	private Vector3 direction;
 
@@ -29,7 +34,7 @@ public class Harpoon : MonoBehaviour {
 	}
 
 	private void Update() {
-		float distance = Vector3.Distance(selfTransform.position, parent.selfTransform.position);
+		float distance = Vector3.Distance(selfTransform.position, launcher.selfTransform.position);
 
 		switch(state){
 			case State.LAUNCHING:
@@ -47,7 +52,7 @@ public class Harpoon : MonoBehaviour {
 				float movement = returnSpeed * Time.deltaTime;
 
 				if(distance < movement){
-					parent.EndReturn();
+					launcher.EndReturn();
 					Destroy(gameObject);
 					return ;
 				}
@@ -59,8 +64,8 @@ public class Harpoon : MonoBehaviour {
 		}
 	}
 
-	public void Launch(HarpoonLauncher parent, Vector3 from, Vector3 direction, float maxDistance, float launchSpeed, float returnSpeed){
-		this.parent = parent;
+	public void Launch(HarpoonLauncher launcher, Vector3 from, Vector3 direction, float maxDistance, float launchSpeed, float returnSpeed){
+		this.launcher = launcher;
 		this.direction = direction;
 		this.maxDistance = maxDistance;
 		this.launchSpeed = launchSpeed;
@@ -74,5 +79,20 @@ public class Harpoon : MonoBehaviour {
 		if(state < State.RETURN){
 			state = State.RETURN;
 		}
+	}
+
+	private void OnTriggerEnter(Collider other) {
+		if(state == State.LAUNCHING){
+			if(other.gameObject.layer == LayerMask.NameToLayer(hookLayer)){
+				HarpoonLauncher otherLauncher = other.GetComponentInParent<HarpoonLauncher>();
+				if(launcher.Equals(otherLauncher)){
+					return ;
+				}
+			}
+			parentTransform = other.GetComponent<Transform>();
+			selfTransform.parent = parentTransform;
+			state = State.GRIPPED;
+		}
+		
 	}
 }

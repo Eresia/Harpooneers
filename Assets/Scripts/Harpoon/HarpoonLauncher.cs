@@ -5,6 +5,11 @@ using UnityEngine;
 public class HarpoonLauncher : MonoBehaviour {
 
 	[SerializeField]
+	private bool selectedPlayer;
+
+	[Space]
+
+	[SerializeField]
 	private Harpoon harpoonPrefab;
 
 	[SerializeField]
@@ -60,15 +65,21 @@ public class HarpoonLauncher : MonoBehaviour {
 	}
 
 	private void Update() {
-		if(Input.GetMouseButton(0)){
-			Vector3 boatPosition = Camera.main.WorldToScreenPoint(selfTransform.position);
-			Vector3 direction = Input.mousePosition - boatPosition;
-			direction.z = direction.y;
-			direction.y = 0;
-			LaunchGrapnel(direction.normalized);
-		}
-		else{
-			LaunchGrapnel(Vector2.zero);
+		if(selectedPlayer){
+			if(Input.GetMouseButton(0)){
+				Vector3 boatPosition = Camera.main.WorldToScreenPoint(selfTransform.position);
+				Vector3 direction = Input.mousePosition - boatPosition;
+				direction.z = direction.y;
+				direction.y = 0;
+				LaunchGrapnel(direction.normalized);
+			}
+			else{
+				LaunchGrapnel(Vector2.zero);
+			}
+
+			if(Input.GetMouseButtonDown(1)){
+				Cut();
+			}
 		}
 	}
 

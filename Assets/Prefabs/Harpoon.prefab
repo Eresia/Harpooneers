@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 135097230892390116}
   - component: {fileID: 23341290647901544}
   - component: {fileID: 114938105809876424}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Harpoon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7574c42597833fd46a6a5a96bbfaf8ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hookLayer: Hook
 --- !u!135 &135097230892390116
 SphereCollider:
   m_ObjectHideFlags: 1

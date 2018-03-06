@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4319683714749184}
   - component: {fileID: 33100386378459800}
   - component: {fileID: 23171653889222386}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Direction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 23454260145349458}
   - component: {fileID: 54003299196477524}
   - component: {fileID: 114263554744906804}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Boat_Test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4285316006738296}
-  m_Layer: 0
+  - component: {fileID: 65327385068174134}
+  m_Layer: 11
   m_Name: Hook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,6 +214,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65327385068174134
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1917460067150450}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114263554744906804
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -224,6 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5798ddc58cf6a84bb70330fe41564ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedPlayer: 1
   harpoonPrefab: {fileID: 114938105809876424, guid: f4c1868bfebd2c7408a81cd0e4b46dcc,
     type: 2}
   directionObject: {fileID: 4319683714749184}
