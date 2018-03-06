@@ -13,11 +13,15 @@ public class PlayerInput : MonoBehaviour
 
     private MovementBehaviour movement;
     private Vector2 inputDir;
+    private Rigidbody _myRigidbody;
+
+    public ExplosiveBarrel playerBomb;
 
     void Awake()
     {
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
+        _myRigidbody = GetComponent<Rigidbody>();
 
         movement = GetComponent<MovementBehaviour>();
 
@@ -59,9 +63,11 @@ public class PlayerInput : MonoBehaviour
 
     private void DropBomb(InputActionEventData data)
     {
-        if(data.GetButtonDown())
+        if(data.GetButtonDown() && !playerBomb.gameObject.activeSelf)
         {
-            Debug.Log("Drop bomb");
+            // Spawn the bomb behind the boat
+            playerBomb.gameObject.SetActive(true);
+            playerBomb.SpawnTheBomb(transform.position - 1.25f * transform.forward, _myRigidbody.velocity);
         }
     }
 
