@@ -1,7 +1,6 @@
 ﻿// MyCharacter.cs - A simple example showing how to get input from Rewired.Player
 
 using UnityEngine;
-using System.Collections;
 using Rewired;
 
 [RequireComponent(typeof(MovementBehaviour))]
@@ -16,10 +15,17 @@ public class PlayerInput : MonoBehaviour
     
     private Vector2 inputDir;
 
+    // Bomb components.
+    public ExplosiveBarrel playerBomb;
+    
+    private Rigidbody _myRigidbody;
+
     void Awake()
     {
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
+
+        _myRigidbody = GetComponent<Rigidbody>();
 
         // Register delegates for specific actions.
         player.AddInputEventDelegate(DropBomb, UpdateLoopType.Update, InputActionEventType.ButtonPressed, "Drop Bomb");
@@ -43,8 +49,6 @@ public class PlayerInput : MonoBehaviour
 
             Vector3 moveDir = new Vector3(moveX, 0f, moveZ);
 
-            //Debug.DrawRay(transform.position, realDir);
-
             movement.Move(moveDir.normalized);
         }
 
@@ -55,9 +59,7 @@ public class PlayerInput : MonoBehaviour
 
             Vector3 harpoonDir = new Vector3(rotateX, 0f, rotateZ);
 
-            Debug.DrawRay(transform.position, harpoonDir.normalized * 2.5f, Color.red, 1f);
-
-            // Pass harpoonDir.normalized
+            //Debug.DrawRay(transform.position, harpoonDir.normalized * 2.5f, Color.red, 1f);
 
             harpoon.LaunchHarpoon(harpoonDir.normalized);
         }
@@ -67,9 +69,11 @@ public class PlayerInput : MonoBehaviour
 
     private void DropBomb(InputActionEventData data)
     {
-        if(data.GetButtonDown())
+        if(data.GetButtonDown() && !playerBomb.gameObject.activeSelf)
         {
-            Debug.Log("Drop bomb");
+            // Spawn the bomb behind the boat
+            playerBomb.gameObject.SetActive(true);
+            playerBomb.SpawnTheBomb(transform.position - 1.25f * transform.forward, _myRigidbody.velocity);
         }
     }
 
