@@ -71,7 +71,7 @@ public class PlayerInput : MonoBehaviour
 
     private void DropBomb(InputActionEventData data)
     {
-        if(data.GetButtonDown() && !playerBomb.gameObject.activeSelf)
+        if(data.GetButtonDown() && !playerBomb.gameObject.activeSelf && !_deathScript.isDead)
         {
             // Spawn the bomb behind the boat
             playerBomb.gameObject.SetActive(true);
@@ -81,7 +81,7 @@ public class PlayerInput : MonoBehaviour
 
     private void ResurrectAlly(InputActionEventData data)
     {
-        if (data.GetButtonDown())
+        if (data.GetButtonDown() && !_deathScript.isDead)
         {
             _deathScript.ResurrectFriend();
         }
@@ -89,7 +89,7 @@ public class PlayerInput : MonoBehaviour
 
     private void ReleaseRope(InputActionEventData data)
     {
-        if (data.GetButton())
+        if (data.GetButton() && !_deathScript.isDead)
         {
             harpoon.Release();
         }
@@ -97,7 +97,7 @@ public class PlayerInput : MonoBehaviour
 
     private void PullingOnRope(InputActionEventData data)
     {
-        if (data.GetButton())
+        if (data.GetButton() && !_deathScript.isDead)
         {
             harpoon.Pull();
         }
