@@ -52,5 +52,8 @@ public class MovementBehaviour : MonoBehaviour {
 
         // Limit max speed.
         rgbd.velocity = Vector3.ClampMagnitude(rgbd.velocity, maxSpeed);
+
+
+        //transform.position = Mathf.Clamp()
     }
 }
