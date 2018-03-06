@@ -8,10 +8,12 @@ using Rewired;
 public class PlayerInput : MonoBehaviour
 {
     public int playerId = 0; // The Rewired player id of this character
-    
-    private Player player; // The Rewired Player
 
-    private MovementBehaviour movement;
+    public MovementBehaviour movement;
+    public HarpoonLauncher harpoon;
+
+    private Player player; // The Rewired Player
+    
     private Vector2 inputDir;
 
     void Awake()
@@ -19,13 +21,17 @@ public class PlayerInput : MonoBehaviour
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
 
-        movement = GetComponent<MovementBehaviour>();
-
         // Register delegates for specific actions.
         player.AddInputEventDelegate(DropBomb, UpdateLoopType.Update, InputActionEventType.ButtonPressed, "Drop Bomb");
         player.AddInputEventDelegate(ResurrectAlly, UpdateLoopType.Update, InputActionEventType.ButtonPressed, "Resurrect");
         player.AddInputEventDelegate(ReleaseRope, UpdateLoopType.Update, "Release Rope");
         player.AddInputEventDelegate(PullingOnRope, UpdateLoopType.Update, "Pull On Rope");
+    }
+
+    private void Reset()
+    {
+        movement = GetComponent<MovementBehaviour>();
+        harpoon = GetComponent<HarpoonLauncher>();
     }
 
     private void Update()
@@ -49,9 +55,11 @@ public class PlayerInput : MonoBehaviour
 
             Vector3 harpoonDir = new Vector3(rotateX, 0f, rotateZ);
 
-            Debug.DrawRay(transform.position, harpoonDir * 2.5f, Color.red, 1f);
+            Debug.DrawRay(transform.position, harpoonDir.normalized * 2.5f, Color.red, 1f);
 
             // Pass harpoonDir.normalized
+
+            harpoon.LaunchHarpoon(harpoonDir.normalized);
         }
 
         HandleCutRope();
@@ -107,15 +115,22 @@ public class PlayerInput : MonoBehaviour
             )
         {
             Debug.Log("Cut the rope");
+
+            harpoon.Cut();
         }
     }
 
     private void OnDestroy()
     {
-        // Free delegates.
-        player.RemoveInputEventDelegate(DropBomb);
-        player.RemoveInputEventDelegate(ResurrectAlly);
-        player.RemoveInputEventDelegate(ReleaseRope);
-        player.RemoveInputEventDelegate(PullingOnRope);
+        /*
+        if(player != null)
+        {
+            // Free delegates.
+            player.RemoveInputEventDelegate(DropBomb);
+            player.RemoveInputEventDelegate(ResurrectAlly);
+            player.RemoveInputEventDelegate(ReleaseRope);
+            player.RemoveInputEventDelegate(PullingOnRope);
+        }
+        */
     }
 }
