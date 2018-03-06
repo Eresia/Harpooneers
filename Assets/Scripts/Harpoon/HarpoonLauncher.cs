@@ -5,7 +5,25 @@ using UnityEngine;
 public class HarpoonLauncher : MonoBehaviour {
 
 	[SerializeField]
+	private Harpoon harpoonPrefab;
+
+	[SerializeField]
+	private Transform directionObject;
+
+	[Space]
+
+	[Tooltip("Joystix is considered at 0 behin d this value")]
+	[SerializeField]
+	private float joystixError;
+
+	[Space]
+
+	[SerializeField]
 	private float castTime;
+
+	[Tooltip("Time beetween max distance and launch harpoon")]
+	[SerializeField]
+	private float castTimeMax;
 
 	[SerializeField]
 	private float castDistance;
@@ -15,4 +33,98 @@ public class HarpoonLauncher : MonoBehaviour {
 	
 	[SerializeField]
 	private float cooldownTime;
+
+	[Space]
+
+	[SerializeField]
+	private float harpoonSpeed;
+	
+	[SerializeField]
+	private float harpoonReturnSpeed;
+
+	public Transform selfTransform {get; private set;}
+
+	private Harpoon harpoon;
+
+	private bool isLaunching;
+
+	private float timeBeforeLaunch;
+
+	private float power;
+
+	private Vector3 lastDirection;
+
+	private void Awake()
+	{
+		selfTransform = GetComponent<Transform>();
+	}
+
+	private void Update() {
+		if(Input.GetMouseButton(0)){
+			Vector3 boatPosition = Camera.main.WorldToScreenPoint(selfTransform.position);
+			Vector3 direction = Input.mousePosition - boatPosition;
+			direction.z = direction.y;
+			direction.y = 0;
+			LaunchGrapnel(direction.normalized);
+		}
+		else{
+			LaunchGrapnel(Vector2.zero);
+		}
+	}
+
+	private void LaunchGrapnel(Vector3 direction){
+		if(harpoon == null){
+			if(direction.sqrMagnitude > joystixError){
+				if(!isLaunching){
+					BeginLaunching();
+				}
+
+				if(power == 1f){
+					if(timeBeforeLaunch >= castTimeMax){
+						EndLaunching(direction);
+						return ;
+					}
+
+					timeBeforeLaunch += Time.deltaTime;
+				}
+				else{
+					power = Mathf.Min(1f, power + (Time.deltaTime / castTime));
+				}
+
+				DisplayLaunching(direction, power);
+				lastDirection = direction;
+			}
+			else if(isLaunching){
+				EndLaunching(lastDirection);
+			}
+		}
+	}
+
+	public void Cut(){
+		if(harpoon != null){
+			harpoon.Cut();
+		}
+	}
+
+	public void EndReturn(){
+		harpoon = null;
+	}
+
+	private void BeginLaunching(){
+		isLaunching = true;
+		power = 0f;
+		timeBeforeLaunch = 0f;
+		directionObject.gameObject.SetActive(true);
+	}
+
+	private void DisplayLaunching(Vector3 direction, float power){
+		directionObject.localPosition = direction * power * castDistance;
+	}
+
+	private void EndLaunching(Vector3 direction){
+		isLaunching = false;
+		directionObject.gameObject.SetActive(false);
+		harpoon = Instantiate<Harpoon>(harpoonPrefab);
+		harpoon.Launch(this, selfTransform.position, direction, launchDistanceMax, harpoonSpeed, harpoonReturnSpeed);
+	}
 }
