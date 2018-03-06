@@ -13,11 +13,15 @@ public class PlayerInput : MonoBehaviour
     [Header("Main components")]
     public MovementBehaviour movement;
     public HarpoonLauncher harpoon;
+    public PlayerManager playerMgr;
 
     [Header("Bomb components")]
     public ExplosiveBarrel playerBomb;
 
+    [Header("Other actions")]
+
     private Rigidbody _myRigidbody;
+    
     private Player player; // Rewired player.
 
     public float timeBeforePause = 1f;
@@ -29,6 +33,7 @@ public class PlayerInput : MonoBehaviour
         player = ReInput.players.GetPlayer(playerId);
 
         _myRigidbody = GetComponent<Rigidbody>();
+        playerMgr = GetComponent<PlayerManager>();
 
         // Register delegates for specific actions.
         player.AddInputEventDelegate(DropBomb, UpdateLoopType.Update, InputActionEventType.ButtonPressed, "Drop Bomb");
@@ -46,7 +51,10 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        // TODO : Check if the player isn't dead.
+        if (playerMgr.isDead)
+        {
+            return;
+        }
 
         // Handle movement.
         {
@@ -98,7 +106,10 @@ public class PlayerInput : MonoBehaviour
 
     private void DropBomb(InputActionEventData data)
     {
-        // TODO : Check if the player isn't dead.
+        if(playerMgr.isDead)
+        {
+            return;
+        }
 
         if (data.GetButtonDown() && !playerBomb.gameObject.activeSelf)
         {
@@ -110,15 +121,23 @@ public class PlayerInput : MonoBehaviour
 
     private void ResurrectAlly(InputActionEventData data)
     {
+        if (playerMgr.isDead)
+        {
+            return;
+        }
+
         if (data.GetButtonDown())
         {
-            Debug.Log("Resurrect Ally");
+            playerMgr.ResurrectFriend();
         }
     }
 
     private void ReleaseRope(InputActionEventData data)
     {
-        // TODO : Check if the player isn't dead.
+        if (playerMgr.isDead)
+        {
+            return;
+        }
 
         if (data.GetButton())
         {
@@ -128,7 +147,10 @@ public class PlayerInput : MonoBehaviour
 
     private void PullingOnRope(InputActionEventData data)
     {
-        // TODO : Check if the player isn't dead.
+        if (playerMgr.isDead)
+        {
+            return;
+        }
 
         if (data.GetButton())
         {
@@ -138,7 +160,10 @@ public class PlayerInput : MonoBehaviour
 
     private void HandleCutRope()
     {
-        // TODO : Check if the player isn't dead.
+        if (playerMgr.isDead)
+        {
+            return;
+        }
 
         if (player.GetButtonDown("Pull On Rope") && player.GetButton("Release Rope")
             || player.GetButton("Pull On Rope") && player.GetButtonDown("Release Rope")
