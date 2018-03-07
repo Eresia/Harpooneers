@@ -29,10 +29,21 @@ public class Ground : MonoBehaviour {
 
 	private Vector2 halfLod;
 
+	private float time;
+
 	private void Awake() {
 		selfTransform = GetComponent<Transform>();
 		halfLod = new Vector2(((float) lod.x) * 0.5f, ((float) lod.y) * 0.5f);
 	}
+
+	// private void Update() {
+	// 	time += Time.deltaTime;
+	// 	for(int i = 0; i < lod.x; i++){
+	// 		for(int j = 0; j < lod.y; j++){
+	// 			points[i * lod.y + j] = Mathf.Sin(time * ((float) i) / 20f) / 3f;
+	// 		}
+	// 	}
+	// }
 
 	private void OnDrawGizmos() {
 		Transform seaTransform = GetComponent<Transform>();
@@ -112,37 +123,86 @@ public class Ground : MonoBehaviour {
 	private Vector3 GetRotation(HeightInfo info, float height){
 		Vector3 result;
 
-		Vector3 a = new Vector3(0, points[info.i.x * lod.y + info.j.x], 0);
-		Vector3 b = new Vector3(1, points[info.i.y * lod.y + info.j.x], 0);
-		Vector3 c = new Vector3(0, points[info.i.x * lod.y + info.j.y], 1);
-		Vector3 d = new Vector3(1, points[info.i.y * lod.y + info.j.y], 1);
+		// Vector3 a = new Vector3(0, points[info.i.x * lod.y + info.j.x], 0);
+		// Vector3 b = new Vector3(1, points[info.i.y * lod.y + info.j.x], 0);
+		// Vector3 c = new Vector3(0, points[info.i.x * lod.y + info.j.y], 1);
+		// Vector3 d = new Vector3(1, points[info.i.y * lod.y + info.j.y], 1);
 
-		Vector3 cross1 = Vector3.Cross(b - a, c - a);
-		if(cross1.y < 0){
-			cross1 = -cross1;
-		}
+		// Vector3 cross1 = Vector3.Cross(b - a, c - a);
+		// if(cross1.y < 0){
+		// 	cross1 = -cross1;
+		// }
 
-		Vector3 cross2 = Vector3.Cross(a - b, d - b);
-		if(cross2.y < 0){
-			cross2 = -cross2;
-		}
+		// Vector3 cross2 = Vector3.Cross(a - b, d - b);
+		// if(cross2.y < 0){
+		// 	cross2 = -cross2;
+		// }
 
-		Vector3 cross3 = Vector3.Cross(a - c, d - c);
-		if(cross3.y < 0){
-			cross3 = -cross3;
-		}
+		// Vector3 cross3 = Vector3.Cross(a - c, d - c);
+		// if(cross3.y < 0){
+		// 	cross3 = -cross3;
+		// }
 		
-		Vector3 cross4 = Vector3.Cross(b - d, c - d);
-		if(cross4.y < 0){
-			cross4 = -cross4;
+		// Vector3 cross4 = Vector3.Cross(b - d, c - d);
+		// if(cross4.y < 0){
+		// 	cross4 = -cross4;
+		// }
+
+		// result = info.coeff.x * cross1; 
+		// result += info.coeff.y * cross2; 
+		// result += info.coeff.z * cross3; 
+		// result += info.coeff.w * cross4;
+
+		// return result / (info.coeff.x + info.coeff.y + info.coeff.z + info.coeff.w);
+
+		float a = points[info.i.x * lod.y + info.j.x];
+		float b = points[info.i.y * lod.y + info.j.x];
+		float c = points[info.i.x * lod.y + info.j.y];
+		float d = points[info.i.y * lod.y + info.j.y];
+
+		float ab = Mathf.Abs(a-b);
+		float cd = Mathf.Abs(c-d);
+		float ac = Mathf.Abs(a-c);
+		float bd = Mathf.Abs(b-d);
+
+		float diffJ;
+		float diffI;
+
+		float signI;
+		float signJ;
+
+		if(ab > cd){
+			diffJ = ab;
+			signJ = Mathf.Sign(b-a);
+		}
+		else{
+			diffJ = cd;
+			signJ = Mathf.Sign(d-c);
 		}
 
-		result = info.coeff.x * cross1; 
-		result += info.coeff.y * cross2; 
-		result += info.coeff.z * cross3; 
-		result += info.coeff.w * cross4;
+		if(ac > bd){
+			diffI = ac;
+			signI = Mathf.Sign(c-a);
+		}
+		else{
+			diffI = bd; 
+			signI = Mathf.Sign(d-b);
+		}
 
-		return result / (info.coeff.x + info.coeff.y + info.coeff.z + info.coeff.w);
+		float x = - signI * Vector2.Angle(new Vector2(1, 0), new Vector2(1, diffI));
+		float z = signJ * Vector2.Angle(new Vector2(1, 0), new Vector2(1, diffJ));
+
+		// float minI = Mathf.Min(Mathf.Min(a, c), Mathf.Min(b, d));
+		// float maxI = Mathf.Max(Mathf.Max(a, c), Mathf.Max(b, d));
+
+		// float minJ = Mathf.Min(Mathf.Min(a, b), Mathf.Min(c, d));
+		// float maxJ = Mathf.Max(Mathf.Max(a, b), Mathf.Max(c, d));
+
+		// float x = Vector2.Angle(new Vector2(1, 0), new Vector2(1, maxI - minI));
+		// float z = Vector2.Angle(new Vector2(1, 0), new Vector2(1, maxJ - minJ));
+		result = new Vector3(x, 0, z);
+
+		return result;
 	}
 
 	private HeightInfo GetHeightInfo(float x, float z){

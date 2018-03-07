@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
-public class GroundGeneraion {
+public class GroundGeneration {
 
 	[MenuItem("DSea/Generate Sea %g")]
 	public static void GenerateSea(){
