@@ -10,7 +10,7 @@ public class ImpactBehaviour : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.relativeVelocity.magnitude);
+        Debug.Log("Impact force : " + collision.relativeVelocity.magnitude);
 
         // Kill the player if the force of impact is too big.
         if(collision.relativeVelocity.magnitude > destructionForce)

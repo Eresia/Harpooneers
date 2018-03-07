@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MovementBehaviour : MonoBehaviour {
+    
+    // TODO Impact hitbox ?
+    public CoqueModule coqueModule;
 
-    public float moveSpeed = 30f;
-    public float maxSpeed = 50f;
-    public float rotationSpeed = 9f;
-
-    // Lerp progressif sur la direction du bateau. (Direction desiree (INPUT) et direction actuelle.
-
+    // Progressive lerp between the input dir and the actual dir.
     private Quaternion initialDir;
     private Quaternion targetDir;
 
@@ -44,14 +42,14 @@ public class MovementBehaviour : MonoBehaviour {
         if(initialDir != targetDir)
         {
             // Turn boat.
-            transform.rotation = Quaternion.Lerp(initialDir, targetDir, Time.deltaTime * rotationSpeed);
+            transform.rotation = Quaternion.Lerp(initialDir, targetDir, Time.deltaTime * coqueModule.turnSpeed);
         }
 
         // Move boat toward.
-        rgbd.AddForce(transform.forward * moveSpeed * move, ForceMode.Force);
+        rgbd.AddForce(transform.forward * coqueModule.moveSpeed * move, ForceMode.Force);
 
         // Limit max speed.
-        rgbd.velocity = Vector3.ClampMagnitude(rgbd.velocity, maxSpeed);
+        rgbd.velocity = Vector3.ClampMagnitude(rgbd.velocity, coqueModule.maxSpeed);
 
         // Limit position in the boundaries of the screen.
         Vector3 pos = transform.position;

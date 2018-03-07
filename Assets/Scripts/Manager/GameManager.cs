@@ -11,7 +11,16 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager instance {get; private set;}
 
-	void Awake()
+    /// <summary>
+    /// Return the number of players for the current game.
+    /// </summary>
+    public int nbOfPlayers;
+
+    public BoatConfiguration[] shipConfigs;
+
+    private ShipManager moduleMgr;
+    
+    void Awake()
 	{
 		if (instance == null){
 			instance = this;

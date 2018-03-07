@@ -2,23 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+/// <summary>
+/// Manage modules of a ship (Setup / Reset).
+/// </summary>
 public class ShipModulesManager : MonoBehaviour {
 
+    [Header("Ship elements")]
     public GameObject[] harpoonsGoArray;
     public GameObject[] coquesGoArray;
-    public GameObject[] cabinesGoArray;
+    public GameObject[] cabinsGoArray;
     public GameObject[] bombsGoArray;
-
-    public HarpoonModule[] harpoonsScriptObjs;
-    public CoqueModule[] coquesScriptObjs;
-    public BombModule[] bombsScriptObjs;
-    public CabineModule[] cabinesScriptObjs;
 
     private HarpoonLauncher _harpoonScript;
     private MovementBehaviour _movementScript;
-    private PlayerInput _inputScript;
     private ExplosiveBarrel _bombScript;
+
+    private PlayerInput _inputScript;
 
 	// Use this for initialization
 	void Awake ()
@@ -26,69 +25,45 @@ public class ShipModulesManager : MonoBehaviour {
         _harpoonScript = GetComponent<HarpoonLauncher>();
         _movementScript = GetComponent<MovementBehaviour>();
         _inputScript = GetComponent<PlayerInput>();
-        _bombScript = _inputScript.playerBomb;
+        _bombScript = _inputScript.bombLauncher;
     }
-
+    
     void Start()
     {
-        ActivateShipModules(0, 2, 1, 2);
+        // Debug config
+        BoatConfiguration config = new BoatConfiguration
+        {
+            coqueId = 0,
+            harpoonId = 0,
+            bombStockId = 0,
+            cabinId = 0,
+        };
+
+        ShipManager moduleMgr = GameObject.FindObjectOfType<ShipManager>();
+
+        ActivateShipModules(config, moduleMgr);
     }
 
-    public void ActivateShipModules(int harpoonID, int coqueID, int cabineID, int bombID)
+    public void ActivateShipModules(BoatConfiguration config, ShipManager moduleMgr)
     {
-        DeactivateAllModules();
+        ResetModules();
 
-        harpoonsGoArray[harpoonID].SetActive(true);
-        coquesGoArray[coqueID].SetActive(true);
-        cabinesGoArray[cabineID].SetActive(true);
-        bombsGoArray[bombID].SetActive(true);
-
-
-        // Update Harpoon parameters
-        for (int i = 0; i < harpoonsScriptObjs.Length; i++)
-        {
-            if (harpoonsScriptObjs[i].moduleId == harpoonID)
-            {
-                //TODO send harpoonsScriptObjs[i] to _harpoonScript
-            }
-        }
-
-        // Update Bombs parameters
-        for (int i = 0; i < bombsScriptObjs.Length; i++)
-        {
-            if (bombsScriptObjs[i].moduleId == harpoonID)
-            {
-                //TODO send bombsScriptObjs[i] to _bombScript
-            }
-        }
-
-        // Update Coque parameters
-        for (int i = 0; i < coquesScriptObjs.Length; i++)
-        {
-            if (coquesScriptObjs[i].moduleId == harpoonID)
-            {
-                //TODO send coquesScriptObjs[i] to _movementScript
-            }
-        }
-
-        // Update Cabine parameters
-        for (int i = 0; i < cabinesScriptObjs.Length; i++)
-        {
-            if (cabinesScriptObjs[i].moduleId == harpoonID)
-            {
-                //TODO send cabinesScriptObjs[i] to nothing, because it's cosmetic. Otherwise it's here.
-            }
-        }
-
-
-    }
-
-    public void RandomShipModules()
-    {
+        // Setup the boat model.
+        harpoonsGoArray[config.harpoonId].SetActive(true);
+        coquesGoArray[config.coqueId].SetActive(true);
+        cabinsGoArray[config.cabinId].SetActive(true);
+        bombsGoArray[config.bombStockId].SetActive(true);
         
+        // Setup the data of each modules.
+        //_harpoonScript.harpoonModule = moduleMgr.harpoonsScriptObjs[config.harpoonId];
+        //_movementScript.coqueModule = moduleMgr.coquesScriptObjs[config.coqueId];
+        //_bombScript.bombStockModule = moduleMgr.bombsScriptObjs[config.bombStockId];
     }
 
-    public void DeactivateAllModules()
+    /// <summary>
+    /// Reset modules on the boat.
+    /// </summary>
+    public void ResetModules()
     {
         for (int i = 0; i < harpoonsGoArray.Length; i++)
         {
@@ -100,9 +75,9 @@ public class ShipModulesManager : MonoBehaviour {
             coquesGoArray[i].SetActive(false);
         }
 
-        for (int i = 0; i < cabinesGoArray.Length; i++)
+        for (int i = 0; i < cabinsGoArray.Length; i++)
         {
-            cabinesGoArray[i].SetActive(false);
+            cabinsGoArray[i].SetActive(false);
         }
 
         for (int i = 0; i < bombsGoArray.Length; i++)

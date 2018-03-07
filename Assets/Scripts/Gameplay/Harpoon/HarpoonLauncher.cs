@@ -4,8 +4,8 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class HarpoonLauncher : MonoBehaviour {
-
-	[SerializeField]
+    
+    [SerializeField]
 	private int playerId;
 
 	[Space]
@@ -37,26 +37,18 @@ public class HarpoonLauncher : MonoBehaviour {
 
 	[SerializeField]
 	private float castDistance;
-
-	[SerializeField]
-	private float launchDistanceMax;
 	
 	[SerializeField]
 	private float cooldownTime;
+    
+    [Header("Module")]
+    public HarpoonModule harpoonModule;
 
-	[Space]
-
-	[SerializeField]
-	private float harpoonSpeed;
-	
-	[SerializeField]
-	private float harpoonReturnSpeed;
-
-	public Transform selfTransform {get; private set;}
+    public Transform selfTransform {get; private set;}
 
 	public Rigidbody selfRigidbody {get; private set;}
-
-	private Harpoon harpoon;
+    
+    private Harpoon harpoon;
 
 	private bool isLaunching;
 
@@ -169,6 +161,6 @@ public class HarpoonLauncher : MonoBehaviour {
 		isLaunching = false;
 		directionObject.gameObject.SetActive(false);
 		harpoon = Instantiate<Harpoon>(harpoonPrefab, selfTransform.position, Quaternion.identity);
-		harpoon.Launch(this, selfTransform.position, direction, launchDistanceMax, harpoonSpeed, harpoonReturnSpeed);
+		harpoon.Launch(this, selfTransform.position, direction, harpoonModule.fireDistance, harpoonModule.fireSpeed, harpoonModule.returnSpeed);
 	}
 }
