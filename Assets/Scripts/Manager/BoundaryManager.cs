@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boundaries : MonoBehaviour {
+public class BoundaryManager : MonoBehaviour {
 
     public Camera cam;
     public LayerMask seaMask;
@@ -41,7 +41,7 @@ public class Boundaries : MonoBehaviour {
     }
 
     /// <summary>
-    /// Return position of a bot inside the screen.
+    /// Return position of a boat inside the screen.
     /// </summary>
     /// <returns></returns>
     public Vector3 InScreenPosition(Vector3 boatPos)

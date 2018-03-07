@@ -8,19 +8,28 @@ public class PlayerManager : MonoBehaviour {
     public float healthNeededForRez;
     public float healthLossPerSec;
     public float rezRadius;
-   
+
+    public int rezAmountWhenDead = 0;
+
     public bool isDead = false;
+    
     private float _rezAmount;
     private float _allyDistance;
     private PlayerManager _allyToRez;
     private PlayerManager[] _alliesList;
 
+    private MovementBehaviour movement;
+
+    private void Awake()
+    {
+        _alliesList = FindObjectsOfType<PlayerManager>();
+        movement = GetComponent<MovementBehaviour>();
+    }
+
     void Start()
     {
         if (isDead)
             Death();
-
-        _alliesList = FindObjectsOfType<PlayerManager>();
     }
 
     public void Death()
@@ -28,8 +37,13 @@ public class PlayerManager : MonoBehaviour {
         Debug.Log("I'm dead");
         isDead = true;
 
+        _rezAmount = rezAmountWhenDead;
+
+        // Freeze the player.
+        movement.FreezePlayer();
+
         // Temporary indicator of death
-        transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
+        // transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
     }
 
     // Called when allies are mashing "A" near your shipwreck
@@ -58,21 +72,24 @@ public class PlayerManager : MonoBehaviour {
                 // Check if ally is within radius of resurrection
                 if (tempAllydistance < rezRadius)
                 {
-                    if(tempAllydistance < _allyDistance)
+                    // Check if ally is dead.
+                    if(ally.isDead)
                     {
-                        _allyDistance = tempAllydistance;
-                        _allyToRez = ally;
+                        // Store ally if he's near than the last one.
+                        if (tempAllydistance < _allyDistance)
+                        {
+                            _allyDistance = tempAllydistance;
+                            _allyToRez = ally;
+                        }
                     }
                 }
             }
         }
 
+        // Try to rez to the dead ally.
         if(_allyToRez != null)
         {
-            if (_allyToRez.isDead)
-            {
-                _allyToRez.AddHealth();
-            }
+            _allyToRez.AddHealth();
         }     
     }
 
@@ -95,8 +112,6 @@ public class PlayerManager : MonoBehaviour {
     {
         Debug.Log("I'm back !");
         isDead = false;
-
-        _rezAmount = 0f;
 
         // Temporary indicator of death
         transform.localRotation = Quaternion.Euler(0f, 0f, 0f);

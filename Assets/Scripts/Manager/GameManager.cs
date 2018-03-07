@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour {
 	public bool debug;
 	public int actualPlayer;
 
-    public Boundaries boundaries;
+    public BoundaryManager boundaries;
 
 	public static GameManager instance {get; private set;}
 

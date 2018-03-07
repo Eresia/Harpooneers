@@ -63,4 +63,10 @@ public class MovementBehaviour : MonoBehaviour {
         
         transform.position = pos;
     }
+
+    // Freeze player at his position.
+    public void FreezePlayer()
+    {
+        move = 0f;
+    }
 }
