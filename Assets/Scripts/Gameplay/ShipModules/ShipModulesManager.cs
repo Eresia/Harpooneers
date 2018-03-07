@@ -11,7 +11,9 @@ public class ShipModulesManager : MonoBehaviour {
     public GameObject[] bombsGoArray;
 
     public HarpoonModule[] harpoonsScriptObjs;
-    public HarpoonModule chosenHarpoon;
+    public CoqueModule[] coquesScriptObjs;
+    public BombModule[] bombsScriptObjs;
+    public CabineModule[] cabinesScriptObjs;
 
     private HarpoonLauncher _harpoonScript;
     private MovementBehaviour _movementScript;
@@ -47,7 +49,34 @@ public class ShipModulesManager : MonoBehaviour {
         {
             if (harpoonsScriptObjs[i].moduleId == harpoonID)
             {
-                chosenHarpoon = harpoonsScriptObjs[i];
+                //TODO send harpoonsScriptObjs[i] to _harpoonScript
+            }
+        }
+
+        // Update Bombs parameters
+        for (int i = 0; i < bombsScriptObjs.Length; i++)
+        {
+            if (bombsScriptObjs[i].moduleId == harpoonID)
+            {
+                //TODO send bombsScriptObjs[i] to _bombScript
+            }
+        }
+
+        // Update Coque parameters
+        for (int i = 0; i < coquesScriptObjs.Length; i++)
+        {
+            if (coquesScriptObjs[i].moduleId == harpoonID)
+            {
+                //TODO send coquesScriptObjs[i] to _movementScript
+            }
+        }
+
+        // Update Cabine parameters
+        for (int i = 0; i < cabinesScriptObjs.Length; i++)
+        {
+            if (cabinesScriptObjs[i].moduleId == harpoonID)
+            {
+                //TODO send cabinesScriptObjs[i] to nothing, because it's cosmetic. Otherwise it's here.
             }
         }
 

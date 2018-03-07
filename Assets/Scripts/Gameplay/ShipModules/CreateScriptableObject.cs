@@ -12,4 +12,12 @@ public class CreateScriptableObject
         AssetDatabase.CreateAsset(module, "Assets/Scripts/Gameplay/ShipModules/ScriptableObjects/harpoon.asset");
         AssetDatabase.SaveAssets();
     }
+
+    [MenuItem("Assets/Create/ShipModules/BombStock")]
+    public static void CreateBombModule()
+    {
+        HarpoonModule module = ScriptableObject.CreateInstance<HarpoonModule>();
+        AssetDatabase.CreateAsset(module, "Assets/Scripts/Gameplay/ShipModules/ScriptableObjects/harpoon.asset");
+        AssetDatabase.SaveAssets();
+    }
 }
