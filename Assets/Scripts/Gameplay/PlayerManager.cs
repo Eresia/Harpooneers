@@ -20,12 +20,12 @@ public class PlayerManager : MonoBehaviour {
     private PlayerManager _allyToRez;
     private PlayerManager[] _alliesList;
 
-    private MovementBehaviour movement;
+    private MovementBehaviourNewPhysic movement;
 
     private void Awake()
     {
         _alliesList = FindObjectsOfType<PlayerManager>();
-        movement = GetComponent<MovementBehaviour>();
+        movement = GetComponent<MovementBehaviourNewPhysic>();
     }
 
     void Start()
@@ -64,6 +64,7 @@ public class PlayerManager : MonoBehaviour {
     public void ResurrectFriend()
     {
         _allyDistance = rezRadius;
+        _allyToRez = null;
 
         foreach(PlayerManager ally in _alliesList)
         {

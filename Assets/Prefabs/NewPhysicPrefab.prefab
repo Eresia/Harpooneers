@@ -245,6 +245,7 @@ GameObject:
   - component: {fileID: 114587944294604564}
   - component: {fileID: 114251360909079708}
   - component: {fileID: 114919561837938988}
+  - component: {fileID: 114691317337192302}
   m_Layer: 0
   m_Name: Boat
   m_TagString: Untagged
@@ -377,11 +378,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4407487545123544}
-  - component: {fileID: 65302090388552530}
   - component: {fileID: 114990082245901598}
+  - component: {fileID: 136255344589531074}
   m_Layer: 9
   m_Name: Model
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -751,7 +752,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1603118906735266}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.9, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4407487545123544}
@@ -1415,18 +1416,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65302090388552530
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1818368145150354}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1.5}
-  m_Center: {x: 0, y: 0.5, z: 0.25}
 --- !u!65 &65409385241251224
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1676,6 +1665,26 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114691317337192302
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1603118906735266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 692fd5dcf5f2dc34f80ce1fea8803da7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shipCollider: {fileID: 136255344589531074}
+  physic: {fileID: 114587944294604564}
+  rayLength: 1
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 513
+  playerMgr: {fileID: 114251360909079708}
+  killingForce: 150
+  bumpForce: 10
 --- !u!114 &114787632788375122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1810,6 +1819,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &136255344589531074
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1818368145150354}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.6
+  m_Height: 2.1
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.5, z: 0.25}
 --- !u!198 &198002899789327730
 ParticleSystem:
   m_ObjectHideFlags: 1
