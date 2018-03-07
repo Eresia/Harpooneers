@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct BoatConfiguration {
+public struct ShipConfiguration {
 
     public int coqueId;
     public int cabinId;

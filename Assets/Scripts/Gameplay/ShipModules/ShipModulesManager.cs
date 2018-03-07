@@ -15,7 +15,6 @@ public class ShipModulesManager : MonoBehaviour {
 
     private HarpoonLauncher _harpoonScript;
     private MovementBehaviour _movementScript;
-    private ExplosiveBarrel _bombScript;
 
     private PlayerInput _inputScript;
 
@@ -25,26 +24,18 @@ public class ShipModulesManager : MonoBehaviour {
         _harpoonScript = GetComponent<HarpoonLauncher>();
         _movementScript = GetComponent<MovementBehaviour>();
         _inputScript = GetComponent<PlayerInput>();
-        _bombScript = _inputScript.bombLauncher;
     }
     
     void Start()
     {
-        // Debug config
-        BoatConfiguration config = new BoatConfiguration
-        {
-            coqueId = 0,
-            harpoonId = 0,
-            bombStockId = 0,
-            cabinId = 0,
-        };
-
-        ShipManager moduleMgr = GameObject.FindObjectOfType<ShipManager>();
+        // Default config for debug.
+        ShipConfiguration config = GameManager.instance.defaultConfig;
+        ShipManager moduleMgr = FindObjectOfType<ShipManager>();
 
         ActivateShipModules(config, moduleMgr);
     }
 
-    public void ActivateShipModules(BoatConfiguration config, ShipManager moduleMgr)
+    public void ActivateShipModules(ShipConfiguration config, ShipManager moduleMgr)
     {
         ResetModules();
 

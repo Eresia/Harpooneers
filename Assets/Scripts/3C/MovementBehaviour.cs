@@ -54,7 +54,7 @@ public class MovementBehaviour : MonoBehaviour {
         // Limit position in the boundaries of the screen.
         Vector3 pos = transform.position;
 
-        Vector3 hitPoint = GameManager.instance.boundaries.InScreenPosition(pos);
+        Vector3 hitPoint = GameManager.instance.boundaryMgr.InScreenPosition(pos);
 
         pos.x = hitPoint.x;
         pos.z = hitPoint.z;

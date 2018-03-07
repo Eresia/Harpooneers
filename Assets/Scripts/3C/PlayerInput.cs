@@ -39,6 +39,10 @@ public class PlayerInput : MonoBehaviour
         player.AddInputEventDelegate(TogglePause, UpdateLoopType.Update, "Toggle Pause");
         player.AddInputEventDelegate(ReleaseRope, UpdateLoopType.Update, "Release Rope");
         player.AddInputEventDelegate(PullingOnRope, UpdateLoopType.Update, "Pull On Rope");
+        
+        // Subscribe to events of controller connection
+        ReInput.ControllerConnectedEvent += OnControllerConnected;
+        ReInput.ControllerDisconnectedEvent += OnControllerDisconnected;
     }
 
     private void Reset()
@@ -177,6 +181,22 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
+    // Controller connection - disconnection.
+
+    // This function will be called when a controller is connected
+    // You can get information about the controller that was connected via the args parameter
+    void OnControllerConnected(ControllerStatusChangedEventArgs args)
+    {
+        // TODO Unpause the game if the game was stopped because a controller has been disconnected.
+    }
+
+    // This function will be called when a controller is fully disconnected
+    // You can get information about the controller that was disconnected via the args parameter
+    void OnControllerDisconnected(ControllerStatusChangedEventArgs args)
+    {
+        // TODO Pause the game if a controller has been disconnected.
+    }
+
     private void OnDestroy()
     {
         /*
@@ -189,5 +209,9 @@ public class PlayerInput : MonoBehaviour
             player.RemoveInputEventDelegate(PullingOnRope);
         }
         */
+
+        // Unsubscribe from events
+        ReInput.ControllerConnectedEvent -= OnControllerConnected;
+        ReInput.ControllerDisconnectedEvent -= OnControllerDisconnected;
     }
 }

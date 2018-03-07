@@ -15,25 +15,32 @@ public class ShipManager : MonoBehaviour {
     public CoqueModule[] coquesScriptObjs;
     public BombStockModule[] bombsScriptObjs;
     public CabineModule[] cabinesScriptObjs;
-
-
-    // Use this for initialization
-    void Start () {
-        //SetupAllShips();
-	}
     
-    private void SetupAllShips()
+    public void SetupAllShips()
     {
         for (int i = 0; i < shipModuleMgrs.Length; i++)
         {
             if(i < GameManager.instance.nbOfPlayers)
             {
-                shipModuleMgrs[i].ActivateShipModules(GameManager.instance.shipConfigs[i], this);
+                Debug.Log("Player " + i + " active !");
+
+                // For debug only. Load default config.
+                if(GameManager.instance.debug)
+                {
+                    shipModuleMgrs[i].ActivateShipModules(GameManager.instance.defaultConfig, this);
+                }
+
+                else
+                {
+                    shipModuleMgrs[i].ActivateShipModules(GameManager.instance.shipConfigs[i], this);
+                }
+                
                 ships[i].SetActive(true);
             }
 
             else
             {
+                Debug.Log("Player " + i + " inactive !");
                 ships[i].SetActive(false);
             }
         }
