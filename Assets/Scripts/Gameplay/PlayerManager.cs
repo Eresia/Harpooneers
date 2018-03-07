@@ -8,6 +8,8 @@ public class PlayerManager : MonoBehaviour {
     public float healthNeededForRez;
     public float healthLossPerSec;
     public float rezRadius;
+    public Slider rezBar;
+    public Image deathIcon;
 
     public int rezAmountWhenDead = 0;
 
@@ -34,7 +36,6 @@ public class PlayerManager : MonoBehaviour {
 
     public void Death()
     {
-        Debug.Log("I'm dead");
         isDead = true;
 
         _rezAmount = rezAmountWhenDead;
@@ -42,8 +43,8 @@ public class PlayerManager : MonoBehaviour {
         // Freeze the player.
         movement.FreezePlayer();
 
-        // Temporary indicator of death
-        // transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
+        // Display the dead icon
+        deathIcon.enabled = true;
     }
 
     // Called when allies are mashing "A" near your shipwreck
@@ -96,24 +97,35 @@ public class PlayerManager : MonoBehaviour {
     // Losing rez bar progression while downed
     void Update()
     {
-        if(_rezAmount > 0)
+        if(isDead)
         {
-            _rezAmount -= Time.deltaTime * healthLossPerSec;
-        }
+            if (_rezAmount > 0)
+            {
+                _rezAmount -= Time.deltaTime * healthLossPerSec;
+                deathIcon.enabled = false;
+                rezBar.gameObject.SetActive(true);
+                rezBar.value = _rezAmount;
+            }
 
+            else
+            {
+                _rezAmount = 0;
+                deathIcon.enabled = true;
+                rezBar.gameObject.SetActive(false);
+            }
+        }
         else
         {
-            _rezAmount = 0;
-        }  
+            deathIcon.enabled = false;
+            rezBar.gameObject.SetActive(false);
+        }
     }
 
     // Player is back in the game
     public void Resurrect()
     {
-        Debug.Log("I'm back !");
         isDead = false;
 
-        // Temporary indicator of death
-        transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        _rezAmount = 0;
     }
 }
