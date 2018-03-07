@@ -36,7 +36,6 @@ public class PlayerManager : MonoBehaviour {
 
     public void Death()
     {
-        Debug.Log("I'm dead");
         isDead = true;
 
         _rezAmount = rezAmountWhenDead;
@@ -125,7 +124,6 @@ public class PlayerManager : MonoBehaviour {
     // Player is back in the game
     public void Resurrect()
     {
-        Debug.Log("I'm back !");
         isDead = false;
 
         _rezAmount = 0;
