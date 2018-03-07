@@ -31,7 +31,9 @@ public class PlayerManager : MonoBehaviour {
     void Start()
     {
         if (isDead)
+        {
             Death();
+        }
     }
 
     public void Death()

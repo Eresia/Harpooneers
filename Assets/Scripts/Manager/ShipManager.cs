@@ -20,7 +20,8 @@ public class ShipManager : MonoBehaviour {
     {
         for (int i = 0; i < shipModuleMgrs.Length; i++)
         {
-            if(i < GameManager.instance.nbOfPlayers)
+            // Check if a player is in the game.
+            if(GameManager.instance.players[i])
             {
                 Debug.Log("Player " + i + " active !");
 

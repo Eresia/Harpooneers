@@ -13,29 +13,31 @@ public class ShipModulesManager : MonoBehaviour {
     public GameObject[] cabinsGoArray;
     public GameObject[] bombsGoArray;
 
-    private HarpoonLauncher _harpoonScript;
-    private MovementBehaviour _movementScript;
-
-    private PlayerInput _inputScript;
+    public HarpoonLauncher _harpoonScript;
+    public MovementBehaviour _movementScript;
+    public ExplosiveBarrel _bombScript;
 
 	// Use this for initialization
-	void Awake ()
+	void Reset ()
     {
         _harpoonScript = GetComponent<HarpoonLauncher>();
         _movementScript = GetComponent<MovementBehaviour>();
-        _inputScript = GetComponent<PlayerInput>();
+        _bombScript = transform.parent.GetComponentInChildren<ExplosiveBarrel>();
     }
     
     void Start()
     {
-        // Default config for debug.
-        ShipConfiguration config = GameManager.instance.defaultConfig;
-        ShipManager moduleMgr = FindObjectOfType<ShipManager>();
+        if(GameManager.instance.debug)
+        {
+            // Default config for debug.
+            ShipConfiguration config = GameManager.instance.defaultConfig;
+            ShipManager moduleMgr = FindObjectOfType<ShipManager>();
 
-        ActivateShipModules(config, moduleMgr);
+            ActivateShipModules(config, moduleMgr);
+        }
     }
 
-    public void ActivateShipModules(ShipConfiguration config, ShipManager moduleMgr)
+    public void ActivateShipModules(ShipConfiguration config, ShipManager shipMgr)
     {
         ResetModules();
 
@@ -46,9 +48,9 @@ public class ShipModulesManager : MonoBehaviour {
         bombsGoArray[config.bombStockId].SetActive(true);
         
         // Setup the data of each modules.
-        //_harpoonScript.harpoonModule = moduleMgr.harpoonsScriptObjs[config.harpoonId];
-        //_movementScript.coqueModule = moduleMgr.coquesScriptObjs[config.coqueId];
-        //_bombScript.bombStockModule = moduleMgr.bombsScriptObjs[config.bombStockId];
+        _harpoonScript.harpoonModule = shipMgr.harpoonsScriptObjs[config.harpoonId];
+        _movementScript.coqueModule = shipMgr.coquesScriptObjs[config.coqueId];
+        _bombScript.bombStockModule = shipMgr.bombsScriptObjs[config.bombStockId];
     }
 
     /// <summary>

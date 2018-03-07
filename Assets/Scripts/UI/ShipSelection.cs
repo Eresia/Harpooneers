@@ -15,14 +15,11 @@ public class ShipSelection : MonoBehaviour {
     public GameObject[] cabinsGoArray;
     public GameObject[] bombsGoArray;
 
+    private ShipConfiguration currentConfig;
+
     // Use this for initialization
     void Start () {
-      
-	}
-
-    void Update()
-    {
-      
+        RandomizeShip();
     }
 
     public void UpdateHarpoon()
@@ -74,5 +71,18 @@ public class ShipSelection : MonoBehaviour {
 
         currentBombID = Random.Range(0, 3);
         UpdateBomb();
+
+        UpdateConfig();
+    }
+
+    // Update the config in the game manager.
+    private void UpdateConfig()
+    {
+        currentConfig.harpoonId = currentHarpoonID;
+        currentConfig.coqueId = currentCoqueID;
+        currentConfig.cabinId = currentCabinID;
+        currentConfig.bombStockId = currentBombID;
+
+        GameManager.instance.shipConfigs[playerID] = currentConfig;
     }
 }

@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour {
 
     public ShipConfiguration[] shipConfigs;
 
+    public bool[] players;
+
     public ShipConfiguration defaultConfig = new ShipConfiguration
     {
         cabinId = 0,
@@ -43,6 +45,15 @@ public class GameManager : MonoBehaviour {
 		}
 
         DontDestroyOnLoad(gameObject);
+
+        shipConfigs = new ShipConfiguration[4];
+
+        // For debug all players are enabled.
+        players = new bool[4];
+        for (int i = 0; i < 4; i++)
+        {
+            players[i] = true;
+        }
 	}
 
     private void OnEnable()
@@ -74,9 +85,10 @@ public class GameManager : MonoBehaviour {
         shipMgr.SetupAllShips();
     }
 
-    public void StartNewGame(int playerCount)
+    public void StartNewGame(int playerCount, bool[] playersReady)
     {
         nbOfPlayers = playerCount;
+        players = playersReady;
 
         sceneMgr.LoadGameScene();
     }
