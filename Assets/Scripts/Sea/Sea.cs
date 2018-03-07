@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Rewired;
 
 public class Sea : MonoBehaviour {
 
@@ -16,16 +17,29 @@ public class Sea : MonoBehaviour {
 
 	private Transform selfTransform;
 
+	private Transform cameraTransform;
+
+	private Mouse mouse;
+
 	private float time;
 
 	private void Awake() {
-		time = 0;
+		// time = 0;
 		selfTransform = GetComponent<Transform>();
+		cameraTransform = Camera.main.GetComponent<Transform>();
+		mouse = ReInput.controllers.Mouse;
 	}
 
 	private void Update() {
-		if((GameManager.instance.actualPlayer) == -1 && (Input.GetMouseButtonDown(0))){
+		if((GameManager.instance.actualPlayer == -1) && mouse.GetButtonDown(0)){
+			RaycastHit hit;
+        	Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
+			// Debug.DrawRay()
+
+			if (Physics.Raycast(ray, out hit, Vector3.Distance(cameraTransform.position, selfTransform.position), layer)) {
+				CreateVortex(hit.transform.position);
+			}
 		}
 		time += Time.deltaTime;
 		for(int i = 0; i < size; i++){
@@ -37,7 +51,10 @@ public class Sea : MonoBehaviour {
 		}
 	}
 
-	public void CreateVortex(Vector2 position){
-		Vector2 seaPosition = new Vector2(selfTransform.position.x - position.x, selfTransform.position.z - position.y);
+	public void CreateVortex(Vector3 position){
+		Vector3 seaPosition = selfTransform.position - position;
+		int i = (int) seaPosition.x - (size / 2);
+		int j = (int) seaPosition.z - (size / 2);
+		wave[i*size + j].position += new Vector3(0, 1, 0);
 	}
 }

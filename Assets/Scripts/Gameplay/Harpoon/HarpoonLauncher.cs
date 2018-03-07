@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Rewired;
 
 [RequireComponent(typeof(Rigidbody))]
 public class HarpoonLauncher : MonoBehaviour {
@@ -66,15 +67,18 @@ public class HarpoonLauncher : MonoBehaviour {
 
 	private Vector3 lastDirection;
 
+	private Mouse mouse;
+
 	private void Awake()
 	{
 		selfTransform = GetComponent<Transform>();
 		selfRigidbody = GetComponent<Rigidbody>();
+		mouse = ReInput.controllers.Mouse;
 	}
 
 	private void Update() {
 		if(GameManager.instance.actualPlayer == playerId){
-			if(Input.GetMouseButton(0)){
+			if(mouse.GetButton(0)){
 				Vector3 boatPosition = Camera.main.WorldToScreenPoint(selfTransform.position);
 				Vector3 direction = Input.mousePosition - boatPosition;
 				direction.z = direction.y;
@@ -85,7 +89,7 @@ public class HarpoonLauncher : MonoBehaviour {
 				LaunchHarpoon(Vector2.zero);
 			}
 
-			if(Input.GetMouseButtonDown(1)){
+			if(mouse.GetButtonDown(1)){
 				Cut();
 			}
 
