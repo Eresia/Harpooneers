@@ -17,21 +17,13 @@ public class ShipSelection : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
+      
 	}
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("mouse here");
-        }
-
-        if (Input.GetKey(KeyCode.A))
-          {
-                Debug.Log("keyboard here");
-          }
-        }
+      
+    }
 
     public void UpdateHarpoon()
     {
@@ -71,8 +63,6 @@ public class ShipSelection : MonoBehaviour {
 
     public void RandomizeShip()
     {
-        Debug.Log("RANDOOOM");
-
         currentHarpoonID = Random.Range(0, 3);
         UpdateHarpoon();
 
