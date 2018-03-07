@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour {
 
     public Boundaries boundaries;
 
+	public Ground ground;
+
 	public static GameManager instance {get; private set;}
 
 	void Awake()
@@ -19,5 +21,7 @@ public class GameManager : MonoBehaviour {
 		else if (instance != this){
 			Destroy(gameObject);   
 		}
+
+		DontDestroyOnLoad(gameObject);
 	}
 }

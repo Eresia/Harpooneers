@@ -45,7 +45,7 @@ public class Sea : MonoBehaviour {
 		for(int i = 0; i < size; i++){
 			for(int j = 0; j < size; j++){
 				Vector3 pos = wave[i*size + j].position;
-				pos.y = Mathf.Sin(time * ((float) i) / 20f) / 3f;
+				pos.y = Mathf.Sin(time * ((float) i) / 2f) / 3f;
 				wave[i*size + j].position = pos;
 			}
 		}

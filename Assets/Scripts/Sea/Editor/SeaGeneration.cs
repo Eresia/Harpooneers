@@ -6,7 +6,7 @@ using UnityEditor.SceneManagement;
 
 public class SeaGeneration {
 
-	[MenuItem("DSea/Generate Sea")]
+	[MenuItem("DSea/Old_Generate Sea")]
 	public static void GenerateSea(){
 		if(!ClearSea()){
 			return ;
@@ -43,7 +43,7 @@ public class SeaGeneration {
 		EditorSceneManager.MarkAllScenesDirty();
 	}
 
-	[MenuItem("DSea/Clear Sea")]
+	[MenuItem("DSea/Old_Clear Sea")]
 	public static bool ClearSea(){
 		Sea sea = GameObject.FindObjectOfType<Sea>();
 
