@@ -375,10 +375,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4432117699621258}
-  - component: {fileID: 54226216301357970}
-  - component: {fileID: 114238097148063314}
-  - component: {fileID: 114732771670407888}
+  - component: {fileID: 114104629161962592}
+  - component: {fileID: 114059523693875120}
   - component: {fileID: 114576571596224756}
+  - component: {fileID: 114739095344508634}
   m_Layer: 0
   m_Name: Boat
   m_TagString: Untagged
@@ -650,6 +650,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4808421499956172}
   - component: {fileID: 136368519739808906}
+  - component: {fileID: 114253187256452404}
   m_Layer: 9
   m_Name: Model
   m_TagString: Untagged
@@ -4194,21 +4195,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!54 &54226216301357970
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1327248367258358}
-  serializedVersion: 2
-  m_Mass: 2
-  m_Drag: 1.5
-  m_AngularDrag: 0.5
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &65351355802298594
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -4221,7 +4207,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 1.5}
   m_Center: {x: 0, y: 0.25, z: 0.25}
---- !u!114 &114238097148063314
+--- !u!114 &114059523693875120
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -4229,13 +4215,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 1327248367258358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 565af457cfeafcb43a4b63b0638655b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 386bb73cc29bd824da80e8babb8eb5d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 10
+  maxSpeed: 10
+  rotationSpeed: 9
+  offsetX: 1
+  offsetZ: 1
+--- !u!114 &114104629161962592
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1327248367258358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db4cc8993307c6349b0927c5c0e81c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: 0
-  movement: {fileID: 114732771670407888}
+  movement: {fileID: 114059523693875120}
   harpoon: {fileID: 114576571596224756}
   playerBomb: {fileID: 114476977556231496}
+--- !u!114 &114253187256452404
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1483641654922982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef241b3197fe84847919d79dfcd8e30c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pivot: {x: 0, y: -0.09, z: 0.08}
 --- !u!114 &114318054212681704
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4284,7 +4298,7 @@ MonoBehaviour:
   cooldownTime: 1
   harpoonSpeed: 10
   harpoonReturnSpeed: 5
---- !u!114 &114732771670407888
+--- !u!114 &114739095344508634
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -4292,14 +4306,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1327248367258358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f375b5d0dc9626f43ac4507ca4d42984, type: 3}
+  m_Script: {fileID: 11500000, guid: 4de3276ed69fe0a4abeeb99056f26950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 30
-  maxSpeed: 30
-  rotationSpeed: 9
-  offsetX: 1
-  offsetZ: 1
+  physicObject: {fileID: 114253187256452404}
+  friction: 3
+  mass: 5
+  limitSpeed: 100
 --- !u!135 &135325822401263578
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -7803,7 +7816,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 2009825964
+  randomSeed: -1320135378
   InitialModule:
     serializedVersion: 3
     enabled: 1

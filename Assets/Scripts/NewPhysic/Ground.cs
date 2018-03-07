@@ -118,23 +118,31 @@ public class Ground : MonoBehaviour {
 		Vector3 d = new Vector3(1, points[info.i.y * lod.y + info.j.y], 1);
 
 		Vector3 cross1 = Vector3.Cross(b - a, c - a);
-		cross1.y = Mathf.Abs(cross1.y);
+		if(cross1.y < 0){
+			cross1 = -cross1;
+		}
 
-		Vector3 cross2 = Vector3.Cross(b - a, b - d);
-		cross2.y = Mathf.Abs(cross2.y);
+		Vector3 cross2 = Vector3.Cross(a - b, d - b);
+		if(cross2.y < 0){
+			cross2 = -cross2;
+		}
 
-		Vector3 cross3 = Vector3.Cross(c - a, c - d);
-		cross3.y = Mathf.Abs(cross3.y);
+		Vector3 cross3 = Vector3.Cross(a - c, d - c);
+		if(cross3.y < 0){
+			cross3 = -cross3;
+		}
 		
-		Vector3 cross4 = Vector3.Cross(d - b, d - c);
-		cross4.y = Mathf.Abs(cross4.y);
+		Vector3 cross4 = Vector3.Cross(b - d, c - d);
+		if(cross4.y < 0){
+			cross4 = -cross4;
+		}
 
 		result = info.coeff.x * cross1; 
 		result += info.coeff.y * cross2; 
 		result += info.coeff.z * cross3; 
 		result += info.coeff.w * cross4;
 
-		return result;
+		return result / (info.coeff.x + info.coeff.y + info.coeff.z + info.coeff.w);
 	}
 
 	private HeightInfo GetHeightInfo(float x, float z){
