@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour {
 
     public BoundaryManager boundaryMgr;
 
+	public Ground ground;
+
 	public static GameManager instance {get; private set;}
 
     /// <summary>

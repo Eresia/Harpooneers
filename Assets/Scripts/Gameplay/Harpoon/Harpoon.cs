@@ -70,7 +70,7 @@ public class Harpoon : MonoBehaviour {
 						Cut();
 					}
 					else{
-						launcher.selfRigidbody.AddForce(force, ForceMode.Acceleration);
+						// launcher.selfRigidbody.AddForce(force, ForceMode.Acceleration);
 					}
 				}
 				else{
