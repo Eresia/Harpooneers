@@ -486,7 +486,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1874652423489286}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.85, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4058488147002366}
@@ -658,7 +658,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1664385169195890}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.13, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4220522353594926}
@@ -1370,10 +1370,8 @@ MonoBehaviour:
   castTime: 1
   castTimeMax: 1
   castDistance: 2
-  launchDistanceMax: 10
   cooldownTime: 1
-  harpoonSpeed: 10
-  harpoonReturnSpeed: 5
+  harpoonModule: {fileID: 0}
 --- !u!114 &114162899036655964
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1402,8 +1400,8 @@ MonoBehaviour:
   - {fileID: 1779588612240720}
   - {fileID: 1799335248613256}
   harpoonsScriptObjs:
-  - {fileID: 11400000, guid: 6ae1a62355734aa418c206ead4ab6bc6, type: 2}
-  - {fileID: 11400000, guid: 85878ec8db8d45f47a6ed361e0efadb0, type: 2}
+  - {fileID: 11400000, guid: 7f7037addcace3a4d9829f24b8140ab3, type: 2}
+  - {fileID: 11400000, guid: 988ccc5f33a52b5408b029a5ac22c07f, type: 2}
   coquesScriptObjs: []
   bombsScriptObjs: []
   cabinesScriptObjs: []
@@ -1418,9 +1416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f375b5d0dc9626f43ac4507ca4d42984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 30
-  maxSpeed: 50
-  rotationSpeed: 9
+  coqueModule: {fileID: 0}
 --- !u!114 &114291056288383838
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1432,7 +1428,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c9854ef2a09d5c46b44adc1ac3e51e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceResistance: 2
+  bombStockModule: {fileID: 0}
+  impactForceNeeded: 0
 --- !u!114 &114311655923268546
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1447,6 +1444,7 @@ MonoBehaviour:
   healthNeededForRez: 10
   healthLossPerSec: 1
   rezRadius: 5
+  rezAmountWhenDead: 0
   isDead: 0
 --- !u!114 &114403885699959892
 MonoBehaviour:
@@ -1473,9 +1471,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerId: 0
   movement: {fileID: 114269241373050450}
-  harpoon: {fileID: 114042531792062400}
-  playerMgr: {fileID: 0}
-  playerBomb: {fileID: 114291056288383838}
+  playerMgr: {fileID: 114311655923268546}
+  harpoonLauncher: {fileID: 114042531792062400}
+  bombLauncher: {fileID: 114291056288383838}
   timeBeforePause: 1
 --- !u!135 &135127269623488578
 SphereCollider:
@@ -1561,7 +1559,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -314256208
+  randomSeed: 184566626
   InitialModule:
     serializedVersion: 3
     enabled: 1

@@ -8,12 +8,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: LightHarpoon
-  m_EditorClassIdentifier: Assembly-CSharp::HarpoonModule
-  moduleName: LightHarpoon
+  m_Script: {fileID: 11500000, guid: 8730f6129caaa354caeaf072520f0dae, type: 3}
+  m_Name: DefaultBombStock
+  m_EditorClassIdentifier: 
+  moduleName: Default Bomb Stock
   moduleId: 0
-  description: Swift & Tiny
-  retractSpeed: 10
-  fireSpeed: 15
-  fireDistance: 20
+  description: Default Bomb Stock
+  bombRadius: 3
+  bombWavesResistance: 1

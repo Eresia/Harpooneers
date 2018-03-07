@@ -12,19 +12,17 @@ public class PlayerInput : MonoBehaviour
 
     [Header("Main components")]
     public MovementBehaviour movement;
-    public HarpoonLauncher harpoon;
     public PlayerManager playerMgr;
-
-    [Header("Bomb components")]
-    public ExplosiveBarrel playerBomb;
-
+    public HarpoonLauncher harpoonLauncher;
+    public ExplosiveBarrel bombLauncher;
+    
     [Header("Other actions")]
+    public float timeBeforePause = 1f;
 
     private Rigidbody _myRigidbody;
     
     private Player player; // Rewired player.
 
-    public float timeBeforePause = 1f;
     private bool doPause; // Do the pause if the delay is repected.
 
     void Awake()
@@ -46,7 +44,10 @@ public class PlayerInput : MonoBehaviour
     private void Reset()
     {
         movement = GetComponent<MovementBehaviour>();
-        harpoon = GetComponent<HarpoonLauncher>();
+        harpoonLauncher = GetComponent<HarpoonLauncher>();
+        playerMgr = GetComponent<PlayerManager>();
+
+        bombLauncher = transform.parent.GetComponentInChildren<ExplosiveBarrel>();
     }
 
     private void Update()
@@ -75,7 +76,7 @@ public class PlayerInput : MonoBehaviour
 
             //Debug.DrawRay(transform.position, harpoonDir.normalized * 2.5f, Color.red, 1f);
 
-            harpoon.LaunchHarpoon(harpoonDir.normalized);
+            harpoonLauncher.LaunchHarpoon(harpoonDir.normalized);
         }
 
         HandleCutRope();
@@ -111,11 +112,11 @@ public class PlayerInput : MonoBehaviour
             return;
         }
 
-        if (data.GetButtonDown() && !playerBomb.gameObject.activeSelf)
+        if (data.GetButtonDown() && !bombLauncher.gameObject.activeSelf)
         {
             // Spawn the bomb behind the boat
-            playerBomb.gameObject.SetActive(true);
-            playerBomb.SpawnTheBomb(transform.position - 1.25f * transform.forward, _myRigidbody.velocity);
+            bombLauncher.gameObject.SetActive(true);
+            bombLauncher.SpawnTheBomb(transform.position - 1.25f * transform.forward, _myRigidbody.velocity);
         }
     }
 
@@ -141,7 +142,7 @@ public class PlayerInput : MonoBehaviour
 
         if (data.GetButton())
         {
-            harpoon.Release();
+            harpoonLauncher.Release();
         }
     }
 
@@ -154,7 +155,7 @@ public class PlayerInput : MonoBehaviour
 
         if (data.GetButton())
         {
-            harpoon.Pull();
+            harpoonLauncher.Pull();
         }
     }
 
@@ -172,7 +173,7 @@ public class PlayerInput : MonoBehaviour
         {
             Debug.Log("Cut the rope");
 
-            harpoon.Cut();
+            harpoonLauncher.Cut();
         }
     }
 
