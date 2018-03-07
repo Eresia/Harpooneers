@@ -19,6 +19,8 @@ public class Ground : MonoBehaviour {
 		public float diffY;
 	}
 
+    public bool displayGizmos;
+
 	public Vector2Int lod;
 
 	public float ratio;
@@ -35,6 +37,12 @@ public class Ground : MonoBehaviour {
 	}
 
 	private void OnDrawGizmos() {
+
+        if(!displayGizmos)
+        {
+            return;
+        }
+
 		Transform seaTransform = GetComponent<Transform>();
 		Vector2 halfLod = new Vector2(((float) lod.x) * 0.5f, ((float) lod.y) * 0.5f);
 		if(points.Length == (lod.x * lod.y)){

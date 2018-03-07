@@ -5,9 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(PhysicMove))]
 public class MovementBehaviourNewPhysic : MonoBehaviour {
 
-    public float moveSpeed = 5f;
-    public float maxSpeed = 10f;
-    public float rotationSpeed;
+    public CoqueModule coqueModule;
 
     [Header("Metrics for boundaries")]
     [Tooltip("Distance with boundaries.")]
@@ -19,7 +17,7 @@ public class MovementBehaviourNewPhysic : MonoBehaviour {
     private Quaternion initialDir;
     private Quaternion targetDir;
 
-	private PhysicMove physicMove;
+	public PhysicMove physicMove;
 
     private float move;
 
@@ -49,10 +47,20 @@ public class MovementBehaviourNewPhysic : MonoBehaviour {
         if(initialDir != targetDir)
         {
             // Turn boat.
-            transform.rotation = Quaternion.Lerp(initialDir, targetDir, Time.deltaTime * rotationSpeed);
+            transform.rotation = Quaternion.Lerp(initialDir, targetDir, Time.deltaTime * coqueModule.turnSpeed);
         }
 
         // Move boat toward.
-        physicMove.AddForce(transform.forward * moveSpeed * move);
+        physicMove.AddForce(transform.forward * coqueModule.moveSpeed * move);
+
+        // Limit position in the boundaries of the screen.
+        Vector3 pos = transform.position;
+
+        Vector3 hitPoint = GameManager.instance.boundaryMgr.InScreenPosition(pos);
+
+        pos.x = hitPoint.x;
+        pos.z = hitPoint.z;
+
+        transform.position = pos;
     }
 }

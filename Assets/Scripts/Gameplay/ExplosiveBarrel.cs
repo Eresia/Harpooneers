@@ -44,6 +44,8 @@ public class ExplosiveBarrel : MonoBehaviour {
 
         // Initial Angular Speed
         _myRigidbody.angularVelocity = new Vector3(0f, Random.Range(-1f, 1f), 0f);
+
+        GetComponent<PhysicMove>().enabled = true;
     }
 
 	public void Explosion()

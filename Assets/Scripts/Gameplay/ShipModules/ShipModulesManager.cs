@@ -31,9 +31,9 @@ public class ShipModulesManager : MonoBehaviour {
         {
             // Default config for debug.
             ShipConfiguration config = GameManager.instance.defaultConfig;
-            ShipManager moduleMgr = FindObjectOfType<ShipManager>();
-
-            ActivateShipModules(config, moduleMgr);
+            ShipManager shipMgr = FindObjectOfType<ShipManager>();
+            
+            ActivateShipModules(config, shipMgr);
         }
     }
 
@@ -46,11 +46,15 @@ public class ShipModulesManager : MonoBehaviour {
         coquesGoArray[config.coqueId].SetActive(true);
         cabinsGoArray[config.cabinId].SetActive(true);
         bombsGoArray[config.bombStockId].SetActive(true);
-        
-        // Setup the data of each modules.
-        _harpoonScript.harpoonModule = shipMgr.harpoonsScriptObjs[config.harpoonId];
-        _movementScript.coqueModule = shipMgr.coquesScriptObjs[config.coqueId];
-        _bombScript.bombStockModule = shipMgr.bombsScriptObjs[config.bombStockId];
+
+        if (shipMgr)
+        {
+            // Setup the data of each modules.
+            _harpoonScript.harpoonModule = shipMgr.harpoonsScriptObjs[config.harpoonId];
+            _movementScript.coqueModule = shipMgr.coquesScriptObjs[config.coqueId];
+            //_movementScript.physicMove.limitSpeed = _movementScript.coqueModule.maxSpeed;
+            _bombScript.bombStockModule = shipMgr.bombsScriptObjs[config.bombStockId];
+        }
     }
 
     /// <summary>

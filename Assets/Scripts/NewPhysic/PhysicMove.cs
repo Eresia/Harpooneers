@@ -34,7 +34,7 @@ public class PhysicMove : MonoBehaviour {
 		velocity = Vector3.ClampMagnitude(velocity, limitSpeed);
 	}
 
-	public void AddForce(Vector3 force){
+	public void AddForce(Vector3 force) {
 		velocity += force / mass;
 	}
 
