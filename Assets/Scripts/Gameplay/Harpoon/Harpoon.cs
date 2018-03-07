@@ -21,6 +21,9 @@ public class Harpoon : MonoBehaviour {
 	private float releaseSpeed;
 
 	[SerializeField]
+	private float forceBlock;
+
+	[SerializeField]
 	private float forceBreak;
 
 	public State state {get; private set;}
@@ -65,13 +68,14 @@ public class Harpoon : MonoBehaviour {
 			case State.GRIPPED:
 				if(distance > actualDistance){
 					Vector3 normal = selfPos - launcherPos;
-					Vector3 force = (distance - actualDistance) * normal;
-					if(forceBreak < force.sqrMagnitude){
-						Cut();
-					}
-					else{
-						// launcher.selfRigidbody.AddForce(force, ForceMode.Acceleration);
-					}
+					// Vector3 force = (distance - actualDistance) * normal.normalized * forceBlock;
+					// if(forceBreak < force.sqrMagnitude){
+					// 	Cut();
+					// }
+					// else{
+					// 	launcher.physicMove.AddForce(force);
+					// }
+					launcher.selfTransform.position = launcherPos + (distance - actualDistance) * normal.normalized;
 				}
 				else{
 					color = (actualDistance - distance) / actualDistance;

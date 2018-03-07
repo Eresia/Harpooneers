@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
 
-// [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(PhysicMove))]
 public class HarpoonLauncher : MonoBehaviour {
 
 	[SerializeField]
@@ -55,7 +55,7 @@ public class HarpoonLauncher : MonoBehaviour {
 
 	public Transform selfTransform {get; private set;}
 
-	// public Rigidbody selfRigidbody {get; private set;}
+	public PhysicMove physicMove {get; private set;}
 
 	private Harpoon harpoon;
 
@@ -72,7 +72,7 @@ public class HarpoonLauncher : MonoBehaviour {
 	private void Awake()
 	{
 		selfTransform = GetComponent<Transform>();
-		// selfRigidbody = GetComponent<Rigidbody>();
+		physicMove = GetComponent<PhysicMove>();
 		mouse = ReInput.controllers.Mouse;
 	}
 
