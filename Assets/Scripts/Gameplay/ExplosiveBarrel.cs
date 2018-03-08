@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExplosiveBarrel : MonoBehaviour {
+public class ExplosiveBarrel : MonoBehaviour, ICollidable {
 
     // TODO Use the wave resistance of the bomb stock module.
 
@@ -10,25 +10,32 @@ public class ExplosiveBarrel : MonoBehaviour {
 
     public float impactForceNeeded = 2f;
 
-    private Rigidbody _myRigidbody;
+    private PhysicMove physicsScript;
     private MeshRenderer _myRenderer;
     private ParticleSystem _explosionFX;
-    private SphereCollider _myCollider;
+    private Collider _myCollider;
 
-    public void Start()
+    public void Awake()
     {
         transform.parent = null;
         gameObject.SetActive(false);
 
-        _myRigidbody = GetComponent<Rigidbody>();
+        physicsScript = GetComponent<PhysicMove>();
         _myRenderer = GetComponentInChildren<MeshRenderer>();
         _explosionFX = GetComponentInChildren<ParticleSystem>();
-        _myCollider = GetComponent<SphereCollider>();
+        _myCollider = GetComponent<Collider>();
+
+        SetupFx();
     }
 
-    void OnCollisionEnter(Collision collision)
+    private void SetupFx()
     {
-        if(collision.impulse.magnitude > impactForceNeeded)
+        _explosionFX.transform.localScale = Vector3.one * bombStockModule.bombRadius * 0.5f;
+    }
+
+    public void OnCollision(Vector3 velocity)
+    {
+        if(velocity.sqrMagnitude > impactForceNeeded)
         {
             Explosion();
         }
@@ -40,10 +47,10 @@ public class ExplosiveBarrel : MonoBehaviour {
         gameObject.transform.position = spawnPosition + new Vector3(0f, 0.25f,0f);
 
         //Initial Force
-        _myRigidbody.AddForce(movementDirection, ForceMode.Impulse);
+        physicsScript.AddForce(movementDirection);
 
         // Initial Angular Speed
-        _myRigidbody.angularVelocity = new Vector3(0f, Random.Range(-1f, 1f), 0f);
+        //_myRigidbody.angularVelocity = new Vector3(0f, Random.Range(-1f, 1f), 0f);
 
         GetComponent<PhysicMove>().enabled = true;
     }
@@ -56,7 +63,7 @@ public class ExplosiveBarrel : MonoBehaviour {
         // TODO : Shockwave
         // TODO : Play SFX
 
-        _myRigidbody.angularVelocity = Vector3.zero;
+        //_myRigidbody.angularVelocity = Vector3.zero;
         gameObject.transform.rotation = Quaternion.identity;
 
         _myRenderer.gameObject.SetActive(false);
@@ -68,9 +75,16 @@ public class ExplosiveBarrel : MonoBehaviour {
 
     IEnumerator DeactiveGameObject()
     {
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitWhile(() => (_explosionFX.isPlaying));
+
         _myRenderer.gameObject.SetActive(true);
         _myCollider.enabled = true;
         gameObject.SetActive(false);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, bombStockModule.bombRadius);
     }
 }

@@ -12,5 +12,9 @@ public class CoqueModule : ScriptableObject
     public float moveSpeed;
     public float maxSpeed;
     public float turnSpeed;
+
     public float hitboxSize;
+
+    public float friction = 1;
+    public float mass = 5;
 }
