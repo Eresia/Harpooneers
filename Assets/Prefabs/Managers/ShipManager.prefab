@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1767903995305004}
+  m_IsPrefabParent: 1
+--- !u!1 &1767903995305004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4761739947793496}
+  - component: {fileID: 114213196037452486}
+  m_Layer: 0
+  m_Name: ShipManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4761739947793496
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1767903995305004}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114213196037452486
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1767903995305004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb45d3370d9afdc4fa0dbf3ac9a4502e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ships:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  shipModuleMgrs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  harpoonsScriptObjs:
+  - {fileID: 11400000, guid: 7f7037addcace3a4d9829f24b8140ab3, type: 2}
+  - {fileID: 11400000, guid: 7f7037addcace3a4d9829f24b8140ab3, type: 2}
+  - {fileID: 11400000, guid: 7f7037addcace3a4d9829f24b8140ab3, type: 2}
+  coquesScriptObjs:
+  - {fileID: 11400000, guid: 990a2b84e0f9a2b4eb2be85c169e88ee, type: 2}
+  - {fileID: 11400000, guid: 990a2b84e0f9a2b4eb2be85c169e88ee, type: 2}
+  - {fileID: 11400000, guid: 990a2b84e0f9a2b4eb2be85c169e88ee, type: 2}
+  bombsScriptObjs:
+  - {fileID: 11400000, guid: 51cc31a380592e34e8ff3a874188a418, type: 2}
+  - {fileID: 11400000, guid: 51cc31a380592e34e8ff3a874188a418, type: 2}
+  - {fileID: 11400000, guid: 51cc31a380592e34e8ff3a874188a418, type: 2}
+  cabinesScriptObjs: []

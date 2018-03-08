@@ -1,23 +1,102 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
 	public bool debug;
 	public int actualPlayer;
 
-    public Boundaries boundaries;
+    public ScenesManager sceneMgr;
+
+    public BoundaryManager boundaryMgr;
+
+	public Ground ground;
 
 	public static GameManager instance {get; private set;}
 
-	void Awake()
+    /// <summary>
+    /// Return the number of players for the current game.
+    /// </summary>
+    public int nbOfPlayers;
+
+    public ShipConfiguration[] shipConfigs;
+
+    public bool[] players;
+
+    public ShipConfiguration defaultConfig = new ShipConfiguration
+    {
+        cabinId = 0,
+        bombStockId = 0,
+        coqueId = 0,
+        harpoonId = 0
+    };
+
+    private ShipManager shipMgr;
+    
+    void Awake()
 	{
-		if (instance == null){
+		if (instance == null) {
 			instance = this;
 		}
-		else if (instance != this){
-			Destroy(gameObject);   
+
+		else if (instance != this) {
+			Destroy(gameObject);
+            return;
 		}
+
+        DontDestroyOnLoad(gameObject);
+
+        shipConfigs = new ShipConfiguration[4];
+
+        // For debug all players are enabled.
+        players = new bool[4];
+        for (int i = 0; i < 4; i++)
+        {
+            players[i] = true;
+        }
 	}
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
+
+    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+    {
+        if(scene.buildIndex == 1)
+        {
+            SetupGameScene();
+        }
+    }
+
+    /// <summary>
+    /// Setup the game scene. Retrieve specific manager.
+    /// </summary>
+    public void SetupGameScene()
+    {
+        boundaryMgr = FindObjectOfType<BoundaryManager>();
+        shipMgr = FindObjectOfType<ShipManager>();
+
+        shipMgr.SetupAllShips();
+    }
+
+    public void StartNewGame(int playerCount, bool[] playersReady)
+    {
+        nbOfPlayers = playerCount;
+        players = playersReady;
+
+        sceneMgr.LoadGameScene();
+    }
+
+    public void ReturnToMainMenu()
+    {
+        sceneMgr.LoadMainMenuScene();
+    }
 }

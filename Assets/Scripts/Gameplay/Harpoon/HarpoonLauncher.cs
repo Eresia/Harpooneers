@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Rewired;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(PhysicMove))]
 public class HarpoonLauncher : MonoBehaviour {
-
-	[SerializeField]
+    
+    [SerializeField]
 	private int playerId;
 
 	[Space]
@@ -37,24 +38,16 @@ public class HarpoonLauncher : MonoBehaviour {
 
 	[SerializeField]
 	private float castDistance;
-
-	[SerializeField]
-	private float launchDistanceMax;
 	
 	[SerializeField]
 	private float cooldownTime;
+    
+    [Header("Module")]
+    public HarpoonModule harpoonModule;
 
-	[Space]
+    public Transform selfTransform {get; private set;}
 
-	[SerializeField]
-	private float harpoonSpeed;
-	
-	[SerializeField]
-	private float harpoonReturnSpeed;
-
-	public Transform selfTransform {get; private set;}
-
-	public Rigidbody selfRigidbody {get; private set;}
+	public PhysicMove physicMove {get; private set;}
 
 	private Harpoon harpoon;
 
@@ -66,15 +59,18 @@ public class HarpoonLauncher : MonoBehaviour {
 
 	private Vector3 lastDirection;
 
+	private Mouse mouse;
+
 	private void Awake()
 	{
 		selfTransform = GetComponent<Transform>();
-		selfRigidbody = GetComponent<Rigidbody>();
+		physicMove = GetComponent<PhysicMove>();
+		mouse = ReInput.controllers.Mouse;
 	}
 
 	private void Update() {
 		if(GameManager.instance.actualPlayer == playerId){
-			if(Input.GetMouseButton(0)){
+			if(mouse.GetButton(0)){
 				Vector3 boatPosition = Camera.main.WorldToScreenPoint(selfTransform.position);
 				Vector3 direction = Input.mousePosition - boatPosition;
 				direction.z = direction.y;
@@ -85,7 +81,7 @@ public class HarpoonLauncher : MonoBehaviour {
 				LaunchHarpoon(Vector2.zero);
 			}
 
-			if(Input.GetMouseButtonDown(1)){
+			if(mouse.GetButtonDown(1)){
 				Cut();
 			}
 
@@ -169,6 +165,6 @@ public class HarpoonLauncher : MonoBehaviour {
 		isLaunching = false;
 		directionObject.gameObject.SetActive(false);
 		harpoon = Instantiate<Harpoon>(harpoonPrefab, selfTransform.position, Quaternion.identity);
-		harpoon.Launch(this, selfTransform.position, direction, launchDistanceMax, harpoonSpeed, harpoonReturnSpeed);
+		harpoon.Launch(this, selfTransform.position, direction, harpoonModule.fireDistance, harpoonModule.fireSpeed, harpoonModule.returnSpeed);
 	}
 }

@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class ExplosiveBarrel : MonoBehaviour {
 
+    // TODO Use the wave resistance of the bomb stock module.
 
-    public float forceResistance;
+    public BombStockModule bombStockModule;
+
+    public float impactForceNeeded = 2f;
+
     private Rigidbody _myRigidbody;
     private MeshRenderer _myRenderer;
     private ParticleSystem _explosionFX;
@@ -24,7 +28,7 @@ public class ExplosiveBarrel : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.impulse.magnitude > forceResistance)
+        if(collision.impulse.magnitude > impactForceNeeded)
         {
             Explosion();
         }
@@ -40,13 +44,15 @@ public class ExplosiveBarrel : MonoBehaviour {
 
         // Initial Angular Speed
         _myRigidbody.angularVelocity = new Vector3(0f, Random.Range(-1f, 1f), 0f);
-    }
 
-   
+        GetComponent<PhysicMove>().enabled = true;
+    }
 
 	public void Explosion()
     {
-        // TODO : Deal damage
+        // TODO : Deal damage with an overlap sphere
+        float radiusToUse = bombStockModule.bombRadius;
+
         // TODO : Shockwave
         // TODO : Play SFX
 
@@ -62,7 +68,7 @@ public class ExplosiveBarrel : MonoBehaviour {
 
     IEnumerator DeactiveGameObject()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.75f);
         _myRenderer.gameObject.SetActive(true);
         _myCollider.enabled = true;
         gameObject.SetActive(false);

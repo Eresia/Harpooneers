@@ -3,18 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MovementBehaviour : MonoBehaviour {
+    
+    // TODO Impact hitbox ?
+    public CoqueModule coqueModule;
 
-    public float moveSpeed = 5f;
-    public float maxSpeed = 10f;
-    public float rotationSpeed;
-
-    [Header("Metrics for boundaries")]
-    [Tooltip("Distance with boundaries.")]
-    public float offsetX = 1f;
-    public float offsetZ = 1f;
-
-    // Lerp progressif sur la direction du bateau. (Direction desiree (INPUT) et direction actuelle.
-
+    // Progressive lerp between the input dir and the actual dir.
     private Quaternion initialDir;
     private Quaternion targetDir;
 
@@ -49,23 +42,29 @@ public class MovementBehaviour : MonoBehaviour {
         if(initialDir != targetDir)
         {
             // Turn boat.
-            transform.rotation = Quaternion.Lerp(initialDir, targetDir, Time.deltaTime * rotationSpeed);
+            transform.rotation = Quaternion.Lerp(initialDir, targetDir, Time.deltaTime * coqueModule.turnSpeed);
         }
 
         // Move boat toward.
-        rgbd.AddForce(transform.forward * moveSpeed * move, ForceMode.Force);
+        rgbd.AddForce(transform.forward * coqueModule.moveSpeed * move, ForceMode.Force);
 
         // Limit max speed.
-        rgbd.velocity = Vector3.ClampMagnitude(rgbd.velocity, maxSpeed);
+        rgbd.velocity = Vector3.ClampMagnitude(rgbd.velocity, coqueModule.maxSpeed);
 
-
+        // Limit position in the boundaries of the screen.
         Vector3 pos = transform.position;
-        float boundaryX = GameManager.instance.boundaries.size.x / 2;
-        float boundaryZ = GameManager.instance.boundaries.size.z / 2;
 
-        pos.x = Mathf.Clamp(transform.position.x, -boundaryX + offsetX, boundaryX - offsetX);
-        pos.z = Mathf.Clamp(transform.position.z, -boundaryZ + offsetZ, boundaryZ - offsetZ);
+        Vector3 hitPoint = GameManager.instance.boundaryMgr.InScreenPosition(pos);
 
+        pos.x = hitPoint.x;
+        pos.z = hitPoint.z;
+        
         transform.position = pos;
+    }
+
+    // Freeze player at his position.
+    public void FreezePlayer()
+    {
+        move = 0f;
     }
 }
