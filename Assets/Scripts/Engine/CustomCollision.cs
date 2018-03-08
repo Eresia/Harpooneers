@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoatCollision : MonoBehaviour {
-
-    public CapsuleCollider shipCollider;
+public class CustomCollision : MonoBehaviour {
+    
     public PhysicMove physic;
     
     public float rayLengthForward = 5f;
@@ -19,8 +18,49 @@ public class BoatCollision : MonoBehaviour {
 
     private RaycastHit hit;
 
-	// Update is called once per frame
-	void FixedUpdate () {
+    protected void OnCollisionEnter(Collision collision)
+    {
+        HandleCollision(collision);
+    }
+
+    protected void OnCollisionStay(Collision collision)
+    {
+        HandleCollision(collision);
+    }
+
+    protected void HandleCollision(Collision collision)
+    {
+        float forceToCompensate = physic.velocity.sqrMagnitude;
+
+        OnCollision(forceToCompensate);
+
+        physic.AddForce(collision.contacts[0].normal * bumpForce * forceToCompensate);
+    }
+
+    protected virtual void OnCollision(float impactForce)
+    {
+        Debug.Log("Impact force : " + Mathf.RoundToInt(impactForce));
+
+        bool killPlayer = true;
+
+        Debug.Log(hit.collider);
+
+        // Don't kill the player when hit a player or a floating object.
+        if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("FloatingObject"))
+        {
+            killPlayer = false;
+        }
+
+        // Kill player if the ship moves too fast.
+        if (impactForce > killingForce && killPlayer)
+        {
+            playerMgr.Death();
+        }
+    }
+
+    /*
+    // Update is called once per frame
+    void FixedUpdate () {
 
         Vector3 shipCenter = transform.TransformPoint(shipCollider.center);
         Ray r = new Ray(shipCenter, transform.forward);
@@ -40,38 +80,12 @@ public class BoatCollision : MonoBehaviour {
     {
         if (Physics.Raycast(r, out hit, rayLength, blockingLayer))
         {
-            // Ignore itself.
-            if (hit.collider == shipCollider)
-            {
-                return;
-            }
-
             Vector3 currentVelocity = physic.velocity;
             Debug.Log("Impact force : " + Mathf.RoundToInt(currentVelocity.sqrMagnitude));
-
-            // Trigger collision if exist.
-            ICollidable physicMove = hit.collider.GetComponent<ICollidable>();
-            if (physicMove != null)
-            {
-                physicMove.OnCollision(physic.velocity);
-            }
-
-            bool killPlayer = true;
-
-            // Don't kill the player when hit a player or a floating object.
-            if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("FloatingObject"))
-            {
-                killPlayer = false;
-            }
-
-            // Kill player if the ship moves too fast.
-            if (currentVelocity.sqrMagnitude > killingForce && killPlayer)
-            {
-                playerMgr.Death();
-            }
-
+            
             // Create bump
             physic.AddForce(-currentVelocity * bumpForce);
         }
     }
+    */
 }

@@ -120,7 +120,7 @@ public class PlayerInput : MonoBehaviour
         {
             // Spawn the bomb behind the boat
             bombLauncher.gameObject.SetActive(true);
-            bombLauncher.SpawnTheBomb(transform.position - 1.25f * transform.forward, _myRigidbody.velocity);
+            bombLauncher.SpawnTheBomb(transform.position - bombLauncher.behindOffset * transform.forward, _myRigidbody.velocity);
         }
     }
 
