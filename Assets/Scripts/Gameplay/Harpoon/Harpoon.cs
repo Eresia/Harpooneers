@@ -55,7 +55,7 @@ public class Harpoon : MonoBehaviour {
 		Vector3 launcherPos = launcher.selfTransform.position;
 		float color = 0;
 		float distance = Vector3.Distance(selfPos, launcherPos);
-
+        
 		switch(state){
 			case State.LAUNCHING:
 				selfPos += direction * launchSpeed * Time.deltaTime;
@@ -66,7 +66,8 @@ public class Harpoon : MonoBehaviour {
 				break;
 
 			case State.GRIPPED:
-				if(distance > actualDistance){
+				if(distance > actualDistance) {
+
 					Vector3 normal = selfPos - launcherPos;
 					// Vector3 force = (distance - actualDistance) * normal.normalized * forceBlock;
 					// if(forceBreak < force.sqrMagnitude){
@@ -75,12 +76,15 @@ public class Harpoon : MonoBehaviour {
 					// else{
 					// 	launcher.physicMove.AddForce(force);
 					// }
+
 					launcher.selfTransform.position = launcherPos + (distance - actualDistance) * normal.normalized;
-				}
-				else{
+                }
+
+				else {
 					color = (actualDistance - distance) / actualDistance;
 				}
-				break;
+
+                break;
 
 			case State.RETURN:
 				float movement = returnSpeed * Time.deltaTime;
@@ -148,11 +152,19 @@ public class Harpoon : MonoBehaviour {
 					return ;
 				}
 			}
+
 			parentTransform = other.GetComponent<Transform>();
 			selfTransform.parent = parentTransform;
 			maxDistance = Vector3.Distance(selfTransform.position, launcher.selfTransform.position);
 			actualDistance = maxDistance;
 			state = State.GRIPPED;
+
+            // Notify that the gameobject has been harpooned.
+            IHarpoonable harpoonable = other.GetComponent<IHarpoonable>();
+            if(harpoonable != null)
+            {
+                harpoonable.OnHarpoonCollide(this);
+            }
 		}
 		
 	}

@@ -118,7 +118,7 @@ public class PlayerInputNewPhysic : MonoBehaviour
         {
             // Spawn the bomb behind the boat
             bombLauncher.gameObject.SetActive(true);
-            bombLauncher.SpawnTheBomb(transform.position - 1.25f * transform.forward, movement.physicMove.velocity);
+            bombLauncher.SpawnTheBomb(transform.position - bombLauncher.behindOffset * transform.forward, movement.physicMove.velocity);
         }
     }
 

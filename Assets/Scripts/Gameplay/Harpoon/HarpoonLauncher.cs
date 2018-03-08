@@ -165,6 +165,9 @@ public class HarpoonLauncher : MonoBehaviour {
 		isLaunching = false;
 		directionObject.gameObject.SetActive(false);
 		harpoon = Instantiate<Harpoon>(harpoonPrefab, selfTransform.position, Quaternion.identity);
-		harpoon.Launch(this, selfTransform.position, direction, harpoonModule.fireDistance, harpoonModule.fireSpeed, harpoonModule.returnSpeed);
+
+        float speedBonus = physicMove.velocity.sqrMagnitude;
+
+		harpoon.Launch(this, selfTransform.position, direction, harpoonModule.fireDistance, harpoonModule.fireSpeed + speedBonus, harpoonModule.returnSpeed);
 	}
 }
