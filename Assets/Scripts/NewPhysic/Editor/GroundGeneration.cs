@@ -16,6 +16,7 @@ public class GroundGeneration {
 		Transform seaTransform = sea.GetComponent<Transform>();
 
 		sea.points = new float[sea.lod.x * sea.lod.y];
+		sea.coeffPoints = new float[sea.lod.x * sea.lod.y];
 
 		for(int i = 0; i < sea.lod.x; i++){
 			for(int j = 0; j < sea.lod.y; j++){

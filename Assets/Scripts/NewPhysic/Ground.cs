@@ -42,6 +42,8 @@ public class Ground : MonoBehaviour {
 
 	public float[] points;
 
+	public float[] coeffPoints;
+
 	private Transform selfTransform;
 
 	private Vector2 halfLod;
@@ -52,6 +54,8 @@ public class Ground : MonoBehaviour {
 
 	[Space]
 
+	public Color gizmosColor;
+
 	public LayerMask testLayer;
 	
 	public float amplitude;
@@ -59,6 +63,14 @@ public class Ground : MonoBehaviour {
 	public float waveLength;
 
 	public float period;
+
+	[Space]
+
+	public float distanceDigress;
+
+	public float timeDigress;
+
+	public float minWave;
 
 	private void Awake() {
 		selfTransform = GetComponent<Transform>();
@@ -79,21 +91,36 @@ public class Ground : MonoBehaviour {
 			}
 		}
 
-		Vector2 xLimits = new Vector2(GetX(0), GetX(lod.x - 1));
-		Vector2 zLimits = new Vector2(GetZ(0), GetZ(lod.x - 1));
+		if(waves.Count > 0){
+			WaveOptions[] currentWaves = waves.ToArray();
 
-		Debug.Log(xLimits + " " + zLimits);
+			for(int i = 0; i < lod.x; i++){
+				for(int j = 0; j < lod.y; j++){
+					if(coeffPoints[i * lod.y + j] != 0){
+						points[i * lod.y + j] = 0;
+						coeffPoints[i * lod.y + j] = 0;
+					}
+					
+				}
+			}
 
-		foreach(WaveOptions w in waves){
-			for(int i = 0; i < 150; i++){
-				for(int j = 0; j < 150; j++){
-					CalculateWave(w, i, j, xLimits, zLimits);
-					CalculateWave(w, -i, j, xLimits, zLimits);
-					CalculateWave(w, i, -j, xLimits, zLimits);
-					CalculateWave(w, -i, -j, xLimits, zLimits);
+			for(int i = 0; i < currentWaves.Length; i++){
+				CheckWave(currentWaves[i]);
+			}
+
+			for(int i = 0; i < lod.x; i++){
+				for(int j = 0; j < lod.y; j++){
+					if(coeffPoints[i * lod.y + j] != 0){
+						points[i * lod.y + j] /= coeffPoints[i * lod.y + j];
+					}
+					
 				}
 			}
 		}
+
+	
+
+		
 
 		// for(int i = 0; i < lod.x; i++){
 		// 	for(int j = 0; j < lod.y; j++){
@@ -102,42 +129,109 @@ public class Ground : MonoBehaviour {
 		// }
 	}
 
-	private void CalculateWave(WaveOptions w, int i, int j, Vector2 xLimits, Vector2 zLimits){
-		if((w.position.x + i) < xLimits.x){
-			return ;
+	private void CheckWave(WaveOptions w){
+		double waveSize = 0f;
+		for(int i = 0; i < 20; i++){
+			for(int j = 0; j < 20; j++){
+				waveSize += CalculateWave(w, i, j);
+				waveSize += CalculateWave(w, -i, j);
+				waveSize += CalculateWave(w, i, -j);
+				waveSize += CalculateWave(w, -i, -j);
+
+				// if(!result){
+				// 	break;
+				// }
+				// Debug.Log(again);
+				
+			}
+
+			// if(!result){
+			// 	break;
+			// }
 		}
 
-		if((w.position.x + i) > xLimits.y){
-			return ;
+		if(waveSize < minWave){
+			Debug.Log("Remove impact " + waveSize);
+			waves.Remove(w);
 		}
+	}
 
-		if((w.position.y + j) < zLimits.x){
-			return ;
-		}
+	private float CalculateWave(WaveOptions w, int i, int j){
 
-		if((w.position.y + j) > zLimits.y){
-			return ;
+		if((i + j) == 0){
+			return 0f;
 		}
 
 		float xRound = Mathf.Round(w.position.x);
 		float yRound = Mathf.Round(w.position.y);
 
+		if((xRound + i) < 0){
+			return 0f;
+		}
+
+		if((xRound + i) >= lod.x){
+			return 0f;
+		}
+
+		if((yRound + j) < 0){
+			return 0f;
+		}
+
+		if((yRound + j) >= lod.y){
+			return 0f;
+		}
+
+		int pointId = ((((int) xRound) + i) * lod.y) + (((int) yRound) + j);
+
 		float offsetX = xRound - w.position.x;
 		float offsetY = yRound - w.position.y;
 
-		float wt = w.angularFrequency * (time - w.time);
+		float currentTime = time - w.time;
 
-		float thetaX = (w.waveNumber * ((float) i) - offsetX) - wt;
-		float thetaY = (w.waveNumber * ((float) j) - offsetY) - wt;
+		float iCoeff = 1;
+		float jCoeff = 1;
 
-		// float height = ((w.amplitude * Mathf.Sin(thetaX)) + (w.amplitude * Mathf.Sin(thetaY))) / 2f;
-		float height = w.amplitude * Mathf.Sin(thetaX);
-
-		try{
-			points[((((int) xRound) + i) * lod.y) + (((int) yRound) + j)] = height;
-		} catch(IndexOutOfRangeException){
-			// Debug.Log(xRound + " " + i + " " + yRound + " " + j);
+		if(i < 0){
+			iCoeff *= -1;
 		}
+
+		if(j < 0){
+			jCoeff *= -1;
+		}
+
+		float wt = w.angularFrequency * currentTime;
+
+		float iFloat = (float) i;
+		float jFloat = (float) j;
+
+		float iAbs = Mathf.Abs(iFloat);
+		float jAbs = Mathf.Abs(jFloat);
+
+		float thetaX = (w.waveNumber * (((float) i) / lod.x) - offsetX) - (wt * iCoeff);
+		float thetaY = (w.waveNumber * (((float) j) / lod.y) - offsetY) - (wt * jCoeff);
+
+		float xHeight;
+		float yHeight;
+
+		xHeight = Mathf.Sin(thetaX) / Mathf.Exp(iAbs / distanceDigress) / Mathf.Exp(wt / timeDigress);
+		yHeight = Mathf.Sin(thetaY) / Mathf.Exp(jAbs / distanceDigress) / Mathf.Exp(wt / timeDigress);
+
+		float coeff = iAbs + jAbs;
+		float theta = (iAbs * xHeight + jAbs * yHeight) / coeff;
+
+		float finalHeight = w.amplitude * theta;
+
+		points[pointId] += finalHeight / coeff;
+		coeffPoints[pointId] += (1 / coeff);
+
+		// if(Mathf.Abs(finalHeight) < minWave){
+		// 	return false;
+		// }
+		// else{
+		// 	return true;
+		// }
+
+		return Mathf.Abs(finalHeight);
 		
 	}
 
@@ -159,6 +253,7 @@ public class Ground : MonoBehaviour {
 	private void OnDrawGizmos() {
 		Transform seaTransform = GetComponent<Transform>();
 		Vector2 halfLod = new Vector2(((float) lod.x) * 0.5f, ((float) lod.y) * 0.5f);
+		Gizmos.color = gizmosColor;
 		if(points.Length == (lod.x * lod.y)){
 			for(int i = 0; i < lod.x; i++){
 				for(int j = 0; j < lod.y; j++){
