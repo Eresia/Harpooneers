@@ -34,4 +34,14 @@ public class CreateScriptableObject
 
         EditorGUIUtility.PingObject(module);
     }
+
+    [MenuItem("Assets/Create/ShipModules/Cabine")]
+    public static void CreateCabineModule()
+    {
+        CabineModule module = ScriptableObject.CreateInstance<CabineModule>();
+        AssetDatabase.CreateAsset(module, "Assets/ScriptableObjects/Cabine.asset");
+        AssetDatabase.SaveAssets();
+
+        EditorGUIUtility.PingObject(module);
+    }
 }

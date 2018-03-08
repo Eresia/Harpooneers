@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Rewired;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InputInMainMenu : MonoBehaviour {
 
@@ -15,6 +16,10 @@ public class InputInMainMenu : MonoBehaviour {
     public int nbOfPlayers;
     public int nbOfPlayersReady;
 
+    public GameObject[] moduleSelectionArray;
+    public Image[] tabImages;
+    private int currentModuleTabIndex = 0;
+
     private void Awake()
     {
         playerReady = new bool[4];
@@ -24,6 +29,14 @@ public class InputInMainMenu : MonoBehaviour {
         for (int i = 0; i < 4; i++)
         {
             players[i] = ReInput.players.GetPlayer(i);
+        }
+    }
+
+    void Start()
+    {
+        for (int i = 0; i < players.Length; i++)
+        {
+            NextModuleTab(i, 0);
         }
     }
 
@@ -91,6 +104,34 @@ public class InputInMainMenu : MonoBehaviour {
                     prepareGamePanel.PlayerReady(i);
                 }
             }
+
+          
+            if (players[i].GetButtonDown("PreviousTab"))
+            {
+                NextModuleTab(i, -1);
+            }
+            if (players[i].GetButtonDown("NextTab"))
+            {
+                NextModuleTab(i, 1);
+            }
+
         }
+    }
+
+    private void NextModuleTab(int playerID, int direction)
+    {
+        currentModuleTabIndex += direction;
+        if (currentModuleTabIndex < 0)
+            currentModuleTabIndex = moduleSelectionArray.Length - 1;
+        currentModuleTabIndex = currentModuleTabIndex % moduleSelectionArray.Length;
+        
+        for(int i = 0; i < moduleSelectionArray.Length; i++)
+        {
+            moduleSelectionArray[i].SetActive(false);
+            tabImages[i].color = Color.gray;
+        }
+        moduleSelectionArray[currentModuleTabIndex].SetActive(true);
+        tabImages[currentModuleTabIndex].color = Color.white;
+      
     }
 }

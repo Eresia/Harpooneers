@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour {
         harpoonId = 0
     };
 
-    private ShipManager shipMgr;
+    public ShipManager shipMgr;
     
     void Awake()
 	{
