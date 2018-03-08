@@ -3,6 +3,22 @@ using System.Collections.Generic;
 using Rewired;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
+
+[System.Serializable]
+public class InputList
+{
+    public Button[] inputs;
+}
+
+[System.Serializable]
+public class TabsList
+{
+    public Image[] tabs;
+    public GameObject[] moduleSelectionGO;
+}
+
 
 public class InputInMainMenu : MonoBehaviour {
 
@@ -17,9 +33,13 @@ public class InputInMainMenu : MonoBehaviour {
     public int nbOfPlayersReady;
 
     public ShipSelection[] playerShips;
-    public GameObject[] moduleSelectionArray;
-    public Image[] tabImages;
-    private int currentModuleTabIndex = 0;
+  
+    private int[] currentModuleTabIndex;
+
+    public TabsList[] playerTabs;
+    public InputList[] playerInputs;
+
+    private PointerEventData pointer;
 
     private void Awake()
     {
@@ -31,6 +51,16 @@ public class InputInMainMenu : MonoBehaviour {
         {
             players[i] = ReInput.players.GetPlayer(i);
         }
+
+
+        currentModuleTabIndex = new int[4];
+
+        for (int i = 0; i < currentModuleTabIndex.Length; i++)
+        {
+            currentModuleTabIndex[i] = 0;
+        }
+
+      
     }
 
     void Start()
@@ -106,7 +136,7 @@ public class InputInMainMenu : MonoBehaviour {
                 }
             }
 
-          
+            // Change module family
             if (players[i].GetButtonDown("PreviousTab"))
             {
                 NextModuleTab(i, -1);
@@ -116,23 +146,41 @@ public class InputInMainMenu : MonoBehaviour {
                 NextModuleTab(i, 1);
             }
 
+
+            // Change module
+            if (players[i].GetButtonDown("PreviousModule"))
+            {
+                pointer = new PointerEventData(EventSystem.current);
+                ExecuteEvents.Execute(playerInputs[i].inputs[0].gameObject, pointer, ExecuteEvents.submitHandler);
+            }
+
+            if (players[i].GetButtonDown("NextModule"))
+            {
+                pointer = new PointerEventData(EventSystem.current);
+                ExecuteEvents.Execute(playerInputs[i].inputs[1].gameObject, pointer, ExecuteEvents.submitHandler);
+            }
+            if (players[i].GetButtonDown("RandomShip"))
+            {
+                pointer = new PointerEventData(EventSystem.current);
+                ExecuteEvents.Execute(playerInputs[i].inputs[2].gameObject, pointer, ExecuteEvents.submitHandler);
+            }
         }
     }
 
     private void NextModuleTab(int playerID, int direction)
-    {
-        currentModuleTabIndex += direction;
-        if (currentModuleTabIndex < 0)
-            currentModuleTabIndex = moduleSelectionArray.Length - 1;
-        currentModuleTabIndex = currentModuleTabIndex % moduleSelectionArray.Length;
-        
-        for(int i = 0; i < moduleSelectionArray.Length; i++)
+    {   
+        currentModuleTabIndex[playerID] += direction;
+        if (currentModuleTabIndex[playerID] < 0)
+            currentModuleTabIndex[playerID] = playerTabs[playerID].moduleSelectionGO.Length - 1;
+        currentModuleTabIndex[playerID] = currentModuleTabIndex[playerID] % playerTabs[playerID].moduleSelectionGO.Length;
+
+        for (int i = 0; i < playerTabs[playerID].moduleSelectionGO.Length; i++)
         {
-            moduleSelectionArray[i].SetActive(false);
-            tabImages[i].color = Color.gray;
+            playerTabs[playerID].moduleSelectionGO[i].SetActive(false);
+            playerTabs[playerID].tabs[i].color = Color.gray;
         }
-        playerShips[playerID].currentTabID = currentModuleTabIndex;
-        moduleSelectionArray[currentModuleTabIndex].SetActive(true);
-        tabImages[currentModuleTabIndex].color = Color.white;      
+        playerShips[playerID].currentTabID = currentModuleTabIndex[playerID];
+        playerTabs[playerID].moduleSelectionGO[currentModuleTabIndex[playerID]].SetActive(true);
+        playerTabs[playerID].tabs[currentModuleTabIndex[playerID]].color = Color.white;      
     }
 }
