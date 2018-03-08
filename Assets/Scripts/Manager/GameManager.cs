@@ -97,6 +97,7 @@ public class GameManager : MonoBehaviour {
     {
         boundaryMgr = FindObjectOfType<BoundaryManager>();
         shipMgr = FindObjectOfType<ShipManager>();
+        ground = FindObjectOfType<Ground>();
 
         shipMgr.SetupAllShips();
     }
