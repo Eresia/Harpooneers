@@ -10,6 +10,7 @@ public class ShipSelection : MonoBehaviour {
     public int currentCoqueID;
     public int currentCabinID;
     public int currentBombID;
+    
 
     public GameObject[] harpoonsGoArray;
     public GameObject[] coquesGoArray;
@@ -21,6 +22,7 @@ public class ShipSelection : MonoBehaviour {
     public Text[]moduleDescriptionFields;
 
     private ShipConfiguration currentConfig;
+    public int currentTabID;
     
 
     // Use this for initialization
@@ -30,9 +32,9 @@ public class ShipSelection : MonoBehaviour {
        // GameManager.instance.shipMgr.harpoonsScriptObjs[currentHarpoonID].name;
     }
 
-    public void PreviousModule(int id)
+    public void PreviousModule()
     {
-        switch(id)
+        switch(currentTabID)
         {
             case 0:
                 currentHarpoonID--;
@@ -65,9 +67,9 @@ public class ShipSelection : MonoBehaviour {
      
     }
 
-    public void NextModule(int id)
+    public void NextModule()
     {
-        switch (id)
+        switch (currentTabID)
         {
             case 0:
                 currentHarpoonID++;

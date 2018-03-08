@@ -16,6 +16,7 @@ public class InputInMainMenu : MonoBehaviour {
     public int nbOfPlayers;
     public int nbOfPlayersReady;
 
+    public ShipSelection[] playerShips;
     public GameObject[] moduleSelectionArray;
     public Image[] tabImages;
     private int currentModuleTabIndex = 0;
@@ -130,8 +131,8 @@ public class InputInMainMenu : MonoBehaviour {
             moduleSelectionArray[i].SetActive(false);
             tabImages[i].color = Color.gray;
         }
+        playerShips[playerID].currentTabID = currentModuleTabIndex;
         moduleSelectionArray[currentModuleTabIndex].SetActive(true);
-        tabImages[currentModuleTabIndex].color = Color.white;
-      
+        tabImages[currentModuleTabIndex].color = Color.white;      
     }
 }
