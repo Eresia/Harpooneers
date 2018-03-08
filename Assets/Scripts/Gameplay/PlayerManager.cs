@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour {
     public float healthNeededForRez;
     public float healthLossPerSec;
     public float rezRadius;
+    public float healthPerInput;
     public Slider rezBar;
     public Image deathIcon;
 
@@ -52,7 +53,7 @@ public class PlayerManager : MonoBehaviour {
     // Called when allies are mashing "A" near your shipwreck
     public void AddHealth()
     {
-        _rezAmount += 1;    
+        _rezAmount += healthPerInput;    
         
         if(_rezAmount >= healthNeededForRez)
         {
