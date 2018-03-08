@@ -113,10 +113,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hookLayer: Hook
-  minDistance: 1
-  releaseSpeed: 2
-  forceBlock: 10
-  forceBreak: 2000
+  minDistance: 1.5
+  releaseSpeed: 6
+  forceBlock: 0
+  forceBreak: 4000
 --- !u!120 &120266009548636656
 LineRenderer:
   m_ObjectHideFlags: 1
