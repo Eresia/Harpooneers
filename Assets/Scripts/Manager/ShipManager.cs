@@ -12,10 +12,10 @@ public class ShipManager : MonoBehaviour {
 
     [Header("Modules for boat (Scriptable objects)")]
     public HarpoonModule[] harpoonsScriptObjs;
-    public CoqueModule[] coquesScriptObjs;
-    public BombStockModule[] bombsScriptObjs;
+    public CoqueModule[] coquesScriptObjs;    
     public CabineModule[] cabinesScriptObjs;
-    
+    public BombStockModule[] bombsScriptObjs;
+
     public void SetupAllShips()
     {
         for (int i = 0; i < shipModuleMgrs.Length; i++)

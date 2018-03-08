@@ -14,14 +14,14 @@ public class ShipModulesManager : MonoBehaviour {
     public GameObject[] bombsGoArray;
 
     public HarpoonLauncher _harpoonScript;
-    public MovementBehaviour _movementScript;
+    public MovementBehaviourNewPhysic _movementScript;
     public ExplosiveBarrel _bombScript;
 
 	// Use this for initialization
 	void Reset ()
     {
         _harpoonScript = GetComponent<HarpoonLauncher>();
-        _movementScript = GetComponent<MovementBehaviour>();
+        _movementScript = GetComponent<MovementBehaviourNewPhysic>();
         _bombScript = transform.parent.GetComponentInChildren<ExplosiveBarrel>();
     }
     
@@ -34,6 +34,17 @@ public class ShipModulesManager : MonoBehaviour {
             ShipManager shipMgr = FindObjectOfType<ShipManager>();
             
             ActivateShipModules(config, shipMgr);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        // TODO REMOVE when tweaking is finished.
+        if(GameManager.instance.debug)
+        {
+            _movementScript.physicMove.limitSpeed = _movementScript.coqueModule.maxSpeed;
+            _movementScript.physicMove.friction = _movementScript.coqueModule.friction;
+            _movementScript.physicMove.mass = _movementScript.coqueModule.mass;
         }
     }
 
@@ -51,8 +62,12 @@ public class ShipModulesManager : MonoBehaviour {
         {
             // Setup the data of each modules.
             _harpoonScript.harpoonModule = shipMgr.harpoonsScriptObjs[config.harpoonId];
+
+            // Configure coque and impact move physic.
             _movementScript.coqueModule = shipMgr.coquesScriptObjs[config.coqueId];
-            //_movementScript.physicMove.limitSpeed = _movementScript.coqueModule.maxSpeed;
+            _movementScript.physicMove.limitSpeed = _movementScript.coqueModule.maxSpeed;
+            _movementScript.physicMove.friction = _movementScript.coqueModule.friction;
+
             _bombScript.bombStockModule = shipMgr.bombsScriptObjs[config.bombStockId];
         }
     }

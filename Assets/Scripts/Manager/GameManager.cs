@@ -9,10 +9,10 @@ public class GameManager : MonoBehaviour {
 	public int actualPlayer;
 
     public ScenesManager sceneMgr;
-
     public BoundaryManager boundaryMgr;
+    public ShipManager shipMgr;
 
-	public Ground ground;
+    public Ground ground;
 
 	public static GameManager instance {get; private set;}
 
@@ -32,8 +32,6 @@ public class GameManager : MonoBehaviour {
         coqueId = 0,
         harpoonId = 0
     };
-
-    private ShipManager shipMgr;
     
     void Awake()
 	{
@@ -70,9 +68,25 @@ public class GameManager : MonoBehaviour {
 
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
-        if(scene.buildIndex == 1)
+        if (scene.buildIndex == 0)
+        {
+            SetupMainMenu();
+        }
+
+        else if (scene.buildIndex == 1)
         {
             SetupGameScene();
+        } 
+    }
+
+    /// <summary>
+    /// Setup the main menu scene. Retrieve specific manager.
+    /// </summary>
+    public void SetupMainMenu()
+    {
+        if(!shipMgr)
+        {
+            shipMgr = FindObjectOfType<ShipManager>();
         }
     }
 
