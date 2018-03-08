@@ -23,10 +23,10 @@ public class GroundGeneration {
 			}
 		}
 
-		sea.points[5 * sea.lod.y + 8] = 1f;
-		sea.points[6 * sea.lod.y + 8] = 1f;
-		sea.points[5 * sea.lod.y + 7] = 1f;
-		sea.points[6 * sea.lod.y + 7] = 1f;
+		// sea.points[5 * sea.lod.y + 8] = 1f;
+		// sea.points[6 * sea.lod.y + 8] = 1f;
+		// sea.points[5 * sea.lod.y + 7] = 1f;
+		// sea.points[6 * sea.lod.y + 7] = 1f;
 
 		EditorUtility.SetDirty(sea);
 		EditorSceneManager.MarkAllScenesDirty();

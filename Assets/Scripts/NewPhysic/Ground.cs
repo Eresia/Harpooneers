@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Ground : MonoBehaviour {
 
@@ -19,6 +20,22 @@ public class Ground : MonoBehaviour {
 		public float diffY;
 	}
 
+	private struct WaveOptions{
+		public Vector2 position;
+
+		public float amplitude;
+
+		public float waveLength;
+
+		public float period;
+
+		public float waveNumber;
+
+		public float angularFrequency;
+
+		public float time;
+	}
+
 	public Vector2Int lod;
 
 	public float ratio;
@@ -31,19 +48,113 @@ public class Ground : MonoBehaviour {
 
 	private float time;
 
+	private List<WaveOptions> waves;
+
+	[Space]
+
+	public LayerMask testLayer;
+	
+	public float amplitude;
+
+	public float waveLength;
+
+	public float period;
+
 	private void Awake() {
 		selfTransform = GetComponent<Transform>();
 		halfLod = new Vector2(((float) lod.x) * 0.5f, ((float) lod.y) * 0.5f);
+		waves = new List<WaveOptions>();
 	}
 
-	// private void Update() {
-	// 	time += Time.deltaTime;
-	// 	for(int i = 0; i < lod.x; i++){
-	// 		for(int j = 0; j < lod.y; j++){
-	// 			points[i * lod.y + j] = Mathf.Sin(time * ((float) i) / 20f) / 3f;
-	// 		}
-	// 	}
-	// }
+	private void Update() {
+		time += Time.deltaTime;
+		if((GameManager.instance.actualPlayer == -1) && Input.GetMouseButtonDown(0)){
+			RaycastHit hit;
+        	Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+			// Debug.DrawRay()
+
+			if (Physics.Raycast(ray, out hit, Mathf.Infinity, testLayer)) {
+				CreateVortex(hit.point);
+			}
+		}
+
+		Vector2 xLimits = new Vector2(GetX(0), GetX(lod.x - 1));
+		Vector2 zLimits = new Vector2(GetZ(0), GetZ(lod.x - 1));
+
+		Debug.Log(xLimits + " " + zLimits);
+
+		foreach(WaveOptions w in waves){
+			for(int i = 0; i < 150; i++){
+				for(int j = 0; j < 150; j++){
+					CalculateWave(w, i, j, xLimits, zLimits);
+					CalculateWave(w, -i, j, xLimits, zLimits);
+					CalculateWave(w, i, -j, xLimits, zLimits);
+					CalculateWave(w, -i, -j, xLimits, zLimits);
+				}
+			}
+		}
+
+		// for(int i = 0; i < lod.x; i++){
+		// 	for(int j = 0; j < lod.y; j++){
+		// 		points[i * lod.y + j] = Mathf.Sin(time * ((float) i) / 20f) / 3f;
+		// 	}
+		// }
+	}
+
+	private void CalculateWave(WaveOptions w, int i, int j, Vector2 xLimits, Vector2 zLimits){
+		if((w.position.x + i) < xLimits.x){
+			return ;
+		}
+
+		if((w.position.x + i) > xLimits.y){
+			return ;
+		}
+
+		if((w.position.y + j) < zLimits.x){
+			return ;
+		}
+
+		if((w.position.y + j) > zLimits.y){
+			return ;
+		}
+
+		float xRound = Mathf.Round(w.position.x);
+		float yRound = Mathf.Round(w.position.y);
+
+		float offsetX = xRound - w.position.x;
+		float offsetY = yRound - w.position.y;
+
+		float wt = w.angularFrequency * (time - w.time);
+
+		float thetaX = (w.waveNumber * ((float) i) - offsetX) - wt;
+		float thetaY = (w.waveNumber * ((float) j) - offsetY) - wt;
+
+		// float height = ((w.amplitude * Mathf.Sin(thetaX)) + (w.amplitude * Mathf.Sin(thetaY))) / 2f;
+		float height = w.amplitude * Mathf.Sin(thetaX);
+
+		try{
+			points[((((int) xRound) + i) * lod.y) + (((int) yRound) + j)] = height;
+		} catch(IndexOutOfRangeException){
+			// Debug.Log(xRound + " " + i + " " + yRound + " " + j);
+		}
+		
+	}
+
+	public void CreateVortex(Vector3 p){
+		WaveOptions newWave = new WaveOptions();
+		float iFloat = ((p.x / ratio) + halfLod.x) - selfTransform.position.x;
+		float jFloat = ((p.z / ratio) + halfLod.y) - selfTransform.position.z;
+
+		newWave.position = new Vector2(iFloat, jFloat);
+		newWave.amplitude = amplitude;
+		newWave.waveLength = waveLength;
+		newWave.period = period;
+		newWave.waveNumber = (2 * Mathf.PI) / waveLength;
+		newWave.angularFrequency = (2 * Mathf.PI) / period;
+		newWave.time = time;
+		waves.Add(newWave);
+	}
 
 	private void OnDrawGizmos() {
 		Transform seaTransform = GetComponent<Transform>();
@@ -63,7 +174,7 @@ public class Ground : MonoBehaviour {
 		}
 	}
 
-	public TransformInfo GetTransformInfo(Vector2 position){
+	public TransformInfo GetTransformInfo(Vector2 position, float yAngle){
 		float minX = GetX(0);
 		float maxX = GetX(lod.x - 1);
 		float minZ = GetZ(0);
@@ -93,7 +204,7 @@ public class Ground : MonoBehaviour {
 
 		HeightInfo info = GetHeightInfo(result.position.x, result.position.z);
 		result.position.y = GetHeight(info);
-		result.rotation = GetRotation(info, result.position.y);
+		result.rotation = GetRotation(info, result.position.y, yAngle);
 
 		return result;
 	}
@@ -120,7 +231,7 @@ public class Ground : MonoBehaviour {
 		return result / (info.coeff.x + info.coeff.y + info.coeff.z + info.coeff.w);
 	}
 
-	private Vector3 GetRotation(HeightInfo info, float height){
+	private Vector3 GetRotation(HeightInfo info, float height, float yAngle){
 		Vector3 result;
 
 		// Vector3 a = new Vector3(0, points[info.i.x * lod.y + info.j.x], 0);
@@ -159,6 +270,21 @@ public class Ground : MonoBehaviour {
 		float b = points[info.i.y * lod.y + info.j.x];
 		float c = points[info.i.x * lod.y + info.j.y];
 		float d = points[info.i.y * lod.y + info.j.y];
+
+		if(yAngle < 0){
+			yAngle = 360 - yAngle;
+		}
+
+		while(yAngle > 90){
+			float temp = a;
+			a = c;
+			c = d;
+			d = b;
+			b = temp;
+			yAngle -= 90;
+		}
+
+		
 
 		float ab = Mathf.Abs(a-b);
 		float cd = Mathf.Abs(c-d);
