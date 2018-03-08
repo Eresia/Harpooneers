@@ -9,14 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c0880e239be2d34095e526734855c6f, type: 3}
-  m_Name: Coque_Tank
+  m_Name: Coque_Standard
   m_EditorClassIdentifier: 
   moduleName: Default coque
   moduleId: 0
   description: Default coque
-  moveSpeed: 2
-  maxSpeed: 2
-  turnSpeed: 10
+  moveSpeed: 3
+  maxSpeed: 5
+  turnSpeed: 8
   hitboxSize: 1
-  friction: 1
-  mass: 5
+  friction: 3
+  mass: 3
