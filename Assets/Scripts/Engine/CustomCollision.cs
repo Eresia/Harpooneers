@@ -15,47 +15,39 @@ public class CustomCollision : MonoBehaviour {
     public float killingForce = 150f;
 
     public float bumpForce = 15f;
-
-    private RaycastHit hit;
-
+    
     protected void OnCollisionEnter(Collision collision)
     {
         HandleCollision(collision);
     }
 
-    protected void OnCollisionStay(Collision collision)
+    void OnCollisionStay(Collision collision)
     {
         HandleCollision(collision);
     }
 
-    protected void HandleCollision(Collision collision)
+    void HandleCollision(Collision collision)
     {
         float forceToCompensate = physic.velocity.sqrMagnitude;
 
-        OnCollision(forceToCompensate);
-
-        physic.AddForce(collision.contacts[0].normal * bumpForce * forceToCompensate);
-    }
-
-    protected virtual void OnCollision(float impactForce)
-    {
-        Debug.Log("Impact force : " + Mathf.RoundToInt(impactForce));
+        Debug.Log("Impact force : " + Mathf.RoundToInt(forceToCompensate));
 
         bool killPlayer = true;
 
-        Debug.Log(hit.collider);
-
         // Don't kill the player when hit a player or a floating object.
-        if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("FloatingObject"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("FloatingObject"))
         {
             killPlayer = false;
         }
 
         // Kill player if the ship moves too fast.
-        if (impactForce > killingForce && killPlayer)
+        if (forceToCompensate > killingForce && killPlayer)
         {
             playerMgr.Death();
         }
+
+        // Bump the player in any case.
+        physic.AddForce(collision.contacts[0].normal * bumpForce * forceToCompensate);
     }
 
     /*

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExplosiveBarrel : MonoBehaviour, IHarpoonable {
+public class ExplosiveBarrel : MonoBehaviour, IHarpoonable, IResetable {
 
     // TODO Use the wave resistance of the bomb stock module.
     
@@ -10,12 +10,23 @@ public class ExplosiveBarrel : MonoBehaviour, IHarpoonable {
     public float behindOffset = 1.25f;
     //public float impactForceNeeded = 2f;
 
+    [Header("Bomb config")]
     public BombStockModule bombStockModule;
+    public LayerMask damageableLayer;
+    public float explosionDelay = 0.5f;
+
+    [Header("FX")]
+    public ParticleSystem radiusFX;
+    public ParticleSystem explosionFX;
+    public ParticleSystem explodingFX;
+
+    public ResetWhenLeaveScreen resetWhenLeaveScreen;
 
     private PhysicMove physicsScript;
     private MeshRenderer _myRenderer;
-    private ParticleSystem _explosionFX;
     private Collider _myCollider;
+
+    private bool hasAlreadyExplode;
 
     public void Awake()
     {
@@ -24,8 +35,9 @@ public class ExplosiveBarrel : MonoBehaviour, IHarpoonable {
 
         physicsScript = GetComponent<PhysicMove>();
         _myRenderer = GetComponentInChildren<MeshRenderer>();
-        _explosionFX = GetComponentInChildren<ParticleSystem>();
         _myCollider = GetComponent<Collider>();
+
+        resetWhenLeaveScreen.resetable = this;
 
         SetupFx();
     }
@@ -33,13 +45,15 @@ public class ExplosiveBarrel : MonoBehaviour, IHarpoonable {
     // Scale fx depending the bomb radius.
     private void SetupFx()
     {
-        // TODO Do the same for the _radiusFx
-        _explosionFX.transform.localScale = Vector3.one * bombStockModule.bombRadius * 0.5f;
+        Vector3 resize = Vector3.one * bombStockModule.bombRadius * 0.5f;
+        
+        radiusFX.transform.localScale = resize;
+        explosionFX.transform.localScale = resize;
     }
     
     private void OnCollisionEnter(Collision collision)
     {
-        Explosion();
+        TriggerExplosion();
     }
 
     /// <summary>
@@ -49,6 +63,10 @@ public class ExplosiveBarrel : MonoBehaviour, IHarpoonable {
     /// <param name="movementDirection"></param>
     public void SpawnTheBomb(Vector3 spawnPosition, Vector3 movementDirection)
     {
+        hasAlreadyExplode = false;
+        
+        radiusFX.Play();
+
         // Spawn Position
         gameObject.transform.position = spawnPosition + new Vector3(0f, 0.25f,0f);
 
@@ -61,22 +79,32 @@ public class ExplosiveBarrel : MonoBehaviour, IHarpoonable {
         GetComponent<PhysicMove>().enabled = true;
 
         _myCollider.enabled = true;
-
-        // Other solution :
-        //Invoke("EnableCollider", 0.25f);
     }
 
-    private void EnableCollider()
+	public void TriggerExplosion()
     {
-        _myCollider.enabled = true;
+        hasAlreadyExplode = true;
+
+        StartCoroutine(Explosion());
     }
 
-	public void Explosion()
+    private IEnumerator Explosion()
     {
-        // TODO : Deal damage with an overlap sphere
-        float radiusToUse = bombStockModule.bombRadius;
+        yield return new WaitForSeconds(explosionDelay);
 
-        // TODO : Shockwave
+        // Deal damage with an overlap sphere
+        Collider[] colliders = Physics.OverlapSphere(transform.position, bombStockModule.bombRadius, damageableLayer);
+        foreach (Collider c in colliders)
+        {
+            if (c == _myCollider)
+            {
+                continue;
+            }
+
+            c.SendMessage("OnExplode", SendMessageOptions.DontRequireReceiver);
+        }
+
+        // TODO : Shockwave on the sea.
 
         //_myRigidbody.angularVelocity = Vector3.zero;
         gameObject.transform.rotation = Quaternion.identity;
@@ -86,18 +114,34 @@ public class ExplosiveBarrel : MonoBehaviour, IHarpoonable {
         _myRenderer.gameObject.SetActive(false);
         _myCollider.enabled = false;
 
-        _explosionFX.Play();
+        // Clear and stop to debug the radius.
+        radiusFX.Stop();
+        radiusFX.Clear();
+
+        explosionFX.Play();
 
         StartCoroutine(DeactiveGameObject());
+    }
+
+    public void OnExplode()
+    {
+        Debug.Log(gameObject + " EXPLODE");
+
+        if(hasAlreadyExplode)
+        {
+            return;
+        }
+
+        TriggerExplosion();
     }
 
     /// <summary>
     /// Deactive gameobject after that the FX is finished.
     /// </summary>
     /// <returns></returns>
-    IEnumerator DeactiveGameObject()
+    private IEnumerator DeactiveGameObject()
     {
-        yield return new WaitWhile(() => (_explosionFX.isPlaying));
+        yield return new WaitWhile(() => (explosionFX.isPlaying));
 
         _myRenderer.gameObject.SetActive(true);
         gameObject.SetActive(false);
@@ -115,6 +159,14 @@ public class ExplosiveBarrel : MonoBehaviour, IHarpoonable {
     {
         harpoon.Cut();
 
-        Explosion();
+        TriggerExplosion();
+    }
+
+    public void ResetGameObject()
+    {
+        Debug.Log("RESET BARREL");
+
+        StartCoroutine(DeactiveGameObject());
+        resetWhenLeaveScreen.isReseting = false;
     }
 }
