@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
-public class GroundGeneraion {
+public class GroundGeneration {
 
 	[MenuItem("DSea/Generate Sea %g")]
 	public static void GenerateSea(){
@@ -16,6 +16,7 @@ public class GroundGeneraion {
 		Transform seaTransform = sea.GetComponent<Transform>();
 
 		sea.points = new float[sea.lod.x * sea.lod.y];
+		sea.coeffPoints = new float[sea.lod.x * sea.lod.y];
 
 		for(int i = 0; i < sea.lod.x; i++){
 			for(int j = 0; j < sea.lod.y; j++){
@@ -23,10 +24,10 @@ public class GroundGeneraion {
 			}
 		}
 
-		sea.points[5 * sea.lod.y + 8] = 1f;
-		sea.points[6 * sea.lod.y + 8] = 1f;
-		sea.points[5 * sea.lod.y + 7] = 1f;
-		sea.points[6 * sea.lod.y + 7] = 1f;
+		// sea.points[5 * sea.lod.y + 8] = 1f;
+		// sea.points[6 * sea.lod.y + 8] = 1f;
+		// sea.points[5 * sea.lod.y + 7] = 1f;
+		// sea.points[6 * sea.lod.y + 7] = 1f;
 
 		EditorUtility.SetDirty(sea);
 		EditorSceneManager.MarkAllScenesDirty();
