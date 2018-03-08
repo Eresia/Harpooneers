@@ -82,7 +82,7 @@ public class ExplosiveBarrel : MonoBehaviour, ICollidable {
         gameObject.SetActive(false);
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, bombStockModule.bombRadius);
