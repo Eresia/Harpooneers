@@ -45,7 +45,7 @@ public class ExplosiveBarrel : MonoBehaviour, IHarpoonable, IResetable {
     // Scale fx depending the bomb radius.
     private void SetupFx()
     {
-        Vector3 resize = Vector3.one * bombStockModule.bombRadius * 0.5f;
+        Vector3 resize = Vector3.one * bombStockModule.bombRadius;
         
         radiusFX.transform.localScale = resize;
         explosionFX.transform.localScale = resize;
@@ -83,6 +83,11 @@ public class ExplosiveBarrel : MonoBehaviour, IHarpoonable, IResetable {
 
 	public void TriggerExplosion()
     {
+        if(hasAlreadyExplode)
+        {
+            return;
+        }
+
         hasAlreadyExplode = true;
 
         StartCoroutine(Explosion());
