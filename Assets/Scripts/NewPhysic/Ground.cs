@@ -29,6 +29,8 @@ public class Ground : MonoBehaviour {
 
 	public float maxWaveHeight;
 
+	public ComputeShader seaCompute;
+
 	public float[] points;
 
 	private Transform selfTransform;
@@ -41,9 +43,13 @@ public class Ground : MonoBehaviour {
 
 	private float heightMapRatio;
 
-	private Color[] heigthMap;
+	private List<WaveOptions> waves;
 
-	private List<Wave> waves;
+	private ComputeBuffer optionBuffer;
+
+	private ComputeBuffer pointBuffer;
+
+	private FrameOptions[] frameOptions;
 
 	[Space]
 
@@ -85,7 +91,7 @@ public class Ground : MonoBehaviour {
 	private void Awake() {
 		selfTransform = GetComponent<Transform>();
 		halfLod = new Vector2(((float) lod.x) * 0.5f, ((float) lod.y) * 0.5f);
-		waves = new List<Wave>();
+		waves = new List<WaveOptions>();
 		if(zoneAmplitude != 0){
 			CreateZone();
 		}
@@ -93,11 +99,22 @@ public class Ground : MonoBehaviour {
 		heightMapTexture = new Texture2D(heightMapSize, heightMapSize);
 		heightMapTexture.name = "HeightMap";
 		heightMapRatio = heightMapSize / Mathf.Max(lod.x, lod.y);
-		heigthMap = new Color[heightMapSize * heightMapSize];
 
-		if(rawImage != null){
-			rawImage.texture = heightMapTexture;
-		}
+		frameOptions = new FrameOptions[1];
+		frameOptions[0] = new FrameOptions();
+		frameOptions[0].maxWaveHeight = maxWaveHeight;
+		frameOptions[0].heightMapSize = heightMapSize;
+		frameOptions[0].heightMapRatio = heightMapRatio;
+
+		pointBuffer = new ComputeBuffer(points.Length, sizeof(float));
+
+		optionBuffer = new ComputeBuffer(1, 8*4);
+
+		int kernel = seaCompute.FindKernel("CSMain");
+
+		seaCompute.SetBuffer(kernel, "Options", optionBuffer);
+		seaCompute.SetBuffer(kernel, "Result", pointBuffer);
+		seaCompute.SetTexture(kernel, "HeightMap", heightMapTexture);	
 	}
 
 	private void Update() {
@@ -113,76 +130,93 @@ public class Ground : MonoBehaviour {
 			}
 		}
 
-		Wave[] waveArray = waves.ToArray();
+		WaveOptions[] waveArray = waves.ToArray();
+		
+		if(waves.Count > 0){
+			// for(int i = 0; i < lod.x; i++){
+			// 	for(int j = 0; j < lod.y; j++){
+			// 		CalculateWave(new Vector2Int(i, j));
+			// 	}
+			// }
+
+			frameOptions[0].time = time;
+			frameOptions[0].nbWaves = waveArray.Length;
+			optionBuffer.SetData(frameOptions);
+
+			ComputeBuffer impacts = new ComputeBuffer(waveArray.Length, 48);
+			impacts.SetData(waves);
+
+			pointBuffer.SetData(points);
+
+			int kernel = seaCompute.FindKernel("CSMain");
+
+			seaCompute.SetBuffer(kernel, "Impacts", impacts);
+
+			seaCompute.Dispatch(kernel, 2, 2, 1);
+
+			pointBuffer.GetData(points);
+
+			impacts.Dispose();
+		}
 
 		for(int i = 0; i < waveArray.Length; i++){
-			if(waveArray[i].IsTimeout(time)){
+			if(Wave.IsTimeout(waveArray[i], time)){
 				Debug.Log("Remove Wave");
 				waves.Remove(waveArray[i]);
 			}
 		}
 
-		if(waves.Count > 0){
-			for(int i = 0; i < lod.x; i++){
-				for(int j = 0; j < lod.y; j++){
-					CalculateWave(new Vector2Int(i, j));
-				}
-			}
-		}
-
-		heightMapTexture.SetPixels(heigthMap);
 		heightMapTexture.Apply();
 
+		if(rawImage != null){
+			rawImage.texture = heightMapTexture;
+		}	
+
+		// heightMapTexture.SetPixels(heigthMap);
+		// heightMapTexture.Apply();
+
 	
-		for(int i = 0; i < lod.x; i++){
-			for(int j = 0; j < lod.y; j++){
-				points[i * lod.y + j] = Mathf.Sin(time * ((float) i) / 20f) / 3f;
-			}
-		}
+		// for(int i = 0; i < lod.x; i++){
+		// 	for(int j = 0; j < lod.y; j++){
+		// 		points[i * lod.y + j] = Mathf.Sin(time * ((float) i) / 20f) / 3f;
+		// 	}
+		// }
 	}
 
-	private void CalculateWave(Vector2Int pos){
+	// private void CalculateWave(Vector2Int pos){
 
-		Vector2 heighInfo = Vector2.zero;
-		int pointId = (pos.x* lod.y) + pos.y;
+	// 	Vector2 heighInfo = Vector2.zero;
+	// 	int pointId = (pos.x* lod.y) + pos.y;
 
-		foreach(Wave w in waves){
-			heighInfo += w.CalculateWave(pos, time, lod);
-		}
+	// 	foreach(Wave_a w in waves){
+	// 		heighInfo += w.CalculateWave(pos, time, lod);
+	// 	}
 
-		if(heighInfo.y == 0){
-			points[pointId] = 0f;
-		}
-		else{
-			points[pointId] = heighInfo.x / heighInfo.y;
-		}
+	// 	if(heighInfo.y == 0){
+	// 		points[pointId] = 0f;
+	// 	}
+	// 	else{
+	// 		points[pointId] = heighInfo.x / heighInfo.y;
+	// 	}
 
-		int beginX = Mathf.RoundToInt(pos.x * heightMapRatio);
-		int endX = Mathf.RoundToInt((pos.x + 1) * heightMapRatio);
+	// 	int beginX = Mathf.RoundToInt(pos.x * heightMapRatio);
+	// 	int endX = Mathf.RoundToInt((pos.x + 1) * heightMapRatio);
 
-		int beginY = Mathf.RoundToInt(pos.y * heightMapRatio);
-		int endY = Mathf.RoundToInt((pos.y + 1) * heightMapRatio);
-		for(int i = beginX; i < endX; i++){
-			for(int j = beginY; j < endY; j++){
-				float colorHeight = (Mathf.Clamp(points[pointId], -maxWaveHeight, maxWaveHeight) / maxWaveHeight) + 0.5f;
-				heigthMap[i * heightMapSize + j] = new Color(colorHeight, colorHeight, colorHeight, 1f);
-				// heightMapTexture.SetPixel(i, j, new Color(colorHeight, colorHeight, colorHeight, 1f));
-			}
-		}
-	}
+	// 	int beginY = Mathf.RoundToInt(pos.y * heightMapRatio);
+	// 	int endY = Mathf.RoundToInt((pos.y + 1) * heightMapRatio);
+	// 	for(int i = beginX; i < endX; i++){
+	// 		for(int j = beginY; j < endY; j++){
+	// 			float colorHeight = (Mathf.Clamp(points[pointId], -maxWaveHeight, maxWaveHeight) / maxWaveHeight) + 0.5f;
+	// 			heigthMap[i * heightMapSize + j] = new Color(colorHeight, colorHeight, colorHeight, 1f);
+	// 			// heightMapTexture.SetPixel(i, j, new Color(colorHeight, colorHeight, colorHeight, 1f));
+	// 		}
+	// 	}
+	// }
+
+	
 
 	public void CreateZone(){
-		WaveOptions newWave = new WaveOptions();
-
-		newWave.position = new Vector2(0, 0);
-		newWave.amplitude = zoneAmplitude;
-		newWave.waveLength = zoneWaveLength;
-		newWave.period = zonePeriod;
-		newWave.waveNumber = (2 * Mathf.PI) / zoneWaveLength;
-		newWave.angularFrequency = (2 * Mathf.PI) / zonePeriod;
-		newWave.time = time;
-
-		waves.Add(new WaveZone(newWave));
+		waves.Add(Wave.CreateZone(new Vector2(0, 0), zoneAmplitude, zoneWaveLength, zonePeriod, time));
 	}
 
 	public void CreateImpact(Vector3 p){
@@ -190,21 +224,10 @@ public class Ground : MonoBehaviour {
 	}
 
 	public void CreateImpact(Vector3 p, float amplitude, float length, float period, float distanceDigress, float timeDigress, float timeout){
-		WaveOptions newWave = new WaveOptions();
 		float iFloat = ((p.x / ratio) + halfLod.x) - selfTransform.position.x;
 		float jFloat = ((p.z / ratio) + halfLod.y) - selfTransform.position.z;
 
-		newWave.position = new Vector2(iFloat, jFloat);
-		newWave.amplitude = amplitude;
-		newWave.waveLength = length;
-		newWave.period = period;
-		newWave.waveNumber = (2 * Mathf.PI) / length;
-		newWave.angularFrequency = (2 * Mathf.PI) / period;
-		newWave.distanceDigress = distanceDigress;
-		newWave.timeDigress = timeDigress;
-		newWave.time = time;
-		newWave.timeout = timeout;
-		waves.Add(new WaveImpact(newWave));
+		waves.Add(Wave.CreateImpact(new Vector2(iFloat, jFloat), amplitude, length, period, time, distanceDigress, timeDigress, timeout));
 	}
 
 	private void OnDrawGizmos() {
@@ -427,5 +450,10 @@ public class Ground : MonoBehaviour {
 
 	private float GetZ(int j, Vector2 halfLod, Transform seaTransform){
 		return seaTransform.position.z + ((((float) j) - halfLod.y) * ratio);
+	}
+
+	private void OnDestroy() {
+		optionBuffer.Dispose();
+		pointBuffer.Dispose();
 	}
 }

@@ -587,6 +587,7 @@ MonoBehaviour:
   ratio: 3.26
   heightMapSize: 1024
   maxWaveHeight: 5
+  seaCompute: {fileID: 7200000, guid: c38a7e0af28a2f143b23bc17e4ef5d30, type: 3}
   points:
   - 0
   - 0
@@ -2192,7 +2193,7 @@ MonoBehaviour:
   testLayer:
     serializedVersion: 2
     m_Bits: 8192
-  zoneAmplitude: 3
+  zoneAmplitude: 15
   zoneWaveLength: 0.5
   zonePeriod: 7
   impactAmplitude: 7
@@ -2221,7 +2222,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 462511214}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

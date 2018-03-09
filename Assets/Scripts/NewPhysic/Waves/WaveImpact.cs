@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaveImpact : Wave {
+public class WaveImpact : Wave_a {
 
 	public WaveImpact(WaveOptions options) : base(options){}
 

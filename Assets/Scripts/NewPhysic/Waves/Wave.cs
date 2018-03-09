@@ -3,32 +3,68 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public struct WaveOptions{
+	public int type;
 	public Vector2 position;
-
 	public float amplitude;
-
 	public float waveLength;
-
 	public float period;
-
 	public float waveNumber;
-
 	public float angularFrequency;
-
 	public float distanceDigress;
-
 	public float timeDigress;
-
 	public float time;
-
 	public float timeout;
+
+	public WaveOptions(int type, Vector2 position, float amplitude, float waveLength, float period, float time, float distanceDigress = 0f, float timeDigress= 0f, float timeout= 0f){
+		this.type = type;
+		this.position = position;
+		this.amplitude = amplitude;
+		this.waveLength = waveLength;
+		this.period = period;
+		this.distanceDigress = distanceDigress;
+		this.timeDigress = timeDigress;
+		this.time = time;
+		this.timeout = timeout;
+
+		this.waveNumber = (2 * Mathf.PI) / this.waveLength;
+		this.angularFrequency = (2 * Mathf.PI) / this.period;
+	}
 }
 
-public abstract class Wave {
+struct FrameOptions{
+	public float time;
+	public int nbWaves;
+	public float maxWaveHeight;
+	public int heightMapSize;
+	public float heightMapRatio;
+	public Vector3 trash;
+};
+
+public class Wave{
+
+	public static WaveOptions CreateImpact(Vector2 position, float amplitude, float waveLength, float period, float time, float distanceDigress, float timeDigress, float timeout){
+		return new WaveOptions(0, position, amplitude, waveLength, period, time, distanceDigress, timeDigress, timeout);
+	}
+
+	public static WaveOptions CreateZone(Vector2 position, float amplitude, float waveLength, float period, float time){
+		return new WaveOptions(1, position, amplitude, waveLength, period, time);
+	}
+
+	public static bool IsTimeout(WaveOptions wave, float time){
+		if(wave.type != 1){
+			return (time - wave.time) > wave.timeout;
+		}
+		else{
+			return false;
+		}
+	}
+}
+
+public abstract class Wave_a {
 
 	protected WaveOptions options {get; private set;}
 
-	public Wave(WaveOptions options){
+	public Wave_a(WaveOptions options){
 		this.options = options;
 	}
 
