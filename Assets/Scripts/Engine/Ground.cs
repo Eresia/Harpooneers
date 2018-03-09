@@ -74,7 +74,10 @@ public class Ground : MonoBehaviour {
 		selfTransform = GetComponent<Transform>();
 		halfLod = new Vector2(((float) lod.x) * 0.5f, ((float) lod.y) * 0.5f);
 		waves = new List<Wave>();
-		CreateZone();
+		if(zoneAmplitude != 0){
+			CreateZone();
+		}
+		
 	}
 
 	private void Update() {
