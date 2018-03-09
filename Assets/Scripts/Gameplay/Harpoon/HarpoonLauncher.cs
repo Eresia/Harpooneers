@@ -100,7 +100,7 @@ public class HarpoonLauncher : MonoBehaviour {
 
 		if(harpoon == null){
 
-            Debug.Log(direction.sqrMagnitude);
+            //Debug.Log(direction.sqrMagnitude);
 
 			if(direction.sqrMagnitude > joystixError)
             {

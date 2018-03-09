@@ -592,9 +592,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TimeBeforePattern: 1
-  TurnMin: 2
-  TurnMax: 9
-  WhaleSpeed: 1
+  TurnMin: 4
+  TurnMax: 7
+  DistMin: 15
+  DistMax: 30
+  WaitBeforeDash: 0.5
+  WhaleSpeed: 15
   WhalePrefab: {fileID: 1463582678563990, guid: 5ca97c3b3e91e654e90d0a1e318bed4e,
     type: 2}
   north: {fileID: 445523517}
