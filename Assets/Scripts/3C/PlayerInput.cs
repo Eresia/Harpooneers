@@ -23,6 +23,7 @@ public class PlayerInput : MonoBehaviour
     private Player player; // Rewired player.
 
     private bool doPause; // Do the pause if the delay is repected.
+    private int controllerDisconnected;
 
     void Awake()
     {
@@ -201,22 +202,34 @@ public class PlayerInput : MonoBehaviour
         }
        
     }
-
-
+    
     // Controller connection - disconnection.
 
     // This function will be called when a controller is connected
     // You can get information about the controller that was connected via the args parameter
     void OnControllerConnected(ControllerStatusChangedEventArgs args)
     {
-        // TODO Unpause the game if the game was stopped because a controller has been disconnected.
+        // Unpause the game if the game was stopped because one or more controllers has(ve) been disconnected.
+        controllerDisconnected--;
+
+        if (GameManager.instance.IsPause && controllerDisconnected == 0)
+        {
+            GameManager.instance.PauseGame();
+        }
     }
 
     // This function will be called when a controller is fully disconnected
     // You can get information about the controller that was disconnected via the args parameter
     void OnControllerDisconnected(ControllerStatusChangedEventArgs args)
     {
-        // TODO Pause the game if a controller has been disconnected.
+        // Pause the game if at least one controller has been disconnected.
+
+        if (!GameManager.instance.IsPause)
+        {
+            controllerDisconnected++;
+
+            GameManager.instance.PauseGame();
+        }
     }
 
     private void OnDestroy()
@@ -225,7 +238,7 @@ public class PlayerInput : MonoBehaviour
         if(player != null)
         {
             // Free delegates.
-            player.RemoveInputEventDelegate(DropBomb);
+            player.RemoveInputEventDelegate(DropBomb, UpdateLoopType.Update, InputActionEventType.ButtonPressed, "Drop Bomb");
             player.RemoveInputEventDelegate(ResurrectAlly);
             player.RemoveInputEventDelegate(ReleaseRope);
             player.RemoveInputEventDelegate(PullingOnRope);

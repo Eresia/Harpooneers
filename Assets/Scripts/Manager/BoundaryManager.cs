@@ -12,7 +12,8 @@ public struct BoundariesData
     public float zBottom;
     public float zTop;
 
-    public float sideLength;
+    public float height;
+    public float width;
 }
 
 public class BoundaryManager : MonoBehaviour {
@@ -69,7 +70,7 @@ public class BoundaryManager : MonoBehaviour {
         trapezeData.xBottomRight = limits[3].x;
         trapezeData.xTopRight = limits[2].x;
 
-        trapezeData.sideLength = Mathf.Abs(trapezeData.zBottom - trapezeData.zTop);
+        trapezeData.height = Mathf.Abs(trapezeData.zBottom - trapezeData.zTop);
     }
 
     /// <summary>
@@ -80,7 +81,7 @@ public class BoundaryManager : MonoBehaviour {
     {
         Vector3 clampedPos = boatPos;
         
-        float t = Mathf.Abs(trapezeData.zBottom - boatPos.z) / trapezeData.sideLength;
+        float t = Mathf.Abs(trapezeData.zBottom - boatPos.z) / trapezeData.height;
 
         float xMin = Mathf.Lerp(trapezeData.xBottomLeft, trapezeData.xTopLeft, t);
         float xMax = Mathf.Lerp(trapezeData.xBottomRight, trapezeData.xTopRight, t);
