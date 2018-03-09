@@ -16,11 +16,14 @@ public class PhysicObject : MonoBehaviour {
 	public void MoveOnBoard(PhysicMove mover) {
 		Vector2 pos2 = new Vector2(mover.selfTransform.position.x, mover.selfTransform.position.z);
 		Ground.TransformInfo info = GameManager.instance.ground.GetTransformInfo(pos2, mover.selfTransform.rotation.eulerAngles.y);
-		selfTransform.localRotation = Quaternion.Euler(info.rotation);
+
+        selfTransform.localRotation = Quaternion.Euler(info.rotation);
 		mover.selfTransform.position = info.position;
 		selfTransform.localPosition = -pivot;
+
 		Vector3 normal = selfTransform.up;
 		Vector3 gravity = new Vector3(0, -1, 0);
+
 		mover.AddForce((normal + gravity) * mover.gravity * Time.deltaTime);
 	}
 

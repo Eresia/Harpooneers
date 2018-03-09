@@ -181,10 +181,12 @@ public class HarpoonLauncher : MonoBehaviour {
 
         float speedBonus = physicMove.velocity.sqrMagnitude;
 
-        //Debug.Log(power);
-        float distanceToReach = Mathf.Lerp(0f, harpoonModule.fireDistance, power);
-        //Debug.Log(distanceToReach);
+        // THe distance depends from the duration of cast
+        //float distanceToReach = Mathf.Lerp(0f, harpoonModule.fireDistance, power);
 
-		harpoon.Launch(this, selfTransform.position, direction, distanceToReach, harpoonModule.fireSpeed + speedBonus, harpoonModule.returnSpeed);
+        // OSEF
+        float distanceToReach = harpoonModule.fireDistance;
+
+        harpoon.Launch(this, selfTransform.position, direction, distanceToReach, harpoonModule.fireSpeed + speedBonus, harpoonModule.returnSpeed);
 	}
 }

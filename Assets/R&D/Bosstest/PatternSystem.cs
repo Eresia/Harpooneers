@@ -33,7 +33,12 @@ public class PatternSystem : MonoBehaviour
 
     private void LatDash(Transform whale)
     {
+<<<<<<< HEAD
 
+=======
+        int r = Random.Range(0,10);
+        _sideCheck = !_sideCheck;
+>>>>>>> origin/Loris
     }
 
     IEnumerator Pattern()

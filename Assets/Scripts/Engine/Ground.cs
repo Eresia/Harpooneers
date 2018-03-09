@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class Ground : MonoBehaviour {
 
@@ -24,6 +25,10 @@ public class Ground : MonoBehaviour {
 
 	public float ratio;
 
+	public int heightMapSize;
+
+	public float maxWaveHeight;
+
 	public float[] points;
 
 	private Transform selfTransform;
@@ -32,6 +37,12 @@ public class Ground : MonoBehaviour {
 
 	private float time;
 
+	private Texture2D heightMapTexture;
+
+	private float heightMapRatio;
+
+	private Color[] heigthMap;
+
 	private List<Wave> waves;
 
 	[Space]
@@ -39,8 +50,7 @@ public class Ground : MonoBehaviour {
 	public Color gizmosColor;
 
 	public LayerMask testLayer;
-	
-	
+
 
 	[Space]
 
@@ -70,6 +80,8 @@ public class Ground : MonoBehaviour {
 
 	public float timeout;
 
+	public RawImage rawImage;
+
 	private void Awake() {
 		selfTransform = GetComponent<Transform>();
 		halfLod = new Vector2(((float) lod.x) * 0.5f, ((float) lod.y) * 0.5f);
@@ -77,7 +89,15 @@ public class Ground : MonoBehaviour {
 		if(zoneAmplitude != 0){
 			CreateZone();
 		}
-		
+
+		heightMapTexture = new Texture2D(heightMapSize, heightMapSize);
+		heightMapTexture.name = "HeightMap";
+		heightMapRatio = heightMapSize / Mathf.Max(lod.x, lod.y);
+		heigthMap = new Color[heightMapSize * heightMapSize];
+
+		if(rawImage != null){
+			rawImage.texture = heightMapTexture;
+		}
 	}
 
 	private void Update() {
@@ -110,6 +130,9 @@ public class Ground : MonoBehaviour {
 			}
 		}
 
+		// heightMapTexture.SetPixels(heigthMap);
+
+	
 		// for(int i = 0; i < lod.x; i++){
 		// 	for(int j = 0; j < lod.y; j++){
 		// 		points[i * lod.y + j] = Mathf.Sin(time * ((float) i) / 20f) / 3f;
@@ -120,13 +143,30 @@ public class Ground : MonoBehaviour {
 	private void CalculateWave(Vector2Int pos){
 
 		Vector2 heighInfo = Vector2.zero;
+		int pointId = (pos.x* lod.y) + pos.y;
 
 		foreach(Wave w in waves){
 			heighInfo += w.CalculateWave(pos, time, lod);
 		}
 
-		points[(pos.x* lod.y) + pos.y] = heighInfo.x / heighInfo.y;
-		
+		if(heighInfo.y == 0){
+			points[pointId] = 0f;
+		}
+		else{
+			points[pointId] = heighInfo.x / heighInfo.y;
+		}
+		points[pointId] = heighInfo.x / heighInfo.y;
+		// int beginX = Mathf.RoundToInt(pos.x * heightMapRatio);
+		// int endX = Mathf.RoundToInt((pos.x + 1) * heightMapRatio);
+
+		// int beginY = Mathf.RoundToInt(pos.y * heightMapRatio);
+		// int endY = Mathf.RoundToInt((pos.y + 1) * heightMapRatio);
+		// for(int i = beginX; i < endX; i++){
+		// 	for(int j = beginY; j < endY; j++){
+		// 		float colorHeight = (Mathf.Clamp(points[pointId], -maxWaveHeight, maxWaveHeight) / maxWaveHeight) + 1;
+		// 		heigthMap[i * heightMapSize + j] = new Color(colorHeight, colorHeight, colorHeight, 1f);
+		// 	}
+		// }
 	}
 
 	public void CreateZone(){
@@ -144,16 +184,20 @@ public class Ground : MonoBehaviour {
 	}
 
 	public void CreateImpact(Vector3 p){
+		CreateImpact(p, impactAmplitude, impactWaveLength, impactPeriod, distanceDigress, timeDigress, timeout);
+	}
+
+	public void CreateImpact(Vector3 p, float amplitude, float length, float period, float distanceDigress, float timeDigress, float timeout){
 		WaveOptions newWave = new WaveOptions();
 		float iFloat = ((p.x / ratio) + halfLod.x) - selfTransform.position.x;
 		float jFloat = ((p.z / ratio) + halfLod.y) - selfTransform.position.z;
 
 		newWave.position = new Vector2(iFloat, jFloat);
-		newWave.amplitude = impactAmplitude;
-		newWave.waveLength = impactWaveLength;
-		newWave.period = impactPeriod;
-		newWave.waveNumber = (2 * Mathf.PI) / impactWaveLength;
-		newWave.angularFrequency = (2 * Mathf.PI) / impactPeriod;
+		newWave.amplitude = amplitude;
+		newWave.waveLength = length;
+		newWave.period = period;
+		newWave.waveNumber = (2 * Mathf.PI) / length;
+		newWave.angularFrequency = (2 * Mathf.PI) / period;
 		newWave.distanceDigress = distanceDigress;
 		newWave.timeDigress = timeDigress;
 		newWave.time = time;

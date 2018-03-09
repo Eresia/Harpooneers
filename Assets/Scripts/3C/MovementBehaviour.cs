@@ -54,13 +54,14 @@ public class MovementBehaviour : MonoBehaviour {
 
         // Limit position in the boundaries of the screen.
         Vector3 pos = transform.position;
-        
-        Vector3 hitPoint = GameManager.instance.boundaryMgr.InScreenPosition(pos);
 
-        pos.x = hitPoint.x;
-        pos.z = hitPoint.z;
+        //Vector3 hitPoint = GameManager.instance.boundaryMgr.InScreenPosition(pos);
 
-        transform.position = pos;
+        //pos.x = GameManager.instance.boundaryMgr.;
+        //pos.y = 
+        //pos.z = hitPoint.z;
+
+        transform.position = GameManager.instance.boundaryMgr.InScreenPosition(pos);
     }
 
     // Freeze player at his position.

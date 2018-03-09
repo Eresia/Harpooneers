@@ -15,6 +15,6 @@ public class CoqueModule : ScriptableObject
 
     public float hitboxSize;
 
-    public float friction = 1;
-    public float mass = 5;
+    public float inertia = 1;
+    public float waveResistance = 5;
 }

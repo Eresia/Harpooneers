@@ -37,10 +37,14 @@ public class PlayerInput : MonoBehaviour
         player.AddInputEventDelegate(TogglePause, UpdateLoopType.Update, "Toggle Pause");
         player.AddInputEventDelegate(ReleaseRope, UpdateLoopType.Update, "Release Rope");
         player.AddInputEventDelegate(PullingOnRope, UpdateLoopType.Update, "Pull On Rope");
+        player.AddInputEventDelegate(DisplayPlayerPosition, UpdateLoopType.Update, "Display Player");
 
         // Subscribe to events of controller connection
         ReInput.ControllerConnectedEvent += OnControllerConnected;
         ReInput.ControllerDisconnectedEvent += OnControllerDisconnected;
+
+        // Deactivate the player position indicator
+        playerMgr.FeedbackPlayerPos(false, playerId);
     }
 
     private void Reset()
@@ -86,25 +90,30 @@ public class PlayerInput : MonoBehaviour
 
     private void TogglePause(InputActionEventData data)
     {
-        // If game is unpaused.
-
-        // Use this to pause after a delay.
-        if (!doPause)
-        {
-            doPause = data.GetButtonTimePressed() > timeBeforePause;
-        }
-
-        if (data.GetButtonUp())
-        {
-            if (doPause)
-            {
-                Debug.Log("Toggle pause !");
-            }
-
-            doPause = false;
-        }
-
         // If game is paused : direct unpause.
+        if (GameManager.instance.IsPause)
+        {
+            if(data.GetButtonDown())
+            {
+                GameManager.instance.PauseGame();
+                doPause = false;
+            }
+        }
+
+        // If game is unpaused.
+        else
+        {
+            if (!doPause)
+            {
+                // Use this to pause after a delay.
+                doPause = data.GetButtonTimePressed() > timeBeforePause;
+
+                if (doPause)
+                {
+                    GameManager.instance.PauseGame();
+                }
+            }
+        }
     }
 
     private void DropBomb(InputActionEventData data)
@@ -178,6 +187,21 @@ public class PlayerInput : MonoBehaviour
             harpoonLauncher.Cut();
         }
     }
+
+    private void DisplayPlayerPosition(InputActionEventData data)
+    {
+        if (data.GetButtonDown())
+        {
+            playerMgr.FeedbackPlayerPos(true, playerId);
+        }
+
+        else if(data.GetButtonUp())
+        {
+            playerMgr.FeedbackPlayerPos(false, playerId);
+        }
+       
+    }
+
 
     // Controller connection - disconnection.
 

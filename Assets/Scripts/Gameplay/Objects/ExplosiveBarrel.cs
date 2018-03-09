@@ -20,9 +20,10 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
     public ParticleSystem explosionFX;
     public ParticleSystem explodingFX;
 
+    [Header("Other components")]
     public ResetWhenLeaveScreen resetWhenLeaveScreen;
+    public PhysicMove physicsScript;
 
-    private PhysicMove physicsScript;
     private MeshRenderer _myRenderer;
     private Collider _myCollider;
 
@@ -41,7 +42,7 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
     }
 
     // Scale fx depending the bomb radius.
-    public void SetupFx()
+    public void SetupBombFX()
     {
         Vector3 resize = Vector3.one * bombStockModule.bombRadius;
         
@@ -108,6 +109,7 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
         }
 
         // TODO : Shockwave on the sea.
+        GameManager.instance.ground.CreateImpact(transform.position);
 
         //_myRigidbody.angularVelocity = Vector3.zero;
         gameObject.transform.rotation = Quaternion.identity;
