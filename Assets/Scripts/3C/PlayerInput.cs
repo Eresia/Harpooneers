@@ -20,6 +20,8 @@ public class PlayerInput : MonoBehaviour
     [Header("Other actions")]
     public float timeBeforePause = 1f;
 
+    public GameObject playerPositionIndicator; 
+
     private Player player; // Rewired player.
 
     private bool doPause; // Do the pause if the delay is repected.
@@ -37,10 +39,14 @@ public class PlayerInput : MonoBehaviour
         player.AddInputEventDelegate(TogglePause, UpdateLoopType.Update, "Toggle Pause");
         player.AddInputEventDelegate(ReleaseRope, UpdateLoopType.Update, "Release Rope");
         player.AddInputEventDelegate(PullingOnRope, UpdateLoopType.Update, "Pull On Rope");
+        player.AddInputEventDelegate(DisplayPlayerPosition, UpdateLoopType.Update, "Display Player Position");
 
         // Subscribe to events of controller connection
         ReInput.ControllerConnectedEvent += OnControllerConnected;
         ReInput.ControllerDisconnectedEvent += OnControllerDisconnected;
+
+        // Deactivate the player position indicator
+        playerPositionIndicator.SetActive(false);
     }
 
     private void Reset()
@@ -178,6 +184,20 @@ public class PlayerInput : MonoBehaviour
             harpoonLauncher.Cut();
         }
     }
+
+    private void DisplayPlayerPosition(InputActionEventData data)
+    {
+        if (data.GetButtonDown())
+        {
+            playerPositionIndicator.SetActive(true);
+        }
+        else if(data.GetButtonUp())
+        {
+            playerPositionIndicator.SetActive(false);
+        }
+       
+    }
+
 
     // Controller connection - disconnection.
 
