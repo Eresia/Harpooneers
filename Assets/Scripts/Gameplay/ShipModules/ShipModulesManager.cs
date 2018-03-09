@@ -25,23 +25,11 @@ public class ShipModulesManager : MonoBehaviour {
         _movementScript = GetComponent<MovementBehaviour>();
         _bombScript = transform.parent.GetComponentInChildren<ExplosiveBarrel>();
     }
-    
-    void Start()
-    {
-        if(GameManager.instance.debug)
-        {
-            // Default config for debug.
-            ShipConfiguration config = GameManager.instance.defaultConfig;
-            ShipManager shipMgr = FindObjectOfType<ShipManager>();
-            
-            ActivateShipModules(config, shipMgr);
-        }
-    }
 
     private void FixedUpdate()
     {
         // TODO REMOVE when tweaking is finished.
-        if(GameManager.instance.debug)
+        if(GameManager.instance.shipMgr.tweaking)
         {
             _movementScript.physicMove.limitSpeed = _movementScript.coqueModule.maxSpeed;
             _movementScript.physicMove.friction = _movementScript.coqueModule.friction;

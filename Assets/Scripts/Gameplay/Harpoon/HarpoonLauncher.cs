@@ -97,29 +97,41 @@ public class HarpoonLauncher : MonoBehaviour {
 	}
 
 	public void LaunchHarpoon(Vector3 direction){
+
 		if(harpoon == null){
-			if(direction.sqrMagnitude > joystixError){
-				if(!isLaunching){
+
+            Debug.Log(direction.sqrMagnitude);
+
+			if(direction.sqrMagnitude > joystixError)
+            {
+				if(!isLaunching)
+                {
 					BeginLaunching();
 				}
 
-				if(power == 1f){
-					if(timeBeforeLaunch >= castTimeMax){
-						EndLaunching(direction);
+				if(power == 1f)
+                {
+					if(timeBeforeLaunch >= castTimeMax)
+                    {
+						EndLaunching(direction, power);
 						return ;
 					}
 
 					timeBeforeLaunch += Time.deltaTime;
 				}
-				else{
+
+				else
+                {
 					power = Mathf.Min(1f, power + (Time.deltaTime / castTime));
 				}
 
 				DisplayLaunching(direction, power);
 				lastDirection = direction;
 			}
-			else if(isLaunching){
-				EndLaunching(lastDirection);
+
+			else if(isLaunching)
+            {
+				EndLaunching(lastDirection, power);
 			}
 		}
 	}
@@ -161,13 +173,18 @@ public class HarpoonLauncher : MonoBehaviour {
 		directionObject.localPosition = direction * power * castDistance;
 	}
 
-	private void EndLaunching(Vector3 direction){
+	private void EndLaunching(Vector3 direction, float power){
+
 		isLaunching = false;
 		directionObject.gameObject.SetActive(false);
 		harpoon = Instantiate<Harpoon>(harpoonPrefab, selfTransform.position, Quaternion.identity);
 
         float speedBonus = physicMove.velocity.sqrMagnitude;
 
-		harpoon.Launch(this, selfTransform.position, direction, harpoonModule.fireDistance, harpoonModule.fireSpeed + speedBonus, harpoonModule.returnSpeed);
+        //Debug.Log(power);
+        float distanceToReach = Mathf.Lerp(0f, harpoonModule.fireDistance, power);
+        //Debug.Log(distanceToReach);
+
+		harpoon.Launch(this, selfTransform.position, direction, distanceToReach, harpoonModule.fireSpeed + speedBonus, harpoonModule.returnSpeed);
 	}
 }

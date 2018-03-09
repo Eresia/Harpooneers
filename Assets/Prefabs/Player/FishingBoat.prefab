@@ -1243,7 +1243,7 @@ MonoBehaviour:
   physicObject: {fileID: 114079459227220844}
   friction: 2
   mass: 5
-  limitSpeed: 100
+  limitSpeed: 7
 --- !u!114 &114301401480464612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1346,7 +1346,7 @@ MonoBehaviour:
     type: 2}
   boatFollower: {fileID: 0}
   directionObject: {fileID: 0}
-  joystixError: 0.1
+  joystixError: 0.99
   castTime: 1
   castTimeMax: 1
   castDistance: 2

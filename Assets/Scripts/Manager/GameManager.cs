@@ -75,6 +75,11 @@ public class GameManager : MonoBehaviour {
 
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
+        if(debug)
+        {
+            return;
+        }
+
         if (scene.buildIndex == 0)
         {
             SetupMainMenu();
@@ -83,7 +88,7 @@ public class GameManager : MonoBehaviour {
         else if (scene.buildIndex == 1)
         {
             SetupGameScene();
-        } 
+        }
     }
     
     /// <summary>

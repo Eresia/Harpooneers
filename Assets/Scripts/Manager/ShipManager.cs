@@ -1,12 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Setup all boats in the game depending the number of players and the customizations choosen.
 /// </summary>
 public class ShipManager : MonoBehaviour {
-    
+
+    public bool useDefaultConfig = false;
+    public bool tweaking = false;
+
     public GameObject[] players;
     public ShipModulesManager[] shipModuleMgrs;
     
@@ -18,6 +19,14 @@ public class ShipManager : MonoBehaviour {
     public CabineModule[] cabinesScriptObjs;
     public BombStockModule[] bombsScriptObjs;
 
+    private void Awake()
+    {
+        if(useDefaultConfig)
+        {
+            SetupAllShips();
+        }
+    }
+
     public void SetupAllShips()
     {
         playerAlive = GameManager.instance.nbOfPlayers;
@@ -28,7 +37,7 @@ public class ShipManager : MonoBehaviour {
             if(GameManager.instance.players[i])
             {
                 // For debug only. Load default config.
-                if(GameManager.instance.debug)
+                if(useDefaultConfig)
                 {
                     shipModuleMgrs[i].ActivateShipModules(GameManager.instance.defaultConfig, this);
                 }
