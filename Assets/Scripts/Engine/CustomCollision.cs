@@ -28,9 +28,9 @@ public class CustomCollision : MonoBehaviour {
 
     void HandleCollision(Collision collision)
     {
-        float forceToCompensate = physic.velocity.sqrMagnitude;
+        float forceToCompensate = Mathf.Max(physic.velocity.sqrMagnitude, physic.limitSpeed);
 
-        Debug.Log("Impact force : " + Mathf.RoundToInt(forceToCompensate));
+        //Debug.Log("Impact force : " + Mathf.RoundToInt(forceToCompensate));
 
         bool killPlayer = true;
 

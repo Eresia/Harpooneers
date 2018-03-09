@@ -9,6 +9,8 @@ public class PlayerManager : MonoBehaviour {
     public float healthLossPerSec;
     public float rezRadius;
     public float healthPerInput;
+
+    [Header("UI")]
     public Slider rezBar;
     public Image deathIcon;
 
@@ -21,12 +23,12 @@ public class PlayerManager : MonoBehaviour {
     private PlayerManager _allyToRez;
     private PlayerManager[] _alliesList;
 
-    private MovementBehaviourNewPhysic movement;
+    private MovementBehaviour movement;
 
     private void Awake()
     {
         _alliesList = FindObjectsOfType<PlayerManager>();
-        movement = GetComponent<MovementBehaviourNewPhysic>();
+        movement = GetComponent<MovementBehaviour>();
     }
 
     void Start()
@@ -48,6 +50,8 @@ public class PlayerManager : MonoBehaviour {
 
         // Display the dead icon
         deathIcon.enabled = true;
+
+        GameManager.instance.shipMgr.NotifyDeath();
     }
 
     // Called when allies are mashing "A" near your shipwreck
@@ -131,5 +135,7 @@ public class PlayerManager : MonoBehaviour {
         isDead = false;
 
         _rezAmount = 0;
+
+        GameManager.instance.shipMgr.NotifyAlive();
     }
 }

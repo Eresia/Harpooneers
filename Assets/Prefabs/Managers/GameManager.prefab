@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4507314145147650}
   - component: {fileID: 114170656061699002}
+  - component: {fileID: 114774312991598738}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -51,7 +52,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c53b7e0dbb3ba045a26b3a1d872862e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 1
+  debug: 0
   actualPlayer: -1
-  boundaries: {fileID: 0}
+  sceneMgr: {fileID: 114774312991598738}
+  boundaryMgr: {fileID: 0}
+  shipMgr: {fileID: 0}
+  ground: {fileID: 0}
   nbOfPlayers: 1
+  shipConfigs: []
+  players: 
+  defaultConfig:
+    coqueId: 0
+    cabinId: 0
+    harpoonId: 0
+    bombStockId: 0
+--- !u!114 &114774312991598738
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1297469070234390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3decf80298567ff43beb5910649cfe1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

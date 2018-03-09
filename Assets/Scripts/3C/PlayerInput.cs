@@ -4,7 +4,7 @@ using Rewired;
 /// <summary>
 /// Handle Input associated to each player.
 /// </summary>
-[RequireComponent(typeof(MovementBehaviour))]
+[RequireComponent(typeof(MovementBehaviour_OLD))]
 public class PlayerInput : MonoBehaviour
 {
     [Tooltip("Rewired player id")]
@@ -12,15 +12,14 @@ public class PlayerInput : MonoBehaviour
 
     [Header("Main components")]
     public MovementBehaviour movement;
+    //public MovementBehaviour movement;
     public PlayerManager playerMgr;
     public HarpoonLauncher harpoonLauncher;
     public ExplosiveBarrel bombLauncher;
-    
+
     [Header("Other actions")]
     public float timeBeforePause = 1f;
 
-    private Rigidbody _myRigidbody;
-    
     private Player player; // Rewired player.
 
     private bool doPause; // Do the pause if the delay is repected.
@@ -30,7 +29,6 @@ public class PlayerInput : MonoBehaviour
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
 
-        _myRigidbody = GetComponent<Rigidbody>();
         playerMgr = GetComponent<PlayerManager>();
 
         // Register delegates for specific actions.
@@ -39,7 +37,7 @@ public class PlayerInput : MonoBehaviour
         player.AddInputEventDelegate(TogglePause, UpdateLoopType.Update, "Toggle Pause");
         player.AddInputEventDelegate(ReleaseRope, UpdateLoopType.Update, "Release Rope");
         player.AddInputEventDelegate(PullingOnRope, UpdateLoopType.Update, "Pull On Rope");
-        
+
         // Subscribe to events of controller connection
         ReInput.ControllerConnectedEvent += OnControllerConnected;
         ReInput.ControllerDisconnectedEvent += OnControllerDisconnected;
@@ -47,7 +45,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Reset()
     {
-        movement = GetComponent<MovementBehaviour>();
+        //movement = GetComponent<MovementBehaviour>();
         harpoonLauncher = GetComponent<HarpoonLauncher>();
         playerMgr = GetComponent<PlayerManager>();
 
@@ -98,11 +96,11 @@ public class PlayerInput : MonoBehaviour
 
         if (data.GetButtonUp())
         {
-            if(doPause)
+            if (doPause)
             {
                 Debug.Log("Toggle pause !");
             }
-            
+
             doPause = false;
         }
 
@@ -111,7 +109,7 @@ public class PlayerInput : MonoBehaviour
 
     private void DropBomb(InputActionEventData data)
     {
-        if(playerMgr.isDead)
+        if (playerMgr.isDead)
         {
             return;
         }
@@ -120,7 +118,7 @@ public class PlayerInput : MonoBehaviour
         {
             // Spawn the bomb behind the boat
             bombLauncher.gameObject.SetActive(true);
-            bombLauncher.SpawnTheBomb(transform.position - bombLauncher.behindOffset * transform.forward, _myRigidbody.velocity);
+            bombLauncher.SpawnTheBomb(transform.position - bombLauncher.behindOffset * transform.forward, movement.physicMove.velocity);
         }
     }
 
