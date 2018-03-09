@@ -14,6 +14,8 @@ public class PlayerManager : MonoBehaviour {
     public Slider rezBar;
     public Image deathIcon;
     public GameObject playerPositionIndicator;
+    private Text playerPosText;
+    private Camera mainCamera;
 
     public int rezAmountWhenDead = 0;
 
@@ -30,10 +32,16 @@ public class PlayerManager : MonoBehaviour {
     {
         _alliesList = FindObjectsOfType<PlayerManager>();
         movement = GetComponent<MovementBehaviour>();
+
+        mainCamera = FindObjectOfType<Camera>();
+        playerPosText = playerPositionIndicator.GetComponent<Text>();
     }
 
     void Start()
     {
+
+        StartCoroutine(TimedFeedbackPlayerPos());
+
         if (isDead)
         {
             Death();
@@ -128,6 +136,11 @@ public class PlayerManager : MonoBehaviour {
             deathIcon.enabled = false;
             rezBar.gameObject.SetActive(false);
         }
+
+        if(playerPositionIndicator.activeSelf)
+        {
+            OrientPositionText();
+        }
     }
 
     // Player is back in the game
@@ -140,8 +153,43 @@ public class PlayerManager : MonoBehaviour {
         GameManager.instance.shipMgr.NotifyAlive();
     }
 
-    public void FeedbackPlayerPos(bool displayed)
+    public void FeedbackPlayerPos(bool displayed, int playerId)
     {
         playerPositionIndicator.SetActive(displayed);
+        switch(playerId)
+        {
+            case 0:
+                playerPosText.text = "P1";
+                playerPosText.color = Color.red;
+                break;
+
+            case 1:
+                playerPosText.text = "P2";
+                playerPosText.color = Color.green;
+                break;
+
+            case 2:
+                playerPosText.text = "P3";
+                playerPosText.color = Color.magenta;
+                break;
+
+            case 3:
+                playerPosText.text = "P4";
+                playerPosText.color = Color.yellow;
+                break;
+        }
+    }
+
+    private void OrientPositionText()
+    {
+        playerPositionIndicator.transform.LookAt(transform.position - mainCamera.transform.position);
+    }
+
+    IEnumerator TimedFeedbackPlayerPos()
+    {
+        int playerID = GetComponent<PlayerInput>().playerId;
+        FeedbackPlayerPos(true, playerID);
+        yield return new WaitForSeconds(5f);
+        FeedbackPlayerPos(false, playerID);
     }
 }

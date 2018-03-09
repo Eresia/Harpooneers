@@ -44,7 +44,7 @@ public class PlayerInput : MonoBehaviour
         ReInput.ControllerDisconnectedEvent += OnControllerDisconnected;
 
         // Deactivate the player position indicator
-        playerMgr.FeedbackPlayerPos(false);
+        playerMgr.FeedbackPlayerPos(false, playerId);
     }
 
     private void Reset()
@@ -187,12 +187,12 @@ public class PlayerInput : MonoBehaviour
     {
         if (data.GetButtonDown())
         {
-            playerMgr.FeedbackPlayerPos(true);
+            playerMgr.FeedbackPlayerPos(true, playerId);
         }
 
         else if(data.GetButtonUp())
         {
-            playerMgr.FeedbackPlayerPos(false);
+            playerMgr.FeedbackPlayerPos(false, playerId);
         }
        
     }
