@@ -17,6 +17,13 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager instance {get; private set;}
 
+
+    public bool IsPause
+    {
+        get { return gamePaused; }
+    }
+    private bool gamePaused;
+
     /// <summary>
     /// Return the number of players for the current game.
     /// </summary>
@@ -42,7 +49,7 @@ public class GameManager : MonoBehaviour {
 
         SetupGame();
 	}
-
+    
     // Setup or reset data.
     private void SetupGame()
     {
@@ -122,8 +129,32 @@ public class GameManager : MonoBehaviour {
         sceneMgr.LoadMainMenuScene();
     }
     
+    public void PauseGame()
+    {
+        gamePaused = !gamePaused;
+
+        Time.timeScale = gamePaused ? 0f : 1f;
+
+        if(gamePaused)
+        {
+            Debug.Log("PAUSE !!!");
+
+            // TODO Display PAUSE PANEL.
+        }
+
+        else
+        {
+            // TODO Undisplay PAUSE PANEL.
+        }
+    }
+
     public void GameOver()
     {
         Debug.Log("GAME OVER !!!");
+    }
+
+    public void GameFinished()
+    {
+        Debug.Log("GAME FINISHED !!!");
     }
 }

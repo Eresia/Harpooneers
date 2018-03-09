@@ -90,25 +90,30 @@ public class PlayerInput : MonoBehaviour
 
     private void TogglePause(InputActionEventData data)
     {
-        // If game is unpaused.
-
-        // Use this to pause after a delay.
-        if (!doPause)
-        {
-            doPause = data.GetButtonTimePressed() > timeBeforePause;
-        }
-
-        if (data.GetButtonUp())
-        {
-            if (doPause)
-            {
-                Debug.Log("Toggle pause !");
-            }
-
-            doPause = false;
-        }
-
         // If game is paused : direct unpause.
+        if (GameManager.instance.IsPause)
+        {
+            if(data.GetButtonDown())
+            {
+                GameManager.instance.PauseGame();
+                doPause = false;
+            }
+        }
+
+        // If game is unpaused.
+        else
+        {
+            if (!doPause)
+            {
+                // Use this to pause after a delay.
+                doPause = data.GetButtonTimePressed() > timeBeforePause;
+
+                if (doPause)
+                {
+                    GameManager.instance.PauseGame();
+                }
+            }
+        }
     }
 
     private void DropBomb(InputActionEventData data)
