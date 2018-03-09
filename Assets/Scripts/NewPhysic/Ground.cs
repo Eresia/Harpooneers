@@ -135,12 +135,9 @@ public class Ground : MonoBehaviour {
 
 	private void CheckWave(WaveOptions w){
 		double waveSize = 0f;
-		for(int i = 0; i < 20; i++){
-			for(int j = 0; j < 20; j++){
+		for(int i = 0; i < lod.x; i++){
+			for(int j = 0; j < lod.y; j++){
 				waveSize += CalculateWave(w, i, j);
-				waveSize += CalculateWave(w, -i, j);
-				waveSize += CalculateWave(w, i, -j);
-				waveSize += CalculateWave(w, -i, -j);
 
 				// if(!result){
 				// 	break;
@@ -162,57 +159,35 @@ public class Ground : MonoBehaviour {
 
 	private float CalculateWave(WaveOptions w, int i, int j){
 
-		if((i + j) == 0){
+		float offsetX = w.position.x - i;
+		float offsetY = w.position.y - j;
+
+		if((offsetX == 0) && (offsetY == 0)){
 			return 0f;
 		}
 
-		float xRound = Mathf.Round(w.position.x);
-		float yRound = Mathf.Round(w.position.y);
-
-		if((xRound + i) < 0){
-			return 0f;
-		}
-
-		if((xRound + i) >= lod.x){
-			return 0f;
-		}
-
-		if((yRound + j) < 0){
-			return 0f;
-		}
-
-		if((yRound + j) >= lod.y){
-			return 0f;
-		}
-
-		int pointId = ((((int) xRound) + i) * lod.y) + (((int) yRound) + j);
-
-		float offsetX = xRound - w.position.x;
-		float offsetY = yRound - w.position.y;
+		int pointId = (i* lod.y) + j;
 
 		float currentTime = time - w.time;
 
 		float iCoeff = 1;
 		float jCoeff = 1;
 
-		if(i < 0){
+		if(offsetX < 0){
 			iCoeff *= -1;
 		}
 
-		if(j < 0){
+		if(offsetY < 0){
 			jCoeff *= -1;
 		}
 
 		float wt = w.angularFrequency * currentTime;
 
-		float iFloat = (float) i;
-		float jFloat = (float) j;
+		float iAbs = Mathf.Abs(offsetX);
+		float jAbs = Mathf.Abs(offsetY);
 
-		float iAbs = Mathf.Abs(iFloat);
-		float jAbs = Mathf.Abs(jFloat);
-
-		float thetaX = (w.waveNumber * (((float) i) / lod.x) - offsetX) - (wt * iCoeff);
-		float thetaY = (w.waveNumber * (((float) j) / lod.y) - offsetY) - (wt * jCoeff);
+		float thetaX = (w.waveNumber * (offsetX / lod.x)) - (wt * iCoeff);
+		float thetaY = (w.waveNumber * (offsetY / lod.y)) - (wt * jCoeff);
 
 		float xHeight;
 		float yHeight;
@@ -220,13 +195,16 @@ public class Ground : MonoBehaviour {
 		xHeight = Mathf.Sin(thetaX) / Mathf.Exp(iAbs / w.distanceDigress) / Mathf.Exp(wt / w.timeDigress);
 		yHeight = Mathf.Sin(thetaY) / Mathf.Exp(jAbs / w.distanceDigress) / Mathf.Exp(wt / w.timeDigress);
 
-		float coeff = iAbs + jAbs;
+		float coeff = (iAbs + jAbs);
+		
 		float theta = (iAbs * xHeight + jAbs * yHeight) / coeff;
 
 		float finalHeight = w.amplitude * theta;
 
-		points[pointId] += finalHeight / coeff;
-		coeffPoints[pointId] += (1 / coeff);
+		float heightAbs = Mathf.Abs(finalHeight);
+
+		points[pointId] += finalHeight * (heightAbs/ coeff);
+		coeffPoints[pointId] += (heightAbs / coeff);
 
 		// if(Mathf.Abs(finalHeight) < minWave){
 		// 	return false;
@@ -235,7 +213,7 @@ public class Ground : MonoBehaviour {
 		// 	return true;
 		// }
 
-		return Mathf.Abs(finalHeight);
+		return heightAbs;
 		
 	}
 
