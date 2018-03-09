@@ -11,25 +11,24 @@ public class PatternSystem : MonoBehaviour
     public int TurnMin = 1; 
     [Range(5,10)]
     public int TurnMax = 5;
+    [Range(0,50)]
+    public int DistMin;
+    [Range(0,50)]
+    public int DistMax;
+    public float WaitBeforeDash = 0f;
+
     [Header("Effect")]
-    public float WhaleSpeed = 1f;
+    public float WhaleSpeed = 0f;
     [Header("Links")]
     public GameObject WhalePrefab;
     public Transform north;
     public Transform east;
     public Transform south;
     public Transform west;
-    private bool _sideCheck;
 
     private void Start()
     {
         StartCoroutine(Pattern());
-    }
-
-    private void LatDash(Transform whale)
-    {
-        int r = Random.Range(0,10);
-        _sideCheck = !_sideCheck;
     }
 
     IEnumerator Pattern()
@@ -64,15 +63,24 @@ public class PatternSystem : MonoBehaviour
 
     IEnumerator HMove(Transform whale)
     {
+        bool _left;
         int turn = Random.Range(TurnMin, TurnMax+1);
-        Debug.Log("Turns = " + turn);
+        _left = false;
 
-        _sideCheck = false;
         for(int i = 0; i < turn; i++)
         {
-            LatDash(whale);
+            int distance = Random.Range(DistMin,DistMax);
+            if (_left)
+                distance *= -1;
+            Vector3 destination = whale.position + whale.transform.right * distance;
+            float duration = Mathf.Abs(distance/WhaleSpeed);
+            whale.DOMove(destination, duration);
+            yield return new WaitForSeconds(Mathf.Abs(duration));
+
+            _left = !_left;
         }
 
-        yield return null;
+        yield return new WaitForSeconds(WaitBeforeDash);
+        whale.DOMove(whale.transform.forward * 50f, 1f);
     }
 }

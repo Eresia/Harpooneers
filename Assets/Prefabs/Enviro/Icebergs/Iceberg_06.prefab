@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4241724332265836}
   - component: {fileID: 33395045288423700}
   - component: {fileID: 23616895685133986}
+  - component: {fileID: 64813166088024700}
   m_Layer: 0
   m_Name: Iceberg_06
   m_TagString: Untagged
@@ -81,4 +82,18 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1613231411896428}
+  m_Mesh: {fileID: 4300000, guid: 737f4983c25e6a84d82cea5769220863, type: 3}
+--- !u!64 &64813166088024700
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1613231411896428}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: 737f4983c25e6a84d82cea5769220863, type: 3}
