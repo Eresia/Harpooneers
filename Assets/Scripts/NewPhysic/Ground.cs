@@ -33,6 +33,10 @@ public class Ground : MonoBehaviour {
 
 		public float angularFrequency;
 
+		public float distanceDigress;
+
+		public float timeDigress;
+
 		public float time;
 	}
 
@@ -213,8 +217,8 @@ public class Ground : MonoBehaviour {
 		float xHeight;
 		float yHeight;
 
-		xHeight = Mathf.Sin(thetaX) / Mathf.Exp(iAbs / distanceDigress) / Mathf.Exp(wt / timeDigress);
-		yHeight = Mathf.Sin(thetaY) / Mathf.Exp(jAbs / distanceDigress) / Mathf.Exp(wt / timeDigress);
+		xHeight = Mathf.Sin(thetaX) / Mathf.Exp(iAbs / w.distanceDigress) / Mathf.Exp(wt / w.timeDigress);
+		yHeight = Mathf.Sin(thetaY) / Mathf.Exp(jAbs / w.distanceDigress) / Mathf.Exp(wt / w.timeDigress);
 
 		float coeff = iAbs + jAbs;
 		float theta = (iAbs * xHeight + jAbs * yHeight) / coeff;
@@ -246,6 +250,8 @@ public class Ground : MonoBehaviour {
 		newWave.period = period;
 		newWave.waveNumber = (2 * Mathf.PI) / waveLength;
 		newWave.angularFrequency = (2 * Mathf.PI) / period;
+		newWave.distanceDigress = distanceDigress;
+		newWave.timeDigress = timeDigress;
 		newWave.time = time;
 		waves.Add(newWave);
 	}
