@@ -103,8 +103,8 @@ public class Harpoon : MonoBehaviour {
 				break;
 		}
 
-		lineRenderer.SetPosition(0, selfPos);
-		lineRenderer.SetPosition(1, launcherPos);
+        lineRenderer.SetPosition(0, selfPos);
+        lineRenderer.SetPosition(1, launcherPos);
 		lineRenderer.materials[0].color = new Color(color, color, color, 1f);
 	}
 
@@ -115,9 +115,12 @@ public class Harpoon : MonoBehaviour {
 		this.launchSpeed = launchSpeed;
 		this.returnSpeed = returnSpeed;
 		this.state = State.LAUNCHING;
+        
+        selfTransform.position = from;
 
-		selfTransform.position = from;
-	}
+        lineRenderer.SetPosition(0, from);
+        lineRenderer.SetPosition(1, from);
+    }
 
 	public void Cut(){
 		if(state < State.RETURN){

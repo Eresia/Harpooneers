@@ -25,14 +25,6 @@ public class GameManager : MonoBehaviour {
     public ShipConfiguration[] shipConfigs;
 
     public bool[] players;
-
-    public ShipConfiguration defaultConfig = new ShipConfiguration
-    {
-        cabinId = 0,
-        bombStockId = 0,
-        coqueId = 0,
-        harpoonId = 0
-    };
     
     void Awake()
 	{

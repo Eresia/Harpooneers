@@ -6,6 +6,16 @@
 public class ShipManager : MonoBehaviour {
 
     public bool useDefaultConfig = false;
+
+    public ShipConfiguration defaultConfig = new ShipConfiguration
+    {
+        cabinId = 0,
+        bombStockId = 0,
+        coqueId = 0,
+        harpoonId = 0
+    };
+
+    [Tooltip("Try to update module at runtime, but every modules wont work.")]
     public bool tweaking = false;
 
     public GameObject[] players;
@@ -39,7 +49,7 @@ public class ShipManager : MonoBehaviour {
                 // For debug only. Load default config.
                 if(useDefaultConfig)
                 {
-                    shipModuleMgrs[i].ActivateShipModules(GameManager.instance.defaultConfig, this);
+                    shipModuleMgrs[i].ActivateShipModules(GameManager.instance.shipMgr.defaultConfig, this);
                 }
 
                 else
