@@ -3219,12 +3219,22 @@ Prefab:
       propertyPath: joystixError
       value: 0.9999
       objectReference: {fileID: 0}
+    - target: {fileID: 114888584532763218, guid: 8d447a651bdff9d4f851fefa8a7a864c,
+        type: 2}
+      propertyPath: playerPositionIndicator
+      value: 
+      objectReference: {fileID: 1343739244}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8d447a651bdff9d4f851fefa8a7a864c, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &1343739243 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4493171840694980, guid: 8d447a651bdff9d4f851fefa8a7a864c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1343739242}
+--- !u!1 &1343739244 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1232968556676988, guid: 8d447a651bdff9d4f851fefa8a7a864c,
     type: 2}
   m_PrefabInternal: {fileID: 1343739242}
 --- !u!1001 &1423903720

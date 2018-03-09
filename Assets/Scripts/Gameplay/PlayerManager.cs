@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviour {
     [Header("UI")]
     public Slider rezBar;
     public Image deathIcon;
+    public GameObject playerPositionIndicator;
 
     public int rezAmountWhenDead = 0;
 
@@ -137,5 +138,10 @@ public class PlayerManager : MonoBehaviour {
         _rezAmount = 0;
 
         GameManager.instance.shipMgr.NotifyAlive();
+    }
+
+    public void FeedbackPlayerPos(bool displayed)
+    {
+        playerPositionIndicator.SetActive(displayed);
     }
 }

@@ -1294,6 +1294,7 @@ MonoBehaviour:
   friction: 2
   mass: 5
   limitSpeed: 7
+  gravity: 0
 --- !u!114 &114301401480464612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1311,7 +1312,6 @@ MonoBehaviour:
   harpoonLauncher: {fileID: 114609724380578428}
   bombLauncher: {fileID: 0}
   timeBeforePause: 1
-  playerPositionIndicator: {fileID: 1232968556676988}
 --- !u!114 &114355733020500592
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1397,7 +1397,7 @@ MonoBehaviour:
     type: 2}
   boatFollower: {fileID: 0}
   directionObject: {fileID: 0}
-  joystixError: 0.99
+  joystixError: 0.9999
   castTime: 1
   castTimeMax: 1
   castDistance: 2
@@ -1523,6 +1523,7 @@ MonoBehaviour:
   healthPerInput: 0
   rezBar: {fileID: 114414539537242024}
   deathIcon: {fileID: 114616054903995692}
+  playerPositionIndicator: {fileID: 1232968556676988}
   rezAmountWhenDead: 0
   isDead: 0
 --- !u!136 &136460695975876572
