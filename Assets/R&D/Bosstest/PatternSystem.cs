@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PatternSystem : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class PatternSystem : MonoBehaviour
 
     private void LatDash(Transform whale)
     {
-        Random.Range(0,10);
+        int Random.Range(0,10);
         _sideCheck = !_sideCheck;
     }
 
