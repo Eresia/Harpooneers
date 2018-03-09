@@ -29,11 +29,14 @@ public class ShipModulesManager : MonoBehaviour {
     private void FixedUpdate()
     {
         // TODO REMOVE when tweaking is finished.
+
         if(GameManager.instance.shipMgr.tweaking)
         {
             _movementScript.physicMove.limitSpeed = _movementScript.coqueModule.maxSpeed;
-            _movementScript.physicMove.friction = _movementScript.coqueModule.friction;
-            _movementScript.physicMove.mass = _movementScript.coqueModule.mass;
+            _movementScript.physicMove.friction = _movementScript.coqueModule.inertia;
+            _movementScript.physicMove.gravity = _movementScript.coqueModule.waveResistance;
+            
+            _bombScript.physicsScript.gravity = _bombScript.bombStockModule.bombWavesResistance;
         }
     }
 
@@ -55,10 +58,13 @@ public class ShipModulesManager : MonoBehaviour {
             // Configure coque and impact move physic.
             _movementScript.coqueModule = shipMgr.coquesScriptObjs[config.coqueId];
             _movementScript.physicMove.limitSpeed = _movementScript.coqueModule.maxSpeed;
-            _movementScript.physicMove.friction = _movementScript.coqueModule.friction;
+            _movementScript.physicMove.friction = _movementScript.coqueModule.inertia;
+            _movementScript.physicMove.gravity = _movementScript.coqueModule.waveResistance;
 
             _bombScript.bombStockModule = shipMgr.bombsScriptObjs[config.bombStockId];
-            _bombScript.SetupFx();
+            _bombScript.physicsScript.gravity = _bombScript.bombStockModule.bombWavesResistance;
+
+            _bombScript.SetupBombFX();
         }
     }
 

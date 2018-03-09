@@ -41,7 +41,7 @@ public class ShipManager : MonoBehaviour {
     {
         playerAlive = GameManager.instance.nbOfPlayers;
 
-        for (int i = 0; i < shipModuleMgrs.Length; i++)
+        for (int i = 0; i < players.Length; i++)
         {
             // Check if a player is in the game.
             if(GameManager.instance.players[i])

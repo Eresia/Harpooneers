@@ -283,6 +283,7 @@ MonoBehaviour:
   friction: 1
   mass: 1
   limitSpeed: 10
+  gravity: -10
 --- !u!114 &114280649162688774
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -316,6 +317,7 @@ MonoBehaviour:
   explosionFX: {fileID: 198705812699117832}
   explodingFX: {fileID: 198292180236823474}
   resetWhenLeaveScreen: {fileID: 114449333884124644}
+  physicsScript: {fileID: 114000989618548766}
 --- !u!114 &114449333884124644
 MonoBehaviour:
   m_ObjectHideFlags: 1

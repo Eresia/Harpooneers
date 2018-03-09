@@ -2,6 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct BoundariesData
+{
+    public float xBottomLeft;
+    public float xBottomRight;
+    public float xTopLeft;
+    public float xTopRight;
+    public float zBottom;
+    public float zTop;
+
+    public float sideLength;
+}
+
 public class BoundaryManager : MonoBehaviour {
 
     public Camera cam;
@@ -9,8 +22,10 @@ public class BoundaryManager : MonoBehaviour {
 
     public float horizontalOffset = 0.1f;
     public float verticalOffset = 0.1f;
-
+    
     private Vector3[] limits;
+
+    public BoundariesData trapezeData;
 
     private void Awake()
     {
@@ -43,6 +58,18 @@ public class BoundaryManager : MonoBehaviour {
         {
             limits[3] = hit.point;
         }
+
+        // Update trapeze data
+        trapezeData.zBottom = limits[0].z;
+        trapezeData.zTop = limits[1].z;
+
+        trapezeData.xBottomLeft = limits[0].x;
+        trapezeData.xTopLeft = limits[1].x;
+
+        trapezeData.xBottomRight = limits[3].x;
+        trapezeData.xTopRight = limits[2].x;
+
+        trapezeData.sideLength = Mathf.Abs(trapezeData.zBottom - trapezeData.zTop);
     }
 
     /// <summary>
@@ -51,21 +78,19 @@ public class BoundaryManager : MonoBehaviour {
     /// <returns></returns>
     public Vector3 InScreenPosition(Vector3 boatPos)
     {
-        Vector3 posInScreen = Camera.main.WorldToViewportPoint(boatPos);
+        Vector3 clampedPos = boatPos;
+        
+        float t = Mathf.Abs(trapezeData.zBottom - boatPos.z) / trapezeData.sideLength;
 
-        posInScreen.x = Mathf.Clamp(posInScreen.x, 0f + horizontalOffset, 1f - horizontalOffset);
-        posInScreen.y = Mathf.Clamp(posInScreen.y, 0f + verticalOffset, 1f - verticalOffset);
-        posInScreen.z = 0f;
+        float xMin = Mathf.Lerp(trapezeData.xBottomLeft, trapezeData.xTopLeft, t);
+        float xMax = Mathf.Lerp(trapezeData.xBottomRight, trapezeData.xTopRight, t);
 
-        Ray r = Camera.main.ViewportPointToRay(posInScreen);
+        //Debug.Log(t + ": " + xMin + " " + xMax);
 
-        RaycastHit hit;
-        if (Physics.Raycast(r, out hit, 10000f, seaMask))
-        {
-            Debug.DrawRay(r.origin, r.direction * hit.distance, Color.green);
-        }
+        clampedPos.x = Mathf.Clamp(clampedPos.x, xMin + horizontalOffset, xMax - horizontalOffset);
+        clampedPos.z = Mathf.Clamp(clampedPos.z, trapezeData.zBottom + verticalOffset, trapezeData.zTop - verticalOffset);
 
-        return hit.point;
+        return clampedPos;
     }
 
     public bool IsInScreen(Vector3 pos)
