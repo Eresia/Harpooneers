@@ -155,9 +155,15 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
         gameObject.SetActive(false);
     }
 
-    // Debug radius.
+    
     private void OnDrawGizmosSelected()
     {
+        if(!bombStockModule)
+        {
+            return;
+        }
+
+        // Debug radius of the bomb.
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, bombStockModule.bombRadius);
     }

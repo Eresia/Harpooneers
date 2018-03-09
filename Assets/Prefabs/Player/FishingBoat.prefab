@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 4758839221072308}
   - component: {fileID: 65409385241251224}
   m_Layer: 11
-  m_Name: Hook
+  m_Name: HookCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1204,8 +1204,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.5, z: 1.5}
-  m_Center: {x: 0, y: 0.25, z: 0.25}
+  m_Size: {x: 1.25, y: 1, z: 2.25}
+  m_Center: {x: 0, y: 0.5, z: 0.25}
 --- !u!114 &114149151925101046
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1321,7 +1321,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicObject: {fileID: 114149151925101046}
   friction: 2
-  mass: 5
   limitSpeed: 7
   gravity: 50
 --- !u!114 &114301401480464612
@@ -1421,17 +1420,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5798ddc58cf6a84bb70330fe41564ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerId: 0
   harpoonPrefab: {fileID: 114938105809876424, guid: f4c1868bfebd2c7408a81cd0e4b46dcc,
     type: 2}
   boatFollower: {fileID: 0}
   directionObject: {fileID: 0}
-  joystixError: 0.9999
+  joystickError: 0.8
   castTime: 1
   castTimeMax: 1
   castDistance: 2
   cooldownTime: 1
-  harpoonModule: {fileID: 11400000, guid: 7f7037addcace3a4d9829f24b8140ab3, type: 2}
+  harpoonModule: {fileID: 0}
+  targetable:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!114 &114616054903995692
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1477,8 +1478,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 513
   playerMgr: {fileID: 114888584532763218}
-  killingForce: 150
-  bumpForce: 2
+  killingForce: 225
+  bumpForce: 15
 --- !u!114 &114787632788375122
 MonoBehaviour:
   m_ObjectHideFlags: 1

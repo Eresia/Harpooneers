@@ -40,6 +40,9 @@ public class HarpoonLauncher : MonoBehaviour {
     [Header("Module")]
     public HarpoonModule harpoonModule;
 
+    [Header("AutoAim")]
+    public LayerMask targetable;
+
     public Transform selfTransform {get; private set;}
 
 	public PhysicMove physicMove {get; private set;}
@@ -138,7 +141,8 @@ public class HarpoonLauncher : MonoBehaviour {
 
 	private void DisplayLaunching(Vector3 direction, float power){
 		directionObject.localPosition = direction * power * castDistance;
-	}
+        directionObject.rotation = Quaternion.LookRotation(direction);
+    }
 
 	private void EndLaunching(Vector3 direction, float power){
 
@@ -153,6 +157,24 @@ public class HarpoonLauncher : MonoBehaviour {
         // OSEF
         //float distanceToReach = harpoonModule.fireDistance;
 
+        direction = TryToAutoAim(direction);
+
         harpoon.Launch(this, selfTransform.position, direction * harpoonModule.fireSpeed + physicMove.Velocity, distanceToReach, harpoonModule.returnSpeed);
 	}
+
+    private Vector3 TryToAutoAim(Vector3 currentDir)
+    {
+        Ray r = new Ray(selfTransform.position, currentDir);
+        Vector3 finalDir = currentDir;
+
+        Debug.DrawRay(r.origin, r.direction * 100f, Color.green, 2f);
+
+        RaycastHit hit;
+        if(Physics.Raycast(r, out hit, 1000f, targetable)) {
+
+            finalDir = (hit.transform.position - selfTransform.position).normalized;
+        }
+
+        return finalDir;
+    }
 }

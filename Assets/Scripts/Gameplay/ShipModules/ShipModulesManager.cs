@@ -33,7 +33,7 @@ public class ShipModulesManager : MonoBehaviour {
         if(GameManager.instance.shipMgr.tweaking)
         {
             _movementScript.physicMove.friction = _movementScript.coqueModule.drag;
-            _movementScript.physicMove.gravity = _movementScript.coqueModule.waveResistance;
+            _movementScript.physicMove.gravity = _movementScript.coqueModule.waveSensibility;
             
             _bombScript.physicsScript.gravity = _bombScript.bombStockModule.bombWavesResistance;
         }
@@ -58,7 +58,7 @@ public class ShipModulesManager : MonoBehaviour {
             _movementScript.coqueModule = shipMgr.coquesScriptObjs[config.coqueId];
             _movementScript.physicMove.limitSpeed = _movementScript.coqueModule.moveSpeedMax;
             _movementScript.physicMove.friction = _movementScript.coqueModule.drag;
-            _movementScript.physicMove.gravity = _movementScript.coqueModule.waveResistance;
+            _movementScript.physicMove.gravity = _movementScript.coqueModule.waveSensibility;
 
             _bombScript.bombStockModule = shipMgr.bombsScriptObjs[config.bombStockId];
             _bombScript.physicsScript.gravity = _bombScript.bombStockModule.bombWavesResistance;

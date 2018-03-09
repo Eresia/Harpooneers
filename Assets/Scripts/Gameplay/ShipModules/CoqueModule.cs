@@ -5,15 +5,15 @@ using UnityEngine;
 [System.Serializable]
 public class CoqueModule : ScriptableObject
 {
-    public string moduleName;
+    public string moduleName = "La bonne Coque";
     public int moduleId;
-    public string description;
+    public string description = "A nice hull";
     
-    public float moveSpeedMax;
-    public float turnSpeed;
+    public float moveSpeedMax = 0.005f;
+    public float turnSpeed = 5;
 
     public float hitboxSize;
 
-    public float drag = 1;
-    public float waveResistance = 5;
+    public float drag = 2;
+    public float waveSensibility = 20;
 }

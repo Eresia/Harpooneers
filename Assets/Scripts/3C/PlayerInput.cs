@@ -4,7 +4,7 @@ using Rewired;
 /// <summary>
 /// Handle Input associated to each player.
 /// </summary>
-[RequireComponent(typeof(MovementBehaviour_OLD))]
+[RequireComponent(typeof(MovementBehaviour))]
 public class PlayerInput : MonoBehaviour
 {
     [Tooltip("Rewired player id")]

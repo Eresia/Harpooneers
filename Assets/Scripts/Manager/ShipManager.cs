@@ -15,11 +15,12 @@ public class ShipManager : MonoBehaviour {
         harpoonId = 0
     };
 
-    [Tooltip("Try to update module at runtime, but every modules wont work.")]
+    [Tooltip("Try to update module at runtime, but warning an attribute can not work.")]
     public bool tweaking = false;
 
     public GameObject[] players;
-    public ShipModulesManager[] shipModuleMgrs;
+    
+    private ShipModulesManager[] shipModuleMgrs;
     
     private int playerAlive = 0;
 
@@ -31,7 +32,14 @@ public class ShipManager : MonoBehaviour {
 
     private void Awake()
     {
-        if(useDefaultConfig)
+        shipModuleMgrs = new ShipModulesManager[players.Length];
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            shipModuleMgrs[i] = players[i].GetComponentInChildren<ShipModulesManager>();
+        }
+
+        if (useDefaultConfig)
         {
             SetupAllShips();
         }

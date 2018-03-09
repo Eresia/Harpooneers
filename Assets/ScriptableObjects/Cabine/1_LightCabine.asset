@@ -8,15 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c0880e239be2d34095e526734855c6f, type: 3}
-  m_Name: 1_LightCoque
+  m_Script: {fileID: 11500000, guid: 6d72af0933b6c0245bdd9aa1c8c66299, type: 3}
+  m_Name: 1_LightCabine
   m_EditorClassIdentifier: 
-  moduleName: Light Hull
+  moduleName: Light Cabin
   moduleId: 1
-  description: It's light  & pretty
-  moveSpeed: 25
-  maxSpeed: 30
-  turnSpeed: 9
-  hitboxSize: 1
-  friction: 2
-  mass: 5
+  description: A bit cramped
