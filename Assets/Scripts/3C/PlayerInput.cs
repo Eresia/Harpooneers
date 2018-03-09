@@ -76,7 +76,7 @@ public class PlayerInput : MonoBehaviour
 
         // Handle harpoon rotation.
         {
-            float rotateX = player.GetAxis("Rotate Horizontal");
+            float rotateX = player.GetAxis ("Rotate Horizontal");
             float rotateZ = player.GetAxis("Rotate Vertical");
 
             Vector3 harpoonDir = new Vector3(rotateX, 0f, rotateZ);

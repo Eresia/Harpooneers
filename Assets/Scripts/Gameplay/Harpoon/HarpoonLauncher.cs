@@ -6,11 +6,6 @@ using Rewired;
 [RequireComponent(typeof(PhysicMove))]
 public class HarpoonLauncher : MonoBehaviour {
     
-    [SerializeField]
-	private int playerId;
-
-	[Space]
-
 	[SerializeField]
 	private Harpoon harpoonPrefab;
 
@@ -25,7 +20,7 @@ public class HarpoonLauncher : MonoBehaviour {
 
 	[Tooltip("Joystix is considered at 0 behin d this value")]
 	[SerializeField]
-	private float joystixError;
+	private float joystickError;
 
 	[Space]
 
@@ -68,39 +63,12 @@ public class HarpoonLauncher : MonoBehaviour {
 		mouse = ReInput.controllers.Mouse;
 	}
 
-	private void Update() {
-		if(GameManager.instance.actualPlayer == playerId){
-			if(mouse.GetButton(0)){
-				Vector3 boatPosition = Camera.main.WorldToScreenPoint(selfTransform.position);
-				Vector3 direction = Input.mousePosition - boatPosition;
-				direction.z = direction.y;
-				direction.y = 0;
-				LaunchHarpoon(direction.normalized);
-			}
-			else{
-				LaunchHarpoon(Vector2.zero);
-			}
-
-			if(mouse.GetButtonDown(1)){
-				Cut();
-			}
-
-			if(harpoon != null){
-				if(Input.GetKey(KeyCode.A)){
-					harpoon.Pull();
-				}
-				else if(Input.GetKey(KeyCode.Z)){
-					harpoon.Release();
-				}
-			}
-		}
-	}
-
 	public void LaunchHarpoon(Vector3 direction){
 
 		if(harpoon == null){
-            
-			if(direction.sqrMagnitude > joystixError)
+
+            //Debug.Log(direction.sqrMagnitude);
+			if(direction.sqrMagnitude > joystickError)
             {
 				if(!isLaunching)
                 {
@@ -179,8 +147,8 @@ public class HarpoonLauncher : MonoBehaviour {
 
         float speedBonus = physicMove.velocity.sqrMagnitude;
 
-        // THe distance depends from the duration of cast
-        //float distanceToReach = Mathf.Lerp(0f, harpoonModule.fireDistance, power);
+        // The distance depends from the duration of cast
+        // float distanceToReach = Mathf.Lerp(0f, harpoonModule.fireDistance, power);
 
         // OSEF
         float distanceToReach = harpoonModule.fireDistance;
