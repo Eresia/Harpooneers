@@ -36,8 +36,9 @@ public class GameManager : MonoBehaviour {
 			Destroy(gameObject);
             return;
 		}
-
+        
         DontDestroyOnLoad(gameObject);
+        Application.runInBackground = true;
 
         SetupGame();
 	}

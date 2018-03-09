@@ -28,7 +28,7 @@ public class PatternSystem : MonoBehaviour
 
     private void LatDash(Transform whale)
     {
-        int Random.Range(0,10);
+        int r = Random.Range(0,10);
         _sideCheck = !_sideCheck;
     }
 

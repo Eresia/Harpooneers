@@ -15,14 +15,13 @@ public class PhaseTransitionManager : MonoBehaviour {
     public int currentPhase = -1;
     [Space(20)]
     public PhaseTransition[] phasesCameras;
-    public bool gameOver;
+    public bool gameFinished;
     
-
-
+    
     // For Debug / Manual
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P) && !gameOver)
+        if(Input.GetKeyDown(KeyCode.P) && !gameFinished)
         {           
             NextPhase();
         }
@@ -35,10 +34,12 @@ public class PhaseTransitionManager : MonoBehaviour {
         if(currentPhase < phasesCameras.Length)
         {
             StartCoroutine(TransitionToNextPhase(cameraTransform.position, phasesCameras[currentPhase].camPosition, phasesCameras[currentPhase].transitionTime));
-        }       
+        }
+
         else
         {
-            gameOver = true;
+            gameFinished = true;
+
             Debug.Log("You won !");
         }
 
