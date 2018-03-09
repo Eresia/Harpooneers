@@ -94,6 +94,9 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
 
     private IEnumerator Explosion(float delay)
     {
+        if (delay > 0)
+            fuseFX.Play();
+
         yield return new WaitForSeconds(delay);
 
         // Deal damage with an overlap sphere
@@ -123,6 +126,7 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
         radiusFX.SetActive(false);
 
         explosionFX.Play();
+        fuseFX.Stop();
 
         StartCoroutine(DeactiveGameObject());
     }

@@ -157,6 +157,11 @@ Prefab:
       propertyPath: boundaryMgr
       value: 
       objectReference: {fileID: 265122724}
+    - target: {fileID: 114872358802777512, guid: bac4336b7303bee4aa64fef9b6be88c1,
+        type: 2}
+      propertyPath: boundaryMgr
+      value: 
+      objectReference: {fileID: 265122724}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bac4336b7303bee4aa64fef9b6be88c1, type: 2}
   m_IsPrefabParent: 0
@@ -2991,6 +2996,16 @@ Prefab:
       propertyPath: boundaryMgr
       value: 
       objectReference: {fileID: 265122724}
+    - target: {fileID: 114872358802777512, guid: bac4336b7303bee4aa64fef9b6be88c1,
+        type: 2}
+      propertyPath: boundaryMgr
+      value: 
+      objectReference: {fileID: 265122724}
+    - target: {fileID: 114394444429946026, guid: bac4336b7303bee4aa64fef9b6be88c1,
+        type: 2}
+      propertyPath: damageableLayer.m_Bits
+      value: 513
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bac4336b7303bee4aa64fef9b6be88c1, type: 2}
   m_IsPrefabParent: 0
