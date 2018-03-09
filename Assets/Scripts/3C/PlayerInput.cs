@@ -80,10 +80,10 @@ public class PlayerInput : MonoBehaviour
             float rotateZ = player.GetAxis("Rotate Vertical");
 
             Vector3 harpoonDir = new Vector3(rotateX, 0f, rotateZ);
-
+            
             //Debug.DrawRay(transform.position, harpoonDir.normalized * 2.5f, Color.red, 1f);
 
-            harpoonLauncher.LaunchHarpoon(harpoonDir.normalized);
+            harpoonLauncher.LaunchHarpoon(harpoonDir);
         }
 
         HandleCutRope();
@@ -128,7 +128,7 @@ public class PlayerInput : MonoBehaviour
         {
             // Spawn the bomb behind the boat
             bombLauncher.gameObject.SetActive(true);
-            bombLauncher.SpawnTheBomb(transform.position - bombLauncher.behindOffset * transform.forward, movement.physicMove.velocity);
+            bombLauncher.SpawnTheBomb(transform.position - bombLauncher.behindOffset * transform.forward, movement.physicMove.Velocity);
         }
     }
 

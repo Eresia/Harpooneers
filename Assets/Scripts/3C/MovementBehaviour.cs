@@ -49,8 +49,12 @@ public class MovementBehaviour : MonoBehaviour {
             transform.rotation = Quaternion.Lerp(initialDir, targetDir, Time.deltaTime * coqueModule.turnSpeed);
         }
 
+        float acc = (coqueModule.drag * coqueModule.moveSpeedMax) / Time.deltaTime + coqueModule.moveSpeedMax;
+
+        //Debug.Log(acc);
+
         // Move boat toward.
-        physicMove.AddForce(transform.forward * coqueModule.moveSpeed * move);
+        physicMove.AddForce(transform.forward * acc * move);
 
         // Limit position in the boundaries of the screen.
         Vector3 pos = transform.position;

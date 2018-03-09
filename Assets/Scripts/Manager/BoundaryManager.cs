@@ -23,6 +23,9 @@ public class BoundaryManager : MonoBehaviour {
 
     public float horizontalOffset = 0.1f;
     public float verticalOffset = 0.1f;
+
+    public float resetHorizontalOffset = 0.1f;
+    public float resetVerticalOffset = 0.1f;
     
     private Vector3[] limits;
 
@@ -98,12 +101,12 @@ public class BoundaryManager : MonoBehaviour {
     {
         Vector3 posInScreen = Camera.main.WorldToViewportPoint(pos);
         
-        if(posInScreen.x < 0f || posInScreen.x > 1f)
+        if(posInScreen.x < 0f - resetHorizontalOffset || posInScreen.x > 1f + resetHorizontalOffset)
         {
             return true;
         }
 
-        if (posInScreen.y < 0f || posInScreen.y > 1f)
+        if (posInScreen.y < 0f - resetVerticalOffset || posInScreen.y > 1f + resetVerticalOffset)
         {
             return true;
         }

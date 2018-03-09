@@ -27,11 +27,13 @@ public class PlayerManager : MonoBehaviour {
     private PlayerManager[] _alliesList;
 
     private MovementBehaviour movement;
+    private HarpoonLauncher harpoon;
 
     private void Awake()
     {
         _alliesList = FindObjectsOfType<PlayerManager>();
         movement = GetComponent<MovementBehaviour>();
+        harpoon = GetComponent<HarpoonLauncher>();
 
         mainCamera = FindObjectOfType<Camera>();
         playerPosText = playerPositionIndicator.GetComponent<Text>();
@@ -51,11 +53,12 @@ public class PlayerManager : MonoBehaviour {
     public void Death()
     {
         isDead = true;
-
+        
         _rezAmount = rezAmountWhenDead;
 
-        // Freeze the player.
+        // Freeze the player and cut the harpoon.
         movement.FreezePlayer();
+        harpoon.Cut();
 
         // Display the dead icon
         deathIcon.enabled = true;

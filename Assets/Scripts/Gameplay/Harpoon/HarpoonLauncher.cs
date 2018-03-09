@@ -66,8 +66,7 @@ public class HarpoonLauncher : MonoBehaviour {
 	public void LaunchHarpoon(Vector3 direction){
 
 		if(harpoon == null){
-
-            //Debug.Log(direction.sqrMagnitude);
+            
 			if(direction.sqrMagnitude > joystickError)
             {
 				if(!isLaunching)
@@ -102,8 +101,10 @@ public class HarpoonLauncher : MonoBehaviour {
 		}
 	}
 
-	public void Cut(){
-		if(harpoon != null){
+	public void Cut()
+    {
+		if(harpoon != null)
+        {
 			harpoon.Cut();
 		}
 	}
@@ -144,15 +145,14 @@ public class HarpoonLauncher : MonoBehaviour {
 		isLaunching = false;
 		directionObject.gameObject.SetActive(false);
 		harpoon = Instantiate<Harpoon>(harpoonPrefab, selfTransform.position, Quaternion.identity);
-
-        float speedBonus = physicMove.velocity.sqrMagnitude;
-
+        harpoon.TractionSpeed = harpoonModule.tractionSpeed;
+        
         // The distance depends from the duration of cast
-        // float distanceToReach = Mathf.Lerp(0f, harpoonModule.fireDistance, power);
+        float distanceToReach = Mathf.Lerp(0f, harpoonModule.fireDistance, power);
 
         // OSEF
-        float distanceToReach = harpoonModule.fireDistance;
+        //float distanceToReach = harpoonModule.fireDistance;
 
-        harpoon.Launch(this, selfTransform.position, direction, distanceToReach, harpoonModule.fireSpeed + speedBonus, harpoonModule.returnSpeed);
+        harpoon.Launch(this, selfTransform.position, direction * harpoonModule.fireSpeed + physicMove.Velocity, distanceToReach, harpoonModule.returnSpeed);
 	}
 }

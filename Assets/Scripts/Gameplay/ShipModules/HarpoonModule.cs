@@ -12,4 +12,6 @@ public class HarpoonModule : ScriptableObject {
     public float fireSpeed;
     public float returnSpeed;
     public float fireDistance;
+    
+    public float tractionSpeed;
 }

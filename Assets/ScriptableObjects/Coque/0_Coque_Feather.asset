@@ -14,9 +14,8 @@ MonoBehaviour:
   moduleName: Feather hull
   moduleId: 0
   description: Default coque
-  moveSpeed: 5
-  maxSpeed: 7
+  moveSpeedMax: 0.006
   turnSpeed: 6
   hitboxSize: 1
-  inertia: 1
-  waveResistance: 50
+  drag: 2.5
+  waveResistance: 15

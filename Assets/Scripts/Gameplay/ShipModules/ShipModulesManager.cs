@@ -32,8 +32,7 @@ public class ShipModulesManager : MonoBehaviour {
 
         if(GameManager.instance.shipMgr.tweaking)
         {
-            _movementScript.physicMove.limitSpeed = _movementScript.coqueModule.maxSpeed;
-            _movementScript.physicMove.friction = _movementScript.coqueModule.inertia;
+            _movementScript.physicMove.friction = _movementScript.coqueModule.drag;
             _movementScript.physicMove.gravity = _movementScript.coqueModule.waveResistance;
             
             _bombScript.physicsScript.gravity = _bombScript.bombStockModule.bombWavesResistance;
@@ -57,8 +56,8 @@ public class ShipModulesManager : MonoBehaviour {
 
             // Configure coque and impact move physic.
             _movementScript.coqueModule = shipMgr.coquesScriptObjs[config.coqueId];
-            _movementScript.physicMove.limitSpeed = _movementScript.coqueModule.maxSpeed;
-            _movementScript.physicMove.friction = _movementScript.coqueModule.inertia;
+            _movementScript.physicMove.limitSpeed = _movementScript.coqueModule.moveSpeedMax;
+            _movementScript.physicMove.friction = _movementScript.coqueModule.drag;
             _movementScript.physicMove.gravity = _movementScript.coqueModule.waveResistance;
 
             _bombScript.bombStockModule = shipMgr.bombsScriptObjs[config.bombStockId];

@@ -8,13 +8,12 @@ public class CoqueModule : ScriptableObject
     public string moduleName;
     public int moduleId;
     public string description;
-
-    public float moveSpeed;
-    public float maxSpeed;
+    
+    public float moveSpeedMax;
     public float turnSpeed;
 
     public float hitboxSize;
 
-    public float inertia = 1;
+    public float drag = 1;
     public float waveResistance = 5;
 }
