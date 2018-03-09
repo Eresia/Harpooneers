@@ -2492,6 +2492,93 @@ Transform:
   m_PrefabParentObject: {fileID: 4471385189953528, guid: 3ed6227f943e6bd41b5a93e3ca605351,
     type: 2}
   m_PrefabInternal: {fileID: 646802119}
+--- !u!1001 &699448110
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 114086163139881298, guid: e9f94d6993977004b8ce3c4482836a14,
+        type: 2}
+      propertyPath: phasesCameras.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650500848962988, guid: e9f94d6993977004b8ce3c4482836a14, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650500848962988, guid: e9f94d6993977004b8ce3c4482836a14, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650500848962988, guid: e9f94d6993977004b8ce3c4482836a14, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650500848962988, guid: e9f94d6993977004b8ce3c4482836a14, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650500848962988, guid: e9f94d6993977004b8ce3c4482836a14, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650500848962988, guid: e9f94d6993977004b8ce3c4482836a14, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650500848962988, guid: e9f94d6993977004b8ce3c4482836a14, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650500848962988, guid: e9f94d6993977004b8ce3c4482836a14, type: 2}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 114086163139881298, guid: e9f94d6993977004b8ce3c4482836a14,
+        type: 2}
+      propertyPath: cameraTransform
+      value: 
+      objectReference: {fileID: 1202940208}
+    - target: {fileID: 114086163139881298, guid: e9f94d6993977004b8ce3c4482836a14,
+        type: 2}
+      propertyPath: phasesCameras.Array.data[0].camPosition.y
+      value: 60.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 114086163139881298, guid: e9f94d6993977004b8ce3c4482836a14,
+        type: 2}
+      propertyPath: phasesCameras.Array.data[0].camPosition.z
+      value: -13.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 114086163139881298, guid: e9f94d6993977004b8ce3c4482836a14,
+        type: 2}
+      propertyPath: phasesCameras.Array.data[0].transitionTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114086163139881298, guid: e9f94d6993977004b8ce3c4482836a14,
+        type: 2}
+      propertyPath: currentPhase
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114086163139881298, guid: e9f94d6993977004b8ce3c4482836a14,
+        type: 2}
+      propertyPath: phasesCameras.Array.data[1].transitionTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114086163139881298, guid: e9f94d6993977004b8ce3c4482836a14,
+        type: 2}
+      propertyPath: phasesCameras.Array.data[2].transitionTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114086163139881298, guid: e9f94d6993977004b8ce3c4482836a14,
+        type: 2}
+      propertyPath: phasesCameras.Array.data[3].transitionTime
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: e9f94d6993977004b8ce3c4482836a14, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &712353342
 GameObject:
   m_ObjectHideFlags: 0
