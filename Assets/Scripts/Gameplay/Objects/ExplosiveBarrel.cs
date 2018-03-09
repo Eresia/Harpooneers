@@ -16,7 +16,7 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
     public float delayWhenExplodeInChain = 0.5f;
 
     [Header("FX")]
-    public ParticleSystem radiusFX;
+    public GameObject radiusFX;
     public ParticleSystem explosionFX;
     public ParticleSystem fuseFX;
 
@@ -46,7 +46,7 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
     {
         Vector3 resize = Vector3.one * bombStockModule.bombRadius;
         
-        radiusFX.transform.localScale = resize;
+        radiusFX.transform.parent.localScale *= bombStockModule.bombRadius;
         explosionFX.transform.localScale = resize;
     }
     
@@ -63,8 +63,8 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
     public void SpawnTheBomb(Vector3 spawnPosition, Vector3 movementDirection)
     {
         hasAlreadyExplode = false;
-        
-        radiusFX.Play();
+
+        radiusFX.SetActive(true);
 
         // Spawn Position
         gameObject.transform.position = spawnPosition + new Vector3(0f, 0.25f,0f);
@@ -120,8 +120,7 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
         _myCollider.enabled = false;
 
         // Clear and stop to debug the radius.
-        radiusFX.Stop();
-        radiusFX.Clear();
+        radiusFX.SetActive(false);
 
         explosionFX.Play();
 
