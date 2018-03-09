@@ -130,14 +130,15 @@ public class Ground : MonoBehaviour {
 			}
 		}
 
-		// heightMapTexture.SetPixels(heigthMap);
+		heightMapTexture.SetPixels(heigthMap);
+		heightMapTexture.Apply();
 
 	
-		// for(int i = 0; i < lod.x; i++){
-		// 	for(int j = 0; j < lod.y; j++){
-		// 		points[i * lod.y + j] = Mathf.Sin(time * ((float) i) / 20f) / 3f;
-		// 	}
-		// }
+		for(int i = 0; i < lod.x; i++){
+			for(int j = 0; j < lod.y; j++){
+				points[i * lod.y + j] = Mathf.Sin(time * ((float) i) / 20f) / 3f;
+			}
+		}
 	}
 
 	private void CalculateWave(Vector2Int pos){
@@ -155,18 +156,19 @@ public class Ground : MonoBehaviour {
 		else{
 			points[pointId] = heighInfo.x / heighInfo.y;
 		}
-		points[pointId] = heighInfo.x / heighInfo.y;
-		// int beginX = Mathf.RoundToInt(pos.x * heightMapRatio);
-		// int endX = Mathf.RoundToInt((pos.x + 1) * heightMapRatio);
 
-		// int beginY = Mathf.RoundToInt(pos.y * heightMapRatio);
-		// int endY = Mathf.RoundToInt((pos.y + 1) * heightMapRatio);
-		// for(int i = beginX; i < endX; i++){
-		// 	for(int j = beginY; j < endY; j++){
-		// 		float colorHeight = (Mathf.Clamp(points[pointId], -maxWaveHeight, maxWaveHeight) / maxWaveHeight) + 1;
-		// 		heigthMap[i * heightMapSize + j] = new Color(colorHeight, colorHeight, colorHeight, 1f);
-		// 	}
-		// }
+		int beginX = Mathf.RoundToInt(pos.x * heightMapRatio);
+		int endX = Mathf.RoundToInt((pos.x + 1) * heightMapRatio);
+
+		int beginY = Mathf.RoundToInt(pos.y * heightMapRatio);
+		int endY = Mathf.RoundToInt((pos.y + 1) * heightMapRatio);
+		for(int i = beginX; i < endX; i++){
+			for(int j = beginY; j < endY; j++){
+				float colorHeight = (Mathf.Clamp(points[pointId], -maxWaveHeight, maxWaveHeight) / maxWaveHeight) + 0.5f;
+				heigthMap[i * heightMapSize + j] = new Color(colorHeight, colorHeight, colorHeight, 1f);
+				// heightMapTexture.SetPixel(i, j, new Color(colorHeight, colorHeight, colorHeight, 1f));
+			}
+		}
 	}
 
 	public void CreateZone(){

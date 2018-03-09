@@ -1,0 +1,82 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+struct WaveOptions{
+	float type;
+
+	float2 position;
+
+	float amplitude;
+
+	float waveLength;
+
+	float period;
+
+	float waveNumber;
+
+	float angularFrequency;
+
+	float distanceDigress;
+
+	float timeDigress;
+
+	float time;
+
+	float timeout;
+};
+
+struct FrameOptions{
+	float time;
+	int nbWaves;
+};
+
+RWStructuredBuffer<WaveOptions> Impacts;
+RWStructuredBuffer<FrameOptions> Options;
+RWStructuredBuffer<float> Result;
+RWTexture2D<float4> HeightMap;
+
+[numthreads(20,20,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+	float2 heightInfo = float2(0, 0);
+	int2 lod = int2(20, 20);
+
+	for(int i = 0; i < Options[0].nbWaves; i++){
+		float2 offset = float2(Impacts[i].position.x - id.x, Impacts[i].position.y - id.y);
+
+		if((offset.x != 0) || (offset.y != 0)){
+			float2 direction = float2(sign(offset.x), sign(offset.y));
+
+			float2 posAbs = float2(abs(offset.x), abs(offset.y));
+
+			float coeff = (posAbs.x + posAbs.y);
+			
+			float currentTime = Options[0].time - Impacts[i].time;
+			float wt = Impacts[i].angularFrequency * currentTime;
+
+			float theta = 0;
+			
+			if(Impacts[i].type == 0){
+
+			}
+			
+			//  = CalculateTheta(offset, lod, wt, direction, posAbs);
+
+			float finalHeight = Impacts[i].amplitude * theta;
+
+			float heightAbs = abs(finalHeight);
+
+			heightInfo = heightInfo + (finalHeight * (heightAbs/ coeff), (heightAbs / coeff));
+		}
+
+		
+	}
+
+	if(heightInfo.y == 0){
+		Result[id.x * lod.y + lod.x] = 0;
+	}
+	else{
+		Result[id.x * lod.y + lod.x] = heightInfo.x / heightInfo.y;
+	}
+}
+
