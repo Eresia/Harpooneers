@@ -24,7 +24,9 @@ public class PhysicObject : MonoBehaviour {
 		Vector3 normal = selfTransform.up;
 		Vector3 gravity = new Vector3(0, -1, 0);
 
-		mover.AddForce((normal + gravity) * mover.gravity * Time.deltaTime);
+        Vector3 gravityForce = (normal + gravity) * mover.gravity * Time.deltaTime;
+
+        mover.AddForce(gravityForce);
 	}
 
 	private void OnDrawGizmos() {

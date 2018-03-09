@@ -18,7 +18,7 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
     [Header("FX")]
     public ParticleSystem radiusFX;
     public ParticleSystem explosionFX;
-    public ParticleSystem explodingFX;
+    public ParticleSystem fuseFX;
 
     [Header("Other components")]
     public ResetWhenLeaveScreen resetWhenLeaveScreen;
