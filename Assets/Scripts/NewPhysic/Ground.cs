@@ -20,28 +20,6 @@ public class Ground : MonoBehaviour {
 		public float diffY;
 	}
 
-	private struct WaveOptions{
-		public Vector2 position;
-
-		public float amplitude;
-
-		public float waveLength;
-
-		public float period;
-
-		public float waveNumber;
-
-		public float angularFrequency;
-
-		public float distanceDigress;
-
-		public float timeDigress;
-
-		public float time;
-
-		public float timeout;
-	}
-
 	public Vector2Int lod;
 
 	public float ratio;
@@ -54,7 +32,7 @@ public class Ground : MonoBehaviour {
 
 	private float time;
 
-	private List<WaveOptions> waves;
+	private List<Wave> waves;
 
 	[Space]
 
@@ -62,13 +40,27 @@ public class Ground : MonoBehaviour {
 
 	public LayerMask testLayer;
 	
-	public float amplitude;
-
-	public float waveLength;
-
-	public float period;
+	
 
 	[Space]
+
+	[Header("Zone Waves options")]
+
+	public float zoneAmplitude;
+
+	public float zoneWaveLength;
+
+	public float zonePeriod;
+
+	[Space]
+
+	[Header("Impact Waves options")]
+
+	public float impactAmplitude;
+
+	public float impactWaveLength;
+
+	public float impactPeriod;
 
 	[Range(0f, 1f)]
 	public float distanceDigress;
@@ -81,7 +73,8 @@ public class Ground : MonoBehaviour {
 	private void Awake() {
 		selfTransform = GetComponent<Transform>();
 		halfLod = new Vector2(((float) lod.x) * 0.5f, ((float) lod.y) * 0.5f);
-		waves = new List<WaveOptions>();
+		waves = new List<Wave>();
+		CreateZone();
 	}
 
 	private void Update() {
@@ -93,14 +86,14 @@ public class Ground : MonoBehaviour {
 			// Debug.DrawRay()
 
 			if (Physics.Raycast(ray, out hit, Mathf.Infinity, testLayer)) {
-				CreateVortex(hit.point);
+				CreateImpact(hit.point);
 			}
 		}
 
-		WaveOptions[] waveArray = waves.ToArray();
+		Wave[] waveArray = waves.ToArray();
 
 		for(int i = 0; i < waveArray.Length; i++){
-			if((time - waveArray[i].time) > waveArray[i].timeout){
+			if(waveArray[i].IsTimeout(time)){
 				Debug.Log("Remove Wave");
 				waves.Remove(waveArray[i]);
 			}
@@ -125,75 +118,44 @@ public class Ground : MonoBehaviour {
 
 		Vector2 heighInfo = Vector2.zero;
 
-		foreach(WaveOptions w in waves){
-			heighInfo += CalculateWave(w, pos);
+		foreach(Wave w in waves){
+			heighInfo += w.CalculateWave(pos, time, lod);
 		}
 
 		points[(pos.x* lod.y) + pos.y] = heighInfo.x / heighInfo.y;
 		
 	}
 
-	private Vector2 CalculateWave(WaveOptions w, Vector2Int pos){
-		float offsetX = w.position.x - pos.x;
-		float offsetY = w.position.y - pos.y;
+	public void CreateZone(){
+		WaveOptions newWave = new WaveOptions();
 
-		if((offsetX == 0) && (offsetY == 0)){
-			return Vector2.zero;
-		}
+		newWave.position = new Vector2(0, 0);
+		newWave.amplitude = zoneAmplitude;
+		newWave.waveLength = zoneWaveLength;
+		newWave.period = zonePeriod;
+		newWave.waveNumber = (2 * Mathf.PI) / zoneWaveLength;
+		newWave.angularFrequency = (2 * Mathf.PI) / zonePeriod;
+		newWave.time = time;
 
-		Vector2 direction = new Vector2(1f, 1f);
-
-		if(offsetX < 0){
-			direction.x *= -1;
-		}
-
-		if(offsetY < 0){
-			direction.y *= -1;
-		}
-
-		Vector2 posAbs = new Vector2(Mathf.Abs(offsetX), Mathf.Abs(offsetY));
-		
-		float currentTime = time - w.time;
-		float wt = w.angularFrequency * currentTime;
-
-		float thetaX = (w.waveNumber * (offsetX / lod.x)) - (wt * direction.x);
-		float thetaY = (w.waveNumber * (offsetY / lod.y)) - (wt * direction.y);
-
-		float xHeight;
-		float yHeight;
-
-		xHeight = Mathf.Sin(thetaX) / Mathf.Exp(posAbs.x * w.distanceDigress) / Mathf.Exp(wt * w.timeDigress);
-		yHeight = Mathf.Sin(thetaY) / Mathf.Exp(posAbs.y * + w.distanceDigress) / Mathf.Exp(wt * w.timeDigress);
-
-		float coeff = (posAbs.x + posAbs.y);
-		
-		float theta = (posAbs.x * xHeight + posAbs.y * yHeight) / coeff;
-
-		float finalHeight = w.amplitude * theta;
-
-		float heightAbs = Mathf.Abs(finalHeight);
-
-		return new Vector2(finalHeight * (heightAbs/ coeff), (heightAbs / coeff));
+		waves.Add(new WaveZone(newWave));
 	}
 
-
-
-	public void CreateVortex(Vector3 p){
+	public void CreateImpact(Vector3 p){
 		WaveOptions newWave = new WaveOptions();
 		float iFloat = ((p.x / ratio) + halfLod.x) - selfTransform.position.x;
 		float jFloat = ((p.z / ratio) + halfLod.y) - selfTransform.position.z;
 
 		newWave.position = new Vector2(iFloat, jFloat);
-		newWave.amplitude = amplitude;
-		newWave.waveLength = waveLength;
-		newWave.period = period;
-		newWave.waveNumber = (2 * Mathf.PI) / waveLength;
-		newWave.angularFrequency = (2 * Mathf.PI) / period;
+		newWave.amplitude = impactAmplitude;
+		newWave.waveLength = impactWaveLength;
+		newWave.period = impactPeriod;
+		newWave.waveNumber = (2 * Mathf.PI) / impactWaveLength;
+		newWave.angularFrequency = (2 * Mathf.PI) / impactPeriod;
 		newWave.distanceDigress = distanceDigress;
 		newWave.timeDigress = timeDigress;
 		newWave.time = time;
 		newWave.timeout = timeout;
-		waves.Add(newWave);
+		waves.Add(new WaveImpact(newWave));
 	}
 
 	private void OnDrawGizmos() {
