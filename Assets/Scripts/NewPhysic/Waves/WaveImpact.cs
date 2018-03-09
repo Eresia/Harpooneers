@@ -10,8 +10,10 @@ public class WaveImpact : Wave {
 		float thetaX = (options.waveNumber * (offset.x / lod.x)) - (wt * direction.x);
 		float thetaY = (options.waveNumber * (offset.y / lod.y)) - (wt * direction.y);
 
-		float xHeight = Mathf.Sin(thetaX) / Mathf.Exp(posAbs.x * options.distanceDigress) / Mathf.Exp(wt * options.timeDigress);
-		float yHeight = Mathf.Sin(thetaY) / Mathf.Exp(posAbs.y * + options.distanceDigress) / Mathf.Exp(wt * options.timeDigress);
+		float timeChange = 1 / Mathf.Exp(wt * options.timeDigress);
+
+		float xHeight = Mathf.Sin(thetaX) / Mathf.Exp(posAbs.x * options.distanceDigress) * timeChange;
+		float yHeight = Mathf.Sin(thetaY) / Mathf.Exp(posAbs.y * options.distanceDigress) * timeChange;
 		
 		float theta = (posAbs.x * xHeight + posAbs.y * yHeight) / (posAbs.x + posAbs.y);
 

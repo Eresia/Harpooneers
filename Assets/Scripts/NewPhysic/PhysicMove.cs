@@ -13,6 +13,8 @@ public class PhysicMove : MonoBehaviour {
 
 	public float limitSpeed;
 
+	public float gravity;
+
 	public Transform selfTransform {get; private set;}
 
 	public Vector3 velocity {get; private set;}
@@ -29,7 +31,7 @@ public class PhysicMove : MonoBehaviour {
 			velocity = Vector3.zero;
 		}
 
-		physicObject.MoveOnBoard(selfTransform);
+		physicObject.MoveOnBoard(this);
 
 		velocity = Vector3.ClampMagnitude(velocity, limitSpeed);
 	}
