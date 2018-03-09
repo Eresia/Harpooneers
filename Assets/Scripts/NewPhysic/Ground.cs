@@ -38,6 +38,8 @@ public class Ground : MonoBehaviour {
 		public float timeDigress;
 
 		public float time;
+
+		public float timeout;
 	}
 
 	public Vector2Int lod;
@@ -45,8 +47,6 @@ public class Ground : MonoBehaviour {
 	public float ratio;
 
 	public float[] points;
-
-	public float[] coeffPoints;
 
 	private Transform selfTransform;
 
@@ -70,11 +70,13 @@ public class Ground : MonoBehaviour {
 
 	[Space]
 
+	[Range(0f, 1f)]
 	public float distanceDigress;
 
+	[Range(0f, 1f)]
 	public float timeDigress;
 
-	public float minWave;
+	public float timeout;
 
 	private void Awake() {
 		selfTransform = GetComponent<Transform>();
@@ -95,36 +97,22 @@ public class Ground : MonoBehaviour {
 			}
 		}
 
-		if(waves.Count > 0){
-			WaveOptions[] currentWaves = waves.ToArray();
+		WaveOptions[] waveArray = waves.ToArray();
 
-			for(int i = 0; i < lod.x; i++){
-				for(int j = 0; j < lod.y; j++){
-					if(coeffPoints[i * lod.y + j] != 0){
-						points[i * lod.y + j] = 0;
-						coeffPoints[i * lod.y + j] = 0;
-					}
-					
-				}
-			}
-
-			for(int i = 0; i < currentWaves.Length; i++){
-				CheckWave(currentWaves[i]);
-			}
-
-			for(int i = 0; i < lod.x; i++){
-				for(int j = 0; j < lod.y; j++){
-					if(coeffPoints[i * lod.y + j] != 0){
-						points[i * lod.y + j] /= coeffPoints[i * lod.y + j];
-					}
-					
-				}
+		for(int i = 0; i < waveArray.Length; i++){
+			if((time - waveArray[i].time) > waveArray[i].timeout){
+				Debug.Log("Remove Wave");
+				waves.Remove(waveArray[i]);
 			}
 		}
 
-	
-
-		
+		if(waves.Count > 0){
+			for(int i = 0; i < lod.x; i++){
+				for(int j = 0; j < lod.y; j++){
+					CalculateWave(new Vector2Int(i, j));
+				}
+			}
+		}
 
 		// for(int i = 0; i < lod.x; i++){
 		// 	for(int j = 0; j < lod.y; j++){
@@ -133,89 +121,62 @@ public class Ground : MonoBehaviour {
 		// }
 	}
 
-	private void CheckWave(WaveOptions w){
-		double waveSize = 0f;
-		for(int i = 0; i < lod.x; i++){
-			for(int j = 0; j < lod.y; j++){
-				waveSize += CalculateWave(w, i, j);
+	private void CalculateWave(Vector2Int pos){
 
-				// if(!result){
-				// 	break;
-				// }
-				// Debug.Log(again);
-				
-			}
+		Vector2 heighInfo = Vector2.zero;
 
-			// if(!result){
-			// 	break;
-			// }
+		foreach(WaveOptions w in waves){
+			heighInfo += CalculateWave(w, pos);
 		}
 
-		if(waveSize < minWave){
-			Debug.Log("Remove impact " + waveSize);
-			waves.Remove(w);
-		}
+		points[(pos.x* lod.y) + pos.y] = heighInfo.x / heighInfo.y;
+		
 	}
 
-	private float CalculateWave(WaveOptions w, int i, int j){
-
-		float offsetX = w.position.x - i;
-		float offsetY = w.position.y - j;
+	private Vector2 CalculateWave(WaveOptions w, Vector2Int pos){
+		float offsetX = w.position.x - pos.x;
+		float offsetY = w.position.y - pos.y;
 
 		if((offsetX == 0) && (offsetY == 0)){
-			return 0f;
+			return Vector2.zero;
 		}
 
-		int pointId = (i* lod.y) + j;
-
-		float currentTime = time - w.time;
-
-		float iCoeff = 1;
-		float jCoeff = 1;
+		Vector2 direction = new Vector2(1f, 1f);
 
 		if(offsetX < 0){
-			iCoeff *= -1;
+			direction.x *= -1;
 		}
 
 		if(offsetY < 0){
-			jCoeff *= -1;
+			direction.y *= -1;
 		}
 
+		Vector2 posAbs = new Vector2(Mathf.Abs(offsetX), Mathf.Abs(offsetY));
+		
+		float currentTime = time - w.time;
 		float wt = w.angularFrequency * currentTime;
 
-		float iAbs = Mathf.Abs(offsetX);
-		float jAbs = Mathf.Abs(offsetY);
-
-		float thetaX = (w.waveNumber * (offsetX / lod.x)) - (wt * iCoeff);
-		float thetaY = (w.waveNumber * (offsetY / lod.y)) - (wt * jCoeff);
+		float thetaX = (w.waveNumber * (offsetX / lod.x)) - (wt * direction.x);
+		float thetaY = (w.waveNumber * (offsetY / lod.y)) - (wt * direction.y);
 
 		float xHeight;
 		float yHeight;
 
-		xHeight = Mathf.Sin(thetaX) / Mathf.Exp(iAbs / w.distanceDigress) / Mathf.Exp(wt / w.timeDigress);
-		yHeight = Mathf.Sin(thetaY) / Mathf.Exp(jAbs / w.distanceDigress) / Mathf.Exp(wt / w.timeDigress);
+		xHeight = Mathf.Sin(thetaX) / Mathf.Exp(posAbs.x * w.distanceDigress) / Mathf.Exp(wt * w.timeDigress);
+		yHeight = Mathf.Sin(thetaY) / Mathf.Exp(posAbs.y * + w.distanceDigress) / Mathf.Exp(wt * w.timeDigress);
 
-		float coeff = (iAbs + jAbs);
+		float coeff = (posAbs.x + posAbs.y);
 		
-		float theta = (iAbs * xHeight + jAbs * yHeight) / coeff;
+		float theta = (posAbs.x * xHeight + posAbs.y * yHeight) / coeff;
 
 		float finalHeight = w.amplitude * theta;
 
 		float heightAbs = Mathf.Abs(finalHeight);
 
-		points[pointId] += finalHeight * (heightAbs/ coeff);
-		coeffPoints[pointId] += (heightAbs / coeff);
-
-		// if(Mathf.Abs(finalHeight) < minWave){
-		// 	return false;
-		// }
-		// else{
-		// 	return true;
-		// }
-
-		return heightAbs;
-		
+		return new Vector2(finalHeight * (heightAbs/ coeff), (heightAbs / coeff));
 	}
+
+
 
 	public void CreateVortex(Vector3 p){
 		WaveOptions newWave = new WaveOptions();
@@ -231,6 +192,7 @@ public class Ground : MonoBehaviour {
 		newWave.distanceDigress = distanceDigress;
 		newWave.timeDigress = timeDigress;
 		newWave.time = time;
+		newWave.timeout = timeout;
 		waves.Add(newWave);
 	}
 
