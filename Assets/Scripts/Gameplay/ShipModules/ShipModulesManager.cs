@@ -13,15 +13,16 @@ public class ShipModulesManager : MonoBehaviour {
     public GameObject[] cabinsGoArray;
     public GameObject[] bombsGoArray;
 
+    [Header("Components scripts")]
     public HarpoonLauncher _harpoonScript;
-    public MovementBehaviourNewPhysic _movementScript;
+    public MovementBehaviour _movementScript;
     public ExplosiveBarrel _bombScript;
 
 	// Use this for initialization
 	void Reset ()
     {
         _harpoonScript = GetComponent<HarpoonLauncher>();
-        _movementScript = GetComponent<MovementBehaviourNewPhysic>();
+        _movementScript = GetComponent<MovementBehaviour>();
         _bombScript = transform.parent.GetComponentInChildren<ExplosiveBarrel>();
     }
     
@@ -69,6 +70,7 @@ public class ShipModulesManager : MonoBehaviour {
             _movementScript.physicMove.friction = _movementScript.coqueModule.friction;
 
             _bombScript.bombStockModule = shipMgr.bombsScriptObjs[config.bombStockId];
+            _bombScript.SetupFx();
         }
     }
 

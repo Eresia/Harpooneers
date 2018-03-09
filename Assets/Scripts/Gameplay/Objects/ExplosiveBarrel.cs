@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExplosiveBarrel : MonoBehaviour, IHarpoonable, IResetable {
+public class ExplosiveBarrel : MonoBehaviour, IResetable {
 
     // TODO Use the wave resistance of the bomb stock module.
     
@@ -13,7 +13,7 @@ public class ExplosiveBarrel : MonoBehaviour, IHarpoonable, IResetable {
     [Header("Bomb config")]
     public BombStockModule bombStockModule;
     public LayerMask damageableLayer;
-    public float explosionDelay = 0.5f;
+    public float delayWhenExplodeInChain = 0.5f;
 
     [Header("FX")]
     public ParticleSystem radiusFX;
@@ -38,12 +38,10 @@ public class ExplosiveBarrel : MonoBehaviour, IHarpoonable, IResetable {
         _myCollider = GetComponent<Collider>();
 
         resetWhenLeaveScreen.resetable = this;
-
-        SetupFx();
     }
 
     // Scale fx depending the bomb radius.
-    private void SetupFx()
+    public void SetupFx()
     {
         Vector3 resize = Vector3.one * bombStockModule.bombRadius;
         
@@ -53,7 +51,7 @@ public class ExplosiveBarrel : MonoBehaviour, IHarpoonable, IResetable {
     
     private void OnCollisionEnter(Collision collision)
     {
-        TriggerExplosion();
+        TriggerExplosion(0f);
     }
 
     /// <summary>
@@ -81,7 +79,7 @@ public class ExplosiveBarrel : MonoBehaviour, IHarpoonable, IResetable {
         _myCollider.enabled = true;
     }
 
-	public void TriggerExplosion()
+    public void TriggerExplosion(float delayToExplode)
     {
         if(hasAlreadyExplode)
         {
@@ -90,12 +88,12 @@ public class ExplosiveBarrel : MonoBehaviour, IHarpoonable, IResetable {
 
         hasAlreadyExplode = true;
 
-        StartCoroutine(Explosion());
+        StartCoroutine(Explosion(delayToExplode));
     }
 
-    private IEnumerator Explosion()
+    private IEnumerator Explosion(float delay)
     {
-        yield return new WaitForSeconds(explosionDelay);
+        yield return new WaitForSeconds(delay);
 
         // Deal damage with an overlap sphere
         Collider[] colliders = Physics.OverlapSphere(transform.position, bombStockModule.bombRadius, damageableLayer);
@@ -137,7 +135,7 @@ public class ExplosiveBarrel : MonoBehaviour, IHarpoonable, IResetable {
             return;
         }
 
-        TriggerExplosion();
+        TriggerExplosion(delayWhenExplodeInChain);
     }
 
     /// <summary>
@@ -157,14 +155,6 @@ public class ExplosiveBarrel : MonoBehaviour, IHarpoonable, IResetable {
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, bombStockModule.bombRadius);
-    }
-
-    // Explode the barrel when harpooned D:
-    public void OnHarpoonCollide(Harpoon harpoon)
-    {
-        harpoon.Cut();
-
-        TriggerExplosion();
     }
 
     public void ResetGameObject()

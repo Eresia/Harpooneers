@@ -2,28 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PhysicMove))]
-public class MovementBehaviourNewPhysic : MonoBehaviour {
-
+public class MovementBehaviour_OLD : MonoBehaviour {
+    
+    // TODO Impact hitbox ?
     public CoqueModule coqueModule;
 
-    [Header("Metrics for boundaries")]
-    [Tooltip("Distance with boundaries.")]
-    public float offsetX = 1f;
-    public float offsetZ = 1f;
-
-    // Lerp progressif sur la direction du bateau. (Direction desiree (INPUT) et direction actuelle.
-
+    // Progressive lerp between the input dir and the actual dir.
     private Quaternion initialDir;
     private Quaternion targetDir;
 
-	public PhysicMove physicMove;
+    private Rigidbody rgbd;
 
     private float move;
 
     private void Awake()
     {
-		physicMove = GetComponent<PhysicMove>();
+        rgbd = GetComponent<Rigidbody>();
+
         initialDir = targetDir = Quaternion.identity;
     }
 
@@ -51,7 +46,10 @@ public class MovementBehaviourNewPhysic : MonoBehaviour {
         }
 
         // Move boat toward.
-        physicMove.AddForce(transform.forward * coqueModule.moveSpeed * move);
+        rgbd.AddForce(transform.forward * coqueModule.moveSpeed * move, ForceMode.Force);
+
+        // Limit max speed.
+        rgbd.velocity = Vector3.ClampMagnitude(rgbd.velocity, coqueModule.maxSpeed);
 
         // Limit position in the boundaries of the screen.
         Vector3 pos = transform.position;
@@ -60,7 +58,7 @@ public class MovementBehaviourNewPhysic : MonoBehaviour {
 
         pos.x = hitPoint.x;
         pos.z = hitPoint.z;
-
+        
         transform.position = pos;
     }
 
