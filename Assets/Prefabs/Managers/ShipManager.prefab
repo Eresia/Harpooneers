@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb45d3370d9afdc4fa0dbf3ac9a4502e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ships:
+  players:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -62,15 +62,20 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   harpoonsScriptObjs:
-  - {fileID: 11400000, guid: 7f7037addcace3a4d9829f24b8140ab3, type: 2}
-  - {fileID: 11400000, guid: 7f7037addcace3a4d9829f24b8140ab3, type: 2}
-  - {fileID: 11400000, guid: 7f7037addcace3a4d9829f24b8140ab3, type: 2}
+  - {fileID: 11400000, guid: f603b0c5f7b9f3c47941d6b2a2aedd52, type: 2}
+  - {fileID: 11400000, guid: 6c6be41b112bb2241b36dc3ad4928ee4, type: 2}
+  - {fileID: 11400000, guid: 95693f8ff4a76244996c31c95d695242, type: 2}
+  - {fileID: 11400000, guid: cb66caf517a65c6438cf93c8fab66003, type: 2}
   coquesScriptObjs:
-  - {fileID: 11400000, guid: 990a2b84e0f9a2b4eb2be85c169e88ee, type: 2}
-  - {fileID: 11400000, guid: 990a2b84e0f9a2b4eb2be85c169e88ee, type: 2}
-  - {fileID: 11400000, guid: 990a2b84e0f9a2b4eb2be85c169e88ee, type: 2}
+  - {fileID: 11400000, guid: eb2a6f381e089284cb2d86c8e146674d, type: 2}
+  - {fileID: 11400000, guid: c98511ac7e2cc2746afb5b769ff609bc, type: 2}
+  - {fileID: 11400000, guid: 85a34084e65c96847baa0e932f7e8f1a, type: 2}
+  - {fileID: 11400000, guid: 7b50ab1158671ee4a9b6f9efffb2d9c7, type: 2}
+  cabinesScriptObjs:
+  - {fileID: 11400000, guid: 70d589a4e7d233640978347a6f0ac953, type: 2}
+  - {fileID: 11400000, guid: a5ba727e93234ff43a43dabd78993730, type: 2}
+  - {fileID: 11400000, guid: 4f460c00c3509694995aecb55446f441, type: 2}
   bombsScriptObjs:
+  - {fileID: 11400000, guid: d5687e386ebe5df47ba644e40ba4efb9, type: 2}
+  - {fileID: 11400000, guid: bff3a5d4d8785bb40add39614c80c2a7, type: 2}
   - {fileID: 11400000, guid: 51cc31a380592e34e8ff3a874188a418, type: 2}
-  - {fileID: 11400000, guid: 51cc31a380592e34e8ff3a874188a418, type: 2}
-  - {fileID: 11400000, guid: 51cc31a380592e34e8ff3a874188a418, type: 2}
-  cabinesScriptObjs: []

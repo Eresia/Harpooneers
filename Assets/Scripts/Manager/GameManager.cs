@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -46,6 +47,12 @@ public class GameManager : MonoBehaviour {
 
         DontDestroyOnLoad(gameObject);
 
+        SetupGame();
+	}
+
+    // Setup or reset data.
+    private void SetupGame()
+    {
         shipConfigs = new ShipConfiguration[4];
 
         // For debug all players are enabled.
@@ -54,7 +61,7 @@ public class GameManager : MonoBehaviour {
         {
             players[i] = true;
         }
-	}
+    }
 
     private void OnEnable()
     {
@@ -78,7 +85,7 @@ public class GameManager : MonoBehaviour {
             SetupGameScene();
         } 
     }
-
+    
     /// <summary>
     /// Setup the main menu scene. Retrieve specific manager.
     /// </summary>
@@ -97,6 +104,7 @@ public class GameManager : MonoBehaviour {
     {
         boundaryMgr = FindObjectOfType<BoundaryManager>();
         shipMgr = FindObjectOfType<ShipManager>();
+        ground = FindObjectOfType<Ground>();
 
         shipMgr.SetupAllShips();
     }
@@ -109,8 +117,15 @@ public class GameManager : MonoBehaviour {
         sceneMgr.LoadGameScene();
     }
 
-    public void ReturnToMainMenu()
+    public void ReturnToMainMenu(bool goToCustomizationMenu)
     {
+        // TODO store in a bool if we want to go directly in customization screen.
+
         sceneMgr.LoadMainMenuScene();
+    }
+    
+    public void GameOver()
+    {
+        Debug.Log("GAME OVER !!!");
     }
 }

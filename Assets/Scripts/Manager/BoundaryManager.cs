@@ -14,6 +14,11 @@ public class BoundaryManager : MonoBehaviour {
 
     private void Awake()
     {
+        UpdateBoundaries();
+    }
+
+    public void UpdateBoundaries()
+    {
         // Calculate new boundaries.
         limits = new Vector3[4];
 
@@ -33,7 +38,7 @@ public class BoundaryManager : MonoBehaviour {
         {
             limits[2] = hit.point;
         }
-        
+
         if (Physics.Raycast(cam.ViewportPointToRay(new Vector3(1, 0)), out hit, 10000f, seaMask))
         {
             limits[3] = hit.point;
@@ -61,6 +66,23 @@ public class BoundaryManager : MonoBehaviour {
         }
 
         return hit.point;
+    }
+
+    public bool IsInScreen(Vector3 pos)
+    {
+        Vector3 posInScreen = Camera.main.WorldToViewportPoint(pos);
+        
+        if(posInScreen.x < 0f || posInScreen.x > 1f)
+        {
+            return true;
+        }
+
+        if (posInScreen.y < 0f || posInScreen.y > 1f)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     private void OnDrawGizmos()
