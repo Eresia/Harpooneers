@@ -4247,8 +4247,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerId: 0
   movement: {fileID: 114732771670407888}
-  harpoon: {fileID: 114576571596224756}
-  playerBomb: {fileID: 114476977556231496}
+  playerMgr: {fileID: 0}
+  harpoonLauncher: {fileID: 0}
+  bombLauncher: {fileID: 0}
+  timeBeforePause: 1
 --- !u!114 &114285114900107234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4263,9 +4265,10 @@ MonoBehaviour:
   healthNeededForRez: 10
   healthLossPerSec: 1
   rezRadius: 5
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 4294967295
+  healthPerInput: 0
+  rezBar: {fileID: 0}
+  deathIcon: {fileID: 0}
+  rezAmountWhenDead: 0
   isDead: 0
 --- !u!114 &114318054212681704
 MonoBehaviour:
@@ -4290,7 +4293,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c9854ef2a09d5c46b44adc1ac3e51e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceResistance: 2
+  behindOffset: 1.25
+  bombStockModule: {fileID: 0}
+  damageableLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  explosionDelay: 0.5
+  radiusFX: {fileID: 0}
+  explosionFX: {fileID: 0}
+  explodingFX: {fileID: 0}
+  resetWhenLeaveScreen: {fileID: 0}
 --- !u!114 &114576571596224756
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4311,10 +4323,8 @@ MonoBehaviour:
   castTime: 1
   castTimeMax: 1
   castDistance: 2
-  launchDistanceMax: 10
   cooldownTime: 1
-  harpoonSpeed: 10
-  harpoonReturnSpeed: 5
+  harpoonModule: {fileID: 0}
 --- !u!114 &114732771670407888
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4326,11 +4336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f375b5d0dc9626f43ac4507ca4d42984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 30
-  maxSpeed: 50
-  rotationSpeed: 9
-  offsetX: 1
-  offsetZ: 1
+  coqueModule: {fileID: 0}
 --- !u!135 &135325822401263578
 SphereCollider:
   m_ObjectHideFlags: 1

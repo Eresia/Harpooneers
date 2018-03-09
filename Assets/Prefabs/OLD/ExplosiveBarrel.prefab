@@ -201,7 +201,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c9854ef2a09d5c46b44adc1ac3e51e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceResistance: 2
+  behindOffset: 1.25
+  bombStockModule: {fileID: 0}
+  damageableLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  explosionDelay: 0.5
+  radiusFX: {fileID: 0}
+  explosionFX: {fileID: 0}
+  explodingFX: {fileID: 0}
+  resetWhenLeaveScreen: {fileID: 0}
 --- !u!135 &135187871980723246
 SphereCollider:
   m_ObjectHideFlags: 1
