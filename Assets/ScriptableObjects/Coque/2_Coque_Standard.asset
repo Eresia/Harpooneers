@@ -14,9 +14,8 @@ MonoBehaviour:
   moduleName: Standard hull
   moduleId: 2
   description: Default coque
-  moveSpeed: 3
-  maxSpeed: 5
+  moveSpeedMax: 0.004
   turnSpeed: 8
   hitboxSize: 1
-  inertia: 1
-  waveResistance: 5
+  drag: 3
+  waveSensibility: 10
