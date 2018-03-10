@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaveZone : Wave {
+public class WaveZone : Wave_a {
 
 	public WaveZone(WaveOptions options) : base(options){}
 
