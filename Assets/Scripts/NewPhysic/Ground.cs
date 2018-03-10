@@ -9,7 +9,7 @@ public class Ground : MonoBehaviour {
 
 	public struct TransformInfo{
 		public Vector3 position;
-		public Vector3 rotation;
+		public Vector3 normal;
 	}
 	
 	private struct HeightInfo{
@@ -147,12 +147,14 @@ public class Ground : MonoBehaviour {
 		seaCompute.SetTexture(normaleKernel, "NormaleMap", normaleMapTexture);
 
 		material = GetComponent<Renderer>().material;
-		material.SetTexture("_MainTex", heightMapTexture);
+		material.SetTexture("_HeightMap", normaleMapTexture);
+		material.SetTexture("_NormaleMap", normaleMapTexture);
 		material.SetBuffer("_Vertex", pointBuffer);
+		material.SetFloat("_MaxWaveHeight", maxWaveHeight);
 		material.SetInt("_VertexSize", lod);
 
 		if(rawImage != null){
-			rawImage.texture = normaleMapTexture;
+			rawImage.texture = heightMapTexture;
 		}
 	}
 
@@ -324,7 +326,7 @@ public class Ground : MonoBehaviour {
 
 		HeightInfo info = GetHeightInfo(result.position.x, result.position.z);
 		result.position.y = GetHeight(info);
-		result.rotation = GetRotation(info, result.position.y, yAngle);
+		result.normal = GetNormal(info, result.position, result.position.y, yAngle);
 
 		return result;
 	}
@@ -351,7 +353,14 @@ public class Ground : MonoBehaviour {
 		return result / (info.coeff.x + info.coeff.y + info.coeff.z + info.coeff.w);
 	}
 
-	private Vector3 GetRotation(HeightInfo info, float height, float yAngle){
+	private Vector3 Vector3Abs(Vector3 vector){
+		vector.x = Mathf.Abs(vector.x);
+		vector.y = Mathf.Abs(vector.y);
+		vector.z = Mathf.Abs(vector.z);
+		return vector;
+	}
+
+	private Vector3 GetNormal(HeightInfo info, Vector3 position, float height, float yAngle){
 		Vector3 result;
 
 		// Vector3 a = new Vector3(0, points[info.i.x * lod + info.j.x], 0);
@@ -386,69 +395,79 @@ public class Ground : MonoBehaviour {
 
 		// return result / (info.coeff.x + info.coeff.y + info.coeff.z + info.coeff.w);
 
-		float a = points[info.i.x * lod + info.j.x];
-		float b = points[info.i.y * lod + info.j.x];
-		float c = points[info.i.x * lod + info.j.y];
-		float d = points[info.i.y * lod + info.j.y];
+		result = info.coeff.x * normales[info.i.x * lod + info.j.x]; 
+		result += info.coeff.y * normales[info.i.y * lod + info.j.x]; 
+		result += info.coeff.z * normales[info.i.x * lod + info.j.y]; 
+		result += info.coeff.w * normales[info.i.y * lod + info.j.y];
 
-		if(yAngle < 0){
-			yAngle = 360 - yAngle;
-		}
+		result /= (info.coeff.x + info.coeff.y + info.coeff.z + info.coeff.w);
 
-		while(yAngle > 90){
-			float temp = a;
-			a = c;
-			c = d;
-			d = b;
-			b = temp;
-			yAngle -= 90;
-		}
+		result.y *= -1;
+		result.x *= -1;
+
+		Debug.DrawRay(position, result * 5f);
+
+		// float y = result.y;
+		// result.y = result.z;
+		// result.z = y;
+
+		return result;
+
+		// float a = points[info.i.x * lod + info.j.x];
+		// float b = points[info.i.y * lod + info.j.x];
+		// float c = points[info.i.x * lod + info.j.y];
+		// float d = points[info.i.y * lod + info.j.y];
+
+		// if(yAngle < 0){
+		// 	yAngle = 360 - yAngle;
+		// }
+
+		// while(yAngle > 90){
+		// 	float temp = a;
+		// 	a = c;
+		// 	c = d;
+		// 	d = b;
+		// 	b = temp;
+		// 	yAngle -= 90;
+		// }
 
 		
 
-		float ab = Mathf.Abs(a-b);
-		float cd = Mathf.Abs(c-d);
-		float ac = Mathf.Abs(a-c);
-		float bd = Mathf.Abs(b-d);
+		// float ab = Mathf.Abs(a-b);
+		// float cd = Mathf.Abs(c-d);
+		// float ac = Mathf.Abs(a-c);
+		// float bd = Mathf.Abs(b-d);
 
-		float diffJ;
-		float diffI;
+		// float diffJ;
+		// float diffI;
 
-		float signI;
-		float signJ;
+		// float signI;
+		// float signJ;
 
-		if(ab > cd){
-			diffJ = ab;
-			signJ = Mathf.Sign(b-a);
-		}
-		else{
-			diffJ = cd;
-			signJ = Mathf.Sign(d-c);
-		}
+		// if(ab > cd){
+		// 	diffJ = ab;
+		// 	signJ = Mathf.Sign(b-a);
+		// }
+		// else{
+		// 	diffJ = cd;
+		// 	signJ = Mathf.Sign(d-c);
+		// }
 
-		if(ac > bd){
-			diffI = ac;
-			signI = Mathf.Sign(c-a);
-		}
-		else{
-			diffI = bd; 
-			signI = Mathf.Sign(d-b);
-		}
+		// if(ac > bd){
+		// 	diffI = ac;
+		// 	signI = Mathf.Sign(c-a);
+		// }
+		// else{
+		// 	diffI = bd; 
+		// 	signI = Mathf.Sign(d-b);
+		// }
 
-		float x = - signI * Vector2.Angle(new Vector2(1, 0), new Vector2(1, diffI));
-		float z = signJ * Vector2.Angle(new Vector2(1, 0), new Vector2(1, diffJ));
+		// float x = - signI * Vector2.Angle(new Vector2(1, 0), new Vector2(1, diffI));
+		// float z = signJ * Vector2.Angle(new Vector2(1, 0), new Vector2(1, diffJ));
 
-		// float minI = Mathf.Min(Mathf.Min(a, c), Mathf.Min(b, d));
-		// float maxI = Mathf.Max(Mathf.Max(a, c), Mathf.Max(b, d));
+		// result = new Vector3(x, 0, z);
 
-		// float minJ = Mathf.Min(Mathf.Min(a, b), Mathf.Min(c, d));
-		// float maxJ = Mathf.Max(Mathf.Max(a, b), Mathf.Max(c, d));
-
-		// float x = Vector2.Angle(new Vector2(1, 0), new Vector2(1, maxI - minI));
-		// float z = Vector2.Angle(new Vector2(1, 0), new Vector2(1, maxJ - minJ));
-		result = new Vector3(x, 0, z);
-
-		return result;
+		// return result;
 	}
 
 	private HeightInfo GetHeightInfo(float x, float z){
