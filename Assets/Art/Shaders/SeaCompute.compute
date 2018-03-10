@@ -114,7 +114,7 @@ void CalculatePoint (uint3 id : SV_DispatchThreadID)
 
 	for(uint l = (id.x * Options[0].heigtMapRatio); l < ((id.x + 1) * Options[0].heigtMapRatio); l++){
 		for(uint k = (id.y * Options[0].heigtMapRatio); k < ((id.y + 1) * Options[0].heigtMapRatio); k++){
-			HeightMap[int2(l, k)] = textureHeight;
+			HeightMap[int2(l, k)] = float4(textureHeight, textureHeight, textureHeight, 1);
 		}
 	}
 
@@ -141,20 +141,23 @@ void CalculateNormal (uint3 id : SV_DispatchThreadID)
 
 	int pointId = id.x * lod + id.y;
 
-	int directions[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+	int2 directions[4] = {int2(-1, 0), int2(1, 0), int2(0, -1), int2(0, 1)};
 
-	int neighboursIds[4][2];
+	int2 neighboursIds[4];
 	float3 vertex[4];
 
 	for(int i = 0; i < 4; i++){
-		neighboursIds[i][0] = min(max(0, id.x + directions[i][0]), lod - 1);
-		neighboursIds[i][1] = min(max(0, id.y + directions[i][1]), lod - 1);
-		vertex[i] = float3(directions[i][0], Result[neighboursIds[0][0] * lod + neighboursIds[0][1]] - Result[pointId], directions[i][1]);
+		neighboursIds[i].x = min(max(0, id.x + directions[i].x), lod - 1);
+		neighboursIds[i].y = min(max(0, id.y + directions[i].y), lod - 1);
+		// vertex[i] = normalize(float3(directions[i][0], Result[neighboursIds[i][0] * lod + neighboursIds[i][1]] - Result[pointId], directions[i][1]));
 	}
 
-	float3 sum = cross(vertex[0], vertex[2]) + cross(vertex[3], vertex[0]) + cross(vertex[1], vertex[3]) + cross(vertex[2], vertex[1]);
+	float z1 = Result[neighboursIds[1].x * lod + neighboursIds[1].y] - Result[neighboursIds[0].x * lod + neighboursIds[0].y];
+	float z2 = Result[neighboursIds[3].x * lod + neighboursIds[3].y] - Result[neighboursIds[2].x * lod + neighboursIds[2].y];
 
-	Normales[pointId] = sum * 0.25;
+	// float3 sum = cross(vertex[0], vertex[2]) + cross(vertex[3], vertex[0]) + cross(vertex[1], vertex[3]) + cross(vertex[2], vertex[1]);
+
+	Normales[pointId] = cross(float3(1, z1, 0), float3(0, z2, 1));
 
 	// vertex[0] = 
 
@@ -163,6 +166,7 @@ void CalculateNormal (uint3 id : SV_DispatchThreadID)
 	for(uint l = (id.x * Options[0].heigtMapRatio); l < ((id.x + 1) * Options[0].heigtMapRatio); l++){
 		for(uint k = (id.y * Options[0].heigtMapRatio); k < ((id.y + 1) * Options[0].heigtMapRatio); k++){
 			NormaleMap[int2(l, k)] = float4(Normales[pointId], 1);
+			// NormaleMap[int2(l, k)] = float4(cross(vertex[3], vertex[0]).xyz, 1);
 			// NormaleMap[int2(l, k)] = float4(Normales[pointId].x, Normales[pointId].y, Normales[pointId].z, 1);
 		}
 	}
