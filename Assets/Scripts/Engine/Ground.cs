@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(Renderer))]
 public class Ground : MonoBehaviour {
 
 	public struct TransformInfo{
@@ -20,62 +22,138 @@ public class Ground : MonoBehaviour {
 		public float diffY;
 	}
 
-	private struct WaveOptions{
-		public Vector2 position;
+	public int lodPower;
 
-		public float amplitude;
-
-		public float waveLength;
-
-		public float period;
-
-		public float waveNumber;
-
-		public float angularFrequency;
-
-		public float time;
-	}
-
-	public Vector2Int lod;
+	public int heigtMapPower;
 
 	public float ratio;
 
+	public float maxWaveHeight;
+
+	public ComputeShader seaCompute;
+
 	public float[] points;
 
-	public float[] coeffPoints;
+	private Vector3[] normales;
 
 	private Transform selfTransform;
 
-	private Vector2 halfLod;
+	private int lod;
+
+	private float halfLod;
 
 	private float time;
+	
+
+	private RenderTexture heightMapTexture;
+
+	private RenderTexture normaleMapTexture;
 
 	private List<WaveOptions> waves;
 
+	private ComputeBuffer optionBuffer;
+
+	private ComputeBuffer pointBuffer;
+
+	private ComputeBuffer normaleBuffer;
+
+	private FrameOptions[] frameOptions;
+
+	private int lodPowPower;
+
 	[Space]
 
+	public bool displayGizmos;
 	public Color gizmosColor;
 
 	public LayerMask testLayer;
-	
-	public float amplitude;
 
-	public float waveLength;
-
-	public float period;
 
 	[Space]
 
+	[Header("Zone Waves options")]
+
+	public float zoneAmplitude;
+
+	public float zoneWaveLength;
+
+	public float zonePeriod;
+
+	[Space]
+
+	[Header("Impact Waves options")]
+
+	public float impactAmplitude;
+
+	public float impactWaveLength;
+
+	public float impactPeriod;
+
+	[Range(0f, 1f)]
 	public float distanceDigress;
 
+	[Range(0f, 1f)]
 	public float timeDigress;
 
-	public float minWave;
+	public float timeout;
+
+	public RawImage rawImage;
+
+	private Material material;
 
 	private void Awake() {
 		selfTransform = GetComponent<Transform>();
-		halfLod = new Vector2(((float) lod.x) * 0.5f, ((float) lod.y) * 0.5f);
+		lodPowPower = ((int) Mathf.Pow(2, lodPower));
+		lod = 32 * lodPowPower;
+		normales = new Vector3[lod * lod];
+		halfLod = ((float) lod) * 0.5f;
 		waves = new List<WaveOptions>();
+		if(zoneAmplitude != 0){
+			CreateZone();
+		}
+
+		int heigtMapLod = 32 * ((int) Mathf.Pow(2, heigtMapPower));
+
+		heightMapTexture = new RenderTexture(heigtMapLod, heigtMapLod, 24);
+		heightMapTexture.name = "HeightMap";
+		heightMapTexture.enableRandomWrite = true;
+		heightMapTexture.Create();
+
+		normaleMapTexture = new RenderTexture(heigtMapLod, heigtMapLod, 24);
+		normaleMapTexture.name = "NormaleMap";
+		normaleMapTexture.enableRandomWrite = true;
+		normaleMapTexture.Create();
+
+		frameOptions = new FrameOptions[1];
+		frameOptions[0] = new FrameOptions();
+		frameOptions[0].maxWaveHeight = maxWaveHeight;
+		frameOptions[0].heigtMapRatio = (uint) (heigtMapLod / lod);
+
+		pointBuffer = new ComputeBuffer(points.Length, sizeof(float));
+		normaleBuffer = new ComputeBuffer(normales.Length, 3 * sizeof(float));
+
+		optionBuffer = new ComputeBuffer(1, 8 * sizeof(float));
+
+		int pointKernel = seaCompute.FindKernel("CalculatePoint");
+		int normaleKernel = seaCompute.FindKernel("CalculateNormal");
+
+		seaCompute.SetBuffer(pointKernel, "Options", optionBuffer);
+		seaCompute.SetBuffer(pointKernel, "Result", pointBuffer);
+		seaCompute.SetTexture(pointKernel, "HeightMap", heightMapTexture);
+
+		seaCompute.SetBuffer(normaleKernel, "Options", optionBuffer);
+		seaCompute.SetBuffer(normaleKernel, "Result", pointBuffer);
+		seaCompute.SetBuffer(normaleKernel, "Normales", normaleBuffer);
+		seaCompute.SetTexture(normaleKernel, "NormaleMap", normaleMapTexture);
+
+		material = GetComponent<Renderer>().material;
+		material.SetTexture("_MainTex", heightMapTexture);
+		material.SetBuffer("_Vertex", pointBuffer);
+		material.SetInt("_VertexSize", lod);
+
+		if(rawImage != null){
+			rawImage.texture = normaleMapTexture;
+		}
 	}
 
 	private void Update() {
@@ -87,183 +165,130 @@ public class Ground : MonoBehaviour {
 			// Debug.DrawRay()
 
 			if (Physics.Raycast(ray, out hit, Mathf.Infinity, testLayer)) {
-				CreateVortex(hit.point);
+				CreateImpact(hit.point);
 			}
 		}
 
+		WaveOptions[] waveArray = waves.ToArray();
+		
 		if(waves.Count > 0){
-			WaveOptions[] currentWaves = waves.ToArray();
+			// for(int i = 0; i < lod; i++){
+			// 	for(int j = 0; j < lod; j++){
+			// 		CalculateWave(new Vector2Int(i, j));
+			// 	}
+			// }
 
-			for(int i = 0; i < lod.x; i++){
-				for(int j = 0; j < lod.y; j++){
-					if(coeffPoints[i * lod.y + j] != 0){
-						points[i * lod.y + j] = 0;
-						coeffPoints[i * lod.y + j] = 0;
-					}
-					
-				}
-			}
+			frameOptions[0].time = time;
+			frameOptions[0].nbWaves = (uint) waveArray.Length;
+			frameOptions[0].lod = (uint) lod;
+			optionBuffer.SetData(frameOptions);
 
-			for(int i = 0; i < currentWaves.Length; i++){
-				CheckWave(currentWaves[i]);
-			}
+			ComputeBuffer impacts = new ComputeBuffer(waveArray.Length, 12 * sizeof(float));
+			impacts.SetData(waves);
 
-			for(int i = 0; i < lod.x; i++){
-				for(int j = 0; j < lod.y; j++){
-					if(coeffPoints[i * lod.y + j] != 0){
-						points[i * lod.y + j] /= coeffPoints[i * lod.y + j];
-					}
-					
-				}
-			}
+			pointBuffer.SetData(points);
+
+			int pointKernel = seaCompute.FindKernel("CalculatePoint");
+			int normaleKernel = seaCompute.FindKernel("CalculateNormal");
+
+			seaCompute.SetBuffer(pointKernel, "Impacts", impacts);
+
+			seaCompute.Dispatch(pointKernel, lodPowPower, lodPowPower, 1);
+			seaCompute.Dispatch(normaleKernel, lodPowPower, lodPowPower, 1);
+
+			pointBuffer.GetData(points);
+			normaleBuffer.GetData(normales);
+
+			impacts.Dispose();
 		}
+
+		for(int i = 0; i < waveArray.Length; i++){
+			if(Wave.IsTimeout(waveArray[i], time)){
+				Debug.Log("Remove Wave");
+				waves.Remove(waveArray[i]);
+			}
+		}	
+
+		// heightMapTexture.SetPixels(heigthMap);
+		// heightMapTexture.Apply();
 
 	
-
-		
-
-		// for(int i = 0; i < lod.x; i++){
-		// 	for(int j = 0; j < lod.y; j++){
-		// 		points[i * lod.y + j] = Mathf.Sin(time * ((float) i) / 20f) / 3f;
+		// for(int i = 0; i < lod; i++){
+		// 	for(int j = 0; j < lod; j++){
+		// 		points[i * lod + j] = Mathf.Sin(time * ((float) i) / 20f) / 3f;
 		// 	}
 		// }
 	}
 
-	private void CheckWave(WaveOptions w){
-		double waveSize = 0f;
-		for(int i = 0; i < 20; i++){
-			for(int j = 0; j < 20; j++){
-				waveSize += CalculateWave(w, i, j);
-				waveSize += CalculateWave(w, -i, j);
-				waveSize += CalculateWave(w, i, -j);
-				waveSize += CalculateWave(w, -i, -j);
+	// private void CalculateWave(Vector2Int pos){
 
-				// if(!result){
-				// 	break;
-				// }
-				// Debug.Log(again);
-				
-			}
+	// 	Vector2 heighInfo = Vector2.zero;
+	// 	int pointId = (pos.x* lod) + pos.y;
 
-			// if(!result){
-			// 	break;
-			// }
-		}
+	// 	foreach(Wave_a w in waves){
+	// 		heighInfo += w.CalculateWave(pos, time, lod);
+	// 	}
 
-		if(waveSize < minWave){
-			Debug.Log("Remove impact " + waveSize);
-			waves.Remove(w);
-		}
+	// 	if(heighInfo.y == 0){
+	// 		points[pointId] = 0f;
+	// 	}
+	// 	else{
+	// 		points[pointId] = heighInfo.x / heighInfo.y;
+	// 	}
+
+	// 	int beginX = Mathf.RoundToInt(pos.x * heightMapRatio);
+	// 	int endX = Mathf.RoundToInt((pos.x + 1) * heightMapRatio);
+
+	// 	int beginY = Mathf.RoundToInt(pos.y * heightMapRatio);
+	// 	int endY = Mathf.RoundToInt((pos.y + 1) * heightMapRatio);
+	// 	for(int i = beginX; i < endX; i++){
+	// 		for(int j = beginY; j < endY; j++){
+	// 			float colorHeight = (Mathf.Clamp(points[pointId], -maxWaveHeight, maxWaveHeight) / maxWaveHeight) + 0.5f;
+	// 			heigthMap[i * heightMapSize + j] = new Color(colorHeight, colorHeight, colorHeight, 1f);
+	// 			// heightMapTexture.SetPixel(i, j, new Color(colorHeight, colorHeight, colorHeight, 1f));
+	// 		}
+	// 	}
+	// }
+
+	
+
+	public void CreateZone(){
+		waves.Add(Wave.CreateZone(new Vector2(0, 0), zoneAmplitude, zoneWaveLength, zonePeriod, time));
 	}
 
-	private float CalculateWave(WaveOptions w, int i, int j){
-
-		if((i + j) == 0){
-			return 0f;
-		}
-
-		float xRound = Mathf.Round(w.position.x);
-		float yRound = Mathf.Round(w.position.y);
-
-		if((xRound + i) < 0){
-			return 0f;
-		}
-
-		if((xRound + i) >= lod.x){
-			return 0f;
-		}
-
-		if((yRound + j) < 0){
-			return 0f;
-		}
-
-		if((yRound + j) >= lod.y){
-			return 0f;
-		}
-
-		int pointId = ((((int) xRound) + i) * lod.y) + (((int) yRound) + j);
-
-		float offsetX = xRound - w.position.x;
-		float offsetY = yRound - w.position.y;
-
-		float currentTime = time - w.time;
-
-		float iCoeff = 1;
-		float jCoeff = 1;
-
-		if(i < 0){
-			iCoeff *= -1;
-		}
-
-		if(j < 0){
-			jCoeff *= -1;
-		}
-
-		float wt = w.angularFrequency * currentTime;
-
-		float iFloat = (float) i;
-		float jFloat = (float) j;
-
-		float iAbs = Mathf.Abs(iFloat);
-		float jAbs = Mathf.Abs(jFloat);
-
-		float thetaX = (w.waveNumber * (((float) i) / lod.x) - offsetX) - (wt * iCoeff);
-		float thetaY = (w.waveNumber * (((float) j) / lod.y) - offsetY) - (wt * jCoeff);
-
-		float xHeight;
-		float yHeight;
-
-		xHeight = Mathf.Sin(thetaX) / Mathf.Exp(iAbs / distanceDigress) / Mathf.Exp(wt / timeDigress);
-		yHeight = Mathf.Sin(thetaY) / Mathf.Exp(jAbs / distanceDigress) / Mathf.Exp(wt / timeDigress);
-
-		float coeff = iAbs + jAbs;
-		float theta = (iAbs * xHeight + jAbs * yHeight) / coeff;
-
-		float finalHeight = w.amplitude * theta;
-
-		points[pointId] += finalHeight / coeff;
-		coeffPoints[pointId] += (1 / coeff);
-
-		// if(Mathf.Abs(finalHeight) < minWave){
-		// 	return false;
-		// }
-		// else{
-		// 	return true;
-		// }
-
-		return Mathf.Abs(finalHeight);
-		
+	public void CreateImpact(Vector3 p){
+		CreateImpact(p, impactAmplitude, impactWaveLength, impactPeriod, distanceDigress, timeDigress, timeout);
 	}
 
-	public void CreateVortex(Vector3 p){
-		WaveOptions newWave = new WaveOptions();
-		float iFloat = ((p.x / ratio) + halfLod.x) - selfTransform.position.x;
-		float jFloat = ((p.z / ratio) + halfLod.y) - selfTransform.position.z;
+	public void CreateImpact(Vector3 p, float amplitude, float length, float period, float distanceDigress, float timeDigress, float timeout){
+		float iFloat = ((p.x / ratio) + halfLod) - selfTransform.position.x;
+		float jFloat = ((p.z / ratio) + halfLod) - selfTransform.position.z;
 
-		newWave.position = new Vector2(iFloat, jFloat);
-		newWave.amplitude = amplitude;
-		newWave.waveLength = waveLength;
-		newWave.period = period;
-		newWave.waveNumber = (2 * Mathf.PI) / waveLength;
-		newWave.angularFrequency = (2 * Mathf.PI) / period;
-		newWave.time = time;
-		waves.Add(newWave);
+		waves.Add(Wave.CreateImpact(new Vector2(iFloat, jFloat), amplitude, length, period, time, distanceDigress, timeDigress, timeout));
 	}
 
 	private void OnDrawGizmos() {
-		Transform seaTransform = GetComponent<Transform>();
-		Vector2 halfLod = new Vector2(((float) lod.x) * 0.5f, ((float) lod.y) * 0.5f);
-		Gizmos.color = gizmosColor;
-		if(points.Length == (lod.x * lod.y)){
-			for(int i = 0; i < lod.x; i++){
-				for(int j = 0; j < lod.y; j++){
-					if(i < (lod.x - 1)){
-						Gizmos.DrawLine(CalculateRealPosition(i, j, halfLod, seaTransform), CalculateRealPosition(i + 1, j, halfLod, seaTransform));
-					}
+		if(!displayGizmos){
+			return ;
+		}
 
-					if(j < (lod.y - 1)){
-						Gizmos.DrawLine(CalculateRealPosition(i, j, halfLod, seaTransform), CalculateRealPosition(i, j + 1, halfLod, seaTransform));
-					}
+		int lod = 32 * ((int) Mathf.Pow(2, lodPower));
+
+		if(points.Length != (lod * lod)){
+			return ;
+		}
+
+		Transform seaTransform = GetComponent<Transform>();
+		float halfLod = ((float) lod) * 0.5f;
+		Gizmos.color = gizmosColor;
+		for(int i = 0; i < lod; i++){
+			for(int j = 0; j < lod; j++){
+				if(i < (lod - 1)){
+					Gizmos.DrawLine(CalculateRealPosition(i, j, lod, halfLod, seaTransform), CalculateRealPosition(i + 1, j, lod, halfLod, seaTransform));
+				}
+
+				if(j < (lod - 1)){
+					Gizmos.DrawLine(CalculateRealPosition(i, j, lod, halfLod, seaTransform), CalculateRealPosition(i, j + 1, lod, halfLod, seaTransform));
 				}
 			}
 		}
@@ -271,9 +296,9 @@ public class Ground : MonoBehaviour {
 
 	public TransformInfo GetTransformInfo(Vector2 position, float yAngle){
 		float minX = GetX(0);
-		float maxX = GetX(lod.x - 1);
+		float maxX = GetX(lod - 1);
 		float minZ = GetZ(0);
-		float maxZ = GetZ(lod.y - 1);
+		float maxZ = GetZ(lod - 1);
 
 		TransformInfo result = new TransformInfo();
 
@@ -305,12 +330,12 @@ public class Ground : MonoBehaviour {
 	}
 
 	private Vector3 CalculateRealPosition(int i, int j){
-		return CalculateRealPosition(i, j, halfLod, selfTransform);
+		return CalculateRealPosition(i, j, lod, halfLod, selfTransform);
 	}
 
-	private Vector3 CalculateRealPosition(int i, int j, Vector2 halfLod, Transform seaTransform){
+	private Vector3 CalculateRealPosition(int i, int j, int lod, float halfLod, Transform seaTransform){
 		float x = GetX(i, halfLod, seaTransform);
-		float y = points[i * lod.y + j];
+		float y = points[i * lod + j];
 		float z = GetZ(j, halfLod, seaTransform);
 		return new Vector3(x, y, z);
 	}
@@ -318,10 +343,10 @@ public class Ground : MonoBehaviour {
 	private float GetHeight(HeightInfo info){
 		float result;
 
-		result = info.coeff.x * points[info.i.y * lod.y + info.j.y];
-		result += info.coeff.y * points[info.i.x * lod.y + info.j.y];
-		result += info.coeff.z * points[info.i.y * lod.y + info.j.x];
-		result += info.coeff.w * points[info.i.x * lod.y + info.j.x];
+		result = info.coeff.x * points[info.i.y * lod + info.j.y];
+		result += info.coeff.y * points[info.i.x * lod + info.j.y];
+		result += info.coeff.z * points[info.i.y * lod + info.j.x];
+		result += info.coeff.w * points[info.i.x * lod + info.j.x];
 
 		return result / (info.coeff.x + info.coeff.y + info.coeff.z + info.coeff.w);
 	}
@@ -329,10 +354,10 @@ public class Ground : MonoBehaviour {
 	private Vector3 GetRotation(HeightInfo info, float height, float yAngle){
 		Vector3 result;
 
-		// Vector3 a = new Vector3(0, points[info.i.x * lod.y + info.j.x], 0);
-		// Vector3 b = new Vector3(1, points[info.i.y * lod.y + info.j.x], 0);
-		// Vector3 c = new Vector3(0, points[info.i.x * lod.y + info.j.y], 1);
-		// Vector3 d = new Vector3(1, points[info.i.y * lod.y + info.j.y], 1);
+		// Vector3 a = new Vector3(0, points[info.i.x * lod + info.j.x], 0);
+		// Vector3 b = new Vector3(1, points[info.i.y * lod + info.j.x], 0);
+		// Vector3 c = new Vector3(0, points[info.i.x * lod + info.j.y], 1);
+		// Vector3 d = new Vector3(1, points[info.i.y * lod + info.j.y], 1);
 
 		// Vector3 cross1 = Vector3.Cross(b - a, c - a);
 		// if(cross1.y < 0){
@@ -361,10 +386,10 @@ public class Ground : MonoBehaviour {
 
 		// return result / (info.coeff.x + info.coeff.y + info.coeff.z + info.coeff.w);
 
-		float a = points[info.i.x * lod.y + info.j.x];
-		float b = points[info.i.y * lod.y + info.j.x];
-		float c = points[info.i.x * lod.y + info.j.y];
-		float d = points[info.i.y * lod.y + info.j.y];
+		float a = points[info.i.x * lod + info.j.x];
+		float b = points[info.i.y * lod + info.j.x];
+		float c = points[info.i.x * lod + info.j.y];
+		float d = points[info.i.y * lod + info.j.y];
 
 		if(yAngle < 0){
 			yAngle = 360 - yAngle;
@@ -428,8 +453,8 @@ public class Ground : MonoBehaviour {
 
 	private HeightInfo GetHeightInfo(float x, float z){
 		HeightInfo result = new HeightInfo();
-		float iFloat = ((x / ratio) + halfLod.x) - selfTransform.position.x;
-		float jFloat = ((z / ratio) + halfLod.y) - selfTransform.position.z;
+		float iFloat = ((x / ratio) + halfLod) - selfTransform.position.x;
+		float jFloat = ((z / ratio) + halfLod) - selfTransform.position.z;
 
 		result.i.x = ((int) iFloat);
 		result.i.y = result.i.x;
@@ -460,15 +485,21 @@ public class Ground : MonoBehaviour {
 		return GetX(i, halfLod, selfTransform);
 	}
 
-	private float GetX(int i, Vector2 halfLod, Transform seaTransform){
-		return seaTransform.position.x + ((((float) i) - halfLod.x) * ratio);
+	private float GetX(int i, float halfLod, Transform seaTransform){
+		return seaTransform.position.x + ((((float) i) - halfLod) * ratio);
 	}
 
 	private float GetZ(int j){
 		return GetZ(j, halfLod, selfTransform);
 	}
 
-	private float GetZ(int j, Vector2 halfLod, Transform seaTransform){
-		return seaTransform.position.z + ((((float) j) - halfLod.y) * ratio);
+	private float GetZ(int j, float halfLod, Transform seaTransform){
+		return seaTransform.position.z + ((((float) j) - halfLod) * ratio);
+	}
+
+	private void OnDestroy() {
+		optionBuffer.Dispose();
+		pointBuffer.Dispose();
+		normaleBuffer.Dispose();
 	}
 }

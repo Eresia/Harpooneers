@@ -4,7 +4,7 @@ using Rewired;
 /// <summary>
 /// Handle Input associated to each player.
 /// </summary>
-[RequireComponent(typeof(MovementBehaviour_OLD))]
+[RequireComponent(typeof(MovementBehaviour))]
 public class PlayerInput : MonoBehaviour
 {
     [Tooltip("Rewired player id")]
@@ -23,6 +23,7 @@ public class PlayerInput : MonoBehaviour
     private Player player; // Rewired player.
 
     private bool doPause; // Do the pause if the delay is repected.
+    private int controllerDisconnected;
 
     void Awake()
     {
@@ -37,10 +38,14 @@ public class PlayerInput : MonoBehaviour
         player.AddInputEventDelegate(TogglePause, UpdateLoopType.Update, "Toggle Pause");
         player.AddInputEventDelegate(ReleaseRope, UpdateLoopType.Update, "Release Rope");
         player.AddInputEventDelegate(PullingOnRope, UpdateLoopType.Update, "Pull On Rope");
+        player.AddInputEventDelegate(DisplayPlayerPosition, UpdateLoopType.Update, "Display Player");
 
         // Subscribe to events of controller connection
         ReInput.ControllerConnectedEvent += OnControllerConnected;
         ReInput.ControllerDisconnectedEvent += OnControllerDisconnected;
+
+        // Deactivate the player position indicator
+        playerMgr.FeedbackPlayerPos(false, playerId);
     }
 
     private void Reset()
@@ -71,14 +76,14 @@ public class PlayerInput : MonoBehaviour
 
         // Handle harpoon rotation.
         {
-            float rotateX = player.GetAxis("Rotate Horizontal");
+            float rotateX = player.GetAxis ("Rotate Horizontal");
             float rotateZ = player.GetAxis("Rotate Vertical");
 
             Vector3 harpoonDir = new Vector3(rotateX, 0f, rotateZ);
-
+            
             //Debug.DrawRay(transform.position, harpoonDir.normalized * 2.5f, Color.red, 1f);
 
-            harpoonLauncher.LaunchHarpoon(harpoonDir.normalized);
+            harpoonLauncher.LaunchHarpoon(harpoonDir);
         }
 
         HandleCutRope();
@@ -86,25 +91,30 @@ public class PlayerInput : MonoBehaviour
 
     private void TogglePause(InputActionEventData data)
     {
-        // If game is unpaused.
-
-        // Use this to pause after a delay.
-        if (!doPause)
-        {
-            doPause = data.GetButtonTimePressed() > timeBeforePause;
-        }
-
-        if (data.GetButtonUp())
-        {
-            if (doPause)
-            {
-                Debug.Log("Toggle pause !");
-            }
-
-            doPause = false;
-        }
-
         // If game is paused : direct unpause.
+        if (GameManager.instance.IsPause)
+        {
+            if(data.GetButtonDown())
+            {
+                GameManager.instance.PauseGame();
+                doPause = false;
+            }
+        }
+
+        // If game is unpaused.
+        else
+        {
+            if (!doPause)
+            {
+                // Use this to pause after a delay.
+                doPause = data.GetButtonTimePressed() > timeBeforePause;
+
+                if (doPause)
+                {
+                    GameManager.instance.PauseGame();
+                }
+            }
+        }
     }
 
     private void DropBomb(InputActionEventData data)
@@ -118,7 +128,7 @@ public class PlayerInput : MonoBehaviour
         {
             // Spawn the bomb behind the boat
             bombLauncher.gameObject.SetActive(true);
-            bombLauncher.SpawnTheBomb(transform.position - bombLauncher.behindOffset * transform.forward, movement.physicMove.velocity);
+            bombLauncher.SpawnTheBomb(transform.position - bombLauncher.behindOffset * transform.forward, movement.physicMove.Velocity);
         }
     }
 
@@ -179,20 +189,47 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
+    private void DisplayPlayerPosition(InputActionEventData data)
+    {
+        if (data.GetButtonDown())
+        {
+            playerMgr.FeedbackPlayerPos(true, playerId);
+        }
+
+        else if(data.GetButtonUp())
+        {
+            playerMgr.FeedbackPlayerPos(false, playerId);
+        }
+       
+    }
+    
     // Controller connection - disconnection.
 
     // This function will be called when a controller is connected
     // You can get information about the controller that was connected via the args parameter
     void OnControllerConnected(ControllerStatusChangedEventArgs args)
     {
-        // TODO Unpause the game if the game was stopped because a controller has been disconnected.
+        // Unpause the game if the game was stopped because one or more controllers has(ve) been disconnected.
+        controllerDisconnected--;
+
+        if (GameManager.instance.IsPause && controllerDisconnected == 0)
+        {
+            GameManager.instance.PauseGame();
+        }
     }
 
     // This function will be called when a controller is fully disconnected
     // You can get information about the controller that was disconnected via the args parameter
     void OnControllerDisconnected(ControllerStatusChangedEventArgs args)
     {
-        // TODO Pause the game if a controller has been disconnected.
+        // Pause the game if at least one controller has been disconnected.
+
+        if (!GameManager.instance.IsPause)
+        {
+            controllerDisconnected++;
+
+            GameManager.instance.PauseGame();
+        }
     }
 
     private void OnDestroy()
@@ -201,7 +238,7 @@ public class PlayerInput : MonoBehaviour
         if(player != null)
         {
             // Free delegates.
-            player.RemoveInputEventDelegate(DropBomb);
+            player.RemoveInputEventDelegate(DropBomb, UpdateLoopType.Update, InputActionEventType.ButtonPressed, "Drop Bomb");
             player.RemoveInputEventDelegate(ResurrectAlly);
             player.RemoveInputEventDelegate(ReleaseRope);
             player.RemoveInputEventDelegate(PullingOnRope);

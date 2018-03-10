@@ -51,15 +51,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb45d3370d9afdc4fa0dbf3ac9a4502e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useDefaultConfig: 1
+  defaultConfig:
+    coqueId: 0
+    cabinId: 0
+    harpoonId: 0
+    bombStockId: 0
+  tweaking: 0
   players:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  shipModuleMgrs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 0}
   harpoonsScriptObjs:
   - {fileID: 11400000, guid: f603b0c5f7b9f3c47941d6b2a2aedd52, type: 2}
@@ -75,7 +74,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 70d589a4e7d233640978347a6f0ac953, type: 2}
   - {fileID: 11400000, guid: a5ba727e93234ff43a43dabd78993730, type: 2}
   - {fileID: 11400000, guid: 4f460c00c3509694995aecb55446f441, type: 2}
+  - {fileID: 11400000, guid: 2f9d5a59ef848724d88c8840db849ec3, type: 2}
   bombsScriptObjs:
-  - {fileID: 11400000, guid: d5687e386ebe5df47ba644e40ba4efb9, type: 2}
-  - {fileID: 11400000, guid: bff3a5d4d8785bb40add39614c80c2a7, type: 2}
-  - {fileID: 11400000, guid: 51cc31a380592e34e8ff3a874188a418, type: 2}
+  - {fileID: 11400000, guid: 3a0652e024e451e438ffdc432288e627, type: 2}
+  - {fileID: 11400000, guid: a2853c09ac330fb4f90f5faa85fecdc1, type: 2}
+  - {fileID: 11400000, guid: 48f26bfedf35e4f42ae6a7b2a5495d70, type: 2}
+  - {fileID: 11400000, guid: 5b2512539daa912429e98fd483156c4b, type: 2}

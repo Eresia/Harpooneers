@@ -1,14 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Setup all boats in the game depending the number of players and the customizations choosen.
 /// </summary>
 public class ShipManager : MonoBehaviour {
-    
+
+    public bool useDefaultConfig = false;
+
+    public ShipConfiguration defaultConfig = new ShipConfiguration
+    {
+        cabinId = 0,
+        bombStockId = 0,
+        coqueId = 0,
+        harpoonId = 0
+    };
+
+    [Tooltip("Try to update module at runtime, but warning an attribute can not work.")]
+    public bool tweaking = false;
+
     public GameObject[] players;
-    public ShipModulesManager[] shipModuleMgrs;
+    
+    private ShipModulesManager[] shipModuleMgrs;
     
     private int playerAlive = 0;
 
@@ -18,19 +30,34 @@ public class ShipManager : MonoBehaviour {
     public CabineModule[] cabinesScriptObjs;
     public BombStockModule[] bombsScriptObjs;
 
+    private void Awake()
+    {
+        shipModuleMgrs = new ShipModulesManager[players.Length];
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            shipModuleMgrs[i] = players[i].GetComponentInChildren<ShipModulesManager>();
+        }
+
+        if (useDefaultConfig)
+        {
+            SetupAllShips();
+        }
+    }
+
     public void SetupAllShips()
     {
         playerAlive = GameManager.instance.nbOfPlayers;
 
-        for (int i = 0; i < shipModuleMgrs.Length; i++)
+        for (int i = 0; i < players.Length; i++)
         {
             // Check if a player is in the game.
             if(GameManager.instance.players[i])
             {
                 // For debug only. Load default config.
-                if(GameManager.instance.debug)
+                if(useDefaultConfig)
                 {
-                    shipModuleMgrs[i].ActivateShipModules(GameManager.instance.defaultConfig, this);
+                    shipModuleMgrs[i].ActivateShipModules(GameManager.instance.shipMgr.defaultConfig, this);
                 }
 
                 else

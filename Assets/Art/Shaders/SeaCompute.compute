@@ -1,0 +1,169 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CalculatePoint
+#pragma kernel CalculateNormal
+
+struct WaveOptions{
+	uint type;
+
+	float2 position;
+
+	float amplitude;
+
+	float waveLength;
+
+	float period;
+
+	float waveNumber;
+
+	float angularFrequency;
+
+	float distanceDigress;
+
+	float timeDigress;
+
+	float time;
+
+	float timeout;
+};
+
+struct FrameOptions{
+	float time;
+	uint nbWaves;
+	float maxWaveHeight;
+	uint lod;
+	uint heigtMapRatio;
+	float3 trash;
+};
+
+StructuredBuffer<WaveOptions> Impacts;
+StructuredBuffer<FrameOptions> Options;
+RWStructuredBuffer<float> Result;
+RWTexture2D<float4> HeightMap;
+
+[numthreads(32,32,1)]
+void CalculatePoint (uint3 id : SV_DispatchThreadID)
+{
+	float2 heightInfo = float2(0, 0);
+	int lod = Options[0].lod;
+
+	int pointId = id.x * lod + id.y;
+
+	for(uint i = 0; i < Options[0].nbWaves; i++){
+		float2 offset = float2(Impacts[i].position.x - id.x, Impacts[i].position.y - id.y);
+
+		
+		float2 direction = float2(sign(offset.x), sign(offset.y));
+
+		// float2 posAbs = float2(abs(offset.x), abs(offset.y));
+
+		// float coeff = (2 + posAbs.x + posAbs.y);
+		
+		float currentTime = Options[0].time - Impacts[i].time;
+		float wt = Impacts[i].angularFrequency * currentTime;
+
+		float sinTheta = 0;
+
+		float offsetMagnitude = distance(float2(0, 0), offset);
+		float posAbs = abs(offsetMagnitude);
+		float coeff = (2 + posAbs);
+		float timeChange = 1 / exp(wt * Impacts[i].timeDigress);
+		
+		if(Impacts[i].type == 0){
+			// float sinThetaX = (Impacts[i].waveNumber * (offset.x / lod)) - (wt * direction.x);
+			// float sinThetaY = (Impacts[i].waveNumber * (offset.y / lod)) - (wt * direction.y);
+
+			// float xHeight = sin(sinThetaX) / exp(posAbs.x * Impacts[i].distanceDigress) * timeChange;
+			// float yHeight = sin(sinThetaY) / exp(posAbs.y * Impacts[i].distanceDigress) * timeChange;
+			
+			// sinTheta = ((1 + posAbs.x) * xHeight + (1 + posAbs.y) * yHeight) / coeff;
+
+			float theta = (Impacts[i].waveNumber * (offsetMagnitude / lod)) - (wt/* * direction.x*/);
+			sinTheta = sin(theta) / exp(posAbs * Impacts[i].distanceDigress) * timeChange;
+
+		}
+		else if(Impacts[i].type == 1){
+			sinTheta = sin((Impacts[i].waveNumber * (offset.x / lod)) - wt);
+		}
+
+			float finalHeight = Impacts[i].amplitude * sinTheta;
+
+			float heightAbs = abs(finalHeight);
+
+		heightInfo = heightInfo + float2(finalHeight * (heightAbs/ coeff), (heightAbs / coeff));
+
+		// if((offset.x != 0) || (offset.y != 0)){
+		// 	heightInfo = heightInfo + float2(finalHeight * (heightAbs/ coeff), (heightAbs / coeff));
+		// }
+		// else{
+		// 	heightInfo = heightInfo + float2(finalHeight * (heightAbs/ 2), (heightAbs / 2));
+		// }
+		
+	}
+
+	if(heightInfo.y == 0){
+		Result[pointId] = 0;
+	}
+	else{
+		Result[pointId] = heightInfo.x / heightInfo.y;
+	}
+
+	// id.x = lod - id.x;
+	// id.y = lod - id.y;
+
+	float textureHeight = (clamp(Result[pointId], -Options[0].maxWaveHeight, Options[0].maxWaveHeight) / Options[0].maxWaveHeight) + 0.5;
+
+	for(uint l = (id.x * Options[0].heigtMapRatio); l < ((id.x + 1) * Options[0].heigtMapRatio); l++){
+		for(uint k = (id.y * Options[0].heigtMapRatio); k < ((id.y + 1) * Options[0].heigtMapRatio); k++){
+			HeightMap[int2(l, k)] = textureHeight;
+		}
+	}
+
+	// int beginX = round(id.x * Options[0].heightMapRatio);
+	// int endX = round((id.x + 1) * Options[0].heightMapRatio);
+
+	// int beginY = round(id.y * Options[0].heightMapRatio);
+	// int endY = round((id.y + 1) * Options[0].heightMapRatio);
+	// for(int k = beginX; k < endX; k++){
+	// 	for(int l = beginY; l < endY; l++){
+	// 		float colorHeight = (clamp(Result[pointId], -Options[0].maxWaveHeight, Options[0].maxWaveHeight) / Options[0].maxWaveHeight) + 0.5;
+	// 		HeightMap[int2(k, l)] = float4(colorHeight, colorHeight, colorHeight, 1);
+	// 	}
+	// }
+}
+
+RWStructuredBuffer<float3> Normales;
+RWTexture2D<float4> NormaleMap;
+
+[numthreads(32,32,1)]
+void CalculateNormal (uint3 id : SV_DispatchThreadID)
+{
+	int lod = Options[0].lod;
+
+	int pointId = id.x * lod + id.y;
+
+	int directions[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+	int neighboursIds[4][2];
+	float3 vertex[4];
+
+	for(int i = 0; i < 4; i++){
+		neighboursIds[i][0] = min(max(0, id.x + directions[i][0]), lod - 1);
+		neighboursIds[i][1] = min(max(0, id.y + directions[i][1]), lod - 1);
+		vertex[i] = float3(directions[i][0], Result[neighboursIds[0][0] * lod + neighboursIds[0][1]] - Result[pointId], directions[i][1]);
+	}
+
+	float3 sum = cross(vertex[0], vertex[2]) + cross(vertex[3], vertex[0]) + cross(vertex[1], vertex[3]) + cross(vertex[2], vertex[1]);
+
+	Normales[pointId] = sum * 0.25;
+
+	// vertex[0] = 
+
+	// if()
+
+	for(uint l = (id.x * Options[0].heigtMapRatio); l < ((id.x + 1) * Options[0].heigtMapRatio); l++){
+		for(uint k = (id.y * Options[0].heigtMapRatio); k < ((id.y + 1) * Options[0].heigtMapRatio); k++){
+			NormaleMap[int2(l, k)] = float4(Normales[pointId], 1);
+			// NormaleMap[int2(l, k)] = float4(Normales[pointId].x, Normales[pointId].y, Normales[pointId].z, 1);
+		}
+	}
+}

@@ -16,13 +16,14 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
     public float delayWhenExplodeInChain = 0.5f;
 
     [Header("FX")]
-    public ParticleSystem radiusFX;
+    public GameObject radiusFX;
     public ParticleSystem explosionFX;
-    public ParticleSystem explodingFX;
+    public ParticleSystem fuseFX;
 
+    [Header("Other components")]
     public ResetWhenLeaveScreen resetWhenLeaveScreen;
+    public PhysicMove physicsScript;
 
-    private PhysicMove physicsScript;
     private MeshRenderer _myRenderer;
     private Collider _myCollider;
 
@@ -41,11 +42,11 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
     }
 
     // Scale fx depending the bomb radius.
-    public void SetupFx()
+    public void SetupBombFX()
     {
         Vector3 resize = Vector3.one * bombStockModule.bombRadius;
         
-        radiusFX.transform.localScale = resize;
+        radiusFX.transform.parent.localScale *= bombStockModule.bombRadius;
         explosionFX.transform.localScale = resize;
     }
     
@@ -62,8 +63,8 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
     public void SpawnTheBomb(Vector3 spawnPosition, Vector3 movementDirection)
     {
         hasAlreadyExplode = false;
-        
-        radiusFX.Play();
+
+        radiusFX.SetActive(true);
 
         // Spawn Position
         gameObject.transform.position = spawnPosition + new Vector3(0f, 0.25f,0f);
@@ -93,6 +94,9 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
 
     private IEnumerator Explosion(float delay)
     {
+        if (delay > 0)
+            fuseFX.Play();
+
         yield return new WaitForSeconds(delay);
 
         // Deal damage with an overlap sphere
@@ -108,6 +112,7 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
         }
 
         // TODO : Shockwave on the sea.
+        GameManager.instance.ground.CreateImpact(transform.position);
 
         //_myRigidbody.angularVelocity = Vector3.zero;
         gameObject.transform.rotation = Quaternion.identity;
@@ -118,10 +123,10 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
         _myCollider.enabled = false;
 
         // Clear and stop to debug the radius.
-        radiusFX.Stop();
-        radiusFX.Clear();
+        radiusFX.SetActive(false);
 
         explosionFX.Play();
+        fuseFX.Stop();
 
         StartCoroutine(DeactiveGameObject());
     }
@@ -150,9 +155,15 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
         gameObject.SetActive(false);
     }
 
-    // Debug radius.
+    
     private void OnDrawGizmosSelected()
     {
+        if(!bombStockModule)
+        {
+            return;
+        }
+
+        // Debug radius of the bomb.
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, bombStockModule.bombRadius);
     }

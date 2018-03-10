@@ -8,35 +8,36 @@ public class PhysicMove : MonoBehaviour {
 
 	public float friction;
 
-	public float mass;
-
 	public float limitSpeed;
 
-	public Transform selfTransform {get; private set;}
+	public float gravity;
 
-	public Vector3 velocity {get; private set;}
+	public Transform SelfTransform {get; private set;}
 
-	private void Awake() {
-		selfTransform = GetComponent<Transform>();
-		velocity = Vector3.zero;
+	public Vector3 Velocity {get; private set;}
+
+    private void Awake() {
+		SelfTransform = GetComponent<Transform>();
+		Velocity = Vector3.zero;
 	}
 
 	private void Update() {
 
-		selfTransform.position += velocity * Time.deltaTime;
+		SelfTransform.position += Velocity * Time.deltaTime;
 
-		velocity /= 1 + (friction * Time.deltaTime);
+        float inertness = 1 + (friction * Time.deltaTime);
 
-		if(velocity.sqrMagnitude < 0.01f){
-			velocity = Vector3.zero;
+        Velocity /= inertness;
+
+        if (Velocity.sqrMagnitude < 0.01f){
+			Velocity = Vector3.zero;
 		}
 
-		physicObject.MoveOnBoard(selfTransform);
+        physicObject.MoveOnBoard(this);
+    }
 
-		velocity = Vector3.ClampMagnitude(velocity, limitSpeed);
-	}
-
-	public void AddForce(Vector3 force) {
-		velocity += force / mass;
-	}
+	public void AddForce(Vector3 force)
+    {
+		Velocity += force;
+    }
 }

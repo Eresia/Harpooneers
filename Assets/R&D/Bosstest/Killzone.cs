@@ -15,6 +15,6 @@ public class Killzone : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
-            other.GetComponent<PlayerManager>().Death();
+            other.transform.parent.GetComponent<PlayerManager>().Death();
     }
 }

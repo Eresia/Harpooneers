@@ -49,18 +49,17 @@ public class MovementBehaviour : MonoBehaviour {
             transform.rotation = Quaternion.Lerp(initialDir, targetDir, Time.deltaTime * coqueModule.turnSpeed);
         }
 
+        float acc = (coqueModule.drag * coqueModule.moveSpeedMax) / Time.deltaTime + coqueModule.moveSpeedMax;
+
+        //Debug.Log(acc);
+
         // Move boat toward.
-        physicMove.AddForce(transform.forward * coqueModule.moveSpeed * move);
+        physicMove.AddForce(transform.forward * acc * move);
 
         // Limit position in the boundaries of the screen.
         Vector3 pos = transform.position;
-        
-        Vector3 hitPoint = GameManager.instance.boundaryMgr.InScreenPosition(pos);
 
-        pos.x = hitPoint.x;
-        pos.z = hitPoint.z;
-
-        transform.position = pos;
+        transform.position = GameManager.instance.boundaryMgr.InScreenPosition(pos);
     }
 
     // Freeze player at his position.

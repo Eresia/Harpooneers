@@ -18,9 +18,14 @@ public class Harpoon : MonoBehaviour {
 	private float minDistance;
 
 	[SerializeField]
-	private float releaseSpeed;
+	private float tractionSpeed;
 
-	[SerializeField]
+    public float TractionSpeed {
+        get { return tractionSpeed; }
+        set { tractionSpeed = value; }
+    }
+
+    [SerializeField]
 	private float forceBlock;
 
 	[SerializeField]
@@ -45,12 +50,17 @@ public class Harpoon : MonoBehaviour {
 	
 	private float returnSpeed;
 
-	private void Awake() {
+    public float slingForce = 100f;
+    private bool doSling;
+
+	private void Awake()
+    {
 		selfTransform = GetComponent<Transform>();
 		lineRenderer = GetComponent<LineRenderer>();
 	}
 
-	private void Update() {
+	private void Update()
+    {
 		Vector3 selfPos = selfTransform.position;
 		Vector3 launcherPos = launcher.selfTransform.position;
 		float color = 0;
@@ -58,17 +68,20 @@ public class Harpoon : MonoBehaviour {
         
 		switch(state){
 			case State.LAUNCHING:
-				selfPos += direction * launchSpeed * Time.deltaTime;
+				selfPos += direction * Time.deltaTime;
 				selfTransform.position = selfPos;
-				if(distance > maxDistance){
+
+				if(distance > maxDistance)
+                {
 					Cut();
 				}
 				break;
 
 			case State.GRIPPED:
-				if(distance > actualDistance) {
-
+				if(distance > actualDistance)
+                {
 					Vector3 normal = selfPos - launcherPos;
+
 					// Vector3 force = (distance - actualDistance) * normal.normalized * forceBlock;
 					// if(forceBreak < force.sqrMagnitude){
 					// 	Cut();
@@ -80,7 +93,8 @@ public class Harpoon : MonoBehaviour {
 					launcher.selfTransform.position = launcherPos + (distance - actualDistance) * normal.normalized;
                 }
 
-				else {
+				else
+                {
 					color = (actualDistance - distance) / actualDistance;
 				}
 
@@ -89,12 +103,15 @@ public class Harpoon : MonoBehaviour {
 			case State.RETURN:
 				float movement = returnSpeed * Time.deltaTime;
 
-				if(distance < movement){
+				if(distance < movement)
+                {
 					launcher.EndReturn();
 					Destroy(gameObject);
 					return ;
 				}
-				else{
+
+				else
+                {
 					Vector3 newDirection = launcherPos - selfPos;
 					selfPos += newDirection.normalized * movement;
 					selfTransform.position = selfPos;
@@ -103,69 +120,99 @@ public class Harpoon : MonoBehaviour {
 				break;
 		}
 
-		lineRenderer.SetPosition(0, selfPos);
-		lineRenderer.SetPosition(1, launcherPos);
+        lineRenderer.SetPosition(0, selfPos);
+        lineRenderer.SetPosition(1, launcherPos);
 		lineRenderer.materials[0].color = new Color(color, color, color, 1f);
 	}
 
-	public void Launch(HarpoonLauncher launcher, Vector3 from, Vector3 direction, float maxDistance, float launchSpeed, float returnSpeed){
+	public void Launch(HarpoonLauncher launcher, Vector3 from, Vector3 direction, float maxDistance, float returnSpeed){
 		this.launcher = launcher;
 		this.direction = direction;
 		this.maxDistance = maxDistance;
-		this.launchSpeed = launchSpeed;
 		this.returnSpeed = returnSpeed;
 		this.state = State.LAUNCHING;
+        
+        selfTransform.position = from;
 
-		selfTransform.position = from;
-	}
+        lineRenderer.SetPosition(0, from);
+        lineRenderer.SetPosition(1, from);
+    }
 
 	public void Cut(){
-		if(state < State.RETURN){
+
+		if(state < State.RETURN)
+        {
 			selfTransform.parent = launcher.boatFollower;
+
+            if(doSling)
+            {
+                launcher.physicMove.AddForce(launcher.physicMove.Velocity.normalized * slingForce);
+            }
+
 			state = State.RETURN;
 		}
 	}
 
-	public void Release(){
-		if(state == State.GRIPPED){
-			actualDistance += releaseSpeed * Time.deltaTime;
-			if(actualDistance > maxDistance){
+	public void Release() {
+
+		if(state == State.GRIPPED)
+        {
+			actualDistance += tractionSpeed * Time.deltaTime;
+
+			if(actualDistance > maxDistance)
+            {
 				actualDistance = maxDistance;
-			}
+                doSling = true;
+            }
+
+            else
+            {
+                doSling = false;
+            }
 		}
 	}
 
 	public void Pull(){
 		if(state == State.GRIPPED){
-			actualDistance -= releaseSpeed * Time.deltaTime;
+			actualDistance -= tractionSpeed * Time.deltaTime;
 			if(actualDistance < minDistance){
 				Cut();
 			}
 		}
 	}
 
-	private void OnTriggerEnter(Collider other) {
-		if(state == State.LAUNCHING){
-			if(other.gameObject.layer == LayerMask.NameToLayer(hookLayer)){
-				HarpoonLauncher otherLauncher = other.GetComponentInParent<HarpoonLauncher>();
-				if(launcher.Equals(otherLauncher)){
-					return ;
-				}
-			}
+    // Try to attach to a collider.
+    private void OnTriggerEnter(Collider other)
+    {
+        if (state == State.LAUNCHING)
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer(hookLayer))
+            {
+                HarpoonLauncher otherLauncher = other.GetComponentInParent<HarpoonLauncher>();
+                if (launcher.Equals(otherLauncher))
+                {
+                    return;
+                }
+            }
 
-			parentTransform = other.GetComponent<Transform>();
-			selfTransform.parent = parentTransform;
-			maxDistance = Vector3.Distance(selfTransform.position, launcher.selfTransform.position);
-			actualDistance = maxDistance;
-			state = State.GRIPPED;
+            parentTransform = other.GetComponent<Transform>();
+            selfTransform.parent = parentTransform;
+
+            Vector3 targetPos = selfTransform.position;
+            targetPos.y = 0f;
+
+            selfTransform.position = targetPos;
+
+            maxDistance = Vector3.Distance(selfTransform.position, launcher.selfTransform.position);
+            actualDistance = maxDistance;
+            state = State.GRIPPED;
 
             // Notify that the gameobject has been harpooned.
             IHarpoonable harpoonable = other.GetComponent<IHarpoonable>();
-            if(harpoonable != null)
+            if (harpoonable != null)
             {
                 harpoonable.OnHarpoonCollide(this);
             }
-		}
-		
-	}
+        }
+    }
 }

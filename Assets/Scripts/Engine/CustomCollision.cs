@@ -28,10 +28,8 @@ public class CustomCollision : MonoBehaviour {
 
     void HandleCollision(Collision collision)
     {
-        float forceToCompensate = Mathf.Max(physic.velocity.sqrMagnitude, physic.limitSpeed);
-
-        //Debug.Log("Impact force : " + Mathf.RoundToInt(forceToCompensate));
-
+        //Debug.Log("Impact force : " + Mathf.RoundToInt(physic.Velocity.sqrMagnitude));
+        
         bool killPlayer = true;
 
         // Don't kill the player when hit a player or a floating object.
@@ -41,13 +39,14 @@ public class CustomCollision : MonoBehaviour {
         }
 
         // Kill player if the ship moves too fast.
-        if (forceToCompensate > killingForce && killPlayer)
+        if (physic.Velocity.sqrMagnitude > killingForce && killPlayer)
         {
             playerMgr.Death();
         }
 
         // Bump the player in any case.
-        physic.AddForce(collision.contacts[0].normal * bumpForce * forceToCompensate);
+        physic.AddForce(-physic.Velocity);
+        physic.AddForce(collision.contacts[0].normal * bumpForce);
     }
 
     /*
