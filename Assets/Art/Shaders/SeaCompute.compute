@@ -54,31 +54,38 @@ void CalculatePoint (uint3 id : SV_DispatchThreadID)
 		
 		float2 direction = float2(sign(offset.x), sign(offset.y));
 
-		float2 posAbs = float2(abs(offset.x), abs(offset.y));
+		// float2 posAbs = float2(abs(offset.x), abs(offset.y));
 
-		float coeff = (2 + posAbs.x + posAbs.y);
+		// float coeff = (2 + posAbs.x + posAbs.y);
 		
 		float currentTime = Options[0].time - Impacts[i].time;
 		float wt = Impacts[i].angularFrequency * currentTime;
 
-		float theta = 0;
+		float sinTheta = 0;
+
+		float offsetMagnitude = distance(float2(0, 0), offset);
+		float posAbs = abs(offsetMagnitude);
+		float coeff = (2 + posAbs);
+		float timeChange = 1 / exp(wt * Impacts[i].timeDigress);
 		
 		if(Impacts[i].type == 0){
-			float thetaX = (Impacts[i].waveNumber * (offset.x / lod)) - (wt * direction.x);
-			float thetaY = (Impacts[i].waveNumber * (offset.y / lod)) - (wt * direction.y);
+			// float sinThetaX = (Impacts[i].waveNumber * (offset.x / lod)) - (wt * direction.x);
+			// float sinThetaY = (Impacts[i].waveNumber * (offset.y / lod)) - (wt * direction.y);
 
-			float timeChange = 1 / exp(wt * Impacts[i].timeDigress);
-
-			float xHeight = sin(thetaX) / exp(posAbs.x * Impacts[i].distanceDigress) * timeChange;
-			float yHeight = sin(thetaY) / exp(posAbs.y * Impacts[i].distanceDigress) * timeChange;
+			// float xHeight = sin(sinThetaX) / exp(posAbs.x * Impacts[i].distanceDigress) * timeChange;
+			// float yHeight = sin(sinThetaY) / exp(posAbs.y * Impacts[i].distanceDigress) * timeChange;
 			
-			theta = ((1 + posAbs.x) * xHeight + (1 + posAbs.y) * yHeight) / coeff;
+			// sinTheta = ((1 + posAbs.x) * xHeight + (1 + posAbs.y) * yHeight) / coeff;
+
+			float theta = (Impacts[i].waveNumber * (offsetMagnitude / lod)) - (wt/* * direction.x*/);
+			sinTheta = sin(theta) / exp(posAbs * Impacts[i].distanceDigress) * timeChange;
+
 		}
 		else if(Impacts[i].type == 1){
-			theta = sin((Impacts[i].waveNumber * (offset.x / lod)) - wt);
+			sinTheta = sin((Impacts[i].waveNumber * (offset.x / lod)) - wt);
 		}
 
-			float finalHeight = Impacts[i].amplitude * theta;
+			float finalHeight = Impacts[i].amplitude * sinTheta;
 
 			float heightAbs = abs(finalHeight);
 
@@ -156,6 +163,7 @@ void CalculateNormal (uint3 id : SV_DispatchThreadID)
 	for(uint l = (id.x * Options[0].heigtMapRatio); l < ((id.x + 1) * Options[0].heigtMapRatio); l++){
 		for(uint k = (id.y * Options[0].heigtMapRatio); k < ((id.y + 1) * Options[0].heigtMapRatio); k++){
 			NormaleMap[int2(l, k)] = float4(Normales[pointId], 1);
+			// NormaleMap[int2(l, k)] = float4(Normales[pointId].x, Normales[pointId].y, Normales[pointId].z, 1);
 		}
 	}
 }

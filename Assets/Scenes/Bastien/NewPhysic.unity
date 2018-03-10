@@ -569,7 +569,7 @@ Prefab:
     - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
         type: 2}
       propertyPath: normales.Array.size
-      value: 65536
+      value: 1024
       objectReference: {fileID: 0}
     - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
       propertyPath: m_LocalPosition.x
@@ -611,12 +611,32 @@ Prefab:
     - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
         type: 2}
       propertyPath: displayGizmos
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 23218790605428570, guid: d2b3382be80c31c46b0fc06fcd7980f6,
         type: 2}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
+        type: 2}
+      propertyPath: lodPower
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
+        type: 2}
+      propertyPath: ratio
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
+        type: 2}
+      propertyPath: heigtMapPower
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
+        type: 2}
+      propertyPath: zoneAmplitude
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
