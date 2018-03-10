@@ -6,7 +6,7 @@ public class Killzone : MonoBehaviour
 {
     private BoxCollider _killzone;
 
-    private void Awake()
+    private void Reset()
     {
         _killzone = GetComponent<BoxCollider>();
         _killzone.isTrigger = true;
@@ -15,6 +15,8 @@ public class Killzone : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
+        {
             other.transform.parent.GetComponent<PlayerManager>().Death();
+        }
     }
 }
