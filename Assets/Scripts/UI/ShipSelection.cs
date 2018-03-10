@@ -10,7 +10,8 @@ public class ShipSelection : MonoBehaviour {
     public int currentCoqueID;
     public int currentCabinID;
     public int currentBombID;
-    
+
+    public Material[] shipMaterials;
 
     public GameObject[] harpoonsGoArray;
     public GameObject[] coquesGoArray;
@@ -25,6 +26,28 @@ public class ShipSelection : MonoBehaviour {
     public int currentTabID;
     
 
+
+    void Awake()
+    {
+        foreach(GameObject go in harpoonsGoArray)
+        {
+            go.GetComponent<MeshRenderer>().material = shipMaterials[playerID];
+        }
+        foreach (GameObject go in coquesGoArray)
+        {
+            go.GetComponent<MeshRenderer>().material = shipMaterials[playerID];
+        }
+        foreach (GameObject go in cabinsGoArray)
+        {
+            go.GetComponent<MeshRenderer>().material = shipMaterials[playerID];
+        }
+        foreach (GameObject go in bombsGoArray)
+        {
+            go.GetComponent<MeshRenderer>().material = shipMaterials[playerID];
+        }
+
+
+    }
     // Use this for initialization
     void Start () {
         RandomizeShip();
@@ -39,28 +62,28 @@ public class ShipSelection : MonoBehaviour {
             case 0:
                 currentHarpoonID--;
                 if(currentHarpoonID < 0)
-                   currentHarpoonID = 2;
+                   currentHarpoonID = GameManager.instance.shipMgr.harpoonsScriptObjs.Length-1;
                 UpdateHarpoon();
                 break;
 
             case 1:
                 currentCoqueID--;
                 if (currentCoqueID < 0)
-                    currentCoqueID = 2;
+                    currentCoqueID = GameManager.instance.shipMgr.coquesScriptObjs.Length - 1;
                 UpdateCoque();
                 break;
 
             case 2:
                 currentCabinID--;
                 if (currentCabinID < 0)
-                    currentCabinID = 2;
+                    currentCabinID = GameManager.instance.shipMgr.cabinesScriptObjs.Length - 1;
                 UpdateCabin();
                 break;
 
             case 3:
                 currentBombID--;
                 if(currentBombID < 0)
-                   currentBombID = 2;
+                   currentBombID = GameManager.instance.shipMgr.bombsScriptObjs.Length - 1;
                 UpdateBomb();
                 break;
         }
@@ -73,28 +96,28 @@ public class ShipSelection : MonoBehaviour {
         {
             case 0:
                 currentHarpoonID++;
-                if (currentHarpoonID > 2)
+                if (currentHarpoonID > GameManager.instance.shipMgr.harpoonsScriptObjs.Length - 1)
                     currentHarpoonID = 0;
                 UpdateHarpoon();
                 break;
 
             case 1:
                 currentCoqueID++;
-                if (currentCoqueID > 2)
+                if (currentCoqueID > GameManager.instance.shipMgr.coquesScriptObjs.Length - 1)
                     currentCoqueID = 0;
                 UpdateCoque();
                 break;
 
             case 2:
                 currentCabinID++;
-                if (currentCabinID > 2)
+                if (currentCabinID > GameManager.instance.shipMgr.cabinesScriptObjs.Length - 1)
                     currentCabinID = 0;
                 UpdateCabin();
                 break;
 
             case 3:
                 currentBombID++;
-                if (currentBombID > 2)
+                if (currentBombID > GameManager.instance.shipMgr.bombsScriptObjs.Length - 1)
                     currentBombID = 0;
                 UpdateBomb();
                 break;
@@ -152,16 +175,16 @@ public class ShipSelection : MonoBehaviour {
 
     public void RandomizeShip()
     {
-        currentHarpoonID = Random.Range(0, 3);
+        currentHarpoonID = Random.Range(0, GameManager.instance.shipMgr.harpoonsScriptObjs.Length);
         UpdateHarpoon();
 
-        currentCoqueID = Random.Range(0, 3);
+        currentCoqueID = Random.Range(0, GameManager.instance.shipMgr.coquesScriptObjs.Length);
         UpdateCoque();
 
-        currentCabinID = Random.Range(0, 3);
+        currentCabinID = Random.Range(0, GameManager.instance.shipMgr.cabinesScriptObjs.Length);
         UpdateCabin();
 
-        currentBombID = Random.Range(0, 3);
+        currentBombID = Random.Range(0, GameManager.instance.shipMgr.bombsScriptObjs.Length);
         UpdateBomb();
 
         UpdateConfig();

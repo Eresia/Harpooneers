@@ -50,7 +50,10 @@ public class InputInMainMenu : MonoBehaviour {
         for (int i = 0; i < 4; i++)
         {
             players[i] = ReInput.players.GetPlayer(i);
+            playerShips[i].playerID = i;
         }
+
+     
 
 
         currentModuleTabIndex = new int[4];

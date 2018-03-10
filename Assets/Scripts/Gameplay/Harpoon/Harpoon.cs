@@ -43,7 +43,9 @@ public class Harpoon : MonoBehaviour {
 
 	private Vector3 direction;
 
-	private float maxDistance;
+    private Vector3 launcherPos;
+
+    private float maxDistance;
 	private float actualDistance;
 
 	private float launchSpeed;
@@ -65,7 +67,7 @@ public class Harpoon : MonoBehaviour {
 	private void Update()
     {
 		Vector3 selfPos = selfTransform.position;
-		Vector3 launcherPos = launcher.selfTransform.position;
+        launcherPos = launcher.transform.position;
 		float color = 0;
 		float distance = Vector3.Distance(selfPos, launcherPos);
         
@@ -124,9 +126,10 @@ public class Harpoon : MonoBehaviour {
 		}
 
         lineRenderer.SetPosition(0, selfPos);
-        lineRenderer.SetPosition(1, launcherPos);
+        lineRenderer.SetPosition(1, launcher.harpoonMuzzle.position);
 		lineRenderer.materials[0].color = new Color(color, color, color, 1f);
-	}
+        launcher.harpoonPivot.rotation = Quaternion.LookRotation(new Vector3(selfPos.x, 0f, selfPos.z)) * Quaternion.Euler(-90, -90f, 0f);
+    }
 
 	public void Launch(HarpoonLauncher launcher, Vector3 from, Vector3 direction, float maxDistance, float returnSpeed){
 		this.launcher = launcher;
