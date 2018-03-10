@@ -34,7 +34,7 @@ public class Ground : MonoBehaviour {
 
 	public float[] points;
 
-	public Vector3[] normales;
+	private Vector3[] normales;
 
 	private Transform selfTransform;
 
@@ -47,7 +47,7 @@ public class Ground : MonoBehaviour {
 
 	private RenderTexture heightMapTexture;
 
-	private RenderTexture normalMapTexture;
+	private RenderTexture normaleMapTexture;
 
 	private List<WaveOptions> waves;
 
@@ -105,6 +105,7 @@ public class Ground : MonoBehaviour {
 		selfTransform = GetComponent<Transform>();
 		lodPowPower = ((int) Mathf.Pow(2, lodPower));
 		lod = 32 * lodPowPower;
+		normales = new Vector3[lod * lod];
 		halfLod = ((float) lod) * 0.5f;
 		waves = new List<WaveOptions>();
 		if(zoneAmplitude != 0){
@@ -118,10 +119,10 @@ public class Ground : MonoBehaviour {
 		heightMapTexture.enableRandomWrite = true;
 		heightMapTexture.Create();
 
-		normalMapTexture = new RenderTexture(heigtMapLod, heigtMapLod, 24);
-		normalMapTexture.name = "NormaleMap";
-		normalMapTexture.enableRandomWrite = true;
-		normalMapTexture.Create();
+		normaleMapTexture = new RenderTexture(heigtMapLod, heigtMapLod, 24);
+		normaleMapTexture.name = "NormaleMap";
+		normaleMapTexture.enableRandomWrite = true;
+		normaleMapTexture.Create();
 
 		frameOptions = new FrameOptions[1];
 		frameOptions[0] = new FrameOptions();
@@ -143,7 +144,7 @@ public class Ground : MonoBehaviour {
 		seaCompute.SetBuffer(normaleKernel, "Options", optionBuffer);
 		seaCompute.SetBuffer(normaleKernel, "Result", pointBuffer);
 		seaCompute.SetBuffer(normaleKernel, "Normales", normaleBuffer);
-		seaCompute.SetTexture(normaleKernel, "NormalMap", normalMapTexture);
+		seaCompute.SetTexture(normaleKernel, "NormaleMap", normaleMapTexture);
 
 		material = GetComponent<Renderer>().material;
 		material.SetTexture("_MainTex", heightMapTexture);
@@ -151,7 +152,7 @@ public class Ground : MonoBehaviour {
 		material.SetInt("_VertexSize", lod);
 
 		if(rawImage != null){
-			rawImage.texture = normalMapTexture;
+			rawImage.texture = normaleMapTexture;
 		}
 	}
 

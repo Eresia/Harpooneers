@@ -18,7 +18,6 @@ public class GroundGeneration {
 		int lod = 32 * ((int) Mathf.Pow(2, sea.lodPower));
 
 		sea.points = new float[lod * lod];
-		sea.normales = new Vector3[lod * lod];
 
 		for(int i = 0; i < lod; i++){
 			for(int j = 0; j < lod; j++){
