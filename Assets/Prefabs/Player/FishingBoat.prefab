@@ -1308,6 +1308,7 @@ MonoBehaviour:
   _harpoonScript: {fileID: 114609724380578428}
   _movementScript: {fileID: 114834410021121528}
   _bombScript: {fileID: 0}
+  currentHarpoonGo: {fileID: 0}
 --- !u!114 &114247363230348760
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1433,6 +1434,7 @@ MonoBehaviour:
   targetable:
     serializedVersion: 2
     m_Bits: 1
+  harpoonGo: {fileID: 0}
 --- !u!114 &114616054903995692
 MonoBehaviour:
   m_ObjectHideFlags: 1

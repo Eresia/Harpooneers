@@ -58,13 +58,16 @@ public class HarpoonLauncher : MonoBehaviour {
 	private Vector3 lastDirection;
 
 	private Mouse mouse;
+ 
+    [HideInInspector]
+    public GameObject harpoonGo;
 
 	private void Awake()
 	{
 		selfTransform = GetComponent<Transform>();
 		physicMove = GetComponent<PhysicMove>();
 		mouse = ReInput.controllers.Mouse;
-	}
+    }
 
 	public void LaunchHarpoon(Vector3 direction){
 
@@ -142,6 +145,7 @@ public class HarpoonLauncher : MonoBehaviour {
 	private void DisplayLaunching(Vector3 direction, float power){
 		directionObject.localPosition = direction * power * castDistance;
         directionObject.rotation = Quaternion.LookRotation(direction);
+        harpoonGo.transform.rotation = Quaternion.LookRotation(direction);
     }
 
 	private void EndLaunching(Vector3 direction, float power){
