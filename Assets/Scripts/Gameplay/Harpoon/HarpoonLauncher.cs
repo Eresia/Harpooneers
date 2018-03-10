@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Rewired;
 
 [RequireComponent(typeof(PhysicMove))]
@@ -67,12 +68,34 @@ public class HarpoonLauncher : MonoBehaviour {
  
     public Transform harpoonPivot;
     public Transform harpoonMuzzle;
+    public Image directionImage;
+    private int playerID;
 
     private void Awake()
 	{
 		selfTransform = GetComponent<Transform>();
 		physicMove = GetComponent<PhysicMove>();
 		mouse = ReInput.controllers.Mouse;
+
+        playerID = GetComponent<PlayerInput>().playerId;
+        switch (playerID)
+        {
+            case 0:
+                directionImage.color = Color.yellow;
+                break;
+
+            case 1:
+                directionImage.color = Color.red;
+                break;
+
+            case 2:
+                directionImage.color = Color.magenta;
+                break;
+
+            case 3:
+                directionImage.color = Color.green;
+                break;
+        }
     }
 
 	public void LaunchHarpoon(Vector3 direction){

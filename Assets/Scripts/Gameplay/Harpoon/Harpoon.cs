@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(LineRenderer))]
 public class Harpoon : MonoBehaviour {
@@ -51,6 +52,7 @@ public class Harpoon : MonoBehaviour {
 	private float launchSpeed;
 	
 	private float returnSpeed;
+    private int playerID;
 
     public float slingForce = 100f;
     private bool doSling;
@@ -62,7 +64,8 @@ public class Harpoon : MonoBehaviour {
     {
 		selfTransform = GetComponent<Transform>();
 		lineRenderer = GetComponent<LineRenderer>();
-	}
+       
+    }
 
 	private void Update()
     {
