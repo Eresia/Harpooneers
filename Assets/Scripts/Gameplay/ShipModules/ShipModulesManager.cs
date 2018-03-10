@@ -18,9 +18,7 @@ public class ShipModulesManager : MonoBehaviour {
     public MovementBehaviour _movementScript;
     public ExplosiveBarrel _bombScript;
 
-    [HideInInspector]
-    public GameObject currentHarpoonGo;
-
+   
 	// Use this for initialization
 	void Reset ()
     {
@@ -52,9 +50,7 @@ public class ShipModulesManager : MonoBehaviour {
         cabinsGoArray[config.cabinId].SetActive(true);
         bombsGoArray[config.bombStockId].SetActive(true);
 
-        // Save the harpoon GO to move him later
-        currentHarpoonGo = harpoonsGoArray[config.harpoonId];
-        _harpoonScript.harpoonGo = currentHarpoonGo;
+        
 
         if (shipMgr)
         {

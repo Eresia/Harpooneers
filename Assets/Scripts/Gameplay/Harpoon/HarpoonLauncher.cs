@@ -59,10 +59,10 @@ public class HarpoonLauncher : MonoBehaviour {
 
 	private Mouse mouse;
  
-    [HideInInspector]
-    public GameObject harpoonGo;
+    public Transform harpoonPivot;
+    public Transform harpoonMuzzle;
 
-	private void Awake()
+    private void Awake()
 	{
 		selfTransform = GetComponent<Transform>();
 		physicMove = GetComponent<PhysicMove>();
@@ -145,7 +145,7 @@ public class HarpoonLauncher : MonoBehaviour {
 	private void DisplayLaunching(Vector3 direction, float power){
 		directionObject.localPosition = direction * power * castDistance;
         directionObject.rotation = Quaternion.LookRotation(direction);
-        harpoonGo.transform.rotation = Quaternion.LookRotation(direction);
+        harpoonPivot.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z)) * Quaternion.Euler(-90, 0f, 0f);
     }
 
 	private void EndLaunching(Vector3 direction, float power){
@@ -163,7 +163,7 @@ public class HarpoonLauncher : MonoBehaviour {
 
         direction = TryToAutoAim(direction);
 
-        harpoon.Launch(this, selfTransform.position, direction * harpoonModule.fireSpeed + physicMove.Velocity, distanceToReach, harpoonModule.returnSpeed);
+        harpoon.Launch(this, harpoonPivot.position, direction * harpoonModule.fireSpeed + physicMove.Velocity, distanceToReach, harpoonModule.returnSpeed);
 	}
 
     private Vector3 TryToAutoAim(Vector3 currentDir)
