@@ -84,8 +84,7 @@ public class Geyser : MonoBehaviour {
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius[numberOfExplosionsDone], damageableLayer);
         foreach (Collider c in colliders)
         {
-            Debug.Log(colliders.Length);
-            var customCollision = GetComponent<CustomCollision>();
+            var customCollision = c.GetComponent<CustomCollision>();
 
             if (customCollision != null)
             {
