@@ -1434,7 +1434,7 @@ MonoBehaviour:
   targetableCollider:
     serializedVersion: 2
     m_Bits: 0
-  lockNLoad: 1
+  lockNLoad: 0
 --- !u!114 &114616054903995692
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1480,8 +1480,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 513
   playerMgr: {fileID: 114888584532763218}
-  killingForce: 225
-  bumpForce: 15
+  killingForce: 246
+  bumpForce: 2
 --- !u!114 &114787632788375122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1550,9 +1550,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthNeededForRez: 10
-  healthLossPerSec: 1
-  rezRadius: 5
-  healthPerInput: 0
+  healthLossPerSec: 0.5
+  rezRadius: 4
+  healthPerInput: 0.4
   rezBar: {fileID: 114414539537242024}
   deathIcon: {fileID: 114616054903995692}
   playerPositionIndicator: {fileID: 1232968556676988}
