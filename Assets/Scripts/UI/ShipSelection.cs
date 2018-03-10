@@ -39,28 +39,28 @@ public class ShipSelection : MonoBehaviour {
             case 0:
                 currentHarpoonID--;
                 if(currentHarpoonID < 0)
-                   currentHarpoonID = 2;
+                   currentHarpoonID = GameManager.instance.shipMgr.harpoonsScriptObjs.Length-1;
                 UpdateHarpoon();
                 break;
 
             case 1:
                 currentCoqueID--;
                 if (currentCoqueID < 0)
-                    currentCoqueID = 2;
+                    currentCoqueID = GameManager.instance.shipMgr.coquesScriptObjs.Length - 1;
                 UpdateCoque();
                 break;
 
             case 2:
                 currentCabinID--;
                 if (currentCabinID < 0)
-                    currentCabinID = 2;
+                    currentCabinID = GameManager.instance.shipMgr.cabinesScriptObjs.Length - 1;
                 UpdateCabin();
                 break;
 
             case 3:
                 currentBombID--;
                 if(currentBombID < 0)
-                   currentBombID = 2;
+                   currentBombID = GameManager.instance.shipMgr.bombsScriptObjs.Length - 1;
                 UpdateBomb();
                 break;
         }
@@ -73,28 +73,28 @@ public class ShipSelection : MonoBehaviour {
         {
             case 0:
                 currentHarpoonID++;
-                if (currentHarpoonID > 2)
+                if (currentHarpoonID > GameManager.instance.shipMgr.harpoonsScriptObjs.Length - 1)
                     currentHarpoonID = 0;
                 UpdateHarpoon();
                 break;
 
             case 1:
                 currentCoqueID++;
-                if (currentCoqueID > 2)
+                if (currentCoqueID > GameManager.instance.shipMgr.coquesScriptObjs.Length - 1)
                     currentCoqueID = 0;
                 UpdateCoque();
                 break;
 
             case 2:
                 currentCabinID++;
-                if (currentCabinID > 2)
+                if (currentCabinID > GameManager.instance.shipMgr.cabinesScriptObjs.Length - 1)
                     currentCabinID = 0;
                 UpdateCabin();
                 break;
 
             case 3:
                 currentBombID++;
-                if (currentBombID > 2)
+                if (currentBombID > GameManager.instance.shipMgr.bombsScriptObjs.Length - 1)
                     currentBombID = 0;
                 UpdateBomb();
                 break;

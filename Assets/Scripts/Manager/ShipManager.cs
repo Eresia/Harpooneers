@@ -33,11 +33,14 @@ public class ShipManager : MonoBehaviour {
     private void Awake()
     {
         shipModuleMgrs = new ShipModulesManager[players.Length];
-
-        for (int i = 0; i < players.Length; i++)
+        if(players.Length > 0)
         {
-            shipModuleMgrs[i] = players[i].GetComponentInChildren<ShipModulesManager>();
+            for (int i = 0; i < players.Length; i++)
+            {
+                shipModuleMgrs[i] = players[i].GetComponentInChildren<ShipModulesManager>();
+            }
         }
+        
 
         if (useDefaultConfig)
         {
