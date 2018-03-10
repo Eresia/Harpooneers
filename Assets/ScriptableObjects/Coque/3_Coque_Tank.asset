@@ -14,9 +14,8 @@ MonoBehaviour:
   moduleName: Tank hull
   moduleId: 3
   description: Default coque
-  moveSpeed: 3
-  maxSpeed: 5
-  turnSpeed: 4
+  moveSpeedMax: 0.004
+  turnSpeed: 6
   hitboxSize: 1
-  inertia: 1
-  waveResistance: 1000
+  drag: 1
+  waveSensibility: 5

@@ -14,9 +14,8 @@ MonoBehaviour:
   moduleName: Snake hull
   moduleId: 1
   description: Default coque
-  moveSpeed: 3
-  maxSpeed: 4
-  turnSpeed: 10
+  moveSpeedMax: 0.0025
+  turnSpeed: 12
   hitboxSize: 1
-  inertia: 1
-  waveResistance: 5
+  drag: 5
+  waveSensibility: 10
