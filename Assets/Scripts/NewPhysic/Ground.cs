@@ -24,6 +24,8 @@ public class Ground : MonoBehaviour {
 
 	public int lodPower;
 
+	public int heigtMapPower;
+
 	public float ratio;
 
 	public float maxWaveHeight;
@@ -34,9 +36,12 @@ public class Ground : MonoBehaviour {
 
 	private Transform selfTransform;
 
-	private Vector2 halfLod;
+	private int lod;
+
+	private float halfLod;
 
 	private float time;
+	
 
 	private RenderTexture heightMapTexture;
 
@@ -47,6 +52,8 @@ public class Ground : MonoBehaviour {
 	private ComputeBuffer pointBuffer;
 
 	private FrameOptions[] frameOptions;
+
+	private int lodPowPower;
 
 	[Space]
 
@@ -86,20 +93,21 @@ public class Ground : MonoBehaviour {
 
 	public RawImage rawImage;
 
-	private Vector2Int lod;
-
 	private Material material;
 
 	private void Awake() {
 		selfTransform = GetComponent<Transform>();
-		lod = new Vector2Int(32*lodPower, 32*lodPower);
-		halfLod = new Vector2(((float) lod.x) * 0.5f, ((float) lod.y) * 0.5f);
+		lodPowPower = ((int) Mathf.Pow(2, lodPower));
+		lod = 32 * lodPowPower;
+		halfLod = ((float) lod) * 0.5f;
 		waves = new List<WaveOptions>();
 		if(zoneAmplitude != 0){
 			CreateZone();
 		}
 
-		heightMapTexture = new RenderTexture(lod.x, lod.y, 24);
+		int heigtMapLod = 32 * ((int) Mathf.Pow(2, heigtMapPower));
+
+		heightMapTexture = new RenderTexture(heigtMapLod, heigtMapLod, 24);
 		heightMapTexture.name = "HeightMap";
 		heightMapTexture.enableRandomWrite = true;
 		heightMapTexture.Create();
@@ -107,6 +115,7 @@ public class Ground : MonoBehaviour {
 		frameOptions = new FrameOptions[1];
 		frameOptions[0] = new FrameOptions();
 		frameOptions[0].maxWaveHeight = maxWaveHeight;
+		frameOptions[0].heigtMapRatio = (uint) (heigtMapLod / lod);
 
 		pointBuffer = new ComputeBuffer(points.Length, sizeof(float));
 
@@ -121,7 +130,7 @@ public class Ground : MonoBehaviour {
 		material = GetComponent<Renderer>().material;
 		material.SetTexture("_MainTex", heightMapTexture);
 		material.SetBuffer("_Vertex", pointBuffer);
-		material.SetInt("_VertexSize", lod.y);
+		material.SetInt("_VertexSize", lod);
 	}
 
 	private void Update() {
@@ -140,15 +149,15 @@ public class Ground : MonoBehaviour {
 		WaveOptions[] waveArray = waves.ToArray();
 		
 		if(waves.Count > 0){
-			// for(int i = 0; i < lod.x; i++){
-			// 	for(int j = 0; j < lod.y; j++){
+			// for(int i = 0; i < lod; i++){
+			// 	for(int j = 0; j < lod; j++){
 			// 		CalculateWave(new Vector2Int(i, j));
 			// 	}
 			// }
 
 			frameOptions[0].time = time;
-			frameOptions[0].nbWaves = waveArray.Length;
-			frameOptions[0].lod = lod;
+			frameOptions[0].nbWaves = (uint) waveArray.Length;
+			frameOptions[0].lod = (uint) lod;
 			optionBuffer.SetData(frameOptions);
 
 			ComputeBuffer impacts = new ComputeBuffer(waveArray.Length, 48);
@@ -160,7 +169,7 @@ public class Ground : MonoBehaviour {
 
 			seaCompute.SetBuffer(kernel, "Impacts", impacts);
 
-			seaCompute.Dispatch(kernel, lodPower, lodPower, 1);
+			seaCompute.Dispatch(kernel, lodPowPower, lodPowPower, 1);
 
 			pointBuffer.GetData(points);
 
@@ -182,9 +191,9 @@ public class Ground : MonoBehaviour {
 		// heightMapTexture.Apply();
 
 	
-		// for(int i = 0; i < lod.x; i++){
-		// 	for(int j = 0; j < lod.y; j++){
-		// 		points[i * lod.y + j] = Mathf.Sin(time * ((float) i) / 20f) / 3f;
+		// for(int i = 0; i < lod; i++){
+		// 	for(int j = 0; j < lod; j++){
+		// 		points[i * lod + j] = Mathf.Sin(time * ((float) i) / 20f) / 3f;
 		// 	}
 		// }
 	}
@@ -192,7 +201,7 @@ public class Ground : MonoBehaviour {
 	// private void CalculateWave(Vector2Int pos){
 
 	// 	Vector2 heighInfo = Vector2.zero;
-	// 	int pointId = (pos.x* lod.y) + pos.y;
+	// 	int pointId = (pos.x* lod) + pos.y;
 
 	// 	foreach(Wave_a w in waves){
 	// 		heighInfo += w.CalculateWave(pos, time, lod);
@@ -230,8 +239,8 @@ public class Ground : MonoBehaviour {
 	}
 
 	public void CreateImpact(Vector3 p, float amplitude, float length, float period, float distanceDigress, float timeDigress, float timeout){
-		float iFloat = ((p.x / ratio) + halfLod.x) - selfTransform.position.x;
-		float jFloat = ((p.z / ratio) + halfLod.y) - selfTransform.position.z;
+		float iFloat = ((p.x / ratio) + halfLod) - selfTransform.position.x;
+		float jFloat = ((p.z / ratio) + halfLod) - selfTransform.position.z;
 
 		waves.Add(Wave.CreateImpact(new Vector2(iFloat, jFloat), amplitude, length, period, time, distanceDigress, timeDigress, timeout));
 	}
@@ -241,22 +250,22 @@ public class Ground : MonoBehaviour {
 			return ;
 		}
 
-		Vector2Int lod = new Vector2Int(32*lodPower, 32*lodPower);
+		int lod = 32 * ((int) Mathf.Pow(2, lodPower));
 
-		if(points.Length != (lod.x * lod.y)){
+		if(points.Length != (lod * lod)){
 			return ;
 		}
 
 		Transform seaTransform = GetComponent<Transform>();
-		Vector2 halfLod = new Vector2(((float) lod.x) * 0.5f, ((float) lod.y) * 0.5f);
+		float halfLod = ((float) lod) * 0.5f;
 		Gizmos.color = gizmosColor;
-		for(int i = 0; i < lod.x; i++){
-			for(int j = 0; j < lod.y; j++){
-				if(i < (lod.x - 1)){
+		for(int i = 0; i < lod; i++){
+			for(int j = 0; j < lod; j++){
+				if(i < (lod - 1)){
 					Gizmos.DrawLine(CalculateRealPosition(i, j, lod, halfLod, seaTransform), CalculateRealPosition(i + 1, j, lod, halfLod, seaTransform));
 				}
 
-				if(j < (lod.y - 1)){
+				if(j < (lod - 1)){
 					Gizmos.DrawLine(CalculateRealPosition(i, j, lod, halfLod, seaTransform), CalculateRealPosition(i, j + 1, lod, halfLod, seaTransform));
 				}
 			}
@@ -265,9 +274,9 @@ public class Ground : MonoBehaviour {
 
 	public TransformInfo GetTransformInfo(Vector2 position, float yAngle){
 		float minX = GetX(0);
-		float maxX = GetX(lod.x - 1);
+		float maxX = GetX(lod - 1);
 		float minZ = GetZ(0);
-		float maxZ = GetZ(lod.y - 1);
+		float maxZ = GetZ(lod - 1);
 
 		TransformInfo result = new TransformInfo();
 
@@ -302,9 +311,9 @@ public class Ground : MonoBehaviour {
 		return CalculateRealPosition(i, j, lod, halfLod, selfTransform);
 	}
 
-	private Vector3 CalculateRealPosition(int i, int j, Vector2Int lod, Vector2 halfLod, Transform seaTransform){
+	private Vector3 CalculateRealPosition(int i, int j, int lod, float halfLod, Transform seaTransform){
 		float x = GetX(i, halfLod, seaTransform);
-		float y = points[i * lod.y + j];
+		float y = points[i * lod + j];
 		float z = GetZ(j, halfLod, seaTransform);
 		return new Vector3(x, y, z);
 	}
@@ -312,10 +321,10 @@ public class Ground : MonoBehaviour {
 	private float GetHeight(HeightInfo info){
 		float result;
 
-		result = info.coeff.x * points[info.i.y * lod.y + info.j.y];
-		result += info.coeff.y * points[info.i.x * lod.y + info.j.y];
-		result += info.coeff.z * points[info.i.y * lod.y + info.j.x];
-		result += info.coeff.w * points[info.i.x * lod.y + info.j.x];
+		result = info.coeff.x * points[info.i.y * lod + info.j.y];
+		result += info.coeff.y * points[info.i.x * lod + info.j.y];
+		result += info.coeff.z * points[info.i.y * lod + info.j.x];
+		result += info.coeff.w * points[info.i.x * lod + info.j.x];
 
 		return result / (info.coeff.x + info.coeff.y + info.coeff.z + info.coeff.w);
 	}
@@ -323,10 +332,10 @@ public class Ground : MonoBehaviour {
 	private Vector3 GetRotation(HeightInfo info, float height, float yAngle){
 		Vector3 result;
 
-		// Vector3 a = new Vector3(0, points[info.i.x * lod.y + info.j.x], 0);
-		// Vector3 b = new Vector3(1, points[info.i.y * lod.y + info.j.x], 0);
-		// Vector3 c = new Vector3(0, points[info.i.x * lod.y + info.j.y], 1);
-		// Vector3 d = new Vector3(1, points[info.i.y * lod.y + info.j.y], 1);
+		// Vector3 a = new Vector3(0, points[info.i.x * lod + info.j.x], 0);
+		// Vector3 b = new Vector3(1, points[info.i.y * lod + info.j.x], 0);
+		// Vector3 c = new Vector3(0, points[info.i.x * lod + info.j.y], 1);
+		// Vector3 d = new Vector3(1, points[info.i.y * lod + info.j.y], 1);
 
 		// Vector3 cross1 = Vector3.Cross(b - a, c - a);
 		// if(cross1.y < 0){
@@ -355,10 +364,10 @@ public class Ground : MonoBehaviour {
 
 		// return result / (info.coeff.x + info.coeff.y + info.coeff.z + info.coeff.w);
 
-		float a = points[info.i.x * lod.y + info.j.x];
-		float b = points[info.i.y * lod.y + info.j.x];
-		float c = points[info.i.x * lod.y + info.j.y];
-		float d = points[info.i.y * lod.y + info.j.y];
+		float a = points[info.i.x * lod + info.j.x];
+		float b = points[info.i.y * lod + info.j.x];
+		float c = points[info.i.x * lod + info.j.y];
+		float d = points[info.i.y * lod + info.j.y];
 
 		if(yAngle < 0){
 			yAngle = 360 - yAngle;
@@ -422,8 +431,8 @@ public class Ground : MonoBehaviour {
 
 	private HeightInfo GetHeightInfo(float x, float z){
 		HeightInfo result = new HeightInfo();
-		float iFloat = ((x / ratio) + halfLod.x) - selfTransform.position.x;
-		float jFloat = ((z / ratio) + halfLod.y) - selfTransform.position.z;
+		float iFloat = ((x / ratio) + halfLod) - selfTransform.position.x;
+		float jFloat = ((z / ratio) + halfLod) - selfTransform.position.z;
 
 		result.i.x = ((int) iFloat);
 		result.i.y = result.i.x;
@@ -454,16 +463,16 @@ public class Ground : MonoBehaviour {
 		return GetX(i, halfLod, selfTransform);
 	}
 
-	private float GetX(int i, Vector2 halfLod, Transform seaTransform){
-		return seaTransform.position.x + ((((float) i) - halfLod.x) * ratio);
+	private float GetX(int i, float halfLod, Transform seaTransform){
+		return seaTransform.position.x + ((((float) i) - halfLod) * ratio);
 	}
 
 	private float GetZ(int j){
 		return GetZ(j, halfLod, selfTransform);
 	}
 
-	private float GetZ(int j, Vector2 halfLod, Transform seaTransform){
-		return seaTransform.position.z + ((((float) j) - halfLod.y) * ratio);
+	private float GetZ(int j, float halfLod, Transform seaTransform){
+		return seaTransform.position.z + ((((float) j) - halfLod) * ratio);
 	}
 
 	private void OnDestroy() {

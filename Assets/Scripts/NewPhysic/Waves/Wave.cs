@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public struct WaveOptions{
-	public int type;
+	public uint type;
 	public Vector2 position;
 	public float amplitude;
 	public float waveLength;
@@ -15,7 +15,7 @@ public struct WaveOptions{
 	public float time;
 	public float timeout;
 
-	public WaveOptions(int type, Vector2 position, float amplitude, float waveLength, float period, float time, float distanceDigress = 0f, float timeDigress= 0f, float timeout= 0f){
+	public WaveOptions(uint type, Vector2 position, float amplitude, float waveLength, float period, float time, float distanceDigress = 0f, float timeDigress= 0f, float timeout= 0f){
 		this.type = type;
 		this.position = position;
 		this.amplitude = amplitude;
@@ -33,9 +33,10 @@ public struct WaveOptions{
 
 struct FrameOptions{
 	public float time;
-	public int nbWaves;
+	public uint nbWaves;
 	public float maxWaveHeight;
-	public Vector2Int lod;
+	public uint lod;
+	public uint heigtMapRatio;
 	public Vector3 trash;
 };
 

@@ -2,7 +2,7 @@
 #pragma kernel CSMain
 
 struct WaveOptions{
-	int type;
+	uint type;
 
 	float2 position;
 
@@ -27,9 +27,10 @@ struct WaveOptions{
 
 struct FrameOptions{
 	float time;
-	int nbWaves;
+	uint nbWaves;
 	float maxWaveHeight;
-	int2 lod;
+	uint lod;
+	uint heigtMapRatio;
 	float3 trash;
 };
 
@@ -42,11 +43,11 @@ RWTexture2D<float4> HeightMap;
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
 	float2 heightInfo = float2(0, 0);
-	int2 lod = Options[0].lod;
+	int lod = Options[0].lod;
 
-	int pointId = id.x * lod.y + id.y;
+	int pointId = id.x * lod + id.y;
 
-	for(int i = 0; i < Options[0].nbWaves; i++){
+	for(uint i = 0; i < Options[0].nbWaves; i++){
 		float2 offset = float2(Impacts[i].position.x - id.x, Impacts[i].position.y - id.y);
 
 		if((offset.x != 0) || (offset.y != 0)){
@@ -62,8 +63,8 @@ void CSMain (uint3 id : SV_DispatchThreadID)
 			float theta = 0;
 			
 			if(Impacts[i].type == 0){
-				float thetaX = (Impacts[i].waveNumber * (offset.x / lod.x)) - (wt * direction.x);
-				float thetaY = (Impacts[i].waveNumber * (offset.y / lod.y)) - (wt * direction.y);
+				float thetaX = (Impacts[i].waveNumber * (offset.x / lod)) - (wt * direction.x);
+				float thetaY = (Impacts[i].waveNumber * (offset.y / lod)) - (wt * direction.y);
 
 				float timeChange = 1 / exp(wt * Impacts[i].timeDigress);
 
@@ -73,7 +74,7 @@ void CSMain (uint3 id : SV_DispatchThreadID)
 				theta = (posAbs.x * xHeight + posAbs.y * yHeight) / (posAbs.x + posAbs.y);
 			}
 			else if(Impacts[i].type == 1){
-				theta = sin((Impacts[i].waveNumber * (offset.x / lod.x)) - wt);
+				theta = sin((Impacts[i].waveNumber * (offset.x / lod)) - wt);
 			}
 
 			float finalHeight = Impacts[i].amplitude * theta;
@@ -93,10 +94,16 @@ void CSMain (uint3 id : SV_DispatchThreadID)
 		Result[pointId] = heightInfo.x / heightInfo.y;
 	}
 
-	id.x = lod.x - id.x;
-	id.y = lod.y - id.y;
+	// id.x = lod - id.x;
+	// id.y = lod - id.y;
 
-	HeightMap[id.xy] = (clamp(Result[pointId], -Options[0].maxWaveHeight, Options[0].maxWaveHeight) / Options[0].maxWaveHeight) + 0.5;
+	float textureHeight = (clamp(Result[pointId], -Options[0].maxWaveHeight, Options[0].maxWaveHeight) / Options[0].maxWaveHeight) + 0.5;
+
+	for(uint l = (id.x * Options[0].heigtMapRatio); l < ((id.x + 1) * Options[0].heigtMapRatio); l++){
+		for(uint k = (id.y * Options[0].heigtMapRatio); k < ((id.y + 1) * Options[0].heigtMapRatio); k++){
+			HeightMap[int2(l, k)] = textureHeight;
+		}
+	}
 
 	// int beginX = round(id.x * Options[0].heightMapRatio);
 	// int endX = round((id.x + 1) * Options[0].heightMapRatio);

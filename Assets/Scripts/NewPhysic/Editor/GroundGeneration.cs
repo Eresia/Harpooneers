@@ -15,13 +15,13 @@ public class GroundGeneration {
 		
 		Transform seaTransform = sea.GetComponent<Transform>();
 
-		Vector2Int lod = new Vector2Int(32*sea.lodPower, 32*sea.lodPower);
+		int lod = 32 * ((int) Mathf.Pow(2, sea.lodPower));
 
-		sea.points = new float[lod.x * lod.y];
+		sea.points = new float[lod * lod];
 
-		for(int i = 0; i < lod.x; i++){
-			for(int j = 0; j < lod.y; j++){
-				sea.points[i*lod.y + j] = seaTransform.position.y;
+		for(int i = 0; i < lod; i++){
+			for(int j = 0; j < lod; j++){
+				sea.points[i*lod + j] = seaTransform.position.y;
 			}
 		}
 
