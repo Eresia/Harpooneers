@@ -197,6 +197,12 @@ public class Harpoon : MonoBehaviour {
 
             parentTransform = other.GetComponent<Transform>();
             selfTransform.parent = parentTransform;
+
+            Vector3 targetPos = selfTransform.position;
+            targetPos.y = 0f;
+
+            selfTransform.position = targetPos;
+
             maxDistance = Vector3.Distance(selfTransform.position, launcher.selfTransform.position);
             actualDistance = maxDistance;
             state = State.GRIPPED;
