@@ -5,6 +5,8 @@
 /// </summary>
 public class ShipManager : MonoBehaviour {
 
+
+   
     public bool useDefaultConfig = false;
 
     public ShipConfiguration defaultConfig = new ShipConfiguration
