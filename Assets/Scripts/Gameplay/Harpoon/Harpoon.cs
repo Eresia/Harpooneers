@@ -53,7 +53,10 @@ public class Harpoon : MonoBehaviour {
     public float slingForce = 100f;
     private bool doSling;
 
-	private void Awake()
+    // Current gameObject where the harpoon is attached.
+    private IHarpoonable iHarpoonable;
+
+    private void Awake()
     {
 		selfTransform = GetComponent<Transform>();
 		lineRenderer = GetComponent<LineRenderer>();
@@ -140,6 +143,13 @@ public class Harpoon : MonoBehaviour {
 
 	public void Cut(){
 
+        if(iHarpoonable != null)
+        {
+            iHarpoonable.OnHarpoonDetach();
+
+            iHarpoonable = null;
+        }
+
 		if(state < State.RETURN)
         {
 			selfTransform.parent = launcher.boatFollower;
@@ -207,11 +217,11 @@ public class Harpoon : MonoBehaviour {
             actualDistance = maxDistance;
             state = State.GRIPPED;
 
-            // Notify that the gameobject has been harpooned.
-            IHarpoonable harpoonable = other.GetComponent<IHarpoonable>();
-            if (harpoonable != null)
+            // Store and notify that the gameobject has been harpooned.
+            iHarpoonable = other.GetComponent<IHarpoonable>();
+            if (iHarpoonable != null)
             {
-                harpoonable.OnHarpoonCollide(this);
+                iHarpoonable.OnHarpoonAttach(this);
             }
         }
     }

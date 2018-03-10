@@ -183,8 +183,6 @@ public class PlayerInput : MonoBehaviour
             || player.GetButtonDown("Pull On Rope") && player.GetButtonDown("Release Rope")
             )
         {
-            Debug.Log("Cut the rope");
-
             harpoonLauncher.Cut();
         }
     }

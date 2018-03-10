@@ -4,10 +4,17 @@ using UnityEngine;
 
 public abstract class HandleHarpoonHit : MonoBehaviour, IHarpoonable {
 
-    public void OnHarpoonCollide(Harpoon harpoon)
+    public void OnHarpoonAttach(Harpoon harpoon)
     {
-        ActionWhenHarpoon(harpoon);
+        ActionWhenHarpoonAttach(harpoon);
     }
 
-    protected abstract void ActionWhenHarpoon(Harpoon harpoon);
+    public void OnHarpoonDetach()
+    {
+        ActionWhenHarpoonDetach();
+    }
+
+    protected abstract void ActionWhenHarpoonAttach(Harpoon harpoon);
+
+    protected abstract void ActionWhenHarpoonDetach();
 }
