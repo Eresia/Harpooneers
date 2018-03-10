@@ -5,7 +5,7 @@
 /// </summary>
 public class ShipManager : MonoBehaviour {
 
-
+    public Material[] playerMaterials;
    
     public bool useDefaultConfig = false;
 
@@ -62,12 +62,12 @@ public class ShipManager : MonoBehaviour {
                 // For debug only. Load default config.
                 if(useDefaultConfig)
                 {
-                    shipModuleMgrs[i].ActivateShipModules(GameManager.instance.shipMgr.defaultConfig, this);
+                    shipModuleMgrs[i].ActivateShipModules(GameManager.instance.shipMgr.defaultConfig, this, playerMaterials[i]);
                 }
 
                 else
                 {
-                    shipModuleMgrs[i].ActivateShipModules(GameManager.instance.shipConfigs[i], this);
+                    shipModuleMgrs[i].ActivateShipModules(GameManager.instance.shipConfigs[i], this, playerMaterials[i]);
                 }
                 
                 players[i].SetActive(true);
