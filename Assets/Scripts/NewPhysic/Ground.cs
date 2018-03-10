@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Renderer))]
 public class Ground : MonoBehaviour {
 
 	public struct TransformInfo{
@@ -21,11 +22,9 @@ public class Ground : MonoBehaviour {
 		public float diffY;
 	}
 
-	public Vector2Int lod;
+	public int lodPower;
 
 	public float ratio;
-
-	public int heightMapSize;
 
 	public float maxWaveHeight;
 
@@ -39,9 +38,7 @@ public class Ground : MonoBehaviour {
 
 	private float time;
 
-	private Texture2D heightMapTexture;
-
-	private float heightMapRatio;
+	private RenderTexture heightMapTexture;
 
 	private List<WaveOptions> waves;
 
@@ -53,6 +50,7 @@ public class Ground : MonoBehaviour {
 
 	[Space]
 
+	public bool displayGizmos;
 	public Color gizmosColor;
 
 	public LayerMask testLayer;
@@ -88,23 +86,27 @@ public class Ground : MonoBehaviour {
 
 	public RawImage rawImage;
 
+	private Vector2Int lod;
+
+	private Material material;
+
 	private void Awake() {
 		selfTransform = GetComponent<Transform>();
+		lod = new Vector2Int(32*lodPower, 32*lodPower);
 		halfLod = new Vector2(((float) lod.x) * 0.5f, ((float) lod.y) * 0.5f);
 		waves = new List<WaveOptions>();
 		if(zoneAmplitude != 0){
 			CreateZone();
 		}
 
-		heightMapTexture = new Texture2D(heightMapSize, heightMapSize);
+		heightMapTexture = new RenderTexture(lod.x, lod.y, 24);
 		heightMapTexture.name = "HeightMap";
-		heightMapRatio = heightMapSize / Mathf.Max(lod.x, lod.y);
+		heightMapTexture.enableRandomWrite = true;
+		heightMapTexture.Create();
 
 		frameOptions = new FrameOptions[1];
 		frameOptions[0] = new FrameOptions();
 		frameOptions[0].maxWaveHeight = maxWaveHeight;
-		frameOptions[0].heightMapSize = heightMapSize;
-		frameOptions[0].heightMapRatio = heightMapRatio;
 
 		pointBuffer = new ComputeBuffer(points.Length, sizeof(float));
 
@@ -114,7 +116,12 @@ public class Ground : MonoBehaviour {
 
 		seaCompute.SetBuffer(kernel, "Options", optionBuffer);
 		seaCompute.SetBuffer(kernel, "Result", pointBuffer);
-		seaCompute.SetTexture(kernel, "HeightMap", heightMapTexture);	
+		seaCompute.SetTexture(kernel, "HeightMap", heightMapTexture);
+
+		material = GetComponent<Renderer>().material;
+		material.SetTexture("_MainTex", heightMapTexture);
+		material.SetBuffer("_Vertex", pointBuffer);
+		material.SetInt("_VertexSize", lod.y);
 	}
 
 	private void Update() {
@@ -141,6 +148,7 @@ public class Ground : MonoBehaviour {
 
 			frameOptions[0].time = time;
 			frameOptions[0].nbWaves = waveArray.Length;
+			frameOptions[0].lod = lod;
 			optionBuffer.SetData(frameOptions);
 
 			ComputeBuffer impacts = new ComputeBuffer(waveArray.Length, 48);
@@ -152,7 +160,7 @@ public class Ground : MonoBehaviour {
 
 			seaCompute.SetBuffer(kernel, "Impacts", impacts);
 
-			seaCompute.Dispatch(kernel, 2, 2, 1);
+			seaCompute.Dispatch(kernel, lodPower, lodPower, 1);
 
 			pointBuffer.GetData(points);
 
@@ -165,8 +173,6 @@ public class Ground : MonoBehaviour {
 				waves.Remove(waveArray[i]);
 			}
 		}
-
-		heightMapTexture.Apply();
 
 		if(rawImage != null){
 			rawImage.texture = heightMapTexture;
@@ -231,19 +237,27 @@ public class Ground : MonoBehaviour {
 	}
 
 	private void OnDrawGizmos() {
+		if(!displayGizmos){
+			return ;
+		}
+
+		Vector2Int lod = new Vector2Int(32*lodPower, 32*lodPower);
+
+		if(points.Length != (lod.x * lod.y)){
+			return ;
+		}
+
 		Transform seaTransform = GetComponent<Transform>();
 		Vector2 halfLod = new Vector2(((float) lod.x) * 0.5f, ((float) lod.y) * 0.5f);
 		Gizmos.color = gizmosColor;
-		if(points.Length == (lod.x * lod.y)){
-			for(int i = 0; i < lod.x; i++){
-				for(int j = 0; j < lod.y; j++){
-					if(i < (lod.x - 1)){
-						Gizmos.DrawLine(CalculateRealPosition(i, j, halfLod, seaTransform), CalculateRealPosition(i + 1, j, halfLod, seaTransform));
-					}
+		for(int i = 0; i < lod.x; i++){
+			for(int j = 0; j < lod.y; j++){
+				if(i < (lod.x - 1)){
+					Gizmos.DrawLine(CalculateRealPosition(i, j, lod, halfLod, seaTransform), CalculateRealPosition(i + 1, j, lod, halfLod, seaTransform));
+				}
 
-					if(j < (lod.y - 1)){
-						Gizmos.DrawLine(CalculateRealPosition(i, j, halfLod, seaTransform), CalculateRealPosition(i, j + 1, halfLod, seaTransform));
-					}
+				if(j < (lod.y - 1)){
+					Gizmos.DrawLine(CalculateRealPosition(i, j, lod, halfLod, seaTransform), CalculateRealPosition(i, j + 1, lod, halfLod, seaTransform));
 				}
 			}
 		}
@@ -285,10 +299,10 @@ public class Ground : MonoBehaviour {
 	}
 
 	private Vector3 CalculateRealPosition(int i, int j){
-		return CalculateRealPosition(i, j, halfLod, selfTransform);
+		return CalculateRealPosition(i, j, lod, halfLod, selfTransform);
 	}
 
-	private Vector3 CalculateRealPosition(int i, int j, Vector2 halfLod, Transform seaTransform){
+	private Vector3 CalculateRealPosition(int i, int j, Vector2Int lod, Vector2 halfLod, Transform seaTransform){
 		float x = GetX(i, halfLod, seaTransform);
 		float y = points[i * lod.y + j];
 		float z = GetZ(j, halfLod, seaTransform);

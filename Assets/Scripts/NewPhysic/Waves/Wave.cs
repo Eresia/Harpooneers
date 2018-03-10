@@ -35,8 +35,7 @@ struct FrameOptions{
 	public float time;
 	public int nbWaves;
 	public float maxWaveHeight;
-	public int heightMapSize;
-	public float heightMapRatio;
+	public Vector2Int lod;
 	public Vector3 trash;
 };
 
