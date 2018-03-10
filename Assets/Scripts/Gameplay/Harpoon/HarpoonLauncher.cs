@@ -40,8 +40,14 @@ public class HarpoonLauncher : MonoBehaviour {
     [Header("Module")]
     public HarpoonModule harpoonModule;
 
-    [Header("AutoAim")]
-    public LayerMask targetable;
+    [Header("GD Features")]
+
+    [Tooltip("Try to autocorrect the target when launch the harpoon. It Needs bigger collider.")]
+    public bool autoCorrectDestination = false;
+    public LayerMask targetableCollider;
+
+    [Tooltip("Distance depends of the cast time")]
+    public bool lockNLoad = true;
 
     public Transform selfTransform {get; private set;}
 
@@ -151,13 +157,25 @@ public class HarpoonLauncher : MonoBehaviour {
 		harpoon = Instantiate<Harpoon>(harpoonPrefab, selfTransform.position, Quaternion.identity);
         harpoon.TractionSpeed = harpoonModule.tractionSpeed;
         
-        // The distance depends from the duration of cast
-        float distanceToReach = Mathf.Lerp(0f, harpoonModule.fireDistance, power);
+        float distanceToReach = 0f;
 
-        // OSEF
-        //float distanceToReach = harpoonModule.fireDistance;
+        // Here The distance depends from the duration of cast
+        if (lockNLoad)
+        {
+            distanceToReach = Mathf.Lerp(0f, harpoonModule.fireDistance, power);
+        }
 
-        direction = TryToAutoAim(direction);
+        // Here any duration give max distance.
+        else
+        {
+            distanceToReach = harpoonModule.fireDistance;
+        }
+
+        // Auto correct the destination of the harpoon.
+        if(autoCorrectDestination)
+        {
+            direction = TryToAutoAim(direction);
+        }
 
         harpoon.Launch(this, selfTransform.position, direction * harpoonModule.fireSpeed + physicMove.Velocity, distanceToReach, harpoonModule.returnSpeed);
 	}
@@ -170,7 +188,7 @@ public class HarpoonLauncher : MonoBehaviour {
         Debug.DrawRay(r.origin, r.direction * 100f, Color.green, 2f);
 
         RaycastHit hit;
-        if(Physics.Raycast(r, out hit, 1000f, targetable)) {
+        if(Physics.Raycast(r, out hit, 1000f, targetableCollider)) {
 
             finalDir = (hit.transform.position - selfTransform.position).normalized;
         }

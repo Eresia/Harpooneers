@@ -1430,9 +1430,11 @@ MonoBehaviour:
   castDistance: 2
   cooldownTime: 1
   harpoonModule: {fileID: 0}
-  targetable:
+  autoCorrectDestination: 0
+  targetableCollider:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 0
+  lockNLoad: 1
 --- !u!114 &114616054903995692
 MonoBehaviour:
   m_ObjectHideFlags: 1
