@@ -34,6 +34,8 @@ public class Ground : MonoBehaviour {
 
 	public float[] points;
 
+	public Vector3[] normales;
+
 	private Transform selfTransform;
 
 	private int lod;
@@ -45,11 +47,15 @@ public class Ground : MonoBehaviour {
 
 	private RenderTexture heightMapTexture;
 
+	private RenderTexture normalMapTexture;
+
 	private List<WaveOptions> waves;
 
 	private ComputeBuffer optionBuffer;
 
 	private ComputeBuffer pointBuffer;
+
+	private ComputeBuffer normaleBuffer;
 
 	private FrameOptions[] frameOptions;
 
@@ -112,25 +118,41 @@ public class Ground : MonoBehaviour {
 		heightMapTexture.enableRandomWrite = true;
 		heightMapTexture.Create();
 
+		normalMapTexture = new RenderTexture(heigtMapLod, heigtMapLod, 24);
+		normalMapTexture.name = "NormaleMap";
+		normalMapTexture.enableRandomWrite = true;
+		normalMapTexture.Create();
+
 		frameOptions = new FrameOptions[1];
 		frameOptions[0] = new FrameOptions();
 		frameOptions[0].maxWaveHeight = maxWaveHeight;
 		frameOptions[0].heigtMapRatio = (uint) (heigtMapLod / lod);
 
 		pointBuffer = new ComputeBuffer(points.Length, sizeof(float));
+		normaleBuffer = new ComputeBuffer(normales.Length, 3 * sizeof(float));
 
-		optionBuffer = new ComputeBuffer(1, 8*4);
+		optionBuffer = new ComputeBuffer(1, 8 * sizeof(float));
 
-		int kernel = seaCompute.FindKernel("CSMain");
+		int pointKernel = seaCompute.FindKernel("CalculatePoint");
+		int normaleKernel = seaCompute.FindKernel("CalculateNormal");
 
-		seaCompute.SetBuffer(kernel, "Options", optionBuffer);
-		seaCompute.SetBuffer(kernel, "Result", pointBuffer);
-		seaCompute.SetTexture(kernel, "HeightMap", heightMapTexture);
+		seaCompute.SetBuffer(pointKernel, "Options", optionBuffer);
+		seaCompute.SetBuffer(pointKernel, "Result", pointBuffer);
+		seaCompute.SetTexture(pointKernel, "HeightMap", heightMapTexture);
+
+		seaCompute.SetBuffer(normaleKernel, "Options", optionBuffer);
+		seaCompute.SetBuffer(normaleKernel, "Result", pointBuffer);
+		seaCompute.SetBuffer(normaleKernel, "Normales", normaleBuffer);
+		seaCompute.SetTexture(normaleKernel, "NormalMap", normalMapTexture);
 
 		material = GetComponent<Renderer>().material;
 		material.SetTexture("_MainTex", heightMapTexture);
 		material.SetBuffer("_Vertex", pointBuffer);
 		material.SetInt("_VertexSize", lod);
+
+		if(rawImage != null){
+			rawImage.texture = normalMapTexture;
+		}
 	}
 
 	private void Update() {
@@ -160,18 +182,21 @@ public class Ground : MonoBehaviour {
 			frameOptions[0].lod = (uint) lod;
 			optionBuffer.SetData(frameOptions);
 
-			ComputeBuffer impacts = new ComputeBuffer(waveArray.Length, 48);
+			ComputeBuffer impacts = new ComputeBuffer(waveArray.Length, 12 * sizeof(float));
 			impacts.SetData(waves);
 
 			pointBuffer.SetData(points);
 
-			int kernel = seaCompute.FindKernel("CSMain");
+			int pointKernel = seaCompute.FindKernel("CalculatePoint");
+			int normaleKernel = seaCompute.FindKernel("CalculateNormal");
 
-			seaCompute.SetBuffer(kernel, "Impacts", impacts);
+			seaCompute.SetBuffer(pointKernel, "Impacts", impacts);
 
-			seaCompute.Dispatch(kernel, lodPowPower, lodPowPower, 1);
+			seaCompute.Dispatch(pointKernel, lodPowPower, lodPowPower, 1);
+			seaCompute.Dispatch(normaleKernel, lodPowPower, lodPowPower, 1);
 
 			pointBuffer.GetData(points);
+			normaleBuffer.GetData(normales);
 
 			impacts.Dispose();
 		}
@@ -181,10 +206,6 @@ public class Ground : MonoBehaviour {
 				Debug.Log("Remove Wave");
 				waves.Remove(waveArray[i]);
 			}
-		}
-
-		if(rawImage != null){
-			rawImage.texture = heightMapTexture;
 		}	
 
 		// heightMapTexture.SetPixels(heigthMap);
@@ -478,5 +499,6 @@ public class Ground : MonoBehaviour {
 	private void OnDestroy() {
 		optionBuffer.Dispose();
 		pointBuffer.Dispose();
+		normaleBuffer.Dispose();
 	}
 }
