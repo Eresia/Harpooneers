@@ -360,114 +360,115 @@ public class Ground : MonoBehaviour {
 		return vector;
 	}
 
-	private Vector3 GetNormal(HeightInfo info, Vector3 position, float height, float yAngle){
+	private Vector3 GetNormal(HeightInfo info, Vector3 position, float height, float yAngle)
+    {
 		Vector3 result;
 
-		// Vector3 a = new Vector3(0, points[info.i.x * lod + info.j.x], 0);
-		// Vector3 b = new Vector3(1, points[info.i.y * lod + info.j.x], 0);
-		// Vector3 c = new Vector3(0, points[info.i.x * lod + info.j.y], 1);
-		// Vector3 d = new Vector3(1, points[info.i.y * lod + info.j.y], 1);
+        result = info.coeff.x * normales[info.i.x * lod + info.j.x];
+        result += info.coeff.y * normales[info.i.y * lod + info.j.x];
+        result += info.coeff.z * normales[info.i.x * lod + info.j.y];
+        result += info.coeff.w * normales[info.i.y * lod + info.j.y];
 
-		// Vector3 cross1 = Vector3.Cross(b - a, c - a);
-		// if(cross1.y < 0){
-		// 	cross1 = -cross1;
-		// }
+        result /= (info.coeff.x + info.coeff.y + info.coeff.z + info.coeff.w);
 
-		// Vector3 cross2 = Vector3.Cross(a - b, d - b);
-		// if(cross2.y < 0){
-		// 	cross2 = -cross2;
-		// }
+        result.y *= -1;
+        result.x *= -1;
 
-		// Vector3 cross3 = Vector3.Cross(a - c, d - c);
-		// if(cross3.y < 0){
-		// 	cross3 = -cross3;
-		// }
-		
-		// Vector3 cross4 = Vector3.Cross(b - d, c - d);
-		// if(cross4.y < 0){
-		// 	cross4 = -cross4;
-		// }
+        Debug.DrawRay(position, result * 5f);
 
-		// result = info.coeff.x * cross1; 
-		// result += info.coeff.y * cross2; 
-		// result += info.coeff.z * cross3; 
-		// result += info.coeff.w * cross4;
+        return result;
 
-		// return result / (info.coeff.x + info.coeff.y + info.coeff.z + info.coeff.w);
+        {
+            // Vector3 a = new Vector3(0, points[info.i.x * lod + info.j.x], 0);
+            // Vector3 b = new Vector3(1, points[info.i.y * lod + info.j.x], 0);
+            // Vector3 c = new Vector3(0, points[info.i.x * lod + info.j.y], 1);
+            // Vector3 d = new Vector3(1, points[info.i.y * lod + info.j.y], 1);
 
-		result = info.coeff.x * normales[info.i.x * lod + info.j.x]; 
-		result += info.coeff.y * normales[info.i.y * lod + info.j.x]; 
-		result += info.coeff.z * normales[info.i.x * lod + info.j.y]; 
-		result += info.coeff.w * normales[info.i.y * lod + info.j.y];
+            // Vector3 cross1 = Vector3.Cross(b - a, c - a);
+            // if(cross1.y < 0){
+            // 	cross1 = -cross1;
+            // }
 
-		result /= (info.coeff.x + info.coeff.y + info.coeff.z + info.coeff.w);
+            // Vector3 cross2 = Vector3.Cross(a - b, d - b);
+            // if(cross2.y < 0){
+            // 	cross2 = -cross2;
+            // }
 
-		result.y *= -1;
-		result.x *= -1;
+            // Vector3 cross3 = Vector3.Cross(a - c, d - c);
+            // if(cross3.y < 0){
+            // 	cross3 = -cross3;
+            // }
 
-		Debug.DrawRay(position, result * 5f);
+            // Vector3 cross4 = Vector3.Cross(b - d, c - d);
+            // if(cross4.y < 0){
+            // 	cross4 = -cross4;
+            // }
 
-		// float y = result.y;
-		// result.y = result.z;
-		// result.z = y;
+            // result = info.coeff.x * cross1; 
+            // result += info.coeff.y * cross2; 
+            // result += info.coeff.z * cross3; 
+            // result += info.coeff.w * cross4;
 
-		return result;
+            // return result / (info.coeff.x + info.coeff.y + info.coeff.z + info.coeff.w);
+        }
 
-		// float a = points[info.i.x * lod + info.j.x];
-		// float b = points[info.i.y * lod + info.j.x];
-		// float c = points[info.i.x * lod + info.j.y];
-		// float d = points[info.i.y * lod + info.j.y];
+        {
+            // float a = points[info.i.x * lod + info.j.x];
+            // float b = points[info.i.y * lod + info.j.x];
+            // float c = points[info.i.x * lod + info.j.y];
+            // float d = points[info.i.y * lod + info.j.y];
 
-		// if(yAngle < 0){
-		// 	yAngle = 360 - yAngle;
-		// }
+            // if(yAngle < 0){
+            // 	yAngle = 360 - yAngle;
+            // }
 
-		// while(yAngle > 90){
-		// 	float temp = a;
-		// 	a = c;
-		// 	c = d;
-		// 	d = b;
-		// 	b = temp;
-		// 	yAngle -= 90;
-		// }
+            // while(yAngle > 90){
+            // 	float temp = a;
+            // 	a = c;
+            // 	c = d;
+            // 	d = b;
+            // 	b = temp;
+            // 	yAngle -= 90;
+            // }
 
-		
 
-		// float ab = Mathf.Abs(a-b);
-		// float cd = Mathf.Abs(c-d);
-		// float ac = Mathf.Abs(a-c);
-		// float bd = Mathf.Abs(b-d);
 
-		// float diffJ;
-		// float diffI;
+            // float ab = Mathf.Abs(a-b);
+            // float cd = Mathf.Abs(c-d);
+            // float ac = Mathf.Abs(a-c);
+            // float bd = Mathf.Abs(b-d);
 
-		// float signI;
-		// float signJ;
+            // float diffJ;
+            // float diffI;
 
-		// if(ab > cd){
-		// 	diffJ = ab;
-		// 	signJ = Mathf.Sign(b-a);
-		// }
-		// else{
-		// 	diffJ = cd;
-		// 	signJ = Mathf.Sign(d-c);
-		// }
+            // float signI;
+            // float signJ;
 
-		// if(ac > bd){
-		// 	diffI = ac;
-		// 	signI = Mathf.Sign(c-a);
-		// }
-		// else{
-		// 	diffI = bd; 
-		// 	signI = Mathf.Sign(d-b);
-		// }
+            // if(ab > cd){
+            // 	diffJ = ab;
+            // 	signJ = Mathf.Sign(b-a);
+            // }
+            // else{
+            // 	diffJ = cd;
+            // 	signJ = Mathf.Sign(d-c);
+            // }
 
-		// float x = - signI * Vector2.Angle(new Vector2(1, 0), new Vector2(1, diffI));
-		// float z = signJ * Vector2.Angle(new Vector2(1, 0), new Vector2(1, diffJ));
+            // if(ac > bd){
+            // 	diffI = ac;
+            // 	signI = Mathf.Sign(c-a);
+            // }
+            // else{
+            // 	diffI = bd; 
+            // 	signI = Mathf.Sign(d-b);
+            // }
 
-		// result = new Vector3(x, 0, z);
+            // float x = - signI * Vector2.Angle(new Vector2(1, 0), new Vector2(1, diffI));
+            // float z = signJ * Vector2.Angle(new Vector2(1, 0), new Vector2(1, diffJ));
 
-		// return result;
+            // result = new Vector3(x, 0, z);
+
+            // return result;
+        }
 	}
 
 	private HeightInfo GetHeightInfo(float x, float z){

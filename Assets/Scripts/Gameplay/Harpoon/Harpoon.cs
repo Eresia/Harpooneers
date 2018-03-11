@@ -57,6 +57,8 @@ public class Harpoon : MonoBehaviour {
     public float slingForce = 100f;
     private bool doSling;
 
+    private Vector3 harpoonPivotDir;
+
     // Current gameObject where the harpoon is attached.
     private IHarpoonable iHarpoonable;
 
@@ -74,7 +76,8 @@ public class Harpoon : MonoBehaviour {
 		float color = 0;
 		float distance = Vector3.Distance(selfPos, launcherPos);
         
-		switch(state){
+		switch(state)
+        {
 			case State.LAUNCHING:
 				selfPos += direction * Time.deltaTime;
 				selfTransform.position = selfPos;
@@ -89,14 +92,6 @@ public class Harpoon : MonoBehaviour {
 				if(distance > actualDistance)
                 {
 					Vector3 normal = selfPos - launcherPos;
-
-					// Vector3 force = (distance - actualDistance) * normal.normalized * forceBlock;
-					// if(forceBreak < force.sqrMagnitude){
-					// 	Cut();
-					// }
-					// else{
-					// 	launcher.physicMove.AddForce(force);
-					// }
 
 					launcher.selfTransform.position = launcherPos + (distance - actualDistance) * normal.normalized;
                 }
@@ -114,8 +109,9 @@ public class Harpoon : MonoBehaviour {
 				if(distance < movement)
                 {
 					launcher.EndReturn();
-					Destroy(gameObject);
-					return ;
+
+                    Destroy(gameObject); // TODO Optimize that !
+					return;
 				}
 
 				else
@@ -128,10 +124,18 @@ public class Harpoon : MonoBehaviour {
 				break;
 		}
 
+        // Move the line renderer depending the harpoon and the harpoon muzzle pos.
         lineRenderer.SetPosition(0, selfPos);
         lineRenderer.SetPosition(1, launcher.harpoonMuzzle.position);
+
+        // TODO remove when material will be set.
 		lineRenderer.materials[0].color = new Color(color, color, color, 1f);
-        launcher.harpoonPivot.rotation = Quaternion.LookRotation(new Vector3(selfPos.x, 0f, selfPos.z)) * Quaternion.Euler(-90, -90f, 0f);
+
+        // Update harpoon pivot depending the pos of the harpoon.
+        harpoonPivotDir = (selfPos - launcher.harpoonMuzzle.position).normalized;
+        harpoonPivotDir.y = 0f;
+
+        launcher.harpoonPivot.rotation = Quaternion.LookRotation(harpoonPivotDir);
     }
 
 	public void Launch(HarpoonLauncher launcher, Vector3 from, Vector3 direction, float maxDistance, float returnSpeed){

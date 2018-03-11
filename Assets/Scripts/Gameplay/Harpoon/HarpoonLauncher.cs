@@ -161,8 +161,11 @@ public class HarpoonLauncher : MonoBehaviour {
     }
 
     public void EndReturn(){
+
 		harpoon = null;
-	}
+
+        harpoonPivot.localRotation = Quaternion.identity;
+    }
 
 	private void BeginLaunching(){
 		isLaunching = true;
@@ -174,7 +177,7 @@ public class HarpoonLauncher : MonoBehaviour {
 	private void DisplayLaunching(Vector3 direction, float power){
 		directionObject.localPosition = direction * power * castDistance;
         directionObject.rotation = Quaternion.LookRotation(direction);
-        harpoonPivot.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z)) * Quaternion.Euler(-90, 0f, 0f);
+        harpoonPivot.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
     }
 
 	private void EndLaunching(Vector3 direction, float power){
