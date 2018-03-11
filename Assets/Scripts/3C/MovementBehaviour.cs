@@ -2,30 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PhysicMove))]
 public class MovementBehaviour : MonoBehaviour {
 
-    public float moveSpeed = 5f;
-    public float maxSpeed = 10f;
-    public float rotationSpeed;
-
-    [Header("Metrics for boundaries")]
-    [Tooltip("Distance with boundaries.")]
-    public float offsetX = 1f;
-    public float offsetZ = 1f;
+    public CoqueModule coqueModule;
 
     // Lerp progressif sur la direction du bateau. (Direction desiree (INPUT) et direction actuelle.
 
     private Quaternion initialDir;
     private Quaternion targetDir;
 
-    private Rigidbody rgbd;
+	public PhysicMove physicMove;
 
     private float move;
 
+    private void Reset()
+    {
+        physicMove = GetComponent<PhysicMove>();
+    }
+
     private void Awake()
     {
-        rgbd = GetComponent<Rigidbody>();
-
         initialDir = targetDir = Quaternion.identity;
     }
 
@@ -49,23 +46,25 @@ public class MovementBehaviour : MonoBehaviour {
         if(initialDir != targetDir)
         {
             // Turn boat.
-            transform.rotation = Quaternion.Lerp(initialDir, targetDir, Time.deltaTime * rotationSpeed);
+            transform.rotation = Quaternion.Lerp(initialDir, targetDir, Time.deltaTime * coqueModule.turnSpeed);
         }
 
+        float acc = (coqueModule.drag * coqueModule.moveSpeedMax) / Time.deltaTime + coqueModule.moveSpeedMax;
+
+        //Debug.Log(acc);
+
         // Move boat toward.
-        rgbd.AddForce(transform.forward * moveSpeed * move, ForceMode.Force);
+        physicMove.AddForce(transform.forward * acc * move);
 
-        // Limit max speed.
-        rgbd.velocity = Vector3.ClampMagnitude(rgbd.velocity, maxSpeed);
+        // Limit position in the boundaries of the screen.
+        Vector3 pos = transform.position;
 
+        transform.position = GameManager.instance.boundaryMgr.InScreenPosition(pos);
+    }
 
-        Vector3 pos = Vector3.zero;
-        float boundaryX = GameManager.instance.boundaries.size.x / 2;
-        float boundaryZ = GameManager.instance.boundaries.size.z / 2;
-
-        pos.x = Mathf.Clamp(transform.position.x, -boundaryX + offsetX, boundaryX - offsetX);
-        pos.z = Mathf.Clamp(transform.position.z, -boundaryZ + offsetZ, boundaryZ - offsetZ);
-
-        transform.position = pos;
+    // Freeze player at his position.
+    public void FreezePlayer()
+    {
+        move = 0f;
     }
 }

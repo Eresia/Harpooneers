@@ -1,15 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Rewired;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(PhysicMove))]
 public class HarpoonLauncher : MonoBehaviour {
-
-	[SerializeField]
-	private int playerId;
-
-	[Space]
-
+    
 	[SerializeField]
 	private Harpoon harpoonPrefab;
 
@@ -24,7 +21,7 @@ public class HarpoonLauncher : MonoBehaviour {
 
 	[Tooltip("Joystix is considered at 0 behin d this value")]
 	[SerializeField]
-	private float joystixError;
+	private float joystickError;
 
 	[Space]
 
@@ -37,24 +34,25 @@ public class HarpoonLauncher : MonoBehaviour {
 
 	[SerializeField]
 	private float castDistance;
-
-	[SerializeField]
-	private float launchDistanceMax;
 	
 	[SerializeField]
 	private float cooldownTime;
+    
+    [Header("Module")]
+    public HarpoonModule harpoonModule;
 
-	[Space]
+    [Header("GD Features")]
 
-	[SerializeField]
-	private float harpoonSpeed;
-	
-	[SerializeField]
-	private float harpoonReturnSpeed;
+    [Tooltip("Try to autocorrect the target when launch the harpoon. It Needs bigger collider.")]
+    public bool autoCorrectDestination = false;
+    public LayerMask targetableCollider;
 
-	public Transform selfTransform {get; private set;}
+    [Tooltip("Distance depends of the cast time")]
+    public bool lockNLoad = true;
 
-	public Rigidbody selfRigidbody {get; private set;}
+    public Transform selfTransform {get; private set;}
+
+	public PhysicMove physicMove {get; private set;}
 
 	private Harpoon harpoon;
 
@@ -65,71 +63,80 @@ public class HarpoonLauncher : MonoBehaviour {
 	private float power;
 
 	private Vector3 lastDirection;
+ 
+    public Transform harpoonPivot;
+    public Transform harpoonMuzzle;
+    public Image directionImage;
+    private int playerID;
 
-	private void Awake()
+    private void Awake()
 	{
 		selfTransform = GetComponent<Transform>();
-		selfRigidbody = GetComponent<Rigidbody>();
-	}
+		physicMove = GetComponent<PhysicMove>();
 
-	private void Update() {
-		if(GameManager.instance.actualPlayer == playerId){
-			if(Input.GetMouseButton(0)){
-				Vector3 boatPosition = Camera.main.WorldToScreenPoint(selfTransform.position);
-				Vector3 direction = Input.mousePosition - boatPosition;
-				direction.z = direction.y;
-				direction.y = 0;
-				LaunchHarpoon(direction.normalized);
-			}
-			else{
-				LaunchHarpoon(Vector2.zero);
-			}
+        playerID = GetComponent<PlayerInput>().playerId;
+        switch (playerID)
+        {
+            case 0:
+                directionImage.color = Color.yellow;
+                break;
 
-			if(Input.GetMouseButtonDown(1)){
-				Cut();
-			}
+            case 1:
+                directionImage.color = Color.red;
+                break;
 
-			if(harpoon != null){
-				if(Input.GetKey(KeyCode.A)){
-					harpoon.Pull();
-				}
-				else if(Input.GetKey(KeyCode.Z)){
-					harpoon.Release();
-				}
-			}
-		}
-	}
+            case 2:
+                directionImage.color = Color.magenta;
+                break;
+
+            case 3:
+                directionImage.color = Color.green;
+                break;
+        }
+    }
 
 	public void LaunchHarpoon(Vector3 direction){
+
 		if(harpoon == null){
-			if(direction.sqrMagnitude > joystixError){
-				if(!isLaunching){
+            
+			if(direction.sqrMagnitude > joystickError)
+            {
+				if(!isLaunching)
+                {
 					BeginLaunching();
 				}
 
-				if(power == 1f){
-					if(timeBeforeLaunch >= castTimeMax){
-						EndLaunching(direction);
+				if(power == 1f)
+                {
+					if(timeBeforeLaunch >= castTimeMax)
+                    {
+						EndLaunching(direction, power);
 						return ;
 					}
 
 					timeBeforeLaunch += Time.deltaTime;
 				}
-				else{
+
+				else
+                {
 					power = Mathf.Min(1f, power + (Time.deltaTime / castTime));
 				}
 
 				DisplayLaunching(direction, power);
 				lastDirection = direction;
 			}
-			else if(isLaunching){
-				EndLaunching(lastDirection);
+
+			else if(isLaunching)
+            {
+				EndLaunching(lastDirection, power);
 			}
 		}
 	}
 
-	public void Cut(){
-		if(harpoon != null){
+	public void Cut()
+    {
+		if(harpoon != null)
+        {
 			harpoon.Cut();
 		}
 	}
@@ -151,8 +158,11 @@ public class HarpoonLauncher : MonoBehaviour {
     }
 
     public void EndReturn(){
+
 		harpoon = null;
-	}
+
+        harpoonPivot.localRotation = Quaternion.identity;
+    }
 
 	private void BeginLaunching(){
 		isLaunching = true;
@@ -163,12 +173,53 @@ public class HarpoonLauncher : MonoBehaviour {
 
 	private void DisplayLaunching(Vector3 direction, float power){
 		directionObject.localPosition = direction * power * castDistance;
-	}
+        directionObject.rotation = Quaternion.LookRotation(direction);
+        harpoonPivot.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
+    }
 
-	private void EndLaunching(Vector3 direction){
+	private void EndLaunching(Vector3 direction, float power){
+
 		isLaunching = false;
 		directionObject.gameObject.SetActive(false);
 		harpoon = Instantiate<Harpoon>(harpoonPrefab, selfTransform.position, Quaternion.identity);
-		harpoon.Launch(this, selfTransform.position, direction, launchDistanceMax, harpoonSpeed, harpoonReturnSpeed);
+        harpoon.TractionSpeed = harpoonModule.tractionSpeed;
+        
+        float distanceToReach = 0f;
+
+        // Here The distance depends from the duration of cast
+        if (lockNLoad)
+        {
+            distanceToReach = Mathf.Lerp(0f, harpoonModule.fireDistance, power);
+        }
+
+        // Here any duration give max distance.
+        else
+        {
+            distanceToReach = harpoonModule.fireDistance;
+        }
+
+        // Auto correct the destination of the harpoon.
+        if(autoCorrectDestination)
+        {
+            direction = TryToAutoAim(direction);
+        }
+
+        harpoon.Launch(this, harpoonPivot.position, direction * harpoonModule.fireSpeed + physicMove.Velocity, distanceToReach, harpoonModule.returnSpeed);
 	}
+
+    private Vector3 TryToAutoAim(Vector3 currentDir)
+    {
+        Ray r = new Ray(selfTransform.position, currentDir);
+        Vector3 finalDir = currentDir;
+
+        Debug.DrawRay(r.origin, r.direction * 100f, Color.green, 2f);
+
+        RaycastHit hit;
+        if(Physics.Raycast(r, out hit, 1000f, targetableCollider)) {
+
+            finalDir = (hit.transform.position - selfTransform.position).normalized;
+        }
+
+        return finalDir;
+    }
 }

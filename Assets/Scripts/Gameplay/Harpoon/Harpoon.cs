@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(LineRenderer))]
 public class Harpoon : MonoBehaviour {
@@ -18,7 +19,15 @@ public class Harpoon : MonoBehaviour {
 	private float minDistance;
 
 	[SerializeField]
-	private float releaseSpeed;
+	private float tractionSpeed;
+
+    public float TractionSpeed {
+        get { return tractionSpeed; }
+        set { tractionSpeed = value; }
+    }
+
+    [SerializeField]
+	private float forceBlock;
 
 	[SerializeField]
 	private float forceBreak;
@@ -35,58 +44,78 @@ public class Harpoon : MonoBehaviour {
 
 	private Vector3 direction;
 
-	private float maxDistance;
+    private Vector3 launcherPos;
+
+    private float maxDistance;
 	private float actualDistance;
 
 	private float launchSpeed;
 	
 	private float returnSpeed;
+    private int playerID;
 
-	private void Awake() {
+    public float slingForce = 100f;
+    private bool doSling;
+
+    private Vector3 harpoonPivotDir;
+
+    // Current gameObject where the harpoon is attached.
+    private IHarpoonable iHarpoonable;
+
+    private void Awake()
+    {
 		selfTransform = GetComponent<Transform>();
 		lineRenderer = GetComponent<LineRenderer>();
-	}
+       
+    }
 
-	private void Update() {
+	private void Update()
+    {
 		Vector3 selfPos = selfTransform.position;
-		Vector3 launcherPos = launcher.selfTransform.position;
+        launcherPos = launcher.transform.position;
 		float color = 0;
 		float distance = Vector3.Distance(selfPos, launcherPos);
-
-		switch(state){
+        
+		switch(state)
+        {
 			case State.LAUNCHING:
-				selfPos += direction * launchSpeed * Time.deltaTime;
+				selfPos += direction * Time.deltaTime;
 				selfTransform.position = selfPos;
-				if(distance > maxDistance){
+
+				if(distance > maxDistance)
+                {
 					Cut();
 				}
 				break;
 
 			case State.GRIPPED:
-				if(distance > actualDistance){
+				if(distance > actualDistance)
+                {
 					Vector3 normal = selfPos - launcherPos;
-					Vector3 force = (distance - actualDistance) * normal;
-					if(forceBreak < force.sqrMagnitude){
-						Cut();
-					}
-					else{
-						launcher.selfRigidbody.AddForce(force, ForceMode.Acceleration);
-					}
-				}
-				else{
+
+					launcher.selfTransform.position = launcherPos + (distance - actualDistance) * normal.normalized;
+                }
+
+				else
+                {
 					color = (actualDistance - distance) / actualDistance;
 				}
-				break;
+
+                break;
 
 			case State.RETURN:
 				float movement = returnSpeed * Time.deltaTime;
 
-				if(distance < movement){
+				if(distance < movement)
+                {
 					launcher.EndReturn();
-					Destroy(gameObject);
-					return ;
+
+                    Destroy(gameObject); // TODO Optimize that !
+					return;
 				}
-				else{
+
+				else
+                {
 					Vector3 newDirection = launcherPos - selfPos;
 					selfPos += newDirection.normalized * movement;
 					selfTransform.position = selfPos;
@@ -95,61 +124,115 @@ public class Harpoon : MonoBehaviour {
 				break;
 		}
 
-		lineRenderer.SetPosition(0, selfPos);
-		lineRenderer.SetPosition(1, launcherPos);
-		lineRenderer.materials[0].color = new Color(color, color, color, 1f);
-	}
+        // Move the line renderer depending the harpoon and the harpoon muzzle pos.
+        lineRenderer.SetPosition(0, selfPos);
+        lineRenderer.SetPosition(1, launcher.harpoonMuzzle.position);
 
-	public void Launch(HarpoonLauncher launcher, Vector3 from, Vector3 direction, float maxDistance, float launchSpeed, float returnSpeed){
+        // TODO remove when material will be set.
+		lineRenderer.materials[0].color = new Color(color, color, color, 1f);
+
+        // Update harpoon pivot depending the pos of the harpoon.
+        harpoonPivotDir = (selfPos - launcher.harpoonMuzzle.position).normalized;
+        harpoonPivotDir.y = 0f;
+
+        launcher.harpoonPivot.rotation = Quaternion.LookRotation(harpoonPivotDir);
+    }
+
+	public void Launch(HarpoonLauncher launcher, Vector3 from, Vector3 direction, float maxDistance, float returnSpeed){
 		this.launcher = launcher;
 		this.direction = direction;
 		this.maxDistance = maxDistance;
-		this.launchSpeed = launchSpeed;
 		this.returnSpeed = returnSpeed;
 		this.state = State.LAUNCHING;
+        
+        selfTransform.position = from;
 
-		selfTransform.position = from;
-	}
+        lineRenderer.SetPosition(0, from);
+        lineRenderer.SetPosition(1, from);
+    }
 
 	public void Cut(){
-		if(state < State.RETURN){
+
+        if(iHarpoonable != null)
+        {
+            iHarpoonable.OnHarpoonDetach();
+
+            iHarpoonable = null;
+        }
+
+		if(state < State.RETURN)
+        {
 			selfTransform.parent = launcher.boatFollower;
+
+            if(doSling)
+            {
+                launcher.physicMove.AddForce(launcher.physicMove.Velocity.normalized * slingForce);
+            }
+
 			state = State.RETURN;
 		}
 	}
 
-	public void Release(){
-		if(state == State.GRIPPED){
-			actualDistance += releaseSpeed * Time.deltaTime;
-			if(actualDistance > maxDistance){
+	public void Release() {
+
+		if(state == State.GRIPPED)
+        {
+			actualDistance += tractionSpeed * Time.deltaTime;
+
+			if(actualDistance > maxDistance)
+            {
 				actualDistance = maxDistance;
-			}
+                doSling = true;
+            }
+
+            else
+            {
+                doSling = false;
+            }
 		}
 	}
 
 	public void Pull(){
 		if(state == State.GRIPPED){
-			actualDistance -= releaseSpeed * Time.deltaTime;
+			actualDistance -= tractionSpeed * Time.deltaTime;
 			if(actualDistance < minDistance){
 				Cut();
 			}
 		}
 	}
 
-	private void OnTriggerEnter(Collider other) {
-		if(state == State.LAUNCHING){
-			if(other.gameObject.layer == LayerMask.NameToLayer(hookLayer)){
-				HarpoonLauncher otherLauncher = other.GetComponentInParent<HarpoonLauncher>();
-				if(launcher.Equals(otherLauncher)){
-					return ;
-				}
-			}
-			parentTransform = other.GetComponent<Transform>();
-			selfTransform.parent = parentTransform;
-			maxDistance = Vector3.Distance(selfTransform.position, launcher.selfTransform.position);
-			actualDistance = maxDistance;
-			state = State.GRIPPED;
-		}
-		
-	}
+    // Try to attach to a collider.
+    private void OnTriggerEnter(Collider other)
+    {
+        if (state == State.LAUNCHING)
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer(hookLayer))
+            {
+                HarpoonLauncher otherLauncher = other.GetComponentInParent<HarpoonLauncher>();
+                if (launcher.Equals(otherLauncher))
+                {
+                    return;
+                }
+            }
+
+            parentTransform = other.GetComponent<Transform>();
+            selfTransform.parent = parentTransform;
+
+            Vector3 targetPos = selfTransform.position;
+            targetPos.y = 0f;
+
+            selfTransform.position = targetPos;
+
+            maxDistance = Vector3.Distance(selfTransform.position, launcher.selfTransform.position);
+            actualDistance = maxDistance;
+            state = State.GRIPPED;
+
+            // Store and notify that the gameobject has been harpooned.
+            iHarpoonable = other.GetComponent<IHarpoonable>();
+            if (iHarpoonable != null)
+            {
+                iHarpoonable.OnHarpoonAttach(this);
+            }
+        }
+    }
 }
