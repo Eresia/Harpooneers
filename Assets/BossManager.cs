@@ -38,6 +38,10 @@ public class BossManager : MonoBehaviour {
         phaseTransitionMgr.OnTransitionFinished = BeginPhase;
 
         SetupPhases();
+    }
+
+    private void Start()
+    {
         SetupSpawns();
 
         // Begin the fight !
