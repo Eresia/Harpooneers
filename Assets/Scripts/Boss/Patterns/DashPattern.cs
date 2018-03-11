@@ -5,8 +5,6 @@ using System;
 
 public class DashPattern : BossPattern {
 
-	public DashPattern(BossAI boss) : base(boss){}
-
     protected override void ExecutePattern(){
 		boss.StartCoroutine(TempDash());
 	}

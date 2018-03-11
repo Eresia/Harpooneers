@@ -8,7 +8,7 @@ public abstract class BossPattern {
 
 	protected BossAI boss;
 
-	public BossPattern(BossAI boss){
+	public void SetBoss(BossAI boss){
 		this.boss = boss;
 	}
     
