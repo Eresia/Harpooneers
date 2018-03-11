@@ -63,8 +63,6 @@ public class HarpoonLauncher : MonoBehaviour {
 	private float power;
 
 	private Vector3 lastDirection;
-
-	private Mouse mouse;
  
     public Transform harpoonPivot;
     public Transform harpoonMuzzle;
@@ -75,7 +73,6 @@ public class HarpoonLauncher : MonoBehaviour {
 	{
 		selfTransform = GetComponent<Transform>();
 		physicMove = GetComponent<PhysicMove>();
-		mouse = ReInput.controllers.Mouse;
 
         playerID = GetComponent<PlayerInput>().playerId;
         switch (playerID)
