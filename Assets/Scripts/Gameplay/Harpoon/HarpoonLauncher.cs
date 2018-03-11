@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Rewired;
 
 [RequireComponent(typeof(PhysicMove))]
 public class HarpoonLauncher : MonoBehaviour {
@@ -63,8 +62,6 @@ public class HarpoonLauncher : MonoBehaviour {
 	private float power;
 
 	private Vector3 lastDirection;
-
-	private Mouse mouse;
  
     public Transform harpoonPivot;
     public Transform harpoonMuzzle;
@@ -75,7 +72,6 @@ public class HarpoonLauncher : MonoBehaviour {
 	{
 		selfTransform = GetComponent<Transform>();
 		physicMove = GetComponent<PhysicMove>();
-		mouse = ReInput.controllers.Mouse;
 
         playerID = GetComponent<PlayerInput>().playerId;
         switch (playerID)
