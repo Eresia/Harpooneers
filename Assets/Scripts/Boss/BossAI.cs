@@ -11,14 +11,14 @@ public class BossAI : MonoBehaviour {
 
     private Animator animator;
 
-	private BossState[] behaviours;
+	private BossAnimatorScript[] behaviours;
 
 	protected virtual void Awake()
     {
 		animator = GetComponent<Animator>();
-		behaviours = animator.GetBehaviours<BossState>();
+		behaviours = animator.GetBehaviours<BossAnimatorScript>();
 
-		foreach(BossState behav in behaviours)
+		foreach(BossAnimatorScript behav in behaviours)
         {
 			behav.Init(this, animator);
 		}

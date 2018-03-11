@@ -4,15 +4,19 @@ using DG.Tweening;
 
 public class DashPattern : BossPattern {
 
-    public DashState state;
-
+    private DashState dashState;
     private WhalePhaseAI whaleAI;
 
     private Tweener tween;
 
-	public DashPattern(BossAI boss, DashState state) : base(boss)
+    public DashPattern(DashState dashState)
     {
-        this.state = state;
+        this.dashState = dashState;
+    }
+
+    public override void SetBoss(BossAI boss)
+    {
+        base.SetBoss(boss);
 
         whaleAI = boss as WhalePhaseAI;
     }
@@ -67,7 +71,7 @@ public class DashPattern : BossPattern {
 
         whaleAI.spawningFX.Play();
 
-        yield return new WaitForSeconds(state.WaitBeforeSpawn);
+        yield return new WaitForSeconds(dashState.WaitBeforeSpawn);
 
         whaleAI.spawningFX.Stop();
         whaleAI.Whale.SetActive(true);
@@ -87,7 +91,7 @@ public class DashPattern : BossPattern {
         _left = Random.Range(0, 1) > 0.5 ? true : false;
 
         // Number of move before dash ?
-        int move = Random.Range(state.TurnMin, state.TurnMax + 1);
+        int move = Random.Range(dashState.TurnMin, dashState.TurnMax + 1);
 
         Vector3 destination;
         float moveDuration = 1f;
@@ -102,16 +106,16 @@ public class DashPattern : BossPattern {
             // Random the new destination.
             if (horizontalDash)
             {
-                destination.z = Random.Range(state.minZ, state.maxZ);
+                destination.z = Random.Range(dashState.minZ, dashState.maxZ);
             }
             else
             {
-                destination.x = Random.Range(state.minX, state.maxX);
+                destination.x = Random.Range(dashState.minX, dashState.maxX);
             }
 
             // Uniform movement.
             float dist = Vector3.Distance(whaleAI.WhaleTransform.position, destination);
-            moveDuration = Mathf.Abs(dist / state.translateSpeed);
+            moveDuration = Mathf.Abs(dist / dashState.translateSpeed);
 
             tween = whaleAI.WhaleTransform.DOMove(destination, moveDuration);
 
@@ -120,20 +124,20 @@ public class DashPattern : BossPattern {
             _left = !_left;
         }
         
-        yield return new WaitForSeconds(state.WaitBeforeDash);
+        yield return new WaitForSeconds(dashState.WaitBeforeDash);
         
         float distance;
         if (horizontalDash)
         {
-            distance = boss.bossMgr.width + state.whaleOffset;
+            distance = boss.bossMgr.width + dashState.whaleOffset;
         }
         else
         {
-            distance = boss.bossMgr.height + state.whaleOffset;
+            distance = boss.bossMgr.height + dashState.whaleOffset;
         }
 
         destination = whaleAI.WhaleTransform.position + whaleAI.WhaleTransform.forward * distance;
-        moveDuration = Mathf.Abs(distance / state.dashSpeed);
+        moveDuration = Mathf.Abs(distance / dashState.dashSpeed);
 
         tween = whaleAI.WhaleTransform.DOMove(destination, moveDuration).SetEase(Ease.InCubic);
 
