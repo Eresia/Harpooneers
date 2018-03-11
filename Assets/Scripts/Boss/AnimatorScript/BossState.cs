@@ -14,11 +14,14 @@ public abstract class BossState : StateMachineBehaviour {
 	public virtual void Init(BossAI boss, Animator animator){
 		this.boss = boss;
 		this.animator = animator;
-		this.endPatternAction = new Action(EndPattern);
+
+		endPatternAction = new Action(EndPattern);
 	}
 
 	public virtual void BeginPattern(BossPattern pattern){
+
 		animator.SetBool("EndPattern", false);
+
 		pattern.ExecutePattern(endPatternAction);
 	}
 

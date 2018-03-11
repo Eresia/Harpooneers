@@ -5,7 +5,7 @@ AnimatorController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: BossAI
+  m_Name: WhalePhaseAI
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: EndPattern
@@ -38,7 +38,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba72312719f31e34bb8dfbdd3ada1793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test: {x: 0, y: 0, z: 0}
+  offsetX: 0
+  offsetY: 0
+  TurnMin: 1
+  TurnMax: 5
+  WaitBeforeSpawn: 2
+  WaitBeforeDash: 0
+  translateSpeed: 30
+  dashSpeed: 120
+  whaleOffset: 10
+  minX: 0
+  maxX: 0
+  minZ: 0
+  maxZ: 0
 --- !u!114 &114189773915921930
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -50,7 +62,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba72312719f31e34bb8dfbdd3ada1793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test: {x: 0, y: 0, z: 0}
+  offsetX: 0.3
+  offsetY: 0.1
+  TurnMin: 3
+  TurnMax: 5
+  WaitBeforeSpawn: 2
+  WaitBeforeDash: 0.5
+  translateSpeed: 10
+  dashSpeed: 90
+  whaleOffset: 17.5
+  minX: 0
+  maxX: 0
+  minZ: 0
+  maxZ: 0
 --- !u!114 &114407903882126600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -74,7 +98,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba72312719f31e34bb8dfbdd3ada1793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test: {x: 0, y: 0, z: 0}
+  offsetX: 0
+  offsetY: 0
+  TurnMin: 1
+  TurnMax: 5
+  WaitBeforeSpawn: 2
+  WaitBeforeDash: 0
+  translateSpeed: 30
+  dashSpeed: 120
+  whaleOffset: 10
+  minX: 0
+  maxX: 0
+  minZ: 0
+  maxZ: 0
 --- !u!1101 &1101342160627919572
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -183,10 +219,10 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102125265432943614}
-    m_Position: {x: 492, y: 240, z: 0}
+    m_Position: {x: 312, y: 240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102985727829828862}
-    m_Position: {x: 504, y: 144, z: 0}
+    m_Position: {x: 360, y: 144, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

@@ -13,7 +13,6 @@ public struct BoundariesData
     public float zTop;
 
     public float height;
-    public float width;
 }
 
 public class BoundaryManager : MonoBehaviour {
@@ -72,8 +71,6 @@ public class BoundaryManager : MonoBehaviour {
 
         trapezeData.xBottomRight = limits[3].x;
         trapezeData.xTopRight = limits[2].x;
-
-        trapezeData.height = Mathf.Abs(trapezeData.zBottom - trapezeData.zTop);
     }
 
     /// <summary>
@@ -113,7 +110,7 @@ public class BoundaryManager : MonoBehaviour {
 
         return false;
     }
-
+    
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
@@ -130,5 +127,19 @@ public class BoundaryManager : MonoBehaviour {
                 Gizmos.DrawLine(limits[i], limits[(i+1) % 4]);
             }
         }
+    }
+
+    public Vector3 ScreenToWorldPos(Vector2 screenPos)
+    {
+        Vector3 worldPos = Vector3.zero;
+
+        worldPos.z = Mathf.Lerp(trapezeData.zBottom, trapezeData.zTop, screenPos.y);
+
+        float xMin = Mathf.Lerp(trapezeData.xBottomLeft, trapezeData.xTopLeft, screenPos.y);
+        float xMax = Mathf.Lerp(trapezeData.xBottomRight, trapezeData.xTopRight, screenPos.y);
+
+        worldPos.x = Mathf.Lerp(xMin, xMax, screenPos.x);
+        
+        return worldPos;
     }
 }

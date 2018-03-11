@@ -89,7 +89,7 @@ public class Geyser : MonoBehaviour {
             if (customCollision != null)
             {
                 customCollision.playerMgr.Death();
-            }       
+            }
         }
 
         numberOfExplosionsDone++;
@@ -98,6 +98,7 @@ public class Geyser : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+
         else if(numberOfExplosionsDone < numberOfExplosions)
         {
             isMoving = true;

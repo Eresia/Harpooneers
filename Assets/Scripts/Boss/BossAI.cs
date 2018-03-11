@@ -6,11 +6,14 @@ using System;
 [RequireComponent(typeof(Animator))]
 public class BossAI : MonoBehaviour {
 
-	private Animator animator;
+    [HideInInspector]
+    public BossManager bossMgr;
+
+    private Animator animator;
 
 	private BossState[] behaviours;
 
-	private void Awake()
+	protected virtual void Awake()
     {
 		animator = GetComponent<Animator>();
 		behaviours = animator.GetBehaviours<BossState>();
@@ -19,5 +22,5 @@ public class BossAI : MonoBehaviour {
         {
 			behav.Init(this, animator);
 		}
-	}
+    }
 }

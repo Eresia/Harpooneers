@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using System;
+
 [System.Serializable]
 public struct PhaseTransition
 {
@@ -12,29 +14,30 @@ public struct PhaseTransition
 public class PhaseTransitionManager : MonoBehaviour {
 
     public Transform cameraTransform;
+
+    // TO REMOVE WHEN FINISHED.
     public int currentPhase = -1;
+
     [Space(20)]
     public PhaseTransition[] phasesCameras;
 
     private bool isTransitioning;
     
+    public Action OnTransitionFinished;
+
     // For Debug / Manual
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.P) && currentPhase < phasesCameras.Length && !isTransitioning)
         {           
-            NextPhase();
+            NextPhase(currentPhase++);
         }
     }
 
-    public void NextPhase()
+    public void NextPhase(int currentPhase)
     {
-        currentPhase++;
-
         if(currentPhase < phasesCameras.Length)
         {
-            Debug.Log(cameraTransform.position + " " + phasesCameras[currentPhase].camPosition);
-
             StartCoroutine(TransitionToNextPhase(cameraTransform.position, phasesCameras[currentPhase].camPosition, phasesCameras[currentPhase].transitionTime));
         }
 
@@ -63,6 +66,7 @@ public class PhaseTransitionManager : MonoBehaviour {
         GameManager.instance.boundaryMgr.UpdateBoundaries();
         GameManager.instance.ground.ratio += 0.5f;
 
+        OnTransitionFinished();
         isTransitioning = false;
     }
 }
