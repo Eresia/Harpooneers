@@ -20,7 +20,7 @@ public class Geyser : MonoBehaviour {
 
     public LayerMask damageableLayer;
 
-    private Vector3 initialPosition;
+    // private Vector3 initialPosition;
     private Vector3 destinationVector;
     private bool isMoving = true;
     private float elapsedTime = 0;
@@ -31,7 +31,7 @@ public class Geyser : MonoBehaviour {
 
     void Awake()
     {
-        initialPosition = transform.position;
+        // initialPosition = transform.position;
     }
     void Start ()
     {
@@ -89,7 +89,7 @@ public class Geyser : MonoBehaviour {
             if (customCollision != null)
             {
                 customCollision.playerMgr.Death();
-            }       
+            }
         }
 
         numberOfExplosionsDone++;
@@ -98,6 +98,7 @@ public class Geyser : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+
         else if(numberOfExplosionsDone < numberOfExplosions)
         {
             isMoving = true;

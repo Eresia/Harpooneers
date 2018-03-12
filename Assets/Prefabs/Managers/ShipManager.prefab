@@ -51,6 +51,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb45d3370d9afdc4fa0dbf3ac9a4502e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMaterials:
+  - {fileID: 2100000, guid: 7904b15aa769c1945a8b28f7f3deddeb, type: 2}
+  - {fileID: 2100000, guid: 1ef814745754a484bb420b1556a154b4, type: 2}
+  - {fileID: 2100000, guid: 38ffa660e167ea24bafcc5106107881e, type: 2}
+  - {fileID: 2100000, guid: b3876c02e0360cb4f8fd4399253a240d, type: 2}
   useDefaultConfig: 1
   defaultConfig:
     coqueId: 0
@@ -59,6 +64,9 @@ MonoBehaviour:
     bombStockId: 0
   tweaking: 0
   players:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   harpoonsScriptObjs:
   - {fileID: 11400000, guid: f603b0c5f7b9f3c47941d6b2a2aedd52, type: 2}

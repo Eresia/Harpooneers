@@ -18,8 +18,19 @@ public class PhysicObject : MonoBehaviour {
 		Ground.TransformInfo info = GameManager.instance.ground.GetTransformInfo(pos2, mover.SelfTransform.rotation.eulerAngles.y);
 		selfTransform.up = info.normal;
 		Vector3 eulerAngles = selfTransform.localEulerAngles;
-		eulerAngles.y = 0;
-		selfTransform.localEulerAngles = eulerAngles;
+		float y = mover.SelfTransform.rotation.eulerAngles.y;
+		if(y > 180){
+			y -= 360;
+		}
+		if(eulerAngles.x > 180){
+			eulerAngles.x -= 360;
+		}
+		if(eulerAngles.z > 180){
+			eulerAngles.z -= 360;
+		}
+		float x = (eulerAngles.x * (1 - (y / 90))) + (eulerAngles.z * (y / 90));
+		float z = (eulerAngles.z * (1 - (y / 90))) + (eulerAngles.x * (y / 90));
+		selfTransform.localEulerAngles = new Vector3(x, 0, z);
 		mover.SelfTransform.position = info.position;
 		selfTransform.localPosition = -pivot;
 		Vector3 normal = info.normal;
