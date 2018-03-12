@@ -130,7 +130,7 @@ public class InputInMainMenu : MonoBehaviour {
                 }
 
                 // Player is now ready.
-                else
+                else if (playerHasJoined[i])
                 {
                     playerReady[i] = true;
                     nbOfPlayersReady++;
