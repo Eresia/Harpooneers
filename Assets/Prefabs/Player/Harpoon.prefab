@@ -51,11 +51,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4611102544060044}
-  - component: {fileID: 135097230892390116}
   - component: {fileID: 23341290647901544}
   - component: {fileID: 114938105809876424}
   - component: {fileID: 54600648998295404}
   - component: {fileID: 120266009548636656}
+  - component: {fileID: 136336412570858112}
   m_Layer: 10
   m_Name: Harpoon
   m_TagString: Untagged
@@ -83,7 +83,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1340704903832242}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.433745, y: 3.175, z: 7.4010553}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children:
   - {fileID: 4978751696285640}
@@ -300,8 +300,8 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!135 &135097230892390116
-SphereCollider:
+--- !u!136 &136336412570858112
+CapsuleCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -309,6 +309,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
   m_Radius: 0.5
+  m_Height: 3
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
