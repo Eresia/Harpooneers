@@ -70,7 +70,7 @@ public class Wave{
 	}
 
 	public static bool IsTimeout(WaveOptions wave, float time){
-		if((wave.type != 1) && (wave.type != 2)){
+		if((wave.type != ((uint) WaveType.ZONE)) && (wave.type != ((uint) WaveType.ZONE_TEST))){
 			return (time - wave.time) > wave.timeout;
 		}
 		else{
