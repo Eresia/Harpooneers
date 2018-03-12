@@ -7,6 +7,11 @@ public class GeyserPattern : BossPattern {
     private GeyserState state;
     private WhalePhaseAI whaleAI;
 
+    private bool isDiving;
+
+    private Tween posTween;
+    private Tween rotTween;
+
     public GeyserPattern(GeyserState state)
     {
         this.state = state;
@@ -21,12 +26,28 @@ public class GeyserPattern : BossPattern {
 
     protected override void ExecutePattern()
     {
-		boss.StartCoroutine(SpawnGeyser());
-	}
+		boss.StartCoroutine(SpawnGeysersThenWait());
+        
+        isDiving = false;
+    }
 
-    protected override void StopPattern()
+    protected override void OnStopPattern()
     {
-        boss.StopCoroutine(SpawnGeyser());
+        // Stop all tweens.
+        if (posTween.IsPlaying())
+        {
+            posTween.Kill();
+            rotTween.Kill();
+        }
+
+        // Check if whale isn't already diving.
+        if(!isDiving)
+        {
+            // Stop behaviour directly.
+            boss.StopAllCoroutines();
+
+            boss.StartCoroutine(WhaleDive());
+        }
     }
 
     private void ChooseSpawn()
@@ -62,10 +83,13 @@ public class GeyserPattern : BossPattern {
         // Move the FX containers.
         whaleAI.FX.transform.position = pos;
         whaleAI.FX.transform.rotation = rot;
+
+        whaleAI.WhaleTransform.position = pos;
+        whaleAI.WhaleTransform.rotation = rot;
     }
 
     // Decide from which spawn the whale will dash.
-    private IEnumerator SpawnGeyser()
+    private IEnumerator SpawnGeysersThenWait()
 	{
         // Geysers chase players.
         for (int i = 0; i < whaleAI.Geysers.Length; i++)
@@ -79,22 +103,46 @@ public class GeyserPattern : BossPattern {
         yield return new WaitWhile(() => (whaleAI.Geysers[0].isActiveAndEnabled));
 
         yield return new WaitForSeconds(state.delayAfterGeyserChase);
-
-        // TODO Display shadow of whale.
-
-        yield return new WaitForSeconds(state.timeBeforeSpawning);
-
+        
         ChooseSpawn();
-
-        // TODO Baleine emerge !
-
+        
+        // Whale emerged
+        Vector3 targetPos = whaleAI.WhaleTransform.position + whaleAI.WhaleTransform.forward * state.emergePosEnd.z + whaleAI.WhaleTransform.up * state.emergePosEnd.y;
+        
+        // Set original pos and rot 
+        whaleAI.WhaleTransform.Translate(whaleAI.WhaleTransform.forward * state.emergePosStart.z + whaleAI.WhaleTransform.up * state.emergePosStart.y);
+        whaleAI.WhaleChildTransform.localRotation = Quaternion.Euler(state.emergeRotationStart);
         whaleAI.Whale.SetActive(true);
 
-        // Boss wait...
-        yield return new WaitForSeconds(10f);
+        // Do emerging.
+        posTween = whaleAI.WhaleTransform.DOLocalMove(targetPos, state.emergedDuration);
+        rotTween = whaleAI.WhaleChildTransform.DOLocalRotate(state.emergeRotationEnd, state.emergedDuration);
 
-        FinishPattern();
+        yield return new WaitForSeconds(state.emergedDuration);
+        
+        // Whale is emerged... WAIT
+
+        yield return new WaitForSeconds(state.waitDuration);
+
+        // Whale dives.
+        yield return WhaleDive();
 	}
 
+    private IEnumerator WhaleDive()
+    {
+        isDiving = true;
+        
+        posTween = whaleAI.WhaleTransform.DOLocalMove(whaleAI.WhaleTransform.up * state.diveHeightEnd + whaleAI.WhaleTransform.forward * state.diveForwardEnd, state.divingDuration);
+        rotTween = whaleAI.WhaleChildTransform.DOLocalRotate(state.diveRotationEnd, state.divingDuration);
 
+        yield return new WaitWhile(() => (posTween.IsPlaying()));
+
+        whaleAI.Whale.SetActive(false);
+
+        // Reset rotation.
+        whaleAI.WhaleChildTransform.localRotation = Quaternion.identity;
+        whaleAI.WhaleChildTransform.localPosition = Vector3.zero;
+
+        OnPatternFinished();
+    }
 }

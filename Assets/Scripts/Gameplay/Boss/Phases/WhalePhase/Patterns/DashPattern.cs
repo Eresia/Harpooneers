@@ -81,7 +81,7 @@ public class DashPattern : BossPattern {
 
         yield return MoveAndDash(horizontalDash);
 
-		FinishPattern();
+        OnPatternFinished();
 	}
 
     IEnumerator MoveAndDash(bool horizontalDash)
@@ -150,7 +150,7 @@ public class DashPattern : BossPattern {
         whaleAI.Whale.SetActive(false);
     }
 
-    protected override void StopPattern()
+    protected override void OnStopPattern()
     {
         // Dash isn't stoppable.
     }

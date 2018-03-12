@@ -205,13 +205,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7574c42597833fd46a6a5a96bbfaf8ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hookLayer: Hook
+  hookLayer: Grippable
   minDistance: 1.5
   tractionSpeed: 0
   forceBlock: 0
   forceBreak: 4000
   slingForce: 5
-  harpoonMeshGo: {fileID: 1318559239427156}
   ropeAttach: {fileID: 4456592517545518}
 --- !u!120 &120266009548636656
 LineRenderer:

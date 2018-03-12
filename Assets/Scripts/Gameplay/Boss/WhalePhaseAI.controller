@@ -109,8 +109,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95cef13b95a628c4fb9fc27d8e0d0cb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayAfterGeyserChase: 2
-  timeBeforeSpawning: 2
+  delayAfterGeyserChase: 0.5
+  emergedDuration: 5
+  emergePosStart: {x: 0, y: -20, z: -10}
+  emergePosEnd: {x: 0, y: 1.75, z: 8}
+  emergeRotationStart: {x: 0, y: 0, z: 0}
+  emergeRotationEnd: {x: -20, y: 0, z: 0}
+  waitDuration: 10
+  divingDuration: 5
+  diveHeightEnd: -30
+  diveForwardEnd: 20
+  diveRotationEnd: {x: 30, y: 0, z: 0}
 --- !u!114 &114407903882126600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -141,7 +150,7 @@ MonoBehaviour:
   WaitBeforeSpawn: 2
   WaitBeforeDash: 0.5
   translateSpeed: 10
-  dashSpeed: 90
+  dashSpeed: 75
   whaleOffset: 18
   minX: 0
   maxX: 0

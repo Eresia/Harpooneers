@@ -137,7 +137,10 @@ MonoBehaviour:
   geyserPrefab: {fileID: 114058333544853980, guid: 9fe4bcfee86ae324a98496a6a8e7279a,
     type: 2}
   NoHittablePatternCount: 2
-  numberOfPatternsWithoutHit: 0
+  numberOfPatternsWithoutHit: 2
+  eyes:
+  - {fileID: 0}
+  - {fileID: 0}
   hitByEyeNeeded: 0
 --- !u!198 &198223805626864814
 ParticleSystem:

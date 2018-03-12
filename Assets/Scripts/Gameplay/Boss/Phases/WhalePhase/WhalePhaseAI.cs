@@ -9,6 +9,7 @@ public class WhalePhaseAI : BossAI {
     public Transform FX;
     public ParticleSystem spawningFX;
 
+    [Header("Patterns components")]
     public Geyser geyserPrefab;
 
     public Geyser[] Geysers
@@ -18,6 +19,7 @@ public class WhalePhaseAI : BossAI {
     private Geyser[] geysers;
 
     public Transform WhaleTransform { get; private set; }
+    public Transform WhaleChildTransform { get; private set; }
 
     public GameObject Whale
     {
@@ -33,6 +35,7 @@ public class WhalePhaseAI : BossAI {
     public int numberOfPatternsWithoutHit;
 
     [Header("Boss attributes")]
+    public HandleHarpoonWithEye[] eyes;
     public int hitByEyeNeeded;
 
     private int passCount = 0;
@@ -52,11 +55,19 @@ public class WhalePhaseAI : BossAI {
         whale = Instantiate(whalePrefab);
 
         WhaleTransform = whale.GetComponent<Transform>();
+        WhaleChildTransform = WhaleTransform.GetChild(0);
 
         geysers = new Geyser[GameManager.instance.nbOfPlayers];
         for (int i = 0; i < geysers.Length; i++)
         {
             geysers[i] = Instantiate<Geyser>(geyserPrefab);
+        }
+
+        eyes = WhaleChildTransform.GetChild(2).GetComponentsInChildren<HandleHarpoonWithEye>();
+
+        foreach(HandleHarpoonWithEye handleHarpoonHit in eyes)
+        {
+            handleHarpoonHit.hitCallback = HitEye;
         }
     }
 
@@ -88,17 +99,26 @@ public class WhalePhaseAI : BossAI {
         {
             rightHitCount++;
         }
-        
-        // Whale is dead.
-        if(leftHitCount == hitByEyeNeeded && rightHitCount == hitByEyeNeeded)
-        {
 
+        Debug.Log(leftHitCount + " " + rightHitCount);
+
+        // Whale is dead.
+        if(leftHitCount >= hitByEyeNeeded && rightHitCount >= hitByEyeNeeded)
+        {
+            // TODO death feedback
+            
+            CurrentPattern.StopPattern();
+
+            animator.enabled = false;
+            enabled = false;
+
+            OnPhaseFinished();
         }
 
         // Whale is alive.
         else
         {
-            CurrentPattern.FinishPattern();
+            CurrentPattern.StopPattern();
         }
     }
 }
