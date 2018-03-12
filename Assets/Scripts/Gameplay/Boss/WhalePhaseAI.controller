@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delayAfterGeyserChase: 0.5
-  emergedDuration: 5
+  emergingDuration: 5
   emergePosStart: {x: 0, y: -20, z: -10}
   emergePosEnd: {x: 0, y: 1.75, z: 8}
   emergeRotationStart: {x: 0, y: 0, z: 0}
@@ -132,6 +132,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Boss>k__BackingField: {fileID: 0}
+--- !u!114 &114424629460741752
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01168ed66f2760842bf3ef05eb548352, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackAmount: 3
+  emergingDuration: 2.5
+  startHeight: -50
+  backAttackTime: 1
+  divingDuration: 5
+  diveHeightEnd: -30
+  diveForwardEnd: 20
+  diveRotationEnd: {x: 45, y: 0, z: 0}
 --- !u!114 &114591433400966774
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -151,30 +170,6 @@ MonoBehaviour:
   WaitBeforeDash: 0.5
   translateSpeed: 10
   dashSpeed: 50
-  whaleOffset: 18
-  minX: 0
-  maxX: 0
-  minZ: 0
-  maxZ: 0
---- !u!114 &114821762183736850
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad79dcb05caf72d46af2bd728f1ef7eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offsetX: 0.3
-  offsetY: 0.1
-  TurnMin: 3
-  TurnMax: 5
-  WaitBeforeSpawn: 2
-  WaitBeforeDash: 0.5
-  translateSpeed: 20
-  dashSpeed: 90
   whaleOffset: 18
   minX: 0
   maxX: 0
@@ -500,13 +495,13 @@ AnimatorState:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: TO CHANGE
+  m_Name: Pattern BackAttack
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101715782495313262}
   m_StateMachineBehaviours:
-  - {fileID: 114821762183736850}
+  - {fileID: 114424629460741752}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -587,16 +582,16 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102125265432943614}
-    m_Position: {x: -120, y: 168, z: 0}
+    m_Position: {x: -12, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102851922653509786}
-    m_Position: {x: 288, y: 132, z: 0}
+    m_Position: {x: 252, y: 144, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102442778312955678}
-    m_Position: {x: 228, y: 252, z: 0}
+    m_Position: {x: -12, y: 204, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102889705949303782}
-    m_Position: {x: 612, y: 216, z: 0}
+    m_Position: {x: 516, y: 156, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

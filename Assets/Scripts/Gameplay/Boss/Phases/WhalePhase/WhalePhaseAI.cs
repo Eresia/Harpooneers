@@ -11,9 +11,6 @@ public class WhalePhaseAI : BossAI {
     public Transform FX;
     public ParticleSystem spawningFX;
 
-
-    public Camera cam;
-
     [Header("Patterns components")]
     public Geyser geyserPrefab;
 
@@ -41,7 +38,9 @@ public class WhalePhaseAI : BossAI {
     public int numberOfPatternsWithoutHit;
 
     [Header("Boss attributes")]
-    public HandleHarpoonWithEye[] eyes;
+
+    public Collider[] eyeColliders;
+    public HandleHarpoonWithEye[] eyesScript;
     public int hitByEyeNeeded;
 
     private int passCount = 0;
@@ -51,15 +50,16 @@ public class WhalePhaseAI : BossAI {
 
     private Vector3 originCamPos;
 
+    private bool phaseFinished;
+
     protected override void Awake()
     {
         base.Awake();
 
-        originCamPos = cam.transform.position;
-
         SpawnWhale();
     }
 
+    // Spawn and setup whale correctly.
     private void SpawnWhale()
     {
         whale = Instantiate(whalePrefab);
@@ -74,11 +74,18 @@ public class WhalePhaseAI : BossAI {
             geysers[i] = Instantiate<Geyser>(geyserPrefab);
         }
 
-        eyes = WhaleChildTransform.GetChild(1).GetComponentsInChildren<HandleHarpoonWithEye>();
+        // Setup eye colliders and scripts.
+        eyesScript = WhaleChildTransform.GetChild(1).GetComponentsInChildren<HandleHarpoonWithEye>();
+        eyeColliders = new Collider[eyesScript.Length];
 
-        foreach(HandleHarpoonWithEye handleHarpoonHit in eyes)
+        for (int i = 0; i < eyeColliders.Length; i++)
         {
-            handleHarpoonHit.hitCallback = HitEye;
+            // Get and disable by default.
+            eyeColliders[i] = eyesScript[i].GetComponent<Collider>();
+            eyeColliders[i].enabled = false;
+
+            // Add callback when hit eye.
+            eyesScript[i].hitCallback = HitEye;
         }
     }
 
@@ -98,6 +105,8 @@ public class WhalePhaseAI : BossAI {
             nextState = UnityEngine.Random.Range(0, NoHittablePatternCount);
         }
 
+        Debug.Log(nextState);
+
         return nextState;
     }
 
@@ -113,25 +122,49 @@ public class WhalePhaseAI : BossAI {
 
         GameManager.instance.camMgr.Shake();
 
-        Debug.Log(leftHitCount + " " + rightHitCount);
-
         // Whale is dead.
         if(leftHitCount >= hitByEyeNeeded && rightHitCount >= hitByEyeNeeded)
         {
-            // TODO death feedback
-            
-            CurrentPattern.StopPattern();
+            if(!phaseFinished)
+            {
+                // TODO death feedback
 
-            animator.enabled = false;
-            enabled = false;
+                phaseFinished = true;
 
-            OnPhaseFinished();
+                animator.enabled = false;
+                enabled = false;
+                
+                OnPhaseFinished();
+            }
+
+            return;
         }
 
-        // Whale is alive.
-        else
+        CurrentPattern.StopPattern();
+    }
+
+    // Reset the whale's transform.
+    public void ResetWhaleTransform()
+    {
+        Whale.SetActive(false);
+
+        WhaleTransform.rotation = Quaternion.identity;
+        WhaleTransform.position = Vector3.zero;
+        WhaleTransform.localScale = Vector3.one;
+        
+        WhaleChildTransform.localRotation = Quaternion.identity;
+        WhaleChildTransform.localPosition = Vector3.zero;
+        WhaleChildTransform.localScale = Vector3.one;
+
+        WhaleAnimator.SetBool("Swim", false);
+    }
+
+    // Make whale vulnerable.
+    public void EnableEyeCollisions(bool enabled)
+    {
+        for (int i = 0; i < eyeColliders.Length; i++)
         {
-            CurrentPattern.StopPattern();
+            eyeColliders[i].enabled = enabled;
         }
     }
 }

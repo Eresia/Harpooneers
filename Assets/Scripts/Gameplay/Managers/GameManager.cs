@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour {
     /// <summary>
     /// Return the number of players for the current game.
     /// </summary>
+    [HideInInspector]
     public int nbOfPlayers;
 
     public ShipConfiguration[] shipConfigs;

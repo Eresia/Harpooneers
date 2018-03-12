@@ -118,17 +118,22 @@ public class GeyserPattern : BossPattern {
         whaleAI.WhaleAnimator.SetBool("Swim", true);
 
         // Do emerging.
-        posTween = whaleAI.WhaleTransform.DOLocalMove(targetPos, state.emergedDuration);
-        rotTween = whaleAI.WhaleChildTransform.DOLocalRotate(state.emergeRotationEnd, state.emergedDuration);
+        posTween = whaleAI.WhaleTransform.DOLocalMove(targetPos, state.emergingDuration);
+        rotTween = whaleAI.WhaleChildTransform.DOLocalRotate(state.emergeRotationEnd, state.emergingDuration);
 
-        yield return new WaitForSeconds(state.emergedDuration);
+        yield return new WaitForSeconds(state.emergingDuration);
 
         // Stop to swin -> Idle.
         whaleAI.WhaleAnimator.SetBool("Swim", false);
 
+        // Boss is now vulnerable.
+        whaleAI.EnableEyeCollisions(true);
+
         // Whale is emerged... WAIT
 
         yield return new WaitForSeconds(state.waitDuration);
+
+        whaleAI.EnableEyeCollisions(false);
 
         // Whale dives.
         yield return WhaleDive();
@@ -147,13 +152,7 @@ public class GeyserPattern : BossPattern {
 
         yield return new WaitWhile(() => (posTween.IsPlaying()));
 
-        whaleAI.Whale.SetActive(false);
-
-        // Reset whale.
-        whaleAI.WhaleChildTransform.localRotation = Quaternion.identity;
-        whaleAI.WhaleChildTransform.localPosition = Vector3.zero;
-        whaleAI.WhaleChildTransform.localScale = Vector3.one;
-        whaleAI.WhaleAnimator.SetBool("Swim", false);
+        whaleAI.ResetWhaleTransform();
 
         OnPatternFinished();
     }

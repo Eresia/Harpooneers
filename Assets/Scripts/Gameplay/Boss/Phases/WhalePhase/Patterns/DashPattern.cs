@@ -157,8 +157,8 @@ public class DashPattern : BossPattern {
 
         // Wait while the dash isn't finished.
         yield return new WaitWhile(() => (tween.IsPlaying()));
-
-        whaleAI.Whale.SetActive(false);
+        
+        whaleAI.ResetWhaleTransform();
     }
 
     protected override void OnStopPattern()
