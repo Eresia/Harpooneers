@@ -11,6 +11,21 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1340704903832242}
   m_IsPrefabParent: 1
+--- !u!1 &1218390549226282
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4456592517545518}
+  m_Layer: 10
+  m_Name: RopeAttach
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1318559239427156
 GameObject:
   m_ObjectHideFlags: 0
@@ -36,11 +51,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4611102544060044}
-  - component: {fileID: 135097230892390116}
   - component: {fileID: 23341290647901544}
   - component: {fileID: 114938105809876424}
   - component: {fileID: 54600648998295404}
   - component: {fileID: 120266009548636656}
+  - component: {fileID: 136336412570858112}
   m_Layer: 10
   m_Name: Harpoon
   m_TagString: Untagged
@@ -48,6 +63,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4456592517545518
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1218390549226282}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4611102544060044}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4611102544060044
 Transform:
   m_ObjectHideFlags: 1
@@ -59,6 +87,7 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children:
   - {fileID: 4978751696285640}
+  - {fileID: 4456592517545518}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -176,12 +205,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7574c42597833fd46a6a5a96bbfaf8ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hookLayer: Hook
+  hookLayer: Grippable
   minDistance: 1.5
   tractionSpeed: 0
   forceBlock: 0
   forceBreak: 4000
   slingForce: 5
+  ropeAttach: {fileID: 4456592517545518}
 --- !u!120 &120266009548636656
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -270,8 +300,8 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!135 &135097230892390116
-SphereCollider:
+--- !u!136 &136336412570858112
+CapsuleCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -279,6 +309,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
   m_Radius: 0.5
+  m_Height: 3
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}

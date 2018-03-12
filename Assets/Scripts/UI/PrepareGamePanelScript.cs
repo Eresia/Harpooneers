@@ -9,6 +9,7 @@ public class PrepareGamePanelScript : MonoBehaviour {
     public GameObject[] shipPanel;
     public GameObject[] readyPanel;
     public GameObject[] notReadyPanel;
+    public GameObject[] moduleSelectionPanel;
 
     private void Awake()
     {
@@ -35,12 +36,13 @@ public class PrepareGamePanelScript : MonoBehaviour {
     {
         notReadyPanel[playerId].SetActive(false);
         readyPanel[playerId].SetActive(true);
+        moduleSelectionPanel[playerId].SetActive(false);
     }
 
     public void PlayerNotReady(int playerId)
     {
         notReadyPanel[playerId].SetActive(true);
         readyPanel[playerId].SetActive(false);
+        moduleSelectionPanel[playerId].SetActive(true);
     }
 }
-

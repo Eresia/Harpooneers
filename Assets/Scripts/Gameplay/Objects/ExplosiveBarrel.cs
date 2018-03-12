@@ -17,6 +17,8 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
 
     [Header("FX")]
     public GameObject radiusFX;
+    [Range(0,1)]
+    public float ExpFXSize = 1;
     public ParticleSystem explosionFX;
     public ParticleSystem fuseFX;
 
@@ -44,7 +46,7 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
     // Scale fx depending the bomb radius.
     public void SetupBombFX()
     {
-        Vector3 resize = Vector3.one * bombStockModule.bombRadius;
+        Vector3 resize = Vector3.one * bombStockModule.bombRadius * ExpFXSize;
         
         radiusFX.transform.parent.localScale *= bombStockModule.bombRadius;
         explosionFX.transform.localScale = resize;

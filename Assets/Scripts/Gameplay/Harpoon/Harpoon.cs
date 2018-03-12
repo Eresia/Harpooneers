@@ -59,6 +59,8 @@ public class Harpoon : MonoBehaviour {
 
     private Vector3 harpoonPivotDir;
 
+    public Transform ropeAttach;
+
     // Current gameObject where the harpoon is attached.
     private IHarpoonable iHarpoonable;
 
@@ -66,7 +68,6 @@ public class Harpoon : MonoBehaviour {
     {
 		selfTransform = GetComponent<Transform>();
 		lineRenderer = GetComponent<LineRenderer>();
-       
     }
 
 	private void Update()
@@ -81,8 +82,9 @@ public class Harpoon : MonoBehaviour {
 			case State.LAUNCHING:
 				selfPos += direction * Time.deltaTime;
 				selfTransform.position = selfPos;
+                selfTransform.rotation = Quaternion.LookRotation(transform.position - launcherPos);
 
-				if(distance > maxDistance)
+                if (distance > maxDistance)
                 {
 					Cut();
 				}
@@ -105,8 +107,9 @@ public class Harpoon : MonoBehaviour {
 
 			case State.RETURN:
 				float movement = returnSpeed * Time.deltaTime;
+                selfTransform.rotation = Quaternion.LookRotation(transform.position - launcher.harpoonMuzzle.position);
 
-				if(distance < movement)
+                if (distance < movement)
                 {
 					launcher.EndReturn();
 
@@ -125,7 +128,7 @@ public class Harpoon : MonoBehaviour {
 		}
 
         // Move the line renderer depending the harpoon and the harpoon muzzle pos.
-        lineRenderer.SetPosition(0, selfPos);
+        lineRenderer.SetPosition(0, ropeAttach.position);
         lineRenderer.SetPosition(1, launcher.harpoonMuzzle.position);
 
         // TODO remove when material will be set.
@@ -149,6 +152,8 @@ public class Harpoon : MonoBehaviour {
 
         lineRenderer.SetPosition(0, from);
         lineRenderer.SetPosition(1, from);
+
+     //   harpoonMeshGo.transform.LookAt()
     }
 
 	public void Cut(){
@@ -219,7 +224,7 @@ public class Harpoon : MonoBehaviour {
             selfTransform.parent = parentTransform;
 
             Vector3 targetPos = selfTransform.position;
-            targetPos.y = 0f;
+            targetPos.y = launcher.harpoonMuzzle.position.y;
 
             selfTransform.position = targetPos;
 

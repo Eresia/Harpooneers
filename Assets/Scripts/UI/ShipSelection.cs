@@ -23,9 +23,7 @@ public class ShipSelection : MonoBehaviour {
     public Text[]moduleDescriptionFields;
 
     private ShipConfiguration currentConfig;
-    public int currentTabID;
-    
-
+    public int currentTabID;    
 
     void Awake()
     {
@@ -45,14 +43,12 @@ public class ShipSelection : MonoBehaviour {
         {
             go.GetComponent<MeshRenderer>().material = shipMaterials[playerID];
         }
-
-
     }
+
+
     // Use this for initialization
     void Start () {
         RandomizeShip();
-
-       // GameManager.instance.shipMgr.harpoonsScriptObjs[currentHarpoonID].name;
     }
 
     public void PreviousModule()
