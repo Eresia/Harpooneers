@@ -163,12 +163,12 @@ public class PlayerManager : MonoBehaviour {
         {
             case 0:
                 playerPosText.text = "P1";
-                playerPosText.color = Color.red;
+                playerPosText.color = Color.yellow;
                 break;
 
             case 1:
                 playerPosText.text = "P2";
-                playerPosText.color = Color.green;
+                playerPosText.color = Color.red;
                 break;
 
             case 2:
@@ -178,7 +178,7 @@ public class PlayerManager : MonoBehaviour {
 
             case 3:
                 playerPosText.text = "P4";
-                playerPosText.color = Color.yellow;
+                playerPosText.color = Color.green;
                 break;
         }
     }

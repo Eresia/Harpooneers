@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: M_Sea
-  m_Shader: {fileID: 4800000, guid: da6f4d66485e6064181c49ae72d35ea4, type: 3}
+  m_Shader: {fileID: 4800000, guid: 7ba49809ab6a7e7469cbe9874d4e14f4, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -46,11 +46,23 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Normal01:
+        m_Texture: {fileID: 2800000, guid: 217eda3b268d0934a96014aa39beacfe, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal02:
+        m_Texture: {fileID: 2800000, guid: 27af78ac9e132b64b8c03c12958ecca6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -63,14 +75,24 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
+    - _MidWaterDistance: 0
     - _Mode: 0
+    - _NormalStrenght: 0.5
+    - _NormalTiling: 6.33
     - _OcclusionStrength: 1
+    - _OverallDepth: 0.65
     - _Parallax: 0.02
+    - _ShallowWaterDistance: 0.765
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
+    - _WaveSpeed: 0.625
     - _ZWrite: 1
+    - __dirty: 0
     m_Colors:
     - _Color: {r: 0.41960785, g: 0.57254905, b: 0.69803923, a: 1}
+    - _DeepColor: {r: 0.31277034, g: 0.31512654, b: 0.6544118, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _MidWaterColor: {r: 0.36786333, g: 0.3717159, b: 0.9264706, a: 0}
+    - _ShallowColor: {r: 0.6729022, g: 0.8798398, b: 0.9338235, a: 0}

@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class Killzone : MonoBehaviour
 {
-    private BoxCollider _killzone;
+    private Collider _killzone;
 
-    private void Awake()
+    private void Reset()
     {
-        _killzone = GetComponent<BoxCollider>();
+        _killzone = GetComponent<Collider>();
         _killzone.isTrigger = true;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
-            other.transform.parent.GetComponent<PlayerManager>().Death();
+        if(other.tag == "Player")
+        {
+            var customCollision = other.GetComponent<CustomCollision>();
+
+            if (customCollision != null)
+            {
+                customCollision.playerMgr.Death();
+            }
+        }
     }
 }

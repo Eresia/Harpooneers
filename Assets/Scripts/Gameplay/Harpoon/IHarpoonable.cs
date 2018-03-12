@@ -4,5 +4,7 @@ using UnityEngine;
 
 public interface IHarpoonable {
 
-    void OnHarpoonCollide(Harpoon harpoon);
+    void OnHarpoonAttach(Harpoon harpoon);
+
+    void OnHarpoonDetach();
 }

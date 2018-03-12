@@ -19,6 +19,7 @@ public class PatternSystem : MonoBehaviour
 
     [Header("Effect")]
     public float WhaleSpeed = 0f;
+
     [Header("Links")]
     public GameObject WhalePrefab;
     public Transform north;
@@ -36,8 +37,7 @@ public class PatternSystem : MonoBehaviour
         GameObject whale;
 
         int side = Random.Range(0, 4);
-
-        Debug.Log(side);
+        
         yield return new WaitForSeconds(TimeBeforePattern);
     
         switch (side)

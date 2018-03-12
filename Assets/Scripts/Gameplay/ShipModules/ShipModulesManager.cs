@@ -18,6 +18,7 @@ public class ShipModulesManager : MonoBehaviour {
     public MovementBehaviour _movementScript;
     public ExplosiveBarrel _bombScript;
 
+   
 	// Use this for initialization
 	void Reset ()
     {
@@ -39,7 +40,7 @@ public class ShipModulesManager : MonoBehaviour {
         }
     }
 
-    public void ActivateShipModules(ShipConfiguration config, ShipManager shipMgr)
+    public void ActivateShipModules(ShipConfiguration config, ShipManager shipMgr, Material shipMaterial)
     {
         ResetModules();
 
@@ -48,6 +49,13 @@ public class ShipModulesManager : MonoBehaviour {
         coquesGoArray[config.coqueId].SetActive(true);
         cabinsGoArray[config.cabinId].SetActive(true);
         bombsGoArray[config.bombStockId].SetActive(true);
+
+        harpoonsGoArray[config.harpoonId].GetComponent<MeshRenderer>().material = shipMaterial;
+        coquesGoArray[config.harpoonId].GetComponent<MeshRenderer>().material = shipMaterial;
+        cabinsGoArray[config.harpoonId].GetComponent<MeshRenderer>().material = shipMaterial;
+        bombsGoArray[config.harpoonId].GetComponent<MeshRenderer>().material = shipMaterial;
+
+
 
         if (shipMgr)
         {

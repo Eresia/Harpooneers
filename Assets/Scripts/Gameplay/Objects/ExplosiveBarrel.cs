@@ -111,7 +111,7 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
             c.SendMessage("OnExplode", SendMessageOptions.DontRequireReceiver);
         }
 
-        // TODO : Shockwave on the sea.
+        // Shockwave on the sea.
         GameManager.instance.ground.CreateImpact(transform.position);
 
         //_myRigidbody.angularVelocity = Vector3.zero;

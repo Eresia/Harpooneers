@@ -5,6 +5,8 @@
 /// </summary>
 public class ShipManager : MonoBehaviour {
 
+    public Material[] playerMaterials;
+   
     public bool useDefaultConfig = false;
 
     public ShipConfiguration defaultConfig = new ShipConfiguration
@@ -33,11 +35,14 @@ public class ShipManager : MonoBehaviour {
     private void Awake()
     {
         shipModuleMgrs = new ShipModulesManager[players.Length];
-
-        for (int i = 0; i < players.Length; i++)
+        if(players.Length > 0)
         {
-            shipModuleMgrs[i] = players[i].GetComponentInChildren<ShipModulesManager>();
+            for (int i = 0; i < players.Length; i++)
+            {
+                shipModuleMgrs[i] = players[i].GetComponentInChildren<ShipModulesManager>();
+            }
         }
+        
 
         if (useDefaultConfig)
         {
@@ -57,12 +62,12 @@ public class ShipManager : MonoBehaviour {
                 // For debug only. Load default config.
                 if(useDefaultConfig)
                 {
-                    shipModuleMgrs[i].ActivateShipModules(GameManager.instance.shipMgr.defaultConfig, this);
+                    shipModuleMgrs[i].ActivateShipModules(GameManager.instance.shipMgr.defaultConfig, this, playerMaterials[i]);
                 }
 
                 else
                 {
-                    shipModuleMgrs[i].ActivateShipModules(GameManager.instance.shipConfigs[i], this);
+                    shipModuleMgrs[i].ActivateShipModules(GameManager.instance.shipConfigs[i], this, playerMaterials[i]);
                 }
                 
                 players[i].SetActive(true);

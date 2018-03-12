@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Rewired;
 
 [RequireComponent(typeof(PhysicMove))]
@@ -62,15 +63,37 @@ public class HarpoonLauncher : MonoBehaviour {
 	private float power;
 
 	private Vector3 lastDirection;
+ 
+    public Transform harpoonPivot;
+    public Transform harpoonMuzzle;
+    public Image directionImage;
+    private int playerID;
 
-	private Mouse mouse;
-
-	private void Awake()
+    private void Awake()
 	{
 		selfTransform = GetComponent<Transform>();
 		physicMove = GetComponent<PhysicMove>();
-		mouse = ReInput.controllers.Mouse;
-	}
+
+        playerID = GetComponent<PlayerInput>().playerId;
+        switch (playerID)
+        {
+            case 0:
+                directionImage.color = Color.yellow;
+                break;
+
+            case 1:
+                directionImage.color = Color.red;
+                break;
+
+            case 2:
+                directionImage.color = Color.magenta;
+                break;
+
+            case 3:
+                directionImage.color = Color.green;
+                break;
+        }
+    }
 
 	public void LaunchHarpoon(Vector3 direction){
 
@@ -135,8 +158,11 @@ public class HarpoonLauncher : MonoBehaviour {
     }
 
     public void EndReturn(){
+
 		harpoon = null;
-	}
+
+        harpoonPivot.localRotation = Quaternion.identity;
+    }
 
 	private void BeginLaunching(){
 		isLaunching = true;
@@ -148,6 +174,7 @@ public class HarpoonLauncher : MonoBehaviour {
 	private void DisplayLaunching(Vector3 direction, float power){
 		directionObject.localPosition = direction * power * castDistance;
         directionObject.rotation = Quaternion.LookRotation(direction);
+        harpoonPivot.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
     }
 
 	private void EndLaunching(Vector3 direction, float power){
@@ -177,7 +204,7 @@ public class HarpoonLauncher : MonoBehaviour {
             direction = TryToAutoAim(direction);
         }
 
-        harpoon.Launch(this, selfTransform.position, direction * harpoonModule.fireSpeed + physicMove.Velocity, distanceToReach, harpoonModule.returnSpeed);
+        harpoon.Launch(this, harpoonPivot.position, direction * harpoonModule.fireSpeed + physicMove.Velocity, distanceToReach, harpoonModule.returnSpeed);
 	}
 
     private Vector3 TryToAutoAim(Vector3 currentDir)
