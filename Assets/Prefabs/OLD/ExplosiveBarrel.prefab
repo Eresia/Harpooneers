@@ -206,11 +206,12 @@ MonoBehaviour:
   damageableLayer:
     serializedVersion: 2
     m_Bits: 0
-  explosionDelay: 0.5
+  delayWhenExplodeInChain: 0.5
   radiusFX: {fileID: 0}
   explosionFX: {fileID: 0}
-  explodingFX: {fileID: 0}
+  fuseFX: {fileID: 0}
   resetWhenLeaveScreen: {fileID: 0}
+  physicsScript: {fileID: 0}
 --- !u!135 &135187871980723246
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -295,7 +296,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -314256208
+  randomSeed: 774384627
   InitialModule:
     serializedVersion: 3
     enabled: 1
