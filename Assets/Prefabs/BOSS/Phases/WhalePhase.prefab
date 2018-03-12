@@ -27,7 +27,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1233394293316934
 GameObject:
   m_ObjectHideFlags: 1
@@ -134,6 +134,11 @@ MonoBehaviour:
     type: 2}
   FX: {fileID: 4545501658588088}
   spawningFX: {fileID: 198223805626864814}
+  geyserPrefab: {fileID: 114058333544853980, guid: 9fe4bcfee86ae324a98496a6a8e7279a,
+    type: 2}
+  NoHittablePatternCount: 2
+  numberOfPatternsWithoutHit: 0
+  hitByEyeNeeded: 0
 --- !u!198 &198223805626864814
 ParticleSystem:
   m_ObjectHideFlags: 1
