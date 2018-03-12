@@ -7,23 +7,27 @@ struct WaveOptions{
 
 	float2 position;
 
+	float2 size;
+
+	uint state;
+
+	float stateTimeChange;
+
 	float amplitude;
-
-	float waveLength;
-
-	float period;
 
 	float waveNumber;
 
 	float angularFrequency;
 
-	float distanceDigress;
+	float waveSpeed;
 
-	float timeDigress;
+	float timeProgression;
 
 	float time;
 
 	float timeout;
+
+	float2 trash;
 };
 
 struct FrameOptions{
@@ -40,56 +44,77 @@ StructuredBuffer<FrameOptions> Options;
 RWStructuredBuffer<float> Result;
 RWTexture2D<float4> HeightMap;
 
+int lod;
+float currentTime;
+float wt;
+float sinTheta;
+float heightAbs;
+float2 heightInfo;
+
+void MakeImpact(uint i, float offsetMagnitude, float posAbs, float coeff){
+	float theta = (Impacts[i].waveNumber * (offsetMagnitude / lod));
+	// float timeProgress = Impacts[i].amplitude - pow(currentTime / (1 / (1 + Impacts[i].waveSpeed)) + posAbs, 2);
+	// sinTheta = sin(theta)  * max(0, timeProgress) / exp(posAbs * Impacts[i].timeProgression);
+	float x = currentTime / (1 / (1 + Impacts[i].waveSpeed)) + posAbs;
+	float timeProgress = Impacts[i].amplitude * sin(x) * (1/(x));
+	sinTheta = sin(theta)  * timeProgress / exp(posAbs * Impacts[i].timeProgression);
+
+	heightAbs = abs(sinTheta);
+	heightInfo = heightInfo + float2(sinTheta * (heightAbs/ coeff), (heightAbs / coeff));
+}
+
+void MakeZone(uint i, float offset, float coeff){
+	sinTheta = Impacts[i].amplitude * sin((Impacts[i].waveNumber * (offset / lod)) - wt);
+	heightAbs = abs(sinTheta);
+	heightInfo = heightInfo + float2(sinTheta * (heightAbs/ coeff), (heightAbs / coeff));
+}
+
 [numthreads(32,32,1)]
 void CalculatePoint (uint3 id : SV_DispatchThreadID)
 {
-	float2 heightInfo = float2(0, 0);
-	int lod = Options[0].lod;
+	heightInfo = float2(0, 0);
+	lod = Options[0].lod;
 
 	int pointId = id.x * lod + id.y;
 
 	for(uint i = 0; i < Options[0].nbWaves; i++){
 		float2 offset = float2(Impacts[i].position.x - id.x, Impacts[i].position.y - id.y);
-
 		
-		float2 direction = float2(sign(offset.x), sign(offset.y));
+		currentTime = Impacts[i].time - Options[0].time;
+		wt = Impacts[i].angularFrequency * currentTime;
 
-		// float2 posAbs = float2(abs(offset.x), abs(offset.y));
-
-		// float coeff = (2 + posAbs.x + posAbs.y);
-		
-		float currentTime = Options[0].time - Impacts[i].time;
-		float wt = Impacts[i].angularFrequency * currentTime;
-
-		float sinTheta = 0;
+		sinTheta = 0;
+		heightAbs = 0;
 
 		float offsetMagnitude = distance(float2(0, 0), offset);
 		float posAbs = abs(offsetMagnitude);
 		float coeff = (2 + posAbs);
-		float timeChange = 1 / exp(wt * Impacts[i].timeDigress);
 		
 		if(Impacts[i].type == 0){
-			// float sinThetaX = (Impacts[i].waveNumber * (offset.x / lod)) - (wt * direction.x);
-			// float sinThetaY = (Impacts[i].waveNumber * (offset.y / lod)) - (wt * direction.y);
-
-			// float xHeight = sin(sinThetaX) / exp(posAbs.x * Impacts[i].distanceDigress) * timeChange;
-			// float yHeight = sin(sinThetaY) / exp(posAbs.y * Impacts[i].distanceDigress) * timeChange;
-			
-			// sinTheta = ((1 + posAbs.x) * xHeight + (1 + posAbs.y) * yHeight) / coeff;
-
-			float theta = (Impacts[i].waveNumber * (offsetMagnitude / lod)) - (wt/* * direction.x*/);
-			sinTheta = sin(theta) / exp(posAbs * Impacts[i].distanceDigress) * timeChange;
-
+			MakeImpact(i, offsetMagnitude, posAbs, coeff);
 		}
 		else if(Impacts[i].type == 1){
-			sinTheta = sin((Impacts[i].waveNumber * (offset.x / lod)) - wt);
+			if((abs(offset.x) < Impacts[i].size.x) && (abs(offset.y) < Impacts[i].size.y)){
+				heightAbs = 0;
+				heightInfo = float2(0, 1);
+				break;
+			}
+
+			float newOffsetX = clamp(offset.x, - Impacts[i].size.x, Impacts[i].size.x);
+			float newOffsetY = clamp(offset.y, - Impacts[i].size.y, Impacts[i].size.y);
+
+			float newMagnitude = distance(float2(newOffsetX, newOffsetY), offset);
+			posAbs = abs(newMagnitude);
+			coeff = (2 + posAbs);
+
+			MakeImpact(i, newMagnitude, posAbs, coeff);
 		}
-
-			float finalHeight = Impacts[i].amplitude * sinTheta;
-
-			float heightAbs = abs(finalHeight);
-
-		heightInfo = heightInfo + float2(finalHeight * (heightAbs/ coeff), (heightAbs / coeff));
+		else if(Impacts[i].type == 2){
+			MakeZone(i, offset.x, coeff);
+		}
+		else if(Impacts[i].type == 3){
+			MakeZone(i, offsetMagnitude, coeff);
+		}
 
 		// if((offset.x != 0) || (offset.y != 0)){
 		// 	heightInfo = heightInfo + float2(finalHeight * (heightAbs/ coeff), (heightAbs / coeff));

@@ -2,32 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum WaveType{
+	IMPACT = 0,
+	RECT_IMPACT = 1,
+	ZONE = 2,
+	ZONE_TEST = 3
+}
+
 public struct WaveOptions{
 	public uint type;
 	public Vector2 position;
+	public Vector2 size;
+	public uint state;
+	public float stateTimeChange;
 	public float amplitude;
-	public float waveLength;
-	public float period;
 	public float waveNumber;
 	public float angularFrequency;
-	public float distanceDigress;
-	public float timeDigress;
+	public float waveSpeed;
+	public float timeProgression;
 	public float time;
 	public float timeout;
+	public Vector2 trash;
 
-	public WaveOptions(uint type, Vector2 position, float amplitude, float waveLength, float period, float time, float distanceDigress = 0f, float timeDigress= 0f, float timeout= 0f){
-		this.type = type;
+	public WaveOptions(WaveType type, Vector2 position, float amplitude, float waveLength, float period, float time, Vector2 size = new Vector2(), float waveSpeed= 0f, float timeProgression= 0f, float timeout= 0f){
+		this.type = (uint) type;
 		this.position = position;
+		this.size = size;
 		this.amplitude = amplitude;
-		this.waveLength = waveLength;
-		this.period = period;
-		this.distanceDigress = distanceDigress;
-		this.timeDigress = timeDigress;
+		this.waveSpeed = waveSpeed;
+		this.timeProgression = timeProgression;
 		this.time = time;
 		this.timeout = timeout;
+		this.state = 0;
+		this.stateTimeChange = 0f;
+		this.trash = new Vector2();
 
-		this.waveNumber = (2 * Mathf.PI) / this.waveLength;
-		this.angularFrequency = (2 * Mathf.PI) / this.period;
+		this.waveNumber = (2 * Mathf.PI) / waveLength;
+		this.angularFrequency = (2 * Mathf.PI) / period;
 	}
 }
 
@@ -42,16 +53,24 @@ struct FrameOptions{
 
 public class Wave{
 
-	public static WaveOptions CreateImpact(Vector2 position, float amplitude, float waveLength, float period, float time, float distanceDigress, float timeDigress, float timeout){
-		return new WaveOptions(0, position, amplitude, waveLength, period, time, distanceDigress, timeDigress, timeout);
+	public static WaveOptions CreateImpact(Vector2 position, float amplitude, float waveLength, float period, float time, float waveSpeed, float timeDigress, float timeout){
+		return new WaveOptions(WaveType.IMPACT, position, amplitude, waveLength, period, time, new Vector2(), waveSpeed, timeDigress, timeout);
 	}
 
-	public static WaveOptions CreateZone(Vector2 position, float amplitude, float waveLength, float period, float time){
-		return new WaveOptions(1, position, amplitude, waveLength, period, time);
+	public static WaveOptions CreateRectImpact(Vector2 position, Vector2 size, float amplitude, float waveLength, float period, float time, float waveSpeed, float timeDigress, float timeout){
+		return new WaveOptions(WaveType.RECT_IMPACT, position, amplitude, waveLength, period, time, size, waveSpeed, timeDigress, timeout);
+	}
+
+	public static WaveOptions CreateZone(float amplitude, float waveLength, float period, float time){
+		return new WaveOptions(WaveType.ZONE, new Vector2(), amplitude, waveLength, period, time);
+	}
+
+	public static WaveOptions CreateZoneTest(float amplitude, float waveLength, float period, float time){
+		return new WaveOptions(WaveType.ZONE_TEST, new Vector2(), amplitude, waveLength, period, time);
 	}
 
 	public static bool IsTimeout(WaveOptions wave, float time){
-		if(wave.type != 1){
+		if((wave.type != ((uint) WaveType.ZONE)) && (wave.type != ((uint) WaveType.ZONE_TEST))){
 			return (time - wave.time) > wave.timeout;
 		}
 		else{
