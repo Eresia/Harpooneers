@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 844826532}
-  m_IndirectSpecularColor: {r: 0.07052275, g: 0.35373604, b: 0.97078824, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -135,6 +135,11 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1120181140}
   m_Script: {fileID: 11500000, guid: c43491e2fe93d024e9cb573ea93dff6b, type: 3}
+--- !u!1 &54009589 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1570830344291374, guid: 8bf8a08baa3e9ed46913231ebede7132,
+    type: 2}
+  m_PrefabInternal: {fileID: 1120181140}
 --- !u!114 &121133936 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114116838119082242, guid: 8bf8a08baa3e9ed46913231ebede7132,
@@ -1335,6 +1340,11 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 391444212}
   m_Mesh: {fileID: 4300000, guid: 8b33eb974b2b5b04ebe222557a74ea3c, type: 3}
+--- !u!1 &392363662 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1570830344291374, guid: 8bf8a08baa3e9ed46913231ebede7132,
+    type: 2}
+  m_PrefabInternal: {fileID: 1064251413}
 --- !u!1 &402077044
 GameObject:
   m_ObjectHideFlags: 0
@@ -1965,6 +1975,11 @@ MonoBehaviour:
   - {fileID: 945139623}
   - {fileID: 1123943054}
   - {fileID: 1417058412}
+  moduleSelectionPanel:
+  - {fileID: 1021816182}
+  - {fileID: 1835499943}
+  - {fileID: 54009589}
+  - {fileID: 392363662}
 --- !u!4 &562035150
 Transform:
   m_ObjectHideFlags: 0
@@ -3323,6 +3338,11 @@ Transform:
   m_Father: {fileID: 1414529997}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: -63.585003}
+--- !u!1 &1021816182 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1570830344291374, guid: 8bf8a08baa3e9ed46913231ebede7132,
+    type: 2}
+  m_PrefabInternal: {fileID: 1449074139}
 --- !u!1 &1023226586 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1120521789719314, guid: 8bf8a08baa3e9ed46913231ebede7132,
@@ -5868,6 +5888,11 @@ GameObject:
   m_PrefabParentObject: {fileID: 1120521789719314, guid: 8bf8a08baa3e9ed46913231ebede7132,
     type: 2}
   m_PrefabInternal: {fileID: 1449074139}
+--- !u!1 &1835499943 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1570830344291374, guid: 8bf8a08baa3e9ed46913231ebede7132,
+    type: 2}
+  m_PrefabInternal: {fileID: 2108911220}
 --- !u!1 &1847183748
 GameObject:
   m_ObjectHideFlags: 0
