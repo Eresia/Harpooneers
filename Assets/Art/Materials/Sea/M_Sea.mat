@@ -12,7 +12,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 0
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -68,9 +68,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
+    - _ChromaticAberration: 0.1
+    - _ColorChange: 0
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _FarDeepDistance: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -80,9 +83,11 @@ Material:
     - _NormalStrenght: 0.5
     - _NormalTiling: 6.33
     - _OcclusionStrength: 1
+    - _Opacity: 0
     - _OverallDepth: 0.65
     - _Parallax: 0.02
     - _ShallowWaterDistance: 0.765
+    - _Smoothness: 2
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -93,6 +98,22 @@ Material:
     m_Colors:
     - _Color: {r: 0.41960785, g: 0.57254905, b: 0.69803923, a: 1}
     - _DeepColor: {r: 0.31277034, g: 0.31512654, b: 0.6544118, a: 0}
+    - _DeepColor1: {r: 0.466317, g: 0.4689327, b: 0.8455882, a: 0}
+    - _DeepColor2: {r: 0.06060771, g: 0.4338235, b: 0.155842, a: 0}
+    - _DeepColor3: {r: 0, g: 0, b: 0, a: 0}
+    - _DeepColor4: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FarDeepColor1: {r: 0.466317, g: 0.4689327, b: 0.8455882, a: 0}
+    - _FarDeepColor2: {r: 0.06060771, g: 0.4338235, b: 0.155842, a: 0}
+    - _FarDeepColor3: {r: 0, g: 0, b: 0, a: 0}
+    - _FarDeepColor4: {r: 0, g: 0, b: 0, a: 0}
     - _MidWaterColor: {r: 0.36786333, g: 0.3717159, b: 0.9264706, a: 0}
+    - _MidWaterColor1: {r: 0.466317, g: 0.4689327, b: 0.8455882, a: 0}
+    - _MidWaterColor2: {r: 0.06060771, g: 0.4338235, b: 0.155842, a: 0}
+    - _MidWaterColor3: {r: 0, g: 0, b: 0, a: 0}
+    - _MidWaterColor4: {r: 0, g: 0, b: 0, a: 0}
     - _ShallowColor: {r: 0.6729022, g: 0.8798398, b: 0.9338235, a: 0}
+    - _ShallowColor1: {r: 0.3368836, g: 0.6120428, b: 0.6838235, a: 0}
+    - _ShallowColor2: {r: 0.3368836, g: 0.6120428, b: 0.6838235, a: 0}
+    - _ShallowColor3: {r: 0.3368836, g: 0.6120428, b: 0.6838235, a: 0}
+    - _ShallowColor4: {r: 0.3368836, g: 0.6120428, b: 0.6838235, a: 0}
