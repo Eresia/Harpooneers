@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour {
 
     public Ground ground;
 
+	public AudioManager audioManager;
+
 	public static GameManager instance {get; private set;}
 
     public bool IsGameOver

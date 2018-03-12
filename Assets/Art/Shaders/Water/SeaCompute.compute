@@ -42,7 +42,7 @@ struct FrameOptions{
 StructuredBuffer<WaveOptions> Impacts;
 StructuredBuffer<FrameOptions> Options;
 RWStructuredBuffer<float> Result;
-RWTexture2D<float4> HeightMap;
+RWTexture2D<float4> HeightNormalMap;
 
 int lod;
 float currentTime;
@@ -115,13 +115,6 @@ void CalculatePoint (uint3 id : SV_DispatchThreadID)
 		else if(Impacts[i].type == 3){
 			MakeZone(i, offsetMagnitude, coeff);
 		}
-
-		// if((offset.x != 0) || (offset.y != 0)){
-		// 	heightInfo = heightInfo + float2(finalHeight * (heightAbs/ coeff), (heightAbs / coeff));
-		// }
-		// else{
-		// 	heightInfo = heightInfo + float2(finalHeight * (heightAbs/ 2), (heightAbs / 2));
-		// }
 		
 	}
 
@@ -132,32 +125,16 @@ void CalculatePoint (uint3 id : SV_DispatchThreadID)
 		Result[pointId] = heightInfo.x / heightInfo.y;
 	}
 
-	// id.x = lod - id.x;
-	// id.y = lod - id.y;
-
 	float textureHeight = (clamp(Result[pointId], -Options[0].maxWaveHeight, Options[0].maxWaveHeight) / Options[0].maxWaveHeight) + 0.5;
 
 	for(uint l = (id.x * Options[0].heigtMapRatio); l < ((id.x + 1) * Options[0].heigtMapRatio); l++){
 		for(uint k = (id.y * Options[0].heigtMapRatio); k < ((id.y + 1) * Options[0].heigtMapRatio); k++){
-			HeightMap[int2(l, k)] = float4(textureHeight, textureHeight, textureHeight, 1);
+			HeightNormalMap[int2(l, k)] = float4(0, 0, 0, textureHeight);
 		}
 	}
-
-	// int beginX = round(id.x * Options[0].heightMapRatio);
-	// int endX = round((id.x + 1) * Options[0].heightMapRatio);
-
-	// int beginY = round(id.y * Options[0].heightMapRatio);
-	// int endY = round((id.y + 1) * Options[0].heightMapRatio);
-	// for(int k = beginX; k < endX; k++){
-	// 	for(int l = beginY; l < endY; l++){
-	// 		float colorHeight = (clamp(Result[pointId], -Options[0].maxWaveHeight, Options[0].maxWaveHeight) / Options[0].maxWaveHeight) + 0.5;
-	// 		HeightMap[int2(k, l)] = float4(colorHeight, colorHeight, colorHeight, 1);
-	// 	}
-	// }
 }
 
 RWStructuredBuffer<float3> Normales;
-RWTexture2D<float4> NormaleMap;
 
 [numthreads(32,32,1)]
 void CalculateNormal (uint3 id : SV_DispatchThreadID)
@@ -174,25 +151,16 @@ void CalculateNormal (uint3 id : SV_DispatchThreadID)
 	for(int i = 0; i < 4; i++){
 		neighboursIds[i].x = min(max(0, id.x + directions[i].x), lod - 1);
 		neighboursIds[i].y = min(max(0, id.y + directions[i].y), lod - 1);
-		// vertex[i] = normalize(float3(directions[i][0], Result[neighboursIds[i][0] * lod + neighboursIds[i][1]] - Result[pointId], directions[i][1]));
 	}
 
 	float z1 = Result[neighboursIds[1].x * lod + neighboursIds[1].y] - Result[neighboursIds[0].x * lod + neighboursIds[0].y];
 	float z2 = Result[neighboursIds[3].x * lod + neighboursIds[3].y] - Result[neighboursIds[2].x * lod + neighboursIds[2].y];
 
-	// float3 sum = cross(vertex[0], vertex[2]) + cross(vertex[3], vertex[0]) + cross(vertex[1], vertex[3]) + cross(vertex[2], vertex[1]);
-
 	Normales[pointId] = cross(float3(1, z1, 0), float3(0, z2, 1));
-
-	// vertex[0] = 
-
-	// if()
 
 	for(uint l = (id.x * Options[0].heigtMapRatio); l < ((id.x + 1) * Options[0].heigtMapRatio); l++){
 		for(uint k = (id.y * Options[0].heigtMapRatio); k < ((id.y + 1) * Options[0].heigtMapRatio); k++){
-			NormaleMap[int2(l, k)] = float4(Normales[pointId], 1);
-			// NormaleMap[int2(l, k)] = float4(cross(vertex[3], vertex[0]).xyz, 1);
-			// NormaleMap[int2(l, k)] = float4(Normales[pointId].x, Normales[pointId].y, Normales[pointId].z, 1);
+			HeightNormalMap[int2(l, k)] = float4(Normales[pointId], HeightNormalMap[int2(l, k)].a);
 		}
 	}
 }
