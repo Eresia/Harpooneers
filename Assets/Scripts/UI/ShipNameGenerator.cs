@@ -59,7 +59,7 @@ public class ShipNameGenerator : MonoBehaviour
         shipSetupID += shipSelect.currentCoqueID * 4;
         shipSetupID += shipSelect.currentCabinID * 16;
         shipSetupID += shipSelect.currentBombID * 64;
-        Debug.Log(shipSetupID);
+       // Debug.Log(shipSetupID);
         return shipSetupID;
     }
 }
