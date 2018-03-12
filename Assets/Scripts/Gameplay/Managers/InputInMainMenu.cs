@@ -41,11 +41,17 @@ public class InputInMainMenu : MonoBehaviour {
 
     private PointerEventData pointer;
 
+    private bool[] _isAxisInUse;
+    private float[] _timeSinceJoystick;
+    public float timeBetweenJoystickInput;
+
     private void Awake()
     {
         playerReady = new bool[4];
         playerHasJoined = new bool[4];
         players = new Player[4];
+        _isAxisInUse = new bool[4];
+        _timeSinceJoystick = new float[4];
 
         for (int i = 0; i < 4; i++)
         {
@@ -54,8 +60,6 @@ public class InputInMainMenu : MonoBehaviour {
         }
 
      
-
-
         currentModuleTabIndex = new int[4];
 
         for (int i = 0; i < currentModuleTabIndex.Length; i++)
@@ -78,6 +82,47 @@ public class InputInMainMenu : MonoBehaviour {
     {
         for (int i = 0; i < players.Length; i++)
         {
+            if (players[i].GetAxisRaw("Module - L Joystick") < 0)
+            {
+                if (_isAxisInUse[i] == false)
+                {
+                    pointer = new PointerEventData(EventSystem.current);
+                    ExecuteEvents.Execute(playerInputs[i].inputs[0].gameObject, pointer, ExecuteEvents.submitHandler);
+                    _isAxisInUse[i] = true;
+                }
+            }
+
+            if (players[i].GetAxisRaw("Module - L Joystick") > 0)
+            {
+                if (_isAxisInUse[i] == false)
+                {
+                    pointer = new PointerEventData(EventSystem.current);
+                    ExecuteEvents.Execute(playerInputs[i].inputs[1].gameObject, pointer, ExecuteEvents.submitHandler);
+                    _isAxisInUse[i] = true;
+                }
+            }
+
+            if (players[i].GetAxisRaw("Module - L Joystick") == 0)
+            {
+                _isAxisInUse[i] = false;
+            }
+
+            if(_isAxisInUse[i] == true)
+            {
+                _timeSinceJoystick[i] += Time.deltaTime;
+            }
+            else
+            {
+                _timeSinceJoystick[i] = 0;
+            }
+
+            if(_timeSinceJoystick[i] >= timeBetweenJoystickInput)
+            {
+                _isAxisInUse[i] = false;
+                _timeSinceJoystick[i] = 0;
+            }
+            
+
             if (players[i].GetButtonDown("Submit"))
             {
                 // Player joins the game.
