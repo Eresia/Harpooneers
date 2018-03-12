@@ -24,7 +24,12 @@ public abstract class BossPattern {
 
     protected abstract void ExecutePattern();
 
-	protected void FinishPattern(){
+    protected abstract void StopPattern();
+
+	public void FinishPattern() {
+
+        StopPattern();
+
 		OnPatternFinished();
 	}
 }

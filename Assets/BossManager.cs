@@ -66,6 +66,8 @@ public class BossManager : MonoBehaviour {
         {
             BossAI boss = g.GetComponent<BossAI>();
             boss.bossMgr = this;
+
+            boss.OnBossBeaten = NextPhase;
         }
     }
 
@@ -80,7 +82,16 @@ public class BossManager : MonoBehaviour {
         }
 
         phaseId++;
-        phaseTransitionMgr.NextPhase(phaseId);
+        if (phaseId < phases.Length)
+        {
+            phaseTransitionMgr.NextPhase(phaseId);
+        }
+
+        // ALL PHASES BEATEN.
+        else
+        {
+            GameManager.instance.GameFinished();
+        }
     }
 
     private void BeginPhase()

@@ -11,9 +11,21 @@ public class BossAI : MonoBehaviour {
 
     private Animator animator;
 
-	private BossAnimatorScript[] behaviours;
+    private BossAnimatorScript[] behaviours;
 
-	protected virtual void Awake()
+    public BossPattern CurrentPattern
+    {
+        get { return currentPattern; }
+        set
+        {
+            currentPattern = value;
+        }
+    }
+    private BossPattern currentPattern;
+
+    public Action OnBossBeaten;
+
+    protected virtual void Awake()
     {
 		animator = GetComponent<Animator>();
 		behaviours = animator.GetBehaviours<BossAnimatorScript>();

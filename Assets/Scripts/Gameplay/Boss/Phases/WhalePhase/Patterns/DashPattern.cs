@@ -149,4 +149,9 @@ public class DashPattern : BossPattern {
 
         whaleAI.Whale.SetActive(false);
     }
+
+    protected override void StopPattern()
+    {
+        // Dash isn't stoppable.
+    }
 }

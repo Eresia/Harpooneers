@@ -17,6 +17,12 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager instance {get; private set;}
 
+    public bool IsGameOver
+    {
+        get { return win || lose; }
+    }
+    private bool lose;
+    private bool win;
 
     public bool IsPause
     {
@@ -150,11 +156,23 @@ public class GameManager : MonoBehaviour {
 
     public void GameOver()
     {
+        if(IsGameOver)
+        {
+            return;
+        }
+
+        lose = true;
         Debug.Log("GAME OVER !!!");
     }
 
     public void GameFinished()
     {
+        if (IsGameOver)
+        {
+            return;
+        }
+
+        win = true;
         Debug.Log("GAME FINISHED !!!");
     }
 }

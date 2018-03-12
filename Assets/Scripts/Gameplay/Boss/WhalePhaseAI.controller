@@ -13,19 +13,19 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: NextState
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: PatternHit
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -98,8 +98,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 277e36830448d5c4e94b1879423d9236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NoHittablePatternCount: 2
-  numberOfpatternsWithoutHit: 2
 --- !u!114 &114297485447214800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -111,6 +109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95cef13b95a628c4fb9fc27d8e0d0cb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delayAfterGeyserChase: 2
+  timeBeforeSpawning: 2
 --- !u!114 &114407903882126600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -578,16 +578,16 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102125265432943614}
-    m_Position: {x: 60, y: 204, z: 0}
+    m_Position: {x: -120, y: 168, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102851922653509786}
     m_Position: {x: 288, y: 132, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102442778312955678}
-    m_Position: {x: 276, y: 240, z: 0}
+    m_Position: {x: 228, y: 252, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102889705949303782}
-    m_Position: {x: 504, y: 204, z: 0}
+    m_Position: {x: 612, y: 216, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
