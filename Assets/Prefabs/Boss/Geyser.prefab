@@ -147,7 +147,7 @@ MonoBehaviour:
   playerTarget: {fileID: 0}
   bubbleFX: {fileID: 198882445904088268}
   geyserFX: {fileID: 198476666619530176}
-  numberOfExplosions: 3
+  numberOfExplosions: 0
   moveSpeed:
   - 6
   - 8
@@ -175,7 +175,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1049961890275738}
   serializedVersion: 5
-  lengthInSec: 5
+  lengthInSec: 3
   simulationSpeed: 1
   stopAction: 0
   looping: 0
