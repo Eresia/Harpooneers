@@ -25,7 +25,7 @@ public class ShipNameGenerator : MonoBehaviour
     void OnEnable()
     {
         // Summary of modules
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < 4; i++)
              moduleNames[i].text = shipSelect.modulesNameFields[i].text;
 
 
@@ -59,7 +59,7 @@ public class ShipNameGenerator : MonoBehaviour
         shipSetupID += shipSelect.currentCoqueID * 4;
         shipSetupID += shipSelect.currentCabinID * 16;
         shipSetupID += shipSelect.currentBombID * 64;
-       // Debug.Log(shipSetupID);
+     
         return shipSetupID;
     }
 }
