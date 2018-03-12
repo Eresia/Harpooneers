@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour {
     public ScenesManager sceneMgr;
     public BoundaryManager boundaryMgr;
     public ShipManager shipMgr;
+    public CameraManager camMgr;
 
     public Ground ground;
 
@@ -116,6 +117,7 @@ public class GameManager : MonoBehaviour {
         boundaryMgr = FindObjectOfType<BoundaryManager>();
         shipMgr = FindObjectOfType<ShipManager>();
         ground = FindObjectOfType<Ground>();
+        camMgr = FindObjectOfType<CameraManager>();
 
         shipMgr.SetupAllShips();
     }

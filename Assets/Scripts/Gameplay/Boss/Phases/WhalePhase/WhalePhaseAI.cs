@@ -3,11 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using DG.Tweening;
+
 public class WhalePhaseAI : BossAI {
 
     public GameObject whalePrefab;
     public Transform FX;
     public ParticleSystem spawningFX;
+
+
+    public Camera cam;
 
     [Header("Patterns components")]
     public Geyser geyserPrefab;
@@ -20,6 +25,7 @@ public class WhalePhaseAI : BossAI {
 
     public Transform WhaleTransform { get; private set; }
     public Transform WhaleChildTransform { get; private set; }
+    public Animator WhaleAnimator { get; private set; }
 
     public GameObject Whale
     {
@@ -43,9 +49,13 @@ public class WhalePhaseAI : BossAI {
     private int leftHitCount;
     private int rightHitCount;
 
+    private Vector3 originCamPos;
+
     protected override void Awake()
     {
         base.Awake();
+
+        originCamPos = cam.transform.position;
 
         SpawnWhale();
     }
@@ -56,6 +66,7 @@ public class WhalePhaseAI : BossAI {
 
         WhaleTransform = whale.GetComponent<Transform>();
         WhaleChildTransform = WhaleTransform.GetChild(0);
+        WhaleAnimator = WhaleChildTransform.GetChild(0).GetComponent<Animator>();
 
         geysers = new Geyser[GameManager.instance.nbOfPlayers];
         for (int i = 0; i < geysers.Length; i++)
@@ -63,7 +74,7 @@ public class WhalePhaseAI : BossAI {
             geysers[i] = Instantiate<Geyser>(geyserPrefab);
         }
 
-        eyes = WhaleChildTransform.GetChild(2).GetComponentsInChildren<HandleHarpoonWithEye>();
+        eyes = WhaleChildTransform.GetChild(1).GetComponentsInChildren<HandleHarpoonWithEye>();
 
         foreach(HandleHarpoonWithEye handleHarpoonHit in eyes)
         {
@@ -99,6 +110,8 @@ public class WhalePhaseAI : BossAI {
         {
             rightHitCount++;
         }
+
+        GameManager.instance.camMgr.Shake();
 
         Debug.Log(leftHitCount + " " + rightHitCount);
 

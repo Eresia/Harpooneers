@@ -119,6 +119,15 @@ public class DashPattern : BossPattern {
 
             tween = whaleAI.WhaleTransform.DOMove(destination, moveDuration);
 
+            if(_left)
+            {
+                whaleAI.WhaleAnimator.Play("LeftDrift");
+            }
+            else
+            {
+                whaleAI.WhaleAnimator.Play("RightDrift");
+            }
+
             yield return new WaitForSeconds(Mathf.Abs(moveDuration));
 
             _left = !_left;
@@ -140,6 +149,8 @@ public class DashPattern : BossPattern {
         moveDuration = Mathf.Abs(distance / dashState.dashSpeed);
 
         tween = whaleAI.WhaleTransform.DOMove(destination, moveDuration).SetEase(Ease.InCubic);
+
+        whaleAI.WhaleAnimator.Play("Dash");
 
         // TODO Generate wave on the sea along the dash
         // TODO song etc

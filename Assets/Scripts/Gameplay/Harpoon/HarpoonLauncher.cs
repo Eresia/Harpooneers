@@ -204,6 +204,8 @@ public class HarpoonLauncher : MonoBehaviour {
             direction = TryToAutoAim(direction);
         }
 
+        Debug.DrawRay(harpoonPivot.position, direction * 20f, Color.red, 1f);
+
         harpoon.Launch(this, harpoonPivot.position, direction * harpoonModule.fireSpeed + physicMove.Velocity, distanceToReach, harpoonModule.returnSpeed);
 	}
 
