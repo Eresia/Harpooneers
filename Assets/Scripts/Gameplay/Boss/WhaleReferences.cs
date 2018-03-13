@@ -13,7 +13,7 @@ public class WhaleReferences : MonoBehaviour {
 
     public Animator whaleAnimator;
 
-    public HandleHarpoonWithEye[] eyeScript;
+    public HandleHarpoonWithWhale[] eyeScript;
 
     public void  PlayEyeBloodFX(int i)
     {

@@ -4,9 +4,9 @@ using UnityEngine;
 
 using System;
 
-public class HandleHarpoonWithEye : HandleHarpoonHit
+public class HandleHarpoonWithWhale : HandleHarpoonHit
 {
-    public bool leftEye;
+    public bool eye;
 
     public Action<bool> hitCallback;
 
@@ -18,7 +18,7 @@ public class HandleHarpoonWithEye : HandleHarpoonHit
 
         // TODO anim
 
-        hitCallback(leftEye);
+        hitCallback(eye);
     }
 
     protected override void ActionWhenHarpoonDetach()
