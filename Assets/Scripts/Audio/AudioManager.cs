@@ -12,7 +12,8 @@ public class AudioManager : MonoBehaviour
 	[System.Serializable]
 	public enum PossibleSound
 	{
-		SEA
+		SEA,
+		MOVE
 	}
 
 	public AudioClip menuMusic;

@@ -25,6 +25,8 @@ public class PlayerInput : MonoBehaviour
     private bool doPause; // Do the pause if the delay is repected.
     private int controllerDisconnected;
 
+	public AudioClip res_sound;
+
     void Awake()
     {
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
@@ -141,6 +143,7 @@ public class PlayerInput : MonoBehaviour
 
         if (data.GetButtonDown())
         {
+			GameManager.instance.audioManager.PlaySoundOneTime (res_sound);
             playerMgr.ResurrectFriend();
         }
     }
