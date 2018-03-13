@@ -1,7 +1,7 @@
 // Amplify Shader Editor - Visual Shader Editing Tool
 // Copyright (c) Amplify Creations, Lda <info@amplify.pt>
 
-#pragma warning disable CS0618
+#pragma warning disable 0618
 
 using UnityEngine;
 using UnityEditor;
