@@ -200,6 +200,9 @@ public class DashPattern : BossPattern {
         // Splash FX
         whaleAI.whaleReferences.PlaySplashFX();
 
+        // Camera Shake
+        GameManager.instance.camMgr.Shake();
+
         Tween t = whaleAI.WhaleChildTransform.DOLocalMove(whaleAI.WhaleTransform.up * state.diveHeightEnd + whaleAI.WhaleTransform.forward * state.diveForwardEnd, state.divingDuration);
         whaleAI.WhaleChildTransform.DOLocalRotate(state.diveRotationEnd, state.divingDuration);
         whaleAI.WhaleChildTransform.DOScale(Vector3.zero, state.divingDuration);

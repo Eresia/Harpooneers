@@ -1474,6 +1474,21 @@ Prefab:
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 458866982}
+    - target: {fileID: 114086163139881298, guid: e9f94d6993977004b8ce3c4482836a14,
+        type: 2}
+      propertyPath: phasesCameras.Array.data[0].camRotation.x
+      value: 56
+      objectReference: {fileID: 0}
+    - target: {fileID: 114086163139881298, guid: e9f94d6993977004b8ce3c4482836a14,
+        type: 2}
+      propertyPath: phasesCameras.Array.data[0].camRotation.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114086163139881298, guid: e9f94d6993977004b8ce3c4482836a14,
+        type: 2}
+      propertyPath: phasesCameras.Array.data[0].camRotation.z
+      value: -4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9f94d6993977004b8ce3c4482836a14, type: 2}
   m_IsPrefabParent: 0
@@ -4143,6 +4158,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossMgr: {fileID: 0}
+  hitOnEyesNeeded: 2
+  bombInMouthNeeded: 2
+  noHittablePatternCount: 0
+  numberOfPatternsWithoutHit: 
 --- !u!1001 &1910038995
 Prefab:
   m_ObjectHideFlags: 0
