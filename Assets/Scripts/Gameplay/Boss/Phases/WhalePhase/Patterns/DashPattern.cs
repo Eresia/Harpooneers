@@ -25,18 +25,18 @@ public class DashPattern : BossPattern {
 
     private IEnumerator Move()
     {
-        Transform target = GameManager.instance.shipMgr.ChoosePlayerToAttack();
+        PlayerManager target = GameManager.instance.shipMgr.ChoosePlayerManagerToAttack();
 		whaleAI.WhaleAnimator.SetBool("Swim", true);
 		float time = 0;
 
 		while(true){
 			time += Time.deltaTime;
-			// if((time >= dashState.targetChangeTime) || ()){
-			// 	target = GameManager.instance.shipMgr.ChoosePlayerToAttack();
-			// 	time = 0;
-			// }
+			if((time >= dashState.targetChangeTime) || (target.isDead)){
+				target = GameManager.instance.shipMgr.ChoosePlayerManagerToAttack();
+				time = 0;
+			}
 			Vector3 whalePosition = whaleAI.WhaleTransform.position;
-			Vector3 targetDirection = target.position - whalePosition;
+			Vector3 targetDirection = target.transform.position - whalePosition;
 			Quaternion angleDirection = Quaternion.LookRotation(targetDirection);
 			whaleAI.WhaleTransform.rotation = Quaternion.Slerp(whaleAI.WhaleTransform.rotation, angleDirection, Time.deltaTime * dashState.turnSpeed);
 			whalePosition += dashState.translateSpeed * whaleAI.WhaleTransform.forward * Time.deltaTime;
