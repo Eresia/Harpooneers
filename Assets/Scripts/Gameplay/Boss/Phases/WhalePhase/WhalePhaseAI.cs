@@ -3,9 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using DG.Tweening;
-
-public class WhalePhaseAI : BossAI {
+public class WhalePhaseAI : PhaseAI {
 
     public GameObject whalePrefab;
     public Transform FX;
@@ -34,7 +32,7 @@ public class WhalePhaseAI : BossAI {
     private GameObject whale;
     
     [Header("Patterns")]
-    public int NoHittablePatternCount;
+    public int noHittablePatternCount;
     public int numberOfPatternsWithoutHit;
 
     [Header("Boss attributes")]
@@ -48,8 +46,6 @@ public class WhalePhaseAI : BossAI {
 
     private int leftHitCount;
     private int rightHitCount;
-
-    private bool phaseFinished;
 
     protected override void Awake()
     {
@@ -99,11 +95,12 @@ public class WhalePhaseAI : BossAI {
 
         if (hitPattern)
         {
+            passCount = 0;
             nextState = 2;
         }
         else
         {
-            nextState = UnityEngine.Random.Range(0, NoHittablePatternCount);
+            nextState = UnityEngine.Random.Range(0, noHittablePatternCount);
         }
 
         return nextState;

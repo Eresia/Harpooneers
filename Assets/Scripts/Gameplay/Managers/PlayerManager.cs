@@ -9,6 +9,7 @@ public class PlayerManager : MonoBehaviour {
     public float healthLossPerSec;
     public float rezRadius;
     public float healthPerInput;
+    public int rezAmountWhenDead = 0;
 
     [Header("UI")]
     public Slider rezBar;
@@ -16,8 +17,6 @@ public class PlayerManager : MonoBehaviour {
     public GameObject playerPositionIndicator;
     private Text playerPosText;
     private Camera mainCamera;
-
-    public int rezAmountWhenDead = 0;
     
     public AudioClip[] res_sounds;
 

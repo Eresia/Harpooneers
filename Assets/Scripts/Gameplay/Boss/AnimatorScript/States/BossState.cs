@@ -9,7 +9,7 @@ public abstract class BossState<T> : BossAnimatorScript where T : BossPattern {
 
 	protected T pattern;
 
-	public override void Init(BossAI boss, Animator animator)
+	public override void Init(PhaseAI boss, Animator animator)
     {
 		base.Init(boss, animator);
 

@@ -41,6 +41,11 @@ public class PhaseTransitionManager : MonoBehaviour {
         {
             StartCoroutine(TransitionToNextPhase(phasesCameras[currentPhase-1], phasesCameras[currentPhase], phasesCameras[currentPhase].transitionTime));
         }
+
+        else if(currentPhase == 0)
+        {
+            StartDirectly(phasesCameras[0]);
+        }
     }
 
     IEnumerator TransitionToNextPhase(PhaseTransition from, PhaseTransition to, float time)
@@ -66,12 +71,25 @@ public class PhaseTransitionManager : MonoBehaviour {
         }
 
         cameraTransform.position = to.camPosition;
+        cameraTransform.rotation = endRot;
 
         GameManager.instance.boundaryMgr.UpdateBoundaries();
-        GameManager.instance.ground.ratio += 0.5f;
+
+        // TODO Test that.
+        //GameManager.instance.ground.ratio += 0.5f;
 
         OnTransitionFinished();
         isTransitioning = false;
+    }
+
+    void StartDirectly(PhaseTransition transition)
+    {
+        cameraTransform.rotation = Quaternion.Euler(transition.camRotation);
+        cameraTransform.position = transition.camPosition;
+
+        GameManager.instance.boundaryMgr.UpdateBoundaries();
+
+        OnTransitionFinished();
     }
 }
 

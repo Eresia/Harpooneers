@@ -66,7 +66,7 @@ public class BossManager : MonoBehaviour {
     {
         foreach(GameObject g in phases)
         {
-            BossAI boss = g.GetComponent<BossAI>();
+            PhaseAI boss = g.GetComponent<PhaseAI>();
             boss.bossMgr = this;
 
             boss.OnPhaseFinished = NextPhase;
@@ -84,12 +84,14 @@ public class BossManager : MonoBehaviour {
         }
 
         phaseId++;
+
+        // Transition then begin phase.
         if (phaseId < phases.Length)
         {
             phaseTransitionMgr.NextPhase(phaseId);
         }
 
-        // ALL PHASES BEATEN.
+        // All phases beaten.
         else
         {
             GameManager.instance.GameFinished();

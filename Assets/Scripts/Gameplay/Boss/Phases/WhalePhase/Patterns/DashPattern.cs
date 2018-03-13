@@ -16,7 +16,7 @@ public class DashPattern : BossPattern {
         this.state = dashState;
     }
 
-    public override void SetBoss(BossAI boss)
+    public override void SetBoss(PhaseAI boss)
     {
         base.SetBoss(boss);
 

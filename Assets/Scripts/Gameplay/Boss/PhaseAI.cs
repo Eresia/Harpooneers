@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 
 [RequireComponent(typeof(Animator))]
-public class BossAI : MonoBehaviour {
+public class PhaseAI : MonoBehaviour {
 
     [HideInInspector]
     public BossManager bossMgr;
@@ -13,6 +11,11 @@ public class BossAI : MonoBehaviour {
 
     protected BossAnimatorScript[] behaviours;
 
+    protected bool phaseFinished;
+
+    /// <summary>
+    /// Return the current pattern played.
+    /// </summary>
     public BossPattern CurrentPattern
     {
         get { return currentPattern; }

@@ -55,10 +55,14 @@ MonoBehaviour:
   currentPhase: -1
   phasesCameras:
   - camPosition: {x: -4.2, y: 26.6, z: -16.4}
+    camRotation: {x: 56, y: 4, z: -4}
     transitionTime: 0
-  - camPosition: {x: 0, y: 35, z: -7}
-    transitionTime: 5
-  - camPosition: {x: 0, y: 45, z: -12.5}
-    transitionTime: 5
-  - camPosition: {x: 0, y: 60, z: -25}
-    transitionTime: 5
+  - camPosition: {x: -4.2, y: 26.6, z: -16.4}
+    camRotation: {x: 0, y: 0, z: 0}
+    transitionTime: 3
+  - camPosition: {x: -4.2, y: 26.6, z: -16.4}
+    camRotation: {x: 0, y: 0, z: 0}
+    transitionTime: 0
+  - camPosition: {x: -4.2, y: 26.6, z: -16.4}
+    camRotation: {x: 0, y: 0, z: 0}
+    transitionTime: 0
