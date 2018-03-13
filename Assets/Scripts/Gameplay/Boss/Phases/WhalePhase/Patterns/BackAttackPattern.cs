@@ -16,7 +16,7 @@ public class BackAttackPattern : BossPattern
         this.state = state;
     }
 
-    public override void SetBoss(BossAI boss)
+    public override void SetBoss(PhaseAI boss)
     {
         base.SetBoss(boss);
 

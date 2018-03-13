@@ -9,6 +9,7 @@ public class PlayerManager : MonoBehaviour {
     public float healthLossPerSec;
     public float rezRadius;
     public float healthPerInput;
+    public int rezAmountWhenDead = 0;
 
     [Header("UI")]
     public Slider rezBar;
@@ -16,9 +17,14 @@ public class PlayerManager : MonoBehaviour {
     public GameObject playerPositionIndicator;
     private Text playerPosText;
     private Camera mainCamera;
+    
+    public AudioClip[] res_sounds;
 
-    public int rezAmountWhenDead = 0;
+    public bool IsDead {
+        get { return isDead; }
+    }
 
+    // TODO Hide after !!
     public bool isDead = false;
     
     private float _rezAmount;
@@ -117,7 +123,8 @@ public class PlayerManager : MonoBehaviour {
         if(_allyToRez != null)
         {
             _allyToRez.AddHealth();
-        }     
+            GameManager.instance.audioManager.PlayRandomSoundOneTimeIn(res_sounds, 1f);
+        }
     }
 
     // Losing rez bar progression while downed
