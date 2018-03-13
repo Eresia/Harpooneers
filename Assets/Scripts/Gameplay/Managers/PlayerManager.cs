@@ -49,9 +49,15 @@ public class PlayerManager : MonoBehaviour {
             Death();
         }
     }
-
+    
     public void Death()
     {
+        // Prevents to kill the player again.
+        if (isDead)
+        {
+            return;
+        }
+
         isDead = true;
         
         _rezAmount = rezAmountWhenDead;
@@ -62,7 +68,7 @@ public class PlayerManager : MonoBehaviour {
 
         // Display the dead icon
         deathIcon.enabled = true;
-
+        
         GameManager.instance.shipMgr.NotifyDeath();
     }
 

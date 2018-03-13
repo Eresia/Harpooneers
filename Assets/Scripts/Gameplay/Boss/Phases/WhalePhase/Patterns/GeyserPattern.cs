@@ -11,6 +11,7 @@ public class GeyserPattern : BossPattern {
 
     private Tween posTween;
     private Tween rotTween;
+    private Tween locTween;
 
     public GeyserPattern(GeyserState state)
     {
@@ -38,6 +39,7 @@ public class GeyserPattern : BossPattern {
         {
             posTween.Kill();
             rotTween.Kill();
+            locTween.Kill();
         }
 
         // Check if whale isn't already diving.
@@ -113,16 +115,25 @@ public class GeyserPattern : BossPattern {
         whaleAI.WhaleTransform.Translate(whaleAI.WhaleTransform.forward * state.emergePosStart.z + whaleAI.WhaleTransform.up * state.emergePosStart.y);
         whaleAI.WhaleChildTransform.localRotation = Quaternion.Euler(state.emergeRotationStart);
         whaleAI.Whale.SetActive(true);
+        whaleAI.WhaleAnimator.SetBool("Swim", true);
 
         // Do emerging.
-        posTween = whaleAI.WhaleTransform.DOLocalMove(targetPos, state.emergedDuration);
-        rotTween = whaleAI.WhaleChildTransform.DOLocalRotate(state.emergeRotationEnd, state.emergedDuration);
+        posTween = whaleAI.WhaleTransform.DOLocalMove(targetPos, state.emergingDuration);
+        rotTween = whaleAI.WhaleChildTransform.DOLocalRotate(state.emergeRotationEnd, state.emergingDuration);
 
-        yield return new WaitForSeconds(state.emergedDuration);
-        
+        yield return new WaitForSeconds(state.emergingDuration);
+
+        // Stop to swin -> Idle.
+        whaleAI.WhaleAnimator.SetBool("Swim", false);
+
+        // Boss is now vulnerable.
+        whaleAI.EnableEyeCollisions(true);
+
         // Whale is emerged... WAIT
 
         yield return new WaitForSeconds(state.waitDuration);
+
+        whaleAI.EnableEyeCollisions(false);
 
         // Whale dives.
         yield return WhaleDive();
@@ -134,14 +145,14 @@ public class GeyserPattern : BossPattern {
         
         posTween = whaleAI.WhaleTransform.DOLocalMove(whaleAI.WhaleTransform.up * state.diveHeightEnd + whaleAI.WhaleTransform.forward * state.diveForwardEnd, state.divingDuration);
         rotTween = whaleAI.WhaleChildTransform.DOLocalRotate(state.diveRotationEnd, state.divingDuration);
+        locTween = whaleAI.WhaleChildTransform.DOScale(Vector3.zero, state.divingDuration);
+
+        whaleAI.WhaleAnimator.Play("Dash");
+        whaleAI.WhaleAnimator.SetBool("Swim", true);
 
         yield return new WaitWhile(() => (posTween.IsPlaying()));
 
-        whaleAI.Whale.SetActive(false);
-
-        // Reset rotation.
-        whaleAI.WhaleChildTransform.localRotation = Quaternion.identity;
-        whaleAI.WhaleChildTransform.localPosition = Vector3.zero;
+        whaleAI.ResetWhaleTransform();
 
         OnPatternFinished();
     }
