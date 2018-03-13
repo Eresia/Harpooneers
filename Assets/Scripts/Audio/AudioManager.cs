@@ -8,7 +8,6 @@ using DG.Tweening;
 [RequireComponent (typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
 {
-
 	[System.Serializable]
 	public enum PossibleSound
 	{

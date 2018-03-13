@@ -118,7 +118,7 @@ public class ShipManager : MonoBehaviour {
         {
             playerId = playerIds[Random.Range(0, playerIds.Count)];
 
-            if (!playerMgrs[playerId].isDead)
+            if (!playerMgrs[playerId].IsDead)
             {
                 targetFound = true;
             }

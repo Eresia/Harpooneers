@@ -18,7 +18,14 @@ public class PlayerManager : MonoBehaviour {
     private Camera mainCamera;
 
     public int rezAmountWhenDead = 0;
+    
+    public AudioClip[] res_sounds;
 
+    public bool IsDead {
+        get { return isDead; }
+    }
+
+    // TODO Hide after !!
     public bool isDead = false;
     
     private float _rezAmount;
@@ -117,7 +124,8 @@ public class PlayerManager : MonoBehaviour {
         if(_allyToRez != null)
         {
             _allyToRez.AddHealth();
-        }     
+            GameManager.instance.audioManager.PlayRandomSoundOneTimeIn(res_sounds, 1f);
+        }
     }
 
     // Losing rez bar progression while downed

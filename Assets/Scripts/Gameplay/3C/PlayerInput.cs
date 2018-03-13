@@ -25,8 +25,6 @@ public class PlayerInput : MonoBehaviour
     private bool doPause; // Do the pause if the delay is repected.
     private int controllerDisconnected;
 
-	public AudioClip res_sound;
-
     void Awake()
     {
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
@@ -61,7 +59,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        if (playerMgr.isDead)
+        if (playerMgr.IsDead)
         {
             return;
         }
@@ -121,7 +119,7 @@ public class PlayerInput : MonoBehaviour
 
     private void DropBomb(InputActionEventData data)
     {
-        if (playerMgr.isDead)
+        if (playerMgr.IsDead)
         {
             return;
         }
@@ -136,21 +134,20 @@ public class PlayerInput : MonoBehaviour
 
     private void ResurrectAlly(InputActionEventData data)
     {
-        if (playerMgr.isDead)
+        if (playerMgr.IsDead)
         {
             return;
         }
 
         if (data.GetButtonDown())
         {
-			GameManager.instance.audioManager.PlaySoundOneTime (res_sound);
             playerMgr.ResurrectFriend();
         }
     }
 
     private void ReleaseRope(InputActionEventData data)
     {
-        if (playerMgr.isDead)
+        if (playerMgr.IsDead)
         {
             return;
         }
@@ -163,7 +160,7 @@ public class PlayerInput : MonoBehaviour
 
     private void PullingOnRope(InputActionEventData data)
     {
-        if (playerMgr.isDead)
+        if (playerMgr.IsDead)
         {
             return;
         }
@@ -176,7 +173,7 @@ public class PlayerInput : MonoBehaviour
 
     private void HandleCutRope()
     {
-        if (playerMgr.isDead)
+        if (playerMgr.IsDead)
         {
             return;
         }

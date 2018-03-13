@@ -1646,7 +1646,6 @@ MonoBehaviour:
   harpoonLauncher: {fileID: 114609724380578428}
   bombLauncher: {fileID: 0}
   timeBeforePause: 1
-  res_sound: {fileID: 0}
 --- !u!114 &114355733020500592
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1869,6 +1868,11 @@ MonoBehaviour:
   deathIcon: {fileID: 114616054903995692}
   playerPositionIndicator: {fileID: 1232968556676988}
   rezAmountWhenDead: 0
+  res_sounds:
+  - {fileID: 8300000, guid: 5648064267e321c45b982d7fbcaa4f87, type: 3}
+  - {fileID: 8300000, guid: 7b478b5a12cb95840bbe3df893dbf61d, type: 3}
+  - {fileID: 8300000, guid: b8105c1d035ee584e87105d88c35ef4c, type: 3}
+  - {fileID: 8300000, guid: d979ec94cc3c8104f92480668c4b6542, type: 3}
   isDead: 0
 --- !u!136 &136460695975876572
 CapsuleCollider:
