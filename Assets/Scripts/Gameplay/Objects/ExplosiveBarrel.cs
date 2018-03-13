@@ -31,6 +31,8 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
 
     private bool hasAlreadyExplode;
 
+	public AudioClip explosion_sound;
+
     public void Awake()
     {
         transform.parent = null;
@@ -69,7 +71,7 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
         radiusFX.SetActive(true);
 
         // Spawn Position
-        gameObject.transform.position = spawnPosition + new Vector3(0f, 0.25f,0f);
+        gameObject.transform.position = spawnPosition + new Vector3(0f, 0.25f, 0f);
 
         //Initial Force
         physicsScript.AddForce(movementDirection);
@@ -96,10 +98,15 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
 
     private IEnumerator Explosion(float delay)
     {
+        // Feedback that the bomb will explodes.
         if (delay > 0)
+        {
             fuseFX.Play();
+        }
 
         yield return new WaitForSeconds(delay);
+        
+        fuseFX.Stop();
 
         // Deal damage with an overlap sphere
         Collider[] colliders = Physics.OverlapSphere(transform.position, bombStockModule.bombRadius, damageableLayer);
@@ -115,8 +122,7 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
 
         // Shockwave on the sea.
         GameManager.instance.ground.CreateImpact(transform.position);
-
-        //_myRigidbody.angularVelocity = Vector3.zero;
+        
         gameObject.transform.rotation = Quaternion.identity;
 
         // Disable physic.
@@ -128,7 +134,7 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
         radiusFX.SetActive(false);
 
         explosionFX.Play();
-        fuseFX.Stop();
+        GameManager.instance.audioManager.PlaySoundOneTime(explosion_sound, 0.1f);
 
         StartCoroutine(DeactiveGameObject());
     }

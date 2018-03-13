@@ -35,6 +35,8 @@ public class PlayerManager : MonoBehaviour {
     private MovementBehaviour movement;
     private HarpoonLauncher harpoon;
 
+	public AudioClip death_sound;
+
     private void Awake()
     {
         _alliesList = FindObjectsOfType<PlayerManager>();
@@ -58,6 +60,8 @@ public class PlayerManager : MonoBehaviour {
     
     public void Death()
     {
+		GameManager.instance.audioManager.PlaySoundOneTime (death_sound);
+
         // Prevents to kill the player again.
         if (isDead)
         {
@@ -123,7 +127,7 @@ public class PlayerManager : MonoBehaviour {
         if(_allyToRez != null)
         {
             _allyToRez.AddHealth();
-            GameManager.instance.audioManager.PlayRandomSoundOneTimeIn(res_sounds, 1f);
+            GameManager.instance.audioManager.PlayRandomSoundOneTimeIn(res_sounds, 0.05f);
         }
     }
 

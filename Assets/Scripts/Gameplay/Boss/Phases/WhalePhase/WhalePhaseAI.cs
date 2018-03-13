@@ -51,6 +51,9 @@ public class WhalePhaseAI : PhaseAI {
     private int leftHitCount;
     private int rightHitCount;
 
+	public AudioClip whale_scream;
+	public AudioClip whale_hit;
+
     protected override void Awake()
     {
         base.Awake();
@@ -77,6 +80,8 @@ public class WhalePhaseAI : PhaseAI {
 
         bodyCollider = whaleReferences.bodyCollider;
         tailCollider = whaleReferences.tailCollider;
+
+		GameManager.instance.audioManager.PlaySoundOneTime (whale_scream, 0.2f);
 
         // Setup eye colliders and scripts.
         eyesScript = whaleReferences.eyeScript;
@@ -115,16 +120,26 @@ public class WhalePhaseAI : PhaseAI {
 
     public void HitEye(bool left)
     {
-        if(left)
+        if(phaseFinished)
+        {
+            // Don't do anything if boss is defeated.
+            return;
+        }
+
+		if(left)
         {
             leftHitCount++;
             whaleReferences.PlayEyeBloodFX(0);
-        } else
+        }
+
+        else
         {
             rightHitCount++;
             whaleReferences.PlayEyeBloodFX(1);
         }
 
+        GameManager.instance.audioManager.PlaySoundOneTime(whale_hit, 0.2f);
+        GameManager.instance.audioManager.PlaySoundOneTime(whale_scream, 0.2f);
         GameManager.instance.camMgr.Shake();
 
         // Whale is dead.

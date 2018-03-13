@@ -24,6 +24,8 @@ public class PlayerInput : MonoBehaviour
 
     private bool doPause; // Do the pause if the delay is repected.
     private int controllerDisconnected;
+    
+	// public AudioClip pull_sound;
 
     void Awake()
     {
@@ -46,6 +48,8 @@ public class PlayerInput : MonoBehaviour
 
         // Deactivate the player position indicator
         playerMgr.FeedbackPlayerPos(false, playerId);
+
+		// GameManager.instance.audioManager.CreatePersistantSound (AudioManager.PossibleSound.PULL, pull_sound, 0.05f);
     }
 
     private void Reset()
@@ -167,8 +171,13 @@ public class PlayerInput : MonoBehaviour
 
         if (data.GetButton())
         {
+			GameManager.instance.audioManager.PlayPersistantSound (AudioManager.PossibleSound.PULL, 0.1f);
             harpoonLauncher.Pull();
         }
+		else
+		{
+			GameManager.instance.audioManager.StopPersistantSound (AudioManager.PossibleSound.PULL, 0.1f);
+		}
     }
 
     private void HandleCutRope()
