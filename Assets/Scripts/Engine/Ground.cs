@@ -81,19 +81,28 @@ public class Ground : MonoBehaviour {
 
 	[Header("Impact Waves options")]
 
+	[Range(0, 100)]
 	public float impactAmplitude;
 
+	[Range(0, 100)]
 	public float impactRadius;
 
+	[Range(0, 100)]
 	public float vortexSmooth;
 
+	[Range(0, 3)]
 	public float impactWaveLength;
 
+	[Range(0, 3)]
 	public float impactPeriod;
 
+	[Range(0, 2)]
 	public float waveSpeed;
+
+	[Range(0, 1)]
 	public float timeProgression;
 
+	[Range(0, 100)]
 	public float timeout;
 
 	public Vector2 waveSize;
@@ -183,10 +192,14 @@ public class Ground : MonoBehaviour {
 			}
 
 			if(waveManager.Waves.ContainsKey(waveVortexId)){
-				float wheel = Input.GetAxis("Mouse ScrollWheel");
-
 				WaveOptions vortex = waveManager.Waves[waveVortexId];
-				vortex.amplitude += wheel;
+				vortex.amplitude += Input.GetAxis("Mouse ScrollWheel");
+				vortex.radius = impactRadius;
+				vortex.smooth = vortexSmooth;
+				vortex.waveNumber = (2 * Mathf.PI) / impactWaveLength;
+				vortex.angularFrequency = (2 * Mathf.PI) / impactPeriod;
+				vortex.waveSpeed = waveSpeed;
+				vortex.timeProgression = timeProgression;
 				waveManager.ChangeWave(waveVortexId, vortex);
 			}
 			

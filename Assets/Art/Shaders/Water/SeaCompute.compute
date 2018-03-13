@@ -68,7 +68,7 @@ void MakeZone(uint i, float offset, float coeff){
 }
 
 void MakeVortex(uint i, float offsetMagnitude, float posAbs, float coeff){
-	float theta = (Impacts[i].waveNumber * (1 / Impacts[i].radius) * (offsetMagnitude / lod));
+	float theta = (Impacts[i].waveNumber * (4 / Impacts[i].radius) * (offsetMagnitude / lod));
 	float x = currentTime / (1 / (1 + Impacts[i].waveSpeed)) - posAbs;
 	float timeProgress = Impacts[i].amplitude * sin(x);
 	float sinTheta = sin(theta * timeProgress);
