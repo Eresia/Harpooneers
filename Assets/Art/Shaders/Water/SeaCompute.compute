@@ -174,15 +174,14 @@ void CalculatePoint (uint3 id : SV_DispatchThreadID)
 	}
 
 	float textureHeight = (clamp(Result[pointId], -Options[0].maxWaveHeight, Options[0].maxWaveHeight) / (Options[0].maxWaveHeight * 2)) + 0.5;
-	// float textureHeight = 0.5;
 
-	// for(uint l = (id.x * Options[0].heigthMapRatio); l < ((id.x + 1) * Options[0].heigthMapRatio); l++){
-	// 	for(uint k = (id.y * Options[0].heigthMapRatio); k < ((id.y + 1) * Options[0].heigthMapRatio); k++){
-	// 		HeightMap[int2(l, k)] = float4(textureHeight, textureHeight, textureHeight, 1);
-	// 	}
-	// }
+	for(uint l = (id.x * Options[0].heigthMapRatio); l < ((id.x + 1) * Options[0].heigthMapRatio); l++){
+		for(uint k = (id.y * Options[0].heigthMapRatio); k < ((id.y + 1) * Options[0].heigthMapRatio); k++){
+			HeightMap[int2(l, k)] = float4(textureHeight, textureHeight, textureHeight, 1);
+		}
+	}
 
-	HeightMap[int2(id.x, id.y)] = float4(textureHeight, textureHeight, textureHeight, 1);
+	// HeightMap[int2(id.x, id.y)] = float4(textureHeight, textureHeight, textureHeight, 1);
 }
 
 RWStructuredBuffer<float3> Normales;
@@ -210,12 +209,12 @@ void CalculateNormal (uint3 id : SV_DispatchThreadID)
 
 	Normales[pointId] = -normalize(cross(float3(1, z1, 0), float3(0, z2, 1)));
 
-	// for(uint l = (id.x * Options[0].heigthMapRatio); l < ((id.x + 1) * Options[0].heigthMapRatio); l++){
-	// 	for(uint k = (id.y * Options[0].heigthMapRatio); k < ((id.y + 1) * Options[0].heigthMapRatio); k++){
-	// 		NormaleMap[int2(l, k)] = float4((z2+1)/2, (z1+1)/2, 1, 1);
-	// 		// NormaleMap[int2(l, k)] = float4(0, 1, 0, 1);
-	// 	}
-	// }
+	for(uint l = (id.x * Options[0].heigthMapRatio); l < ((id.x + 1) * Options[0].heigthMapRatio); l++){
+		for(uint k = (id.y * Options[0].heigthMapRatio); k < ((id.y + 1) * Options[0].heigthMapRatio); k++){
+			NormaleMap[int2(l, k)] = float4((z2+1)/2, (z1+1)/2, 1, 1);
+			// NormaleMap[int2(l, k)] = float4(0, 1, 0, 1);
+		}
+	}
 
-	NormaleMap[int2(id.x, id.y)] = float4((z2+1)/2, (z1+1)/2, 1, 1);
+	// NormaleMap[int2(id.x, id.y)] = float4((z2+1)/2, (z1+1)/2, 1, 1);
 }
