@@ -18,6 +18,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _13843:
+        m_Texture: {fileID: 2800000, guid: 53e80c66896550e48869d76c1787d340, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -36,6 +40,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HeightAlpha:
+        m_Texture: {fileID: 2800000, guid: 53de136ad7d6270459920e3a2e7813e6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _InputHeight:
+        m_Texture: {fileID: 2800000, guid: 07f41aceb20f41d4591e13249b743313, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _InputNormal:
+        m_Texture: {fileID: 2800000, guid: 53de136ad7d6270459920e3a2e7813e6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -66,6 +82,14 @@ Material:
         m_Texture: {fileID: 2800000, guid: 9789d23040cb1fb45ad60392430c3c15, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _T_SeaFoam:
+        m_Texture: {fileID: 2800000, guid: a1f6c3aff67d32e43ac0855c4b137fae, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample0:
+        m_Texture: {fileID: 2800000, guid: 53de136ad7d6270459920e3a2e7813e6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _texcoord:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -73,34 +97,45 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _ChromaticAberration: 0.1
-    - _ColorChange: 0
+    - _ColorChange: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _FarDeepDistance: 0.01
+    - _FarDeepDistance: 0.084
     - _Float0: 0.85
     - _Float1: 3.8
+    - _Float6: 2.6470587
+    - _Float7: 3.4117646
+    - _FoamDistance: 3.25
+    - _FoamSpeed: 0.25
+    - _FoamTiling: 14.1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _HeightCoeff: 200
+    - _HeightColorStrength: 0
     - _Metallic: 0
-    - _MidWaterDistance: 0.066
+    - _MidWaterDistance: 0.378
     - _Mode: 0
     - _NormalScale: 0.6
-    - _NormalStrenght: 0.26
-    - _NormalTiling: 3.3
+    - _NormalStrenght: 0.306
+    - _NormalTiling: 10
+    - _NormalTiling1: 5.3
+    - _NormalTiling2: 1.4
     - _OcclusionStrength: 1
     - _Opacity: 1
-    - _OverallDepth: 1.4
+    - _OverallDepth: 3
     - _Parallax: 0.02
-    - _ShallowWaterDistance: 0.702
+    - _Refraction: 0
+    - _SeaFoamIntensity: 1.95
+    - _ShallowWaterDistance: 0.598
     - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Tiling: 3.8
     - _UVSec: 0
-    - _WaveSpeed: 0.33
+    - _WaveSpeed: 0.184
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
@@ -119,6 +154,8 @@ Material:
     - _FarDeepColor2: {r: 0.10331966, g: 0.12904193, b: 0.1544118, a: 0}
     - _FarDeepColor3: {r: 0.078431375, g: 0.13333334, b: 0.07450981, a: 0}
     - _FarDeepColor4: {r: 0.0292984, g: 0.04411763, b: 0.014273351, a: 0}
+    - _FoamSpeed: {r: 0.01, g: 0.05, b: 0, a: 0}
+    - _FoamSpeedVector: {r: 0.01, g: 0.05, b: 0, a: 0}
     - _MidWaterColor: {r: 0.31877163, g: 0.64705884, b: 0.565553, a: 0}
     - _MidWaterColor1: {r: 0.31877163, g: 0.47046298, b: 0.64705884, a: 0}
     - _MidWaterColor2: {r: 0.18823531, g: 0.40000004, b: 0.5803922, a: 0}

@@ -51,8 +51,9 @@ struct FrameOptions{
 	public uint nbWaves;
 	public float maxWaveHeight;
 	public uint lod;
+	public float ratio;
 	public uint heigtMapRatio;
-	public Vector3 trash;
+	public Vector2 trash;
 };
 
 public class WaveManager{
@@ -97,8 +98,8 @@ public class WaveManager{
 		return actualId -1;
 	}
 
-	public int CreateVortex(Vector2 position, float amplitude, float radius, float smooth, float waveLength, float period, float waveSpeed, float timeDigress, float timeout){
-		WaveOptions newWave = new WaveOptions(WaveType.VORTEX, position, amplitude, radius, smooth, waveLength, period, ActualTime, new Vector2(), waveSpeed, timeDigress, timeout);
+	public int CreateVortex(Vector2 position, float amplitude, float radius, float smooth, float waveLength, float period, float timeDigress, float timeout){
+		WaveOptions newWave = new WaveOptions(WaveType.VORTEX, position, amplitude, radius, smooth, waveLength, period, ActualTime, new Vector2(), 0f, timeDigress, timeout);
 		Waves.Add(actualId, newWave);
 		actualId++;
 		return actualId -1;

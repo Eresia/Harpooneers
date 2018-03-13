@@ -58,7 +58,7 @@ public class PhaseTransitionManager : MonoBehaviour {
         cameraTransform.position = endPos;
 
         GameManager.instance.boundaryMgr.UpdateBoundaries();
-        GameManager.instance.ground.ratio += 0.5f;
+        // GameManager.instance.ground.ratio += 0.5f;
 
         OnTransitionFinished();
         isTransitioning = false;
