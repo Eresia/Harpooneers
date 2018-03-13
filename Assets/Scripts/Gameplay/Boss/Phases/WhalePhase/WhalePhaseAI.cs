@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using DG.Tweening;
-
-public class WhalePhaseAI : BossAI {
+public class WhalePhaseAI : PhaseAI {
 
     public GameObject whalePrefab;
     public Transform FX;
     public ParticleSystem spawningFX;
+
+    [HideInInspector]
+    public WhaleReferences whaleReferences;
 
     [Header("Patterns components")]
     public Geyser geyserPrefab;
@@ -34,12 +35,14 @@ public class WhalePhaseAI : BossAI {
     private GameObject whale;
     
     [Header("Patterns")]
-    public int NoHittablePatternCount;
+    public int noHittablePatternCount;
     public int numberOfPatternsWithoutHit;
 
     [Header("Boss attributes")]
 
     public Collider[] eyeColliders;
+    public Collider bodyCollider;
+    public Collider tailCollider;
     public HandleHarpoonWithEye[] eyesScript;
     public int hitByEyeNeeded;
 
@@ -48,9 +51,8 @@ public class WhalePhaseAI : BossAI {
     private int leftHitCount;
     private int rightHitCount;
 
-    private Vector3 originCamPos;
-
-    private bool phaseFinished;
+	public AudioClip whale_scream;
+	public AudioClip whale_hit;
 
     protected override void Awake()
     {
@@ -63,10 +65,12 @@ public class WhalePhaseAI : BossAI {
     private void SpawnWhale()
     {
         whale = Instantiate(whalePrefab);
+        whale.SetActive(false);
 
+        whaleReferences = whale.GetComponent<WhaleReferences>();
         WhaleTransform = whale.GetComponent<Transform>();
-        WhaleChildTransform = WhaleTransform.GetChild(0);
-        WhaleAnimator = WhaleChildTransform.GetChild(0).GetComponent<Animator>();
+        WhaleChildTransform = whaleReferences.whaleChildTransform;
+        WhaleAnimator = whaleReferences.whaleAnimator;
 
         geysers = new Geyser[GameManager.instance.nbOfPlayers];
         for (int i = 0; i < geysers.Length; i++)
@@ -74,8 +78,13 @@ public class WhalePhaseAI : BossAI {
             geysers[i] = Instantiate<Geyser>(geyserPrefab);
         }
 
+        bodyCollider = whaleReferences.bodyCollider;
+        tailCollider = whaleReferences.tailCollider;
+
+		GameManager.instance.audioManager.PlaySoundOneTime (whale_scream, 0.2f);
+
         // Setup eye colliders and scripts.
-        eyesScript = WhaleChildTransform.GetChild(1).GetComponentsInChildren<HandleHarpoonWithEye>();
+        eyesScript = whaleReferences.eyeScript;
         eyeColliders = new Collider[eyesScript.Length];
 
         for (int i = 0; i < eyeColliders.Length; i++)
@@ -98,28 +107,39 @@ public class WhalePhaseAI : BossAI {
 
         if (hitPattern)
         {
+            passCount = 0;
             nextState = 2;
         }
         else
         {
-            nextState = UnityEngine.Random.Range(0, NoHittablePatternCount);
+            nextState = UnityEngine.Random.Range(0, noHittablePatternCount);
         }
-
-        Debug.Log(nextState);
 
         return nextState;
     }
 
     public void HitEye(bool left)
     {
-        if(left)
+        if(phaseFinished)
         {
-            leftHitCount++;
-        } else
-        {
-            rightHitCount++;
+            // Don't do anything if boss is defeated.
+            return;
         }
 
+		if(left)
+        {
+            leftHitCount++;
+            whaleReferences.PlayEyeBloodFX(0);
+        }
+
+        else
+        {
+            rightHitCount++;
+            whaleReferences.PlayEyeBloodFX(1);
+        }
+
+        GameManager.instance.audioManager.PlaySoundOneTime(whale_hit, 0.2f);
+        GameManager.instance.audioManager.PlaySoundOneTime(whale_scream, 0.2f);
         GameManager.instance.camMgr.Shake();
 
         // Whale is dead.
@@ -155,8 +175,6 @@ public class WhalePhaseAI : BossAI {
         WhaleChildTransform.localRotation = Quaternion.identity;
         WhaleChildTransform.localPosition = Vector3.zero;
         WhaleChildTransform.localScale = Vector3.one;
-
-        WhaleAnimator.SetBool("Swim", false);
     }
 
     // Make whale vulnerable.

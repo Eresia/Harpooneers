@@ -15,6 +15,9 @@ public class CustomCollision : MonoBehaviour {
     public float killingForce = 150f;
 
     public float bumpForce = 15f;
+
+	public AudioClip collision_sound;
+	public AudioClip death_sound;
     
     protected void OnCollisionEnter(Collision collision)
     {
@@ -30,17 +33,21 @@ public class CustomCollision : MonoBehaviour {
     {
         //Debug.Log("Impact force : " + Mathf.RoundToInt(physic.Velocity.sqrMagnitude));
         
+
+
         bool killPlayer = true;
 
         // Don't kill the player when hit a player or a floating object.
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("FloatingObject"))
         {
-            killPlayer = false;
+			GameManager.instance.audioManager.PlaySoundOneTime(collision_sound, 0.05f);
+			killPlayer = false;
         }
 
         // Kill player if the ship moves too fast.
         if (physic.Velocity.sqrMagnitude > killingForce && killPlayer)
         {
+			GameManager.instance.audioManager.PlaySoundOneTime(death_sound, 0.05f);
             playerMgr.Death();
         }
 

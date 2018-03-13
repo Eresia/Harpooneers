@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BossAnimatorScript : StateMachineBehaviour {
 
-	protected BossAI boss;
+	protected PhaseAI boss;
 
 	protected Animator animator;
 
-	public virtual void Init(BossAI boss, Animator animator){
+	public virtual void Init(PhaseAI boss, Animator animator){
 		this.boss = boss;
 		this.animator = animator;
 	}

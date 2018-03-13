@@ -6,9 +6,9 @@ public abstract class BossPattern {
 
     protected Action OnPatternFinished;
 
-	protected BossAI boss;
+	protected PhaseAI boss;
 
-	public virtual void SetBoss(BossAI boss)
+	public virtual void SetBoss(PhaseAI boss)
     {
 		this.boss = boss;
 	}

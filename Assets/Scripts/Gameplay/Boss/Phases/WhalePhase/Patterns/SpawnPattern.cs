@@ -12,7 +12,7 @@ public class SpawnPattern : BossPattern {
         this.spawnState = spawnState;
     }
 
-    public override void SetBoss(BossAI boss)
+    public override void SetBoss(PhaseAI boss)
     {
         base.SetBoss(boss);
 

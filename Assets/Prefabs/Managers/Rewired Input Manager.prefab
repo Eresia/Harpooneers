@@ -319,6 +319,24 @@ MonoBehaviour:
       _behaviorId: 0
       _userAssignable: 1
       _categoryId: 4
+    - _id: 25
+      _name: Display Player
+      _type: 1
+      _descriptiveName: Display a marker on your boat
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 0
+    - _id: 27
+      _name: Action2
+      _type: 1
+      _descriptiveName: Action2
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 0
     actionCategories:
     - _name: Default
       _descriptiveName: 
@@ -333,7 +351,7 @@ MonoBehaviour:
     actionCategoryMap:
       list:
       - categoryId: 0
-        actionIds: 0000000001000000020000000300000009000000080000000a0000000b0000000c0000000d000000
+        actionIds: 0000000001000000020000000300000009000000080000000a0000000b0000000c0000000d000000190000001b000000
       - categoryId: 4
         actionIds: 100000000f00000011000000120000001300000014000000150000001600000017000000
     inputBehaviors:
@@ -492,7 +510,7 @@ MonoBehaviour:
         _modifierKey2: 0
         _modifierKey3: 0
       - _actionCategoryId: 0
-        _actionId: 13
+        _actionId: 25
         _elementType: 1
         _elementIdentifierId: 14
         _axisRange: 0
@@ -631,7 +649,7 @@ MonoBehaviour:
     customControllerMaps: []
     customControllers: []
     playerIdCounter: 5
-    actionIdCounter: 25
+    actionIdCounter: 28
     actionCategoryIdCounter: 5
     inputBehaviorIdCounter: 1
     mapCategoryIdCounter: 2

@@ -8,11 +8,12 @@ using DG.Tweening;
 [RequireComponent (typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
 {
-
 	[System.Serializable]
 	public enum PossibleSound
 	{
-		SEA
+		SEA,
+		MOVE,
+		PULL
 	}
 
 	public AudioClip menuMusic;
@@ -65,6 +66,12 @@ public class AudioManager : MonoBehaviour
 
 	public void PlaySoundOneTime (AudioClip sound, float volume = 1f)
 	{
+        if(sound == null)
+        {
+            // Debug.LogWarning("Audio clip missing !");
+			return ;
+        }
+
 		//AudioSource newSource = targetObject.AddComponent<AudioSource>();
 		AudioSource newSource = gameObject.AddComponent<AudioSource> ();
 		newSource.clip = sound;
@@ -76,6 +83,11 @@ public class AudioManager : MonoBehaviour
 
 	public void PlaySoundsOneTime (AudioClip[] sounds, float volume)
 	{
+        if(sounds.Length <= 0)
+        {
+            Debug.LogWarning("No sounds in the array");
+        }
+
 		foreach (AudioClip s in sounds) {
 			PlaySoundOneTime (s, volume);
 		}

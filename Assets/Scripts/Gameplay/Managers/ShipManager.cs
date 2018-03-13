@@ -9,6 +9,7 @@ public class ShipManager : MonoBehaviour {
     public Material[] playerMaterials;
    
     public bool useDefaultConfig = false;
+    public bool randomDefaultConfig = false;
 
     public ShipConfiguration defaultConfig = new ShipConfiguration
     {
@@ -65,6 +66,9 @@ public class ShipManager : MonoBehaviour {
                 // For debug only. Load default config.
                 if(useDefaultConfig)
                 {
+                    if (randomDefaultConfig)
+                        RandomConfig();
+
                     shipModuleMgrs[i].ActivateShipModules(GameManager.instance.shipMgr.defaultConfig, this, playerMaterials[i]);
                 }
 
@@ -81,6 +85,14 @@ public class ShipManager : MonoBehaviour {
                 players[i].SetActive(false);
             }
         }
+    }
+
+    public void RandomConfig()
+    {
+        defaultConfig.bombStockId = Random.Range(0, 3);
+        defaultConfig.harpoonId = Random.Range(0, 4);
+        defaultConfig.cabinId = Random.Range(0, 4);
+        defaultConfig.coqueId = Random.Range(0, 4);
     }
 
     public void NotifyDeath()
@@ -113,7 +125,7 @@ public class ShipManager : MonoBehaviour {
         {
             playerId = playerIds[Random.Range(0, playerIds.Count)];
 
-            if (!playerMgrs[playerId].isDead)
+            if (!playerMgrs[playerId].IsDead)
             {
                 targetFound = true;
             }

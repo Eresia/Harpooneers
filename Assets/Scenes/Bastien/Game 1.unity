@@ -1385,6 +1385,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114362013403539180, guid: 067cdd2b7bc7c2f48bf143fbdd61132e,
+        type: 2}
+      propertyPath: phases.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4012793707585258, guid: 067cdd2b7bc7c2f48bf143fbdd61132e, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1426,7 +1431,7 @@ Prefab:
         type: 2}
       propertyPath: phases.Array.data[1]
       value: 
-      objectReference: {fileID: 1879553446}
+      objectReference: {fileID: 0}
     - target: {fileID: 114362013403539180, guid: 067cdd2b7bc7c2f48bf143fbdd61132e,
         type: 2}
       propertyPath: phaseTransitionMgr
@@ -1461,7 +1466,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 13265201}
-  - {fileID: 1879553445}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1707,12 +1711,12 @@ Prefab:
     - target: {fileID: 114086163139881298, guid: e9f94d6993977004b8ce3c4482836a14,
         type: 2}
       propertyPath: phasesCameras.Array.data[0].camPosition.y
-      value: 29
+      value: 28.56
       objectReference: {fileID: 0}
     - target: {fileID: 114086163139881298, guid: e9f94d6993977004b8ce3c4482836a14,
         type: 2}
       propertyPath: phasesCameras.Array.data[0].camPosition.z
-      value: -5
+      value: -4.76
       objectReference: {fileID: 0}
     - target: {fileID: 114086163139881298, guid: e9f94d6993977004b8ce3c4482836a14,
         type: 2}
@@ -1763,6 +1767,16 @@ Prefab:
         type: 2}
       propertyPath: phasesCameras.Array.data[1].transitionTime
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114086163139881298, guid: e9f94d6993977004b8ce3c4482836a14,
+        type: 2}
+      propertyPath: phasesCameras.Array.data[0].camPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114086163139881298, guid: e9f94d6993977004b8ce3c4482836a14,
+        type: 2}
+      propertyPath: phasesCameras.Array.data[0].camRotation.x
+      value: 75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9f94d6993977004b8ce3c4482836a14, type: 2}
@@ -2253,7 +2267,8 @@ Prefab:
       propertyPath: NoHittablePatternCount
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 1b48cf6c6e073994ab1e8ddf7068f326, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &849807329 stripped
@@ -4230,82 +4245,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4715467816171786, guid: 4275da3191f17554c9782b4fc0e13d23,
     type: 2}
   m_PrefabInternal: {fileID: 1857611704}
---- !u!1001 &1879553444
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 497174348}
-    m_Modifications:
-    - target: {fileID: 4879814245529086, guid: 1b48cf6c6e073994ab1e8ddf7068f326, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4879814245529086, guid: 1b48cf6c6e073994ab1e8ddf7068f326, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4879814245529086, guid: 1b48cf6c6e073994ab1e8ddf7068f326, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4879814245529086, guid: 1b48cf6c6e073994ab1e8ddf7068f326, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4879814245529086, guid: 1b48cf6c6e073994ab1e8ddf7068f326, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4879814245529086, guid: 1b48cf6c6e073994ab1e8ddf7068f326, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4879814245529086, guid: 1b48cf6c6e073994ab1e8ddf7068f326, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4879814245529086, guid: 1b48cf6c6e073994ab1e8ddf7068f326, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114181008368525658, guid: 1b48cf6c6e073994ab1e8ddf7068f326,
-        type: 2}
-      propertyPath: eyes.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114181008368525658, guid: 1b48cf6c6e073994ab1e8ddf7068f326,
-        type: 2}
-      propertyPath: eyes.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114181008368525658, guid: 1b48cf6c6e073994ab1e8ddf7068f326,
-        type: 2}
-      propertyPath: numberOfPatternsWithoutHit
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114181008368525658, guid: 1b48cf6c6e073994ab1e8ddf7068f326,
-        type: 2}
-      propertyPath: hitByEyeNeeded
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1179193037528430, guid: 1b48cf6c6e073994ab1e8ddf7068f326, type: 2}
-      propertyPath: m_Name
-      value: WhalePhase2
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 1b48cf6c6e073994ab1e8ddf7068f326, type: 2}
-  m_IsPrefabParent: 0
---- !u!4 &1879553445 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4879814245529086, guid: 1b48cf6c6e073994ab1e8ddf7068f326,
-    type: 2}
-  m_PrefabInternal: {fileID: 1879553444}
---- !u!1 &1879553446 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1179193037528430, guid: 1b48cf6c6e073994ab1e8ddf7068f326,
-    type: 2}
-  m_PrefabInternal: {fileID: 1879553444}
 --- !u!1001 &1910038995
 Prefab:
   m_ObjectHideFlags: 0

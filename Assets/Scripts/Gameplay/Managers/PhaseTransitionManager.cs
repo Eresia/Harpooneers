@@ -8,6 +8,7 @@ using System;
 public struct PhaseTransition
 {
     public Vector3 camPosition;
+    public Vector3 camRotation;
     public float transitionTime;
 }
 
@@ -36,32 +37,59 @@ public class PhaseTransitionManager : MonoBehaviour {
 
     public void NextPhase(int currentPhase)
     {
-        if(currentPhase < phasesCameras.Length)
+        if(currentPhase > 0 && currentPhase < phasesCameras.Length)
         {
-            StartCoroutine(TransitionToNextPhase(cameraTransform.position, phasesCameras[currentPhase].camPosition, phasesCameras[currentPhase].transitionTime));
+            StartCoroutine(TransitionToNextPhase(phasesCameras[currentPhase-1], phasesCameras[currentPhase], phasesCameras[currentPhase].transitionTime));
+        }
+
+        else if(currentPhase == 0)
+        {
+            StartDirectly(phasesCameras[0]);
         }
     }
 
-    IEnumerator TransitionToNextPhase(Vector3 startPos, Vector3 endPos, float time)
+    IEnumerator TransitionToNextPhase(PhaseTransition from, PhaseTransition to, float time)
     {
         isTransitioning = true;
 
         float elapsedTime = 0;
 
+        Quaternion startRot = Quaternion.Euler(from.camRotation);
+        Quaternion endRot = Quaternion.Euler(to.camRotation);
+
+        WaitForEndOfFrame wait = new WaitForEndOfFrame();
+
         while (elapsedTime < time)
         {
-            cameraTransform.position = Vector3.Lerp(startPos, endPos, (elapsedTime / time));
+            float t = elapsedTime / time;
+
+            cameraTransform.position = Vector3.Lerp(from.camPosition, to.camPosition, t);
+            cameraTransform.rotation = Quaternion.Lerp(startRot, endRot, t);
+
             elapsedTime += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
+            yield return wait;
         }
 
-        cameraTransform.position = endPos;
+        cameraTransform.position = to.camPosition;
+        cameraTransform.rotation = endRot;
 
         GameManager.instance.boundaryMgr.UpdateBoundaries();
-        // GameManager.instance.ground.ratio += 0.5f;
+
+        // TODO Test that.
+        //GameManager.instance.ground.ratio += 0.5f;
 
         OnTransitionFinished();
         isTransitioning = false;
+    }
+
+    void StartDirectly(PhaseTransition transition)
+    {
+        cameraTransform.rotation = Quaternion.Euler(transition.camRotation);
+        cameraTransform.position = transition.camPosition;
+
+        GameManager.instance.boundaryMgr.UpdateBoundaries();
+
+        OnTransitionFinished();
     }
 }
 
