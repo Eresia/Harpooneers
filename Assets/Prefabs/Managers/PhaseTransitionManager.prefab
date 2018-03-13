@@ -54,12 +54,11 @@ MonoBehaviour:
   cameraTransform: {fileID: 0}
   currentPhase: -1
   phasesCameras:
-  - camPosition: {x: 0, y: 60.09, z: -13.21}
-    transitionTime: 5
-  - camPosition: {x: 0, y: 0, z: 0}
-    transitionTime: 5
-  - camPosition: {x: 0, y: 0, z: 0}
+  - camPosition: {x: -4.2, y: 26.6, z: -16.4}
     transitionTime: 0
-  - camPosition: {x: 0, y: 0, z: 0}
-    transitionTime: 0
-  gameOver: 0
+  - camPosition: {x: 0, y: 35, z: -7}
+    transitionTime: 5
+  - camPosition: {x: 0, y: 45, z: -12.5}
+    transitionTime: 5
+  - camPosition: {x: 0, y: 60, z: -25}
+    transitionTime: 5

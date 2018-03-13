@@ -10,8 +10,6 @@ public class WhaleBody : MonoBehaviour {
 
 	public void OnExplode()
     {
-        Debug.Log("BOOM");
-
         OnWhaleExplode();
     }
 }
