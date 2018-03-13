@@ -99,8 +99,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1973039010504822}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 4868496677196742}
   m_RootOrder: 0
@@ -149,20 +149,20 @@ MonoBehaviour:
   geyserFX: {fileID: 198476666619530176}
   numberOfExplosions: 3
   moveSpeed:
-  - 6
+  - 7
   - 8
-  - 10
+  - 9
   movementDuration:
-  - 5
-  - 5
-  - 5
+  - 3
+  - 3
+  - 1.5
   waitingDuration:
-  - 1
+  - 0.75
   - 0.5
   - 0.5
   radius:
-  - 3
-  - 3
+  - 1
+  - 2
   - 3
   waveAmplitude: []
   damageableLayer:
@@ -176,7 +176,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1049961890275738}
   serializedVersion: 5
   lengthInSec: 3
-  simulationSpeed: 1
+  simulationSpeed: 3
   stopAction: 0
   looping: 0
   prewarm: 0
@@ -227,16 +227,16 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
-  randomSeed: -1061731161
+  scalingMode: 0
+  randomSeed: -1104431108
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 3
-      minScalar: 2
+      scalar: 2
+      minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -3589,7 +3589,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 58986468
+  randomSeed: 332535220
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6949,8 +6949,8 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
-  randomSeed: 1100314920
+  scalingMode: 0
+  randomSeed: 1942678486
   InitialModule:
     serializedVersion: 3
     enabled: 1

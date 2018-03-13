@@ -45,15 +45,28 @@ public class BackAttackPattern : BossPattern
             whaleAI.WhaleChildTransform.DOScale(Vector3.one, state.emergingDuration);
             whaleAI.WhaleChildTransform.DOLocalMove(target.position, state.emergingDuration);
 
+            whaleAI.bodyCollider.enabled = false;
+            whaleAI.tailCollider.enabled = false;
             yield return new WaitForSeconds(state.emergingDuration - state.backAttackTime);
 
             whaleAI.WhaleAnimator.Play("BackAttack");
+            // Splash FX
+            whaleAI.whaleReferences.PlaySplashFX();
 
             yield return new WaitForSeconds(state.backAttackTime);
 
+            // Splash FX
+            whaleAI.whaleReferences.PlaySplashFX();
+
+            whaleAI.bodyCollider.enabled = true;
+            whaleAI.tailCollider.enabled = true;
+
+
+
+
             // Shockwave.
             GameManager.instance.ground.CreateImpact(whaleAI.WhaleTransform.position);
-            whaleAI.whaleReferences.PlaySplashFX();
+           
 
             yield return new WaitForSeconds(state.waitTimeAfterAttack);
 

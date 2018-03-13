@@ -8,6 +8,8 @@ public class WhalePhaseAI : PhaseAI {
     public GameObject whalePrefab;
     public Transform FX;
     public ParticleSystem spawningFX;
+
+    [HideInInspector]
     public WhaleReferences whaleReferences;
 
     [Header("Patterns components")]

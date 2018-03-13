@@ -110,12 +110,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delayAfterGeyserChase: 0.5
-  emergingDuration: 5
+  emergingDuration: 3.5
   emergePosStart: {x: 0, y: -20, z: -10}
   emergePosEnd: {x: 0, y: 1.75, z: 8}
   emergeRotationStart: {x: 0, y: 0, z: 0}
   emergeRotationEnd: {x: -20, y: 0, z: 0}
-  waitDuration: 10
+  waitDuration: 11
   divingDuration: 5
   diveHeightEnd: -30
   diveForwardEnd: 20
@@ -143,11 +143,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01168ed66f2760842bf3ef05eb548352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackAmount: 3
-  emergingDuration: 3.5
-  startHeight: -30
-  backAttackTime: 1
-  waitTimeAfterAttack: 1
+  attackAmount: 2
+  emergingDuration: 3
+  startHeight: -13
+  backAttackTime: 0.75
+  waitTimeAfterAttack: 0.75
   divingDuration: 5
   diveHeightEnd: -30
   diveForwardEnd: 20
@@ -165,12 +165,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offsetX: 0.3
   offsetY: 0.1
-  TurnMin: 3
-  TurnMax: 5
+  TurnMin: 2
+  TurnMax: 4
   WaitBeforeSpawn: 2
-  WaitBeforeDash: 0.5
+  WaitBeforeDash: 0.75
   translateSpeed: 10
-  dashSpeed: 50
+  dashSpeed: 40
   whaleOffset: 18
   diveOnExplode: 1
   divingDuration: 5
@@ -594,7 +594,7 @@ AnimatorStateMachine:
     m_Position: {x: 252, y: 144, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102442778312955678}
-    m_Position: {x: -36, y: 228, z: 0}
+    m_Position: {x: -24, y: 228, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102889705949303782}
     m_Position: {x: 528, y: 192, z: 0}
