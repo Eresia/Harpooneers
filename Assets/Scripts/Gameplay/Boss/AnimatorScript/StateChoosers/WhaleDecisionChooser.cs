@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WhaleDecisionChooser : BossAnimatorScript
+public class WhaleDecisionChooser : StateChooser
 {
     private WhalePhaseAI whalePhase;
 
-    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        if (whalePhase == null)
+	protected override int ChooseState(){
+		if (whalePhase == null)
         {
             whalePhase = animator.GetComponent<WhalePhaseAI>();
         }
 
-        animator.SetInteger("NextState", whalePhase.DecideNextPhase());
-    }
+		// return whalePhase.DecideNextPhase();
+		return 0;
+	}
 }
