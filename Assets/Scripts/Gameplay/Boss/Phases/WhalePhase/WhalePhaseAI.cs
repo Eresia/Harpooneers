@@ -60,7 +60,7 @@ public class WhalePhaseAI : PhaseAI {
     private void SpawnWhale()
     {
         whale = Instantiate(whalePrefab);
-
+        whale.SetActive(false);
 
         whaleReferences = whale.GetComponent<WhaleReferences>();
         WhaleTransform = whale.GetComponent<Transform>();
