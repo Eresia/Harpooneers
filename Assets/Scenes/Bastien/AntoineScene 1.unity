@@ -2269,7 +2269,7 @@ Prefab:
     - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
         type: 2}
       propertyPath: impactWaveLength
-      value: 3
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
         type: 2}
@@ -2289,22 +2289,32 @@ Prefab:
     - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
         type: 2}
       propertyPath: displayGizmos
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
         type: 2}
       propertyPath: impactAmplitude
-      value: 15
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
         type: 2}
       propertyPath: vortexSmooth
-      value: 40
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
         type: 2}
       propertyPath: waveSpeed
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
+        type: 2}
+      propertyPath: impactPeriod
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 23218790605428570, guid: d2b3382be80c31c46b0fc06fcd7980f6,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
