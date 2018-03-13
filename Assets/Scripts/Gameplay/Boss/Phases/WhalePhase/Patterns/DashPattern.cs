@@ -166,6 +166,10 @@ public class DashPattern : BossPattern {
 
         whaleAI.WhaleAnimator.Play("Dash");
 
+        // Splash FX
+        whaleAI.whaleReferences.PlaySplashFX();
+
+
         // TODO Generate wave on the sea along the dash
         // TODO song etc
 
@@ -192,6 +196,10 @@ public class DashPattern : BossPattern {
 
     private IEnumerator WhaleDive()
     {
+
+        // Splash FX
+        whaleAI.whaleReferences.PlaySplashFX();
+
         Tween t = whaleAI.WhaleChildTransform.DOLocalMove(whaleAI.WhaleTransform.up * state.diveHeightEnd + whaleAI.WhaleTransform.forward * state.diveForwardEnd, state.divingDuration);
         whaleAI.WhaleChildTransform.DOLocalRotate(state.diveRotationEnd, state.divingDuration);
         whaleAI.WhaleChildTransform.DOScale(Vector3.zero, state.divingDuration);

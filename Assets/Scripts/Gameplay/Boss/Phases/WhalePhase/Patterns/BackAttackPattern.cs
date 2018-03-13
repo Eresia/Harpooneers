@@ -48,12 +48,14 @@ public class BackAttackPattern : BossPattern
             yield return new WaitForSeconds(state.emergingDuration - state.backAttackTime);
 
             whaleAI.WhaleAnimator.Play("BackAttack");
+            // Splash FX
+            whaleAI.whaleReferences.PlaySplashFX();
 
             yield return new WaitForSeconds(state.backAttackTime);
 
             // Shockwave.
             GameManager.instance.ground.CreateImpact(whaleAI.WhaleTransform.position);
-            whaleAI.whaleReferences.PlaySplashFX();
+           
 
             yield return new WaitForSeconds(state.waitTimeAfterAttack);
 
