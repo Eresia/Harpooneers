@@ -47,7 +47,9 @@ public class Ground : MonoBehaviour {
 
 	private float halfLod;
 
-	private RenderTexture heightNormalMap;
+	private RenderTexture heightMap;
+
+	private RenderTexture normaleMap;
 
 	private ComputeBuffer optionBuffer;
 
@@ -90,7 +92,7 @@ public class Ground : MonoBehaviour {
 	[Range(0, 100)]
 	public float vortexSmooth;
 
-	[Range(0, 3)]
+	[Range(0, 100)]
 	public float impactWaveLength;
 
 	[Range(0, 3)]
@@ -127,10 +129,15 @@ public class Ground : MonoBehaviour {
 
 		int heigtMapLod = 32 * ((int) Mathf.Pow(2, heigtMapPower));
 
-		heightNormalMap = new RenderTexture(heigtMapLod, heigtMapLod, 24);
-		heightNormalMap.name = "HeightNormalMap";
-		heightNormalMap.enableRandomWrite = true;
-		heightNormalMap.Create();
+		heightMap = new RenderTexture(heigtMapLod, heigtMapLod, 24);
+		heightMap.name = "HeightMap";
+		heightMap.enableRandomWrite = true;
+		heightMap.Create();
+
+		normaleMap = new RenderTexture(heigtMapLod, heigtMapLod, 24);
+		normaleMap.name = "NormaleMap";
+		normaleMap.enableRandomWrite = true;
+		normaleMap.Create();
 
 		frameOptions = new FrameOptions[1];
 		frameOptions[0] = new FrameOptions();
@@ -147,21 +154,22 @@ public class Ground : MonoBehaviour {
 
 		seaCompute.SetBuffer(pointKernel, "Options", optionBuffer);
 		seaCompute.SetBuffer(pointKernel, "Result", pointBuffer);
-		seaCompute.SetTexture(pointKernel, "HeightNormalMap", heightNormalMap);
+		seaCompute.SetTexture(pointKernel, "HeightMap", heightMap);
 
 		seaCompute.SetBuffer(normaleKernel, "Options", optionBuffer);
 		seaCompute.SetBuffer(normaleKernel, "Result", pointBuffer);
 		seaCompute.SetBuffer(normaleKernel, "Normales", normaleBuffer);
-		seaCompute.SetTexture(normaleKernel, "HeightNormalMap", heightNormalMap);
+		seaCompute.SetTexture(normaleKernel, "NormaleMap", normaleMap);
 
 		selfRenderer.material = GetComponent<Renderer>().material;
-		selfRenderer.material.SetTexture("_HeightNormalMap", heightNormalMap);
+		selfRenderer.material.SetTexture("_HeightMap", heightMap);
+		selfRenderer.material.SetTexture("_NormaleMap", normaleMap);
 		selfRenderer.material.SetBuffer("_Vertex", pointBuffer);
 		selfRenderer.material.SetFloat("_MaxWaveHeight", maxWaveHeight);
 		selfRenderer.material.SetInt("_VertexSize", lod);
 
 		if(rawImage != null){
-			rawImage.texture = heightNormalMap;
+			rawImage.texture = normaleMap;
 		}
 
 		waveVortexId = -1;
@@ -343,17 +351,20 @@ public class Ground : MonoBehaviour {
     {
 		Vector3 result;
 
-        result = info.coeff.x * normales[info.i.x * lod + info.j.x];
-        result += info.coeff.y * normales[info.i.y * lod + info.j.x];
-        result += info.coeff.z * normales[info.i.x * lod + info.j.y];
-        result += info.coeff.w * normales[info.i.y * lod + info.j.y];
+        result = info.coeff.x * -normales[info.i.x * lod + info.j.x];
+        result += info.coeff.y * -normales[info.i.y * lod + info.j.x];
+        result += info.coeff.z * -normales[info.i.x * lod + info.j.y];
+        result += info.coeff.w * -normales[info.i.y * lod + info.j.y];
 
         result /= (info.coeff.x + info.coeff.y + info.coeff.z + info.coeff.w);
 
-        result.y *= -1;
-        result.x *= -1;
+        // result.y *= -1;
+        // result.x *= -1;
 
-        // Debug.DrawRay(position, result * 5f);
+        Debug.DrawRay(position, -normales[info.i.x * lod + info.j.x] * 5f);
+		Debug.DrawRay(position, -normales[info.i.y * lod + info.j.x] * 5f);
+		Debug.DrawRay(position, -normales[info.i.x * lod + info.j.y] * 5f);
+		Debug.DrawRay(position, -normales[info.i.y * lod + info.j.y] * 5f);
 
         return result;
 	}

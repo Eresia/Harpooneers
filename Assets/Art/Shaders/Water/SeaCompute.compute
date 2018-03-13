@@ -44,7 +44,7 @@ struct FrameOptions{
 StructuredBuffer<WaveOptions> Impacts;
 StructuredBuffer<FrameOptions> Options;
 RWStructuredBuffer<float> Result;
-RWTexture2D<float4> HeightNormalMap;
+RWTexture2D<float4> HeightMap;
 
 int lod;
 float currentTime;
@@ -68,7 +68,7 @@ void MakeZone(uint i, float offset, float coeff){
 }
 
 void MakeVortex(uint i, float offsetMagnitude, float posAbs, float coeff){
-	float theta = (Impacts[i].waveNumber * (4 / Impacts[i].radius) * (offsetMagnitude / lod));
+	float theta = (Impacts[i].waveNumber/* * (4 / Impacts[i].radius)*/ * (offsetMagnitude / lod));
 	float x = currentTime / (1 / (1 + Impacts[i].waveSpeed)) - posAbs;
 	float timeProgress = Impacts[i].amplitude * sin(x);
 	float sinTheta = sin(theta * timeProgress);
@@ -166,12 +166,13 @@ void CalculatePoint (uint3 id : SV_DispatchThreadID)
 
 	for(uint l = (id.x * Options[0].heigtMapRatio); l < ((id.x + 1) * Options[0].heigtMapRatio); l++){
 		for(uint k = (id.y * Options[0].heigtMapRatio); k < ((id.y + 1) * Options[0].heigtMapRatio); k++){
-			HeightNormalMap[int2(l, k)] = float4(0, 0, 0, textureHeight);
+			HeightMap[int2(l, k)] = float4(textureHeight, textureHeight, textureHeight, 1);
 		}
 	}
 }
 
 RWStructuredBuffer<float3> Normales;
+RWTexture2D<float4> NormaleMap;
 
 [numthreads(32,32,1)]
 void CalculateNormal (uint3 id : SV_DispatchThreadID)
@@ -197,7 +198,7 @@ void CalculateNormal (uint3 id : SV_DispatchThreadID)
 
 	for(uint l = (id.x * Options[0].heigtMapRatio); l < ((id.x + 1) * Options[0].heigtMapRatio); l++){
 		for(uint k = (id.y * Options[0].heigtMapRatio); k < ((id.y + 1) * Options[0].heigtMapRatio); k++){
-			HeightNormalMap[int2(l, k)] = float4(Normales[pointId], HeightNormalMap[int2(l, k)].a);
+			NormaleMap[int2(l, k)] = float4(Normales[pointId], 1);
 		}
 	}
 }
