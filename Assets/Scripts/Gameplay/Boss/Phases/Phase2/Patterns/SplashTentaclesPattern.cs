@@ -99,7 +99,7 @@ public class SplashTentaclesPattern : BossPattern {
                 phase2.Tentacles[i].childTransform.DOLocalMove(spawns[i] + state.startPos, state.divingDuration);
                 phase2.Tentacles[i].tentacleCollider.enabled = true;
 
-                phase2.Tentacles[i].animAttack.Play("");
+                //phase2.Tentacles[i].animAttack.Play("");
             }
 
             // TODO WAIT ANIMATION -> OnStateExit -> 
