@@ -38,18 +38,15 @@ public class Ground : MonoBehaviour {
 
 	private Vector3[] normales;
 
+	public WaveManager waveManager {get; private set;}
+
 	private Transform selfTransform;
 
 	private int lod;
 
 	private float halfLod;
 
-	private float time;
-	
-
 	private RenderTexture heightNormalMap;
-
-	private List<WaveOptions> waves;
 
 	private ComputeBuffer optionBuffer;
 
@@ -85,6 +82,10 @@ public class Ground : MonoBehaviour {
 
 	public float impactAmplitude;
 
+	public float impactRadius;
+
+	public float vortexSmooth;
+
 	public float impactWaveLength;
 
 	public float impactPeriod;
@@ -104,10 +105,12 @@ public class Ground : MonoBehaviour {
 		lod = 32 * lodPowPower;
 		normales = new Vector3[lod * lod];
 		halfLod = ((float) lod) * 0.5f;
-		waves = new List<WaveOptions>();
+		
+		waveManager = new WaveManager();
+
 		if(zoneAmplitude != 0){
-			AddWave(Wave.CreateZone(zoneAmplitude, zoneWaveLength, zonePeriod, time));
-			AddWave(Wave.CreateZoneTest(zoneAmplitude * 2, zoneWaveLength * 2, zonePeriod, time + 1));
+			waveManager.CreateZone(zoneAmplitude, zoneWaveLength, zonePeriod);
+			waveManager.CreateZoneTest(zoneAmplitude * 2, zoneWaveLength * 2, zonePeriod);
 		}
 
 		int heigtMapLod = 32 * ((int) Mathf.Pow(2, heigtMapPower));
@@ -151,7 +154,6 @@ public class Ground : MonoBehaviour {
 	}
 
 	private void Update() {
-		time += Time.deltaTime;
 		bool leftClick = Input.GetMouseButtonDown(0);
 		bool rightClick = Input.GetMouseButtonDown(1);
 		if((GameManager.instance.actualPlayer == -1)){
@@ -165,31 +167,33 @@ public class Ground : MonoBehaviour {
 					float iFloat = ((hit.point.x / ratio) + halfLod) - selfTransform.position.x;
 					float jFloat = ((hit.point.z / ratio) + halfLod) - selfTransform.position.z;
 					if(leftClick){
-						AddWave(Wave.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactWaveLength, impactPeriod, time, waveSpeed, timeProgression, timeout));
+						// AddWave(Wave.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactWaveLength, impactPeriod, time, waveSpeed, timeProgression, timeout));
+						waveManager.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, impactWaveLength, impactPeriod, waveSpeed, timeProgression, timeout);
 					}
 					else{
-						AddWave(Wave.CreateRectImpact(new Vector2(iFloat, jFloat), waveSize, impactAmplitude, impactWaveLength, impactPeriod, time, waveSpeed, timeProgression, timeout));
+						waveManager.CreateVortex(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, vortexSmooth, impactWaveLength, impactPeriod, waveSpeed, timeProgression, timeout);
+						// AddWave(Wave.CreateRectImpact(new Vector2(iFloat, jFloat), waveSize, impactAmplitude, impactWaveLength, impactPeriod, time, waveSpeed, timeProgression, timeout));
 					}
 				}
 			}
 		}
 
-		WaveOptions[] waveArray = waves.ToArray();
+		waveManager.IncrementTime(Time.deltaTime);
 		
-		if(waves.Count > 0){
+		if(waveManager.waves.Count > 0){
 			// for(int i = 0; i < lod; i++){
 			// 	for(int j = 0; j < lod; j++){
 			// 		CalculateWave(new Vector2Int(i, j));
 			// 	}
 			// }
 
-			frameOptions[0].time = time;
-			frameOptions[0].nbWaves = (uint) waveArray.Length;
+			frameOptions[0].time = waveManager.ActualTime;
+			frameOptions[0].nbWaves = (uint) waveManager.waves.Count;
 			frameOptions[0].lod = (uint) lod;
 			optionBuffer.SetData(frameOptions);
 
-			ComputeBuffer impacts = new ComputeBuffer(waveArray.Length, 16 * sizeof(float));
-			impacts.SetData(waves);
+			ComputeBuffer impacts = new ComputeBuffer(waveManager.waves.Count, 16 * sizeof(float));
+			impacts.SetData(waveManager.waves);
 
 			pointBuffer.SetData(points);
 
@@ -205,25 +209,16 @@ public class Ground : MonoBehaviour {
 			normaleBuffer.GetData(normales);
 
 			impacts.Dispose();
-		}
 
-		for(int i = 0; i < waveArray.Length; i++){
-			if(Wave.IsTimeout(waveArray[i], time)){
-				Debug.Log("Remove Wave");
-				waves.Remove(waveArray[i]);
-			}
+			waveManager.RefreshWaves();
 		}
-	}
-
-	public void AddWave(WaveOptions wave){
-		waves.Add(wave);
 	}
 
 	public void CreateImpact(Vector3 position){
 		float iFloat = ((position.x / ratio) + halfLod) - selfTransform.position.x;
 		float jFloat = ((position.z / ratio) + halfLod) - selfTransform.position.z;
 
-		AddWave(Wave.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactWaveLength, impactPeriod, time, waveSpeed, timeProgression, timeout));
+		waveManager.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, impactWaveLength, impactPeriod, waveSpeed, timeProgression, timeout);
 	}
 
 	private void OnDrawGizmos() {

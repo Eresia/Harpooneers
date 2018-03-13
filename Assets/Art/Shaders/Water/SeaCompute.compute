@@ -15,6 +15,10 @@ struct WaveOptions{
 
 	float amplitude;
 
+	float radius;
+
+	float smooth;
+
 	float waveNumber;
 
 	float angularFrequency;
@@ -26,8 +30,6 @@ struct WaveOptions{
 	float time;
 
 	float timeout;
-
-	float2 trash;
 };
 
 struct FrameOptions{
@@ -47,25 +49,32 @@ RWTexture2D<float4> HeightNormalMap;
 int lod;
 float currentTime;
 float wt;
-float sinTheta;
-float heightAbs;
 float2 heightInfo;
 
-void MakeImpact(uint i, float offsetMagnitude, float posAbs, float coeff){
+void MakeImpact(uint i, float offsetMagnitude, float posAbs, float coeff, float constantWave){
 	float theta = (Impacts[i].waveNumber * (offsetMagnitude / lod));
-	// float timeProgress = Impacts[i].amplitude - pow(currentTime / (1 / (1 + Impacts[i].waveSpeed)) + posAbs, 2);
-	// sinTheta = sin(theta)  * max(0, timeProgress) / exp(posAbs * Impacts[i].timeProgression);
 	float x = currentTime / (1 / (1 + Impacts[i].waveSpeed)) + posAbs;
-	float timeProgress = Impacts[i].amplitude * sin(x) * (1/(x));
-	sinTheta = sin(theta)  * timeProgress / exp(posAbs * Impacts[i].timeProgression);
+	float timeProgress = Impacts[i].amplitude * sin(x) * lerp(1/x, 1, constantWave);
+	float sinTheta = sin(theta* timeProgress) / exp(abs(posAbs) * Impacts[i].timeProgression);
 
-	heightAbs = abs(sinTheta);
+	float heightAbs = abs(sinTheta);
 	heightInfo = heightInfo + float2(sinTheta * (heightAbs/ coeff), (heightAbs / coeff));
 }
 
 void MakeZone(uint i, float offset, float coeff){
-	sinTheta = Impacts[i].amplitude * sin((Impacts[i].waveNumber * (offset / lod)) - wt);
-	heightAbs = abs(sinTheta);
+	float sinTheta = Impacts[i].amplitude * sin((Impacts[i].waveNumber * (offset / lod)) - wt);
+	float heightAbs = abs(sinTheta);
+	heightInfo = heightInfo + float2(sinTheta * (heightAbs/ coeff), (heightAbs / coeff));
+}
+
+void MakeVortex(uint i, float offsetMagnitude, float posAbs, float coeff){
+	float theta = (Impacts[i].waveNumber * (1 / Impacts[i].radius) * (offsetMagnitude / lod));
+	float x = currentTime / (1 / (1 + Impacts[i].waveSpeed)) - posAbs;
+	float timeProgress = Impacts[i].amplitude * sin(x);
+	float sinTheta = sin(theta * timeProgress);
+	sinTheta += Impacts[i].amplitude * (exp((posAbs - Impacts[i].radius) / Impacts[i].smooth)  - 1);
+
+	float heightAbs = abs(sinTheta);
 	heightInfo = heightInfo + float2(sinTheta * (heightAbs/ coeff), (heightAbs / coeff));
 }
 
@@ -82,20 +91,24 @@ void CalculatePoint (uint3 id : SV_DispatchThreadID)
 		
 		currentTime = Impacts[i].time - Options[0].time;
 		wt = Impacts[i].angularFrequency * currentTime;
-
-		sinTheta = 0;
-		heightAbs = 0;
-
-		float offsetMagnitude = distance(float2(0, 0), offset);
-		float posAbs = abs(offsetMagnitude);
-		float coeff = (2 + posAbs);
 		
 		if(Impacts[i].type == 0){
-			MakeImpact(i, offsetMagnitude, posAbs, coeff);
+			float offsetMagnitude = distance(float2(0, 0), offset);
+			float posAbs = abs(offsetMagnitude);
+
+			if(posAbs < Impacts[i].radius){
+				heightInfo = float2(0, 1);
+				break;
+			}
+
+			posAbs = posAbs - Impacts[i].radius;
+			offsetMagnitude = posAbs * sign(offsetMagnitude);
+			float coeff = (2 + posAbs);
+			
+			MakeImpact(i, offsetMagnitude, posAbs, coeff, 0);
 		}
 		else if(Impacts[i].type == 1){
 			if((abs(offset.x) < Impacts[i].size.x) && (abs(offset.y) < Impacts[i].size.y)){
-				heightAbs = 0;
 				heightInfo = float2(0, 1);
 				break;
 			}
@@ -103,17 +116,41 @@ void CalculatePoint (uint3 id : SV_DispatchThreadID)
 			float newOffsetX = clamp(offset.x, - Impacts[i].size.x, Impacts[i].size.x);
 			float newOffsetY = clamp(offset.y, - Impacts[i].size.y, Impacts[i].size.y);
 
-			float newMagnitude = distance(float2(newOffsetX, newOffsetY), offset);
-			posAbs = abs(newMagnitude);
-			coeff = (2 + posAbs);
+			float offsetMagnitude = distance(float2(newOffsetX, newOffsetY), offset);
+			float posAbs = abs(offsetMagnitude);
+			float coeff = (2 + posAbs);
 
-			MakeImpact(i, newMagnitude, posAbs, coeff);
+			MakeImpact(i, offsetMagnitude, posAbs, coeff, 1);
 		}
 		else if(Impacts[i].type == 2){
+			float offsetMagnitude = distance(float2(0, 0), offset);
+			float posAbs = abs(offsetMagnitude);
+			float coeff = (2 + posAbs);
+
 			MakeZone(i, offset.x, coeff);
 		}
 		else if(Impacts[i].type == 3){
+			float offsetMagnitude = distance(float2(0, 0), offset);
+			float posAbs = abs(offsetMagnitude);
+			float coeff = (2 + posAbs);
+
 			MakeZone(i, offsetMagnitude, coeff);
+		}
+		else if(Impacts[i].type == 4){
+			float offsetMagnitude = distance(float2(0, 0), offset);
+			float posAbs = abs(offsetMagnitude);
+			float coeff = (2 + posAbs);
+
+			if(posAbs < Impacts[i].radius){
+				MakeVortex(i, offsetMagnitude, posAbs, coeff);
+				break;
+			}
+
+			posAbs = posAbs - Impacts[i].radius;
+			offsetMagnitude = posAbs * sign(offsetMagnitude);
+			coeff = (2 + posAbs);
+			
+			MakeImpact(i, offsetMagnitude, -posAbs, coeff, 1);
 		}
 		
 	}

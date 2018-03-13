@@ -79,7 +79,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1932297806522794}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lodPower: 3
   heigtMapPower: 5
-  ratio: 1
+  ratio: 0.5
   maxWaveHeight: 20
   seaCompute: {fileID: 7200000, guid: c38a7e0af28a2f143b23bc17e4ef5d30, type: 3}
   selfRenderer: {fileID: 23218790605428570}
@@ -65697,11 +65697,13 @@ MonoBehaviour:
   zoneAmplitude: 0
   zoneWaveLength: 0.1
   zonePeriod: 1.8
-  impactAmplitude: 30
+  impactAmplitude: 15
+  impactRadius: 30
+  vortexSmooth: 25
   impactWaveLength: 1
   impactPeriod: 1
   waveSpeed: 8
-  timeProgression: 0.15
+  timeProgression: 0.2
   timeout: 10
   waveSize: {x: 1, y: 1}
   rawImage: {fileID: 0}
