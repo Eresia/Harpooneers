@@ -138,14 +138,14 @@ public class Ground : MonoBehaviour {
 		waveManager.CreateZone(zoneAmplitude, zoneWaveLength, zonePeriod);
 		// waveManager.CreateZoneTest(zoneAmplitude * 2, zoneWaveLength * 2, zonePeriod);
 
-		int heigtMapLod = 32 * ((int) Mathf.Pow(2, heigtMapPower));
+		int heightMapLod = 32 * ((int) Mathf.Pow(2, heigtMapPower));
 
-		heightMap = new RenderTexture(heigtMapLod, heigtMapLod, 24, RenderTextureFormat.Default, RenderTextureReadWrite.Linear);
+		heightMap = new RenderTexture(heightMapLod, heightMapLod, 24, RenderTextureFormat.Default, RenderTextureReadWrite.Linear);
 		heightMap.name = "HeightMap";
 		heightMap.enableRandomWrite = true;
 		heightMap.Create();
 
-		normaleMap = new RenderTexture(heigtMapLod, heigtMapLod, 24);
+		normaleMap = new RenderTexture(heightMapLod, heightMapLod, 24);
 		normaleMap.name = "NormaleMap";
 		normaleMap.enableRandomWrite = true;
 		normaleMap.Create();
@@ -153,7 +153,7 @@ public class Ground : MonoBehaviour {
 		frameOptions = new FrameOptions[1];
 		frameOptions[0] = new FrameOptions();
 		frameOptions[0].maxWaveHeight = maxWaveHeight;
-		frameOptions[0].heigtMapRatio = (uint) (heigtMapLod / lod);
+		frameOptions[0].heigtMapRatio = (uint) (heightMapLod / lod);
 		frameOptions[0].ratio = (lodPowPower*ratio) / 4;
 		// frameOptions[0].ratio = 0.5f;
 
@@ -190,6 +190,18 @@ public class Ground : MonoBehaviour {
 	}
 
 	private void Update() {
+
+		if(Input.GetKeyDown(KeyCode.Space)){
+			RenderTexture currentActiveRT = RenderTexture.active;
+			RenderTexture.active = heightMap;
+			Texture2D tex = new Texture2D(heightMap.width, heightMap.height);
+			tex.ReadPixels(new Rect(0, 0, tex.width, tex.height), 0, 0);
+			var bytes = tex.EncodeToPNG();
+			System.IO.File.WriteAllBytes("TEST", bytes);
+			UnityEngine.Object.Destroy(tex);
+			RenderTexture.active = currentActiveRT;
+		}
+
 		bool leftClick = Input.GetMouseButtonDown(0);
 		bool rightClick = Input.GetMouseButtonDown(1);
 		if((GameManager.instance.actualPlayer == -1)){
@@ -378,10 +390,10 @@ public class Ground : MonoBehaviour {
         // result.y *= -1;
         // result.x *= -1;
 
-        Debug.DrawRay(position, normales[info.i.x * lod + info.j.x] * 5f);
-		Debug.DrawRay(position, normales[info.i.y * lod + info.j.x] * 5f);
-		Debug.DrawRay(position, normales[info.i.x * lod + info.j.y] * 5f);
-		Debug.DrawRay(position, normales[info.i.y * lod + info.j.y] * 5f);
+        // Debug.DrawRay(position, normales[info.i.x * lod + info.j.x] * 5f);
+		// Debug.DrawRay(position, normales[info.i.y * lod + info.j.x] * 5f);
+		// Debug.DrawRay(position, normales[info.i.x * lod + info.j.y] * 5f);
+		// Debug.DrawRay(position, normales[info.i.y * lod + info.j.y] * 5f);
 
         return result;
 	}
