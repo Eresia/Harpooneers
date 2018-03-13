@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public enum WaveType{
 	IMPACT = 0,
@@ -58,49 +59,63 @@ public class WaveManager{
 
 	public float ActualTime {get; private set;}
 
-	public List<WaveOptions> waves {get; private set;}
+	public Dictionary<int, WaveOptions> Waves {get; private set;}
+
+	private int actualId;
 
 	public WaveManager(){
 		ResetTime();
-		waves = new List<WaveOptions>();
+		actualId = 0;
+		Waves = new Dictionary<int, WaveOptions>();
 	}
 
-	public WaveOptions CreateImpact(Vector2 position, float amplitude, float radius, float waveLength, float period, float waveSpeed, float timeDigress, float timeout){
+	public int CreateImpact(Vector2 position, float amplitude, float radius, float waveLength, float period, float waveSpeed, float timeDigress, float timeout){
 		WaveOptions newWave = new WaveOptions(WaveType.IMPACT, position, amplitude, radius, 0f, waveLength, period, ActualTime, new Vector2(), waveSpeed, timeDigress, timeout);
-		waves.Add(newWave);
-		return newWave;
+		Waves.Add(actualId, newWave);
+		actualId++;
+		return actualId -1;
 	}
 
-	public WaveOptions CreateRectImpact(Vector2 position, Vector2 size, float amplitude, float waveLength, float period, float waveSpeed, float timeDigress, float timeout){
+	public int CreateRectImpact(Vector2 position, Vector2 size, float amplitude, float waveLength, float period, float waveSpeed, float timeDigress, float timeout){
 		WaveOptions newWave = new WaveOptions(WaveType.RECT_IMPACT, position, amplitude, 0f, 0f, waveLength, period, ActualTime, size, waveSpeed, timeDigress, timeout);
-		waves.Add(newWave);
-		return newWave;
+		Waves.Add(actualId, newWave);
+		actualId++;
+		return actualId -1;
 	}
 
-	public WaveOptions CreateZone(float amplitude, float waveLength, float period){
+	public int CreateZone(float amplitude, float waveLength, float period){
 		WaveOptions newWave = new WaveOptions(WaveType.ZONE, new Vector2(), amplitude, 0f, 0f, waveLength, period, ActualTime);
-		waves.Add(newWave);
-		return newWave;
+		Waves.Add(actualId, newWave);
+		actualId++;
+		return actualId -1;
 	}
 
-	public WaveOptions CreateZoneTest(float amplitude, float waveLength, float period){
+	public int CreateZoneTest(float amplitude, float waveLength, float period){
 		WaveOptions newWave = new WaveOptions(WaveType.ZONE_TEST, new Vector2(), amplitude, 0f, 0f, waveLength, period, ActualTime + 1);
-		waves.Add(newWave);
-		return newWave;
+		Waves.Add(actualId, newWave);
+		actualId++;
+		return actualId -1;
 	}
 
-	public WaveOptions CreateVortex(Vector2 position, float amplitude, float radius, float smooth, float waveLength, float period, float waveSpeed, float timeDigress, float timeout){
+	public int CreateVortex(Vector2 position, float amplitude, float radius, float smooth, float waveLength, float period, float waveSpeed, float timeDigress, float timeout){
 		WaveOptions newWave = new WaveOptions(WaveType.VORTEX, position, amplitude, radius, smooth, waveLength, period, ActualTime, new Vector2(), waveSpeed, timeDigress, timeout);
-		waves.Add(newWave);
-		return newWave;
+		Waves.Add(actualId, newWave);
+		actualId++;
+		return actualId -1;
 	}
 
-	public void IncrementWaveState(WaveOptions wave){
-		if(waves.Contains(wave)){
-			int waveId = waves.IndexOf(wave);
+	public void ChangeWave(int id, WaveOptions wave){
+		if(Waves.ContainsKey(id)){
+			Waves[id] = wave;
+		}
+	}
+
+	public void IncrementWaveState(int waveId){
+		if(Waves.ContainsKey(waveId)){
+			WaveOptions wave = Waves[waveId];
 			wave.state += 1;
 			wave.time = ActualTime;
-			waves[waveId] = wave;
+			Waves[waveId] = wave;
 		}
 	}
 
@@ -117,11 +132,11 @@ public class WaveManager{
 	}
 
 	public void RefreshWaves(){
-		WaveOptions[] waveArray = waves.ToArray();
-		for(int i = 0; i < waveArray.Length; i++){
-			if(IsTimeout(waveArray[i])){
+		int[] waveIds = Waves.Keys.ToArray();
+		for(int i = 0; i < waveIds.Length; i++){
+			if(IsTimeout(Waves[waveIds[i]])){
 				Debug.Log("Remove Wave");
-				waves.Remove(waveArray[i]);
+				Waves.Remove(waveIds[i]);
 			}
 		}
 	}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Renderer))]
@@ -99,6 +100,8 @@ public class Ground : MonoBehaviour {
 
 	public RawImage rawImage;
 
+	private int waveVortexId = -1;
+
 	private void Awake() {
 		selfTransform = GetComponent<Transform>();
 		lodPowPower = ((int) Mathf.Pow(2, lodPower));
@@ -151,6 +154,8 @@ public class Ground : MonoBehaviour {
 		if(rawImage != null){
 			rawImage.texture = heightNormalMap;
 		}
+
+		waveVortexId = -1;
 	}
 
 	private void Update() {
@@ -171,16 +176,25 @@ public class Ground : MonoBehaviour {
 						waveManager.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, impactWaveLength, impactPeriod, waveSpeed, timeProgression, timeout);
 					}
 					else{
-						waveManager.CreateVortex(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, vortexSmooth, impactWaveLength, impactPeriod, waveSpeed, timeProgression, timeout);
+						waveVortexId = waveManager.CreateVortex(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, vortexSmooth, impactWaveLength, impactPeriod, waveSpeed, timeProgression, timeout);
 						// AddWave(Wave.CreateRectImpact(new Vector2(iFloat, jFloat), waveSize, impactAmplitude, impactWaveLength, impactPeriod, time, waveSpeed, timeProgression, timeout));
 					}
 				}
 			}
+
+			if(waveManager.Waves.ContainsKey(waveVortexId)){
+				float wheel = Input.GetAxis("Mouse ScrollWheel");
+
+				WaveOptions vortex = waveManager.Waves[waveVortexId];
+				vortex.amplitude += wheel;
+				waveManager.ChangeWave(waveVortexId, vortex);
+			}
+			
 		}
 
 		waveManager.IncrementTime(Time.deltaTime);
 		
-		if(waveManager.waves.Count > 0){
+		if(waveManager.Waves.Count > 0){
 			// for(int i = 0; i < lod; i++){
 			// 	for(int j = 0; j < lod; j++){
 			// 		CalculateWave(new Vector2Int(i, j));
@@ -188,12 +202,12 @@ public class Ground : MonoBehaviour {
 			// }
 
 			frameOptions[0].time = waveManager.ActualTime;
-			frameOptions[0].nbWaves = (uint) waveManager.waves.Count;
+			frameOptions[0].nbWaves = (uint) waveManager.Waves.Count;
 			frameOptions[0].lod = (uint) lod;
 			optionBuffer.SetData(frameOptions);
 
-			ComputeBuffer impacts = new ComputeBuffer(waveManager.waves.Count, 16 * sizeof(float));
-			impacts.SetData(waveManager.waves);
+			ComputeBuffer impacts = new ComputeBuffer(waveManager.Waves.Count, 16 * sizeof(float));
+			impacts.SetData(waveManager.Waves.Values.ToArray());
 
 			pointBuffer.SetData(points);
 
