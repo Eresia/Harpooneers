@@ -24,12 +24,10 @@ public abstract class BossPattern {
 
     protected abstract void ExecutePattern();
 
-    protected abstract void StopPattern();
+    protected abstract void OnStopPattern();
 
-	public void FinishPattern() {
+	public void StopPattern() {
 
-        StopPattern();
-
-		OnPatternFinished();
+        OnStopPattern();
 	}
 }

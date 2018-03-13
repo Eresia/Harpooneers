@@ -48,6 +48,11 @@ public class Geyser : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
+        if(playerTarget == null)
+        {
+            return;
+        }
+
         // Disable.
         if (numberOfExplosionsDone >= numberOfExplosions)
         {

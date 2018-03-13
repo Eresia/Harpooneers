@@ -9,9 +9,9 @@ public class BossAI : MonoBehaviour {
     [HideInInspector]
     public BossManager bossMgr;
 
-    private Animator animator;
+    protected Animator animator;
 
-    private BossAnimatorScript[] behaviours;
+    protected BossAnimatorScript[] behaviours;
 
     public BossPattern CurrentPattern
     {
@@ -23,7 +23,7 @@ public class BossAI : MonoBehaviour {
     }
     private BossPattern currentPattern;
 
-    public Action OnBossBeaten;
+    public Action OnPhaseFinished;
 
     protected virtual void Awake()
     {

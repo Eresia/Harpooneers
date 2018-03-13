@@ -71,6 +71,8 @@ public class BoundaryManager : MonoBehaviour {
 
         trapezeData.xBottomRight = limits[3].x;
         trapezeData.xTopRight = limits[2].x;
+
+        trapezeData.height = Mathf.Abs(trapezeData.zBottom - trapezeData.zTop);
     }
 
     /// <summary>
@@ -85,8 +87,6 @@ public class BoundaryManager : MonoBehaviour {
 
         float xMin = Mathf.Lerp(trapezeData.xBottomLeft, trapezeData.xTopLeft, t);
         float xMax = Mathf.Lerp(trapezeData.xBottomRight, trapezeData.xTopRight, t);
-
-        //Debug.Log(t + ": " + xMin + " " + xMax);
 
         clampedPos.x = Mathf.Clamp(clampedPos.x, xMin - xMin * horizontalOffset, xMax - xMax * horizontalOffset);
         clampedPos.z = Mathf.Clamp(clampedPos.z, trapezeData.zBottom + trapezeData.zBottom * verticalOffset, trapezeData.zTop - trapezeData.zTop * verticalOffset);

@@ -224,7 +224,7 @@ public class Harpoon : MonoBehaviour {
             selfTransform.parent = parentTransform;
 
             Vector3 targetPos = selfTransform.position;
-            targetPos.y = 0f;
+            targetPos.y = launcher.harpoonMuzzle.position.y;
 
             selfTransform.position = targetPos;
 

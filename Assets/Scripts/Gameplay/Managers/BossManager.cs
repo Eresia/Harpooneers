@@ -8,14 +8,16 @@ public class BossManager : MonoBehaviour {
 
     public GameObject[] phases;
 
-    [Tooltip("Spawns Ref")]
+    [Header("Spawns")]
     public Transform center;
     public Transform north;
     public Transform east;
     public Transform south;
     public Transform west;
 
+    [HideInInspector]
     public float width;
+    [HideInInspector]
     public float height;
 
     public PhaseTransitionManager phaseTransitionMgr;
@@ -67,7 +69,7 @@ public class BossManager : MonoBehaviour {
             BossAI boss = g.GetComponent<BossAI>();
             boss.bossMgr = this;
 
-            boss.OnBossBeaten = NextPhase;
+            boss.OnPhaseFinished = NextPhase;
         }
     }
 

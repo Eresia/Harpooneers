@@ -4,14 +4,16 @@ using DG.Tweening;
 
 public class DashPattern : BossPattern {
 
-    private DashState dashState;
+    private DashState state;
     private WhalePhaseAI whaleAI;
 
-    private Tweener tween;
+    private Tweener dashTween;
+
+    private bool isDashing;
 
     public DashPattern(DashState dashState)
     {
-        this.dashState = dashState;
+        this.state = dashState;
     }
 
     public override void SetBoss(BossAI boss)
@@ -19,16 +21,25 @@ public class DashPattern : BossPattern {
         base.SetBoss(boss);
 
         whaleAI = boss as WhalePhaseAI;
+
+        // Callback when a bomb explodes.
+        
     }
 
     protected override void ExecutePattern() {
         
-        if(tween != null)
+        if(isDashing)
         {
-            tween.Kill();
+            dashTween.Kill();
+            dashTween = null;
         }
 
-		boss.StartCoroutine(SelectSpawnThenDash());
+        if(state.diveOnExplode)
+        {
+            whaleAI.bodyCollider.GetComponent<WhaleBody>().OnWhaleExplode = OnStopPattern;
+        }
+
+        boss.StartCoroutine(SelectSpawnThenDash());
 	}
 
     // Decide from which spawn the whale will dash.
@@ -71,7 +82,7 @@ public class DashPattern : BossPattern {
 
         whaleAI.spawningFX.Play();
 
-        yield return new WaitForSeconds(dashState.WaitBeforeSpawn);
+        yield return new WaitForSeconds(state.WaitBeforeSpawn);
 
         whaleAI.spawningFX.Stop();
         whaleAI.Whale.SetActive(true);
@@ -81,17 +92,18 @@ public class DashPattern : BossPattern {
 
         yield return MoveAndDash(horizontalDash);
 
-		FinishPattern();
+        whaleAI.ResetWhaleTransform();
+
+        OnPatternFinished();
 	}
 
     IEnumerator MoveAndDash(bool horizontalDash)
     {
         // Begin to move left ?
         bool _left;
-        _left = Random.Range(0, 1) > 0.5 ? true : false;
 
         // Number of move before dash ?
-        int move = Random.Range(dashState.TurnMin, dashState.TurnMax + 1);
+        int move = Random.Range(state.TurnMin, state.TurnMax + 1);
 
         Vector3 destination;
         float moveDuration = 1f;
@@ -106,52 +118,91 @@ public class DashPattern : BossPattern {
             // Random the new destination.
             if (horizontalDash)
             {
-                destination.z = Random.Range(dashState.minZ, dashState.maxZ);
+                destination.z = Random.Range(state.minZ, state.maxZ);
             }
             else
             {
-                destination.x = Random.Range(dashState.minX, dashState.maxX);
+                destination.x = Random.Range(state.minX, state.maxX);
             }
 
             // Uniform movement.
             float dist = Vector3.Distance(whaleAI.WhaleTransform.position, destination);
-            moveDuration = Mathf.Abs(dist / dashState.translateSpeed);
+            moveDuration = Mathf.Abs(dist / state.translateSpeed);
 
-            tween = whaleAI.WhaleTransform.DOMove(destination, moveDuration);
+            dashTween = whaleAI.WhaleTransform.DOMove(destination, moveDuration);
+
+            if(_left)
+            {
+                whaleAI.WhaleAnimator.Play("LeftDrift");
+            }
+            else
+            {
+                whaleAI.WhaleAnimator.Play("RightDrift");
+            }
 
             yield return new WaitForSeconds(Mathf.Abs(moveDuration));
 
             _left = !_left;
         }
         
-        yield return new WaitForSeconds(dashState.WaitBeforeDash);
-        
+        yield return new WaitForSeconds(state.WaitBeforeDash);
+
+        isDashing = true;
+
         float distance;
         if (horizontalDash)
         {
-            distance = boss.bossMgr.width + dashState.whaleOffset;
+            distance = boss.bossMgr.width + state.whaleOffset;
         }
         else
         {
-            distance = boss.bossMgr.height + dashState.whaleOffset;
+            distance = boss.bossMgr.height + state.whaleOffset;
         }
 
         destination = whaleAI.WhaleTransform.position + whaleAI.WhaleTransform.forward * distance;
-        moveDuration = Mathf.Abs(distance / dashState.dashSpeed);
+        moveDuration = Mathf.Abs(distance / state.dashSpeed);
 
-        tween = whaleAI.WhaleTransform.DOMove(destination, moveDuration).SetEase(Ease.InCubic);
+        dashTween = whaleAI.WhaleTransform.DOMove(destination, moveDuration).SetEase(Ease.InCubic);
+
+        whaleAI.WhaleAnimator.Play("Dash");
 
         // TODO Generate wave on the sea along the dash
         // TODO song etc
 
         // Wait while the dash isn't finished.
-        yield return new WaitWhile(() => (tween.IsPlaying()));
+        yield return new WaitWhile(() => (dashTween.IsPlaying()));
 
-        whaleAI.Whale.SetActive(false);
+        isDashing = false;
     }
 
-    protected override void StopPattern()
+    protected override void OnStopPattern()
     {
-        // Dash isn't stoppable.
+        // Dive if explodes when dashing.
+
+        if (isDashing)
+        {
+            boss.StopAllCoroutines();
+            
+            dashTween.Kill();
+            dashTween = null;
+
+            boss.StartCoroutine(WhaleDive());
+        }
+    }
+
+    private IEnumerator WhaleDive()
+    {
+        Tween t = whaleAI.WhaleChildTransform.DOLocalMove(whaleAI.WhaleTransform.up * state.diveHeightEnd + whaleAI.WhaleTransform.forward * state.diveForwardEnd, state.divingDuration);
+        whaleAI.WhaleChildTransform.DOLocalRotate(state.diveRotationEnd, state.divingDuration);
+        whaleAI.WhaleChildTransform.DOScale(Vector3.zero, state.divingDuration);
+
+        whaleAI.WhaleAnimator.Play("Dash");
+        whaleAI.WhaleAnimator.SetBool("Swim", true);
+
+        yield return new WaitWhile(() => (t.IsPlaying()));
+
+        whaleAI.ResetWhaleTransform();
+
+        OnPatternFinished();
     }
 }

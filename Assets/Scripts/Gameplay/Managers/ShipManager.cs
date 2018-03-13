@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Setup all boats in the game depending the number of players and the customizations choosen.
@@ -23,6 +24,7 @@ public class ShipManager : MonoBehaviour {
     public GameObject[] players;
     
     private ShipModulesManager[] shipModuleMgrs;
+    private PlayerManager[] playerMgrs;
     
     private int playerAlive = 0;
 
@@ -35,14 +37,15 @@ public class ShipManager : MonoBehaviour {
     private void Awake()
     {
         shipModuleMgrs = new ShipModulesManager[players.Length];
-        if(players.Length > 0)
+        playerMgrs = new PlayerManager[players.Length];
+        if (players.Length > 0)
         {
             for (int i = 0; i < players.Length; i++)
             {
                 shipModuleMgrs[i] = players[i].GetComponentInChildren<ShipModulesManager>();
+                playerMgrs[i] = shipModuleMgrs[i].GetComponent<PlayerManager>();
             }
         }
-        
 
         if (useDefaultConfig)
         {
@@ -93,5 +96,39 @@ public class ShipManager : MonoBehaviour {
     public void NotifyAlive()
     {
         playerAlive++;
+    }
+
+    /// <summary>
+    /// Return a random player alive to attack.
+    /// </summary>
+    /// <returns>Transform</returns>
+    public Transform ChoosePlayerToAttack()
+    {
+        List<int> playerIds = new List<int>();
+        for (int i = 0; i < GameManager.instance.nbOfPlayers; i++)
+        {
+            playerIds.Add(i);
+        }
+
+        bool targetFound = false;
+
+        int playerId = 0;
+
+        while (playerIds.Count > 0 && !targetFound)
+        {
+            playerId = playerIds[Random.Range(0, playerIds.Count)];
+
+            if (!playerMgrs[playerId].isDead)
+            {
+                targetFound = true;
+            }
+
+            else
+            {
+                playerIds.Remove(playerId);
+            }
+        }
+
+        return players[playerId].transform.GetChild(0);
     }
 }

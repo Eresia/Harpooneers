@@ -47,9 +47,7 @@ public class Ground : MonoBehaviour {
 	private float time;
 	
 
-	private RenderTexture heightMapTexture;
-
-	private RenderTexture normaleMapTexture;
+	private RenderTexture heightNormalMap;
 
 	private List<WaveOptions> waves;
 
@@ -114,15 +112,10 @@ public class Ground : MonoBehaviour {
 
 		int heigtMapLod = 32 * ((int) Mathf.Pow(2, heigtMapPower));
 
-		heightMapTexture = new RenderTexture(heigtMapLod, heigtMapLod, 24);
-		heightMapTexture.name = "HeightMap";
-		heightMapTexture.enableRandomWrite = true;
-		heightMapTexture.Create();
-
-		normaleMapTexture = new RenderTexture(heigtMapLod, heigtMapLod, 24);
-		normaleMapTexture.name = "NormaleMap";
-		normaleMapTexture.enableRandomWrite = true;
-		normaleMapTexture.Create();
+		heightNormalMap = new RenderTexture(heigtMapLod, heigtMapLod, 24);
+		heightNormalMap.name = "HeightNormalMap";
+		heightNormalMap.enableRandomWrite = true;
+		heightNormalMap.Create();
 
 		frameOptions = new FrameOptions[1];
 		frameOptions[0] = new FrameOptions();
@@ -139,22 +132,21 @@ public class Ground : MonoBehaviour {
 
 		seaCompute.SetBuffer(pointKernel, "Options", optionBuffer);
 		seaCompute.SetBuffer(pointKernel, "Result", pointBuffer);
-		seaCompute.SetTexture(pointKernel, "HeightMap", heightMapTexture);
+		seaCompute.SetTexture(pointKernel, "HeightNormalMap", heightNormalMap);
 
 		seaCompute.SetBuffer(normaleKernel, "Options", optionBuffer);
 		seaCompute.SetBuffer(normaleKernel, "Result", pointBuffer);
 		seaCompute.SetBuffer(normaleKernel, "Normales", normaleBuffer);
-		seaCompute.SetTexture(normaleKernel, "NormaleMap", normaleMapTexture);
+		seaCompute.SetTexture(normaleKernel, "HeightNormalMap", heightNormalMap);
 
 		selfRenderer.material = GetComponent<Renderer>().material;
-		selfRenderer.material.SetTexture("_HeightMap", normaleMapTexture);
-		selfRenderer.material.SetTexture("_NormaleMap", normaleMapTexture);
+		selfRenderer.material.SetTexture("_HeightNormalMap", heightNormalMap);
 		selfRenderer.material.SetBuffer("_Vertex", pointBuffer);
 		selfRenderer.material.SetFloat("_MaxWaveHeight", maxWaveHeight);
 		selfRenderer.material.SetInt("_VertexSize", lod);
 
 		if(rawImage != null){
-			rawImage.texture = normaleMapTexture;
+			rawImage.texture = heightNormalMap;
 		}
 	}
 
