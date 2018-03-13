@@ -1390,13 +1390,11 @@ Prefab:
       propertyPath: m_Center.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 135279740541667660, guid: bac4336b7303bee4aa64fef9b6be88c1,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: m_Radius
       value: 1.5
       objectReference: {fileID: 0}
-    - target: {fileID: 135279740541667660, guid: bac4336b7303bee4aa64fef9b6be88c1,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: m_Center.y
       value: 2
       objectReference: {fileID: 0}
@@ -1471,13 +1469,11 @@ Prefab:
       propertyPath: m_Center.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 135279740541667660, guid: bac4336b7303bee4aa64fef9b6be88c1,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: m_Radius
       value: 1.5
       objectReference: {fileID: 0}
-    - target: {fileID: 135279740541667660, guid: bac4336b7303bee4aa64fef9b6be88c1,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: m_Center.y
       value: 2
       objectReference: {fileID: 0}
@@ -2093,6 +2089,11 @@ Prefab:
       propertyPath: NoHittablePatternCount
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114181008368525658, guid: 1b48cf6c6e073994ab1e8ddf7068f326,
+        type: 2}
+      propertyPath: noHittablePatternCount
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1b48cf6c6e073994ab1e8ddf7068f326, type: 2}
   m_IsPrefabParent: 0
@@ -2462,13 +2463,11 @@ Prefab:
       propertyPath: m_Center.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 135279740541667660, guid: bac4336b7303bee4aa64fef9b6be88c1,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: m_Radius
       value: 1.5
       objectReference: {fileID: 0}
-    - target: {fileID: 135279740541667660, guid: bac4336b7303bee4aa64fef9b6be88c1,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: m_Center.y
       value: 2
       objectReference: {fileID: 0}
@@ -3292,7 +3291,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4018076426948940, guid: bac4336b7303bee4aa64fef9b6be88c1, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 3.079
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4018076426948940, guid: bac4336b7303bee4aa64fef9b6be88c1, type: 2}
       propertyPath: m_LocalPosition.y
@@ -3327,13 +3326,11 @@ Prefab:
       propertyPath: boundaryMgr
       value: 
       objectReference: {fileID: 265122724}
-    - target: {fileID: 135279740541667660, guid: bac4336b7303bee4aa64fef9b6be88c1,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: m_Center.y
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 135279740541667660, guid: bac4336b7303bee4aa64fef9b6be88c1,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: m_Radius
       value: 1.5
       objectReference: {fileID: 0}
@@ -4321,6 +4318,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossMgr: {fileID: 0}
+  hitOnEyesNeeded: 2
+  bombInMouthNeeded: 2
+  noHittablePatternCount: 0
+  numberOfPatternsWithoutHit: 
 --- !u!1001 &1910038995
 Prefab:
   m_ObjectHideFlags: 0
