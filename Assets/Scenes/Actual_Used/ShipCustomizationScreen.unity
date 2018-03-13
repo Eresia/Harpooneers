@@ -15,10 +15,10 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 8
   m_Fog: 1
-  m_FogColor: {r: 0.5916955, g: 0.6852106, b: 0.83823526, a: 1}
+  m_FogColor: {r: 0.06596022, g: 0.7370984, b: 0.89705884, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.0015
-  m_LinearFogStart: 114.3
+  m_LinearFogStart: 291.7
   m_LinearFogEnd: 1054.1
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
@@ -183,13 +183,13 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 162196611}
-  m_LocalRotation: {x: -0.28181195, y: -0.6485231, z: -0.6485229, w: 0.2818119}
-  m_LocalPosition: {x: 64, y: -7, z: 582}
-  m_LocalScale: {x: 2.500002, y: 2.500001, z: 2.500001}
+  m_LocalRotation: {x: -0.32426146, y: -0.6658078, z: -0.62837446, w: 0.23811795}
+  m_LocalPosition: {x: 40, y: -6, z: 607}
+  m_LocalScale: {x: 2.500002, y: 2.500001, z: 11.558172}
   m_Children: []
   m_Father: {fileID: 1414529997}
   m_RootOrder: 34
-  m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: -133.026}
+  m_LocalEulerAnglesHint: {x: -97.616, y: -43.026, z: -90}
 --- !u!23 &162196613
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2952,8 +2952,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 0.9705882, g: 0.9670445, b: 0.842128, a: 1}
-  m_Intensity: 1.01
+  m_Color: {r: 0.9558824, g: 0.84623706, b: 0.681769, a: 1}
+  m_Intensity: 1.14
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -2962,8 +2962,8 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
+    m_Bias: 0
+    m_NormalBias: 1.24
     m_NearPlane: 0.2
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
@@ -4916,8 +4916,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1505987282}
   m_LocalRotation: {x: -0.68625176, y: 0.17046578, z: 0.17046578, w: 0.68625176}
-  m_LocalPosition: {x: -828, y: -7, z: 690}
-  m_LocalScale: {x: 2.5000007, y: 2.5000014, z: 2.500001}
+  m_LocalPosition: {x: -657, y: -2, z: 509}
+  m_LocalScale: {x: 2.5000007, y: 2.5000014, z: 22.271784}
   m_Children: []
   m_Father: {fileID: 1414529997}
   m_RootOrder: 39
@@ -5086,6 +5086,7 @@ GameObject:
   - component: {fileID: 1612456856}
   - component: {fileID: 1612456855}
   - component: {fileID: 1612456859}
+  - component: {fileID: 1612456860}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5168,6 +5169,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   profile: {fileID: 11400000, guid: 71cc29a0d261f084f9be3fa1756f4d5e, type: 2}
+--- !u!114 &1612456860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1612456854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b9e31fdf962e3e4ca3b62ec3ecc2f4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tonemapper: 0
+  Exposure: 1
+  LinearWhitePoint: 11.2
+  ApplyDithering: 0
+  QualityLevel: 1
+  BlendAmount: 0.68
+  LutTexture: {fileID: 2800000, guid: d063bb87c0a270041b4a50d6a94f6024, type: 3}
+  LutBlendTexture: {fileID: 0}
+  MaskTexture: {fileID: 0}
+  UseDepthMask: 0
+  DepthMaskCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  UseVolumes: 0
+  ExitVolumeBlendTime: 1
+  TriggerVolumeProxy: {fileID: 0}
+  VolumeCollisionMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  EffectFlags:
+    components: []
+  sharedInstanceID: 154acbbb-a23c-4f4d-801b-30f0b69197c7
 --- !u!1001 &1643442104
 Prefab:
   m_ObjectHideFlags: 0

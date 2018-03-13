@@ -65698,12 +65698,12 @@ MonoBehaviour:
   zoneWaveLength: 0.1
   zonePeriod: 1.8
   impactAmplitude: 30
-  impactRadius: 60
-  vortexSmooth: 100
+  impactRadius: 0
+  vortexSmooth: 0
   impactWaveLength: 100
   impactPeriod: 0.1
-  waveSpeed: 0.1
-  timeProgression: 0.1
+  waveSpeed: 0
+  timeProgression: 0
   timeout: 10
-  waveSize: {x: 1, y: 1}
+  waveSize: {x: 0, y: 0}
   rawImage: {fileID: 0}
