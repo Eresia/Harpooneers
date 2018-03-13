@@ -31,6 +31,8 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
 
     private bool hasAlreadyExplode;
 
+	public AudioClip explosion_sound;
+
     public void Awake()
     {
         transform.parent = null;
@@ -88,6 +90,8 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
         {
             return;
         }
+
+		GameManager.instance.audioManager.PlaySoundOneTime (explosion_sound, 0.1f);
 
         hasAlreadyExplode = true;
 

@@ -25,7 +25,9 @@ public class PlayerInput : MonoBehaviour
     private bool doPause; // Do the pause if the delay is repected.
     private int controllerDisconnected;
 
-	public AudioClip res_sound;
+	public AudioClip[] res_sound;
+	private AudioClip res_Sound;
+	public AudioClip pull_sound;
 
     void Awake()
     {
@@ -48,6 +50,8 @@ public class PlayerInput : MonoBehaviour
 
         // Deactivate the player position indicator
         playerMgr.FeedbackPlayerPos(false, playerId);
+
+		GameManager.instance.audioManager.CreatePersistantSound (AudioManager.PossibleSound.PULL, pull_sound, 0.05f);
     }
 
     private void Reset()
@@ -143,7 +147,10 @@ public class PlayerInput : MonoBehaviour
 
         if (data.GetButtonDown())
         {
-			GameManager.instance.audioManager.PlaySoundOneTime (res_sound);
+			int index = Random.Range (0, res_sound.Length);
+			res_Sound = res_sound [index];
+			GameManager.instance.audioManager.PlaySoundOneTime (res_Sound,0.05f);
+
             playerMgr.ResurrectFriend();
         }
     }
@@ -170,8 +177,13 @@ public class PlayerInput : MonoBehaviour
 
         if (data.GetButton())
         {
+			GameManager.instance.audioManager.PlayPersistantSound (AudioManager.PossibleSound.PULL, 0.1f);
             harpoonLauncher.Pull();
         }
+		else
+		{
+			GameManager.instance.audioManager.StopPersistantSound (AudioManager.PossibleSound.PULL, 0.1f);
+		}
     }
 
     private void HandleCutRope()

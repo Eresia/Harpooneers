@@ -51,6 +51,9 @@ public class WhalePhaseAI : BossAI {
 
     private bool phaseFinished;
 
+	public AudioClip whale_scream;
+	public AudioClip whale_hit;
+
     protected override void Awake()
     {
         base.Awake();
@@ -74,6 +77,8 @@ public class WhalePhaseAI : BossAI {
         }
 
         bodyCollider = WhaleChildTransform.GetChild(1).GetChild(0).GetComponent<Collider>();
+
+		GameManager.instance.audioManager.PlaySoundOneTime (whale_scream, 0.2f);
 
         // Setup eye colliders and scripts.
         eyesScript = WhaleChildTransform.GetChild(1).GetComponentsInChildren<HandleHarpoonWithEye>();
@@ -111,7 +116,10 @@ public class WhalePhaseAI : BossAI {
 
     public void HitEye(bool left)
     {
-        if(left)
+		GameManager.instance.audioManager.PlaySoundOneTime (whale_hit, 0.2f);
+		GameManager.instance.audioManager.PlaySoundOneTime (whale_scream, 0.2f);
+
+		if(left)
         {
             leftHitCount++;
         } else

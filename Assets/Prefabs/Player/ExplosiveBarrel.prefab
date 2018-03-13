@@ -502,7 +502,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 2d296df18081ede4ab63f28bf90c1ca5, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.229
+  m_Volume: 0.08
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -692,6 +692,7 @@ MonoBehaviour:
   fuseFX: {fileID: 198292180236823474}
   resetWhenLeaveScreen: {fileID: 114872358802777512}
   physicsScript: {fileID: 114000989618548766}
+  explosion_sound: {fileID: 8300000, guid: 66c55efe3735ce74d9c542d12f7856b8, type: 3}
 --- !u!114 &114556376633281656
 MonoBehaviour:
   m_ObjectHideFlags: 1

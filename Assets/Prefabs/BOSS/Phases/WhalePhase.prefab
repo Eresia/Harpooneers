@@ -138,10 +138,12 @@ MonoBehaviour:
     type: 2}
   NoHittablePatternCount: 2
   numberOfPatternsWithoutHit: 2
-  eyes:
-  - {fileID: 0}
-  - {fileID: 0}
+  eyeColliders: []
+  bodyCollider: {fileID: 0}
+  eyesScript: []
   hitByEyeNeeded: 0
+  whale_scream: {fileID: 8300000, guid: 6e820c0ae228ae5499e0a79755f4c919, type: 3}
+  whale_hit: {fileID: 8300000, guid: 6ef5d8cc08d8e804ebd2fb79df81ff0b, type: 3}
 --- !u!198 &198223805626864814
 ParticleSystem:
   m_ObjectHideFlags: 1
