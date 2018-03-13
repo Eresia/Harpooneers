@@ -37,7 +37,7 @@ public class PhaseTransitionManager : MonoBehaviour {
 
     public void NextPhase(int currentPhase)
     {
-        if(currentPhase-1 > 0 && currentPhase < phasesCameras.Length)
+        if(currentPhase > 0 && currentPhase < phasesCameras.Length)
         {
             StartCoroutine(TransitionToNextPhase(phasesCameras[currentPhase-1], phasesCameras[currentPhase], phasesCameras[currentPhase].transitionTime));
         }

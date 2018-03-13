@@ -4,18 +4,48 @@ using UnityEngine;
 
 public class Phase2AI : PhaseAI {
 
+    [Header("Gameobjects of Krakens.")]
+
+    public TentacleReferences tentaclePrefab;
+    public int tentaclesNeeded = 4;
+
+    public TentacleReferences[] Tentacles
+    {
+        get { return tentacles; }
+    }
+    private TentacleReferences[] tentacles;
+
+    [Header("Patterns and hit")]
     public int hitOnEyesNeeded = 2;
     private int hitOnEyesCount = 0;
 
     public int bombInMouthNeeded = 2;
     private int bombInMouthCount = 0;
 
-    public int noHittablePatternCount;
+    public int noHittablePatternCount = 2;
     public int[] numberOfPatternsWithoutHit;
 
     private int step = 0; // Actual step of the phase.
 
     private int passageCount = 0;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        SpawnTentacles();
+    }
+
+    private void SpawnTentacles()
+    {
+        tentacles = new TentacleReferences[tentaclesNeeded];
+
+        for (int i = 0; i < tentacles.Length; i++)
+        {
+            tentacles[i] = Instantiate<TentacleReferences>(tentaclePrefab, transform);
+            tentacles[i].gameObject.SetActive(false);
+        }
+    }
 
     public int DecideNextPhase()
     {
@@ -41,7 +71,7 @@ public class Phase2AI : PhaseAI {
 
         else
         {
-            nextState = UnityEngine.Random.Range(0, noHittablePatternCount);
+            nextState = Random.Range(0, noHittablePatternCount);
         }
 
         return nextState;
@@ -49,16 +79,19 @@ public class Phase2AI : PhaseAI {
 
     public void HitBoss()
     {
+        // Handle step eyes.
         if(step == 0)
         {
             hitOnEyesCount++;
 
+            // Step 1 beaten.
             if(hitOnEyesCount >= hitOnEyesNeeded)
             {
                 step = 1;
             }
         }
 
+        // Handle step mouth.
         else if(step == 1)
         {
             bombInMouthCount++;
