@@ -10,6 +10,7 @@ public class WhalePhaseAI : BossAI {
     public GameObject whalePrefab;
     public Transform FX;
     public ParticleSystem spawningFX;
+    public WhaleReferences whaleReferences;
 
     [Header("Patterns components")]
     public Geyser geyserPrefab;
@@ -41,6 +42,7 @@ public class WhalePhaseAI : BossAI {
 
     public Collider[] eyeColliders;
     public Collider bodyCollider;
+    public Collider tailCollider;
     public HandleHarpoonWithEye[] eyesScript;
     public int hitByEyeNeeded;
 
@@ -63,9 +65,11 @@ public class WhalePhaseAI : BossAI {
     {
         whale = Instantiate(whalePrefab);
 
+
+        whaleReferences = whale.GetComponent<WhaleReferences>();
         WhaleTransform = whale.GetComponent<Transform>();
-        WhaleChildTransform = WhaleTransform.GetChild(0);
-        WhaleAnimator = WhaleChildTransform.GetChild(0).GetComponent<Animator>();
+        WhaleChildTransform = whaleReferences.whaleChildTransform;
+        WhaleAnimator = whaleReferences.whaleAnimator;
 
         geysers = new Geyser[GameManager.instance.nbOfPlayers];
         for (int i = 0; i < geysers.Length; i++)
@@ -73,10 +77,11 @@ public class WhalePhaseAI : BossAI {
             geysers[i] = Instantiate<Geyser>(geyserPrefab);
         }
 
-        bodyCollider = WhaleChildTransform.GetChild(1).GetChild(0).GetComponent<Collider>();
+        bodyCollider = whaleReferences.bodyCollider;
+        tailCollider = whaleReferences.tailCollider;
 
         // Setup eye colliders and scripts.
-        eyesScript = WhaleChildTransform.GetChild(1).GetComponentsInChildren<HandleHarpoonWithEye>();
+        eyesScript = whaleReferences.eyeScript;
         eyeColliders = new Collider[eyesScript.Length];
 
         for (int i = 0; i < eyeColliders.Length; i++)
@@ -114,9 +119,11 @@ public class WhalePhaseAI : BossAI {
         if(left)
         {
             leftHitCount++;
+            whaleReferences.PlayEyeBloodFX(0);
         } else
         {
             rightHitCount++;
+            whaleReferences.PlayEyeBloodFX(1);
         }
 
         GameManager.instance.camMgr.Shake();
