@@ -95,10 +95,10 @@ public class SplashTentaclesPattern : BossPattern {
 
             for (int i = 0; i < state.tentacleCount; i++)
             {
-                // Play attack animation.
                 phase2.Tentacles[i].childTransform.DOLocalMove(spawns[i] + state.startPos, state.divingDuration);
                 phase2.Tentacles[i].tentacleCollider.enabled = true;
-
+                
+                // TODO Play attack animation.
                 //phase2.Tentacles[i].animAttack.Play("");
             }
 
