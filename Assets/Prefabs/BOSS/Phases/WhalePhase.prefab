@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4063929827086040}
   - component: {fileID: 198223805626864814}
   - component: {fileID: 199685159997427202}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: SpawningFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,14 +134,16 @@ MonoBehaviour:
     type: 2}
   FX: {fileID: 4545501658588088}
   spawningFX: {fileID: 198223805626864814}
+  whaleReferences: {fileID: 0}
   geyserPrefab: {fileID: 114058333544853980, guid: 9fe4bcfee86ae324a98496a6a8e7279a,
     type: 2}
-  NoHittablePatternCount: 2
+  noHittablePatternCount: 0
   numberOfPatternsWithoutHit: 2
-  eyes:
-  - {fileID: 0}
-  - {fileID: 0}
-  hitByEyeNeeded: 0
+  eyeColliders: []
+  bodyCollider: {fileID: 0}
+  tailCollider: {fileID: 0}
+  eyesScript: []
+  hitByEyeNeeded: 2
 --- !u!198 &198223805626864814
 ParticleSystem:
   m_ObjectHideFlags: 1
