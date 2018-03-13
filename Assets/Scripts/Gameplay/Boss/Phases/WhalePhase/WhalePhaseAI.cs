@@ -40,6 +40,7 @@ public class WhalePhaseAI : BossAI {
     [Header("Boss attributes")]
 
     public Collider[] eyeColliders;
+    public Collider bodyCollider;
     public HandleHarpoonWithEye[] eyesScript;
     public int hitByEyeNeeded;
 
@@ -47,8 +48,6 @@ public class WhalePhaseAI : BossAI {
 
     private int leftHitCount;
     private int rightHitCount;
-
-    private Vector3 originCamPos;
 
     private bool phaseFinished;
 
@@ -73,6 +72,8 @@ public class WhalePhaseAI : BossAI {
         {
             geysers[i] = Instantiate<Geyser>(geyserPrefab);
         }
+
+        bodyCollider = WhaleChildTransform.GetChild(1).GetChild(0).GetComponent<Collider>();
 
         // Setup eye colliders and scripts.
         eyesScript = WhaleChildTransform.GetChild(1).GetComponentsInChildren<HandleHarpoonWithEye>();
@@ -104,8 +105,6 @@ public class WhalePhaseAI : BossAI {
         {
             nextState = UnityEngine.Random.Range(0, NoHittablePatternCount);
         }
-
-        Debug.Log(nextState);
 
         return nextState;
     }
@@ -155,8 +154,6 @@ public class WhalePhaseAI : BossAI {
         WhaleChildTransform.localRotation = Quaternion.identity;
         WhaleChildTransform.localPosition = Vector3.zero;
         WhaleChildTransform.localScale = Vector3.one;
-
-        WhaleAnimator.SetBool("Swim", false);
     }
 
     // Make whale vulnerable.

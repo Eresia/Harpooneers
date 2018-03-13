@@ -38,7 +38,7 @@ public class CameraManager : MonoBehaviour {
     private void OnShakeFinished()
     {
         cam.transform.position = originCamPos;
-        cam.transform.position = originCamPos;
+        cam.transform.rotation = originCamRot;
     }
 
     [ContextMenu("SHAKE")]

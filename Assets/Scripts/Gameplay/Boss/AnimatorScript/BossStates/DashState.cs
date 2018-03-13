@@ -18,6 +18,15 @@ public class DashState : BossState<DashPattern>
     public float translateSpeed = 20f;
     public float dashSpeed = 90f;
     public float whaleOffset = 18f;
+    
+    public bool diveOnExplode = true;
+
+    [Header("Dive")]
+    public float divingDuration = 5f;
+    public float diveHeightEnd = -30f;
+    public float diveForwardEnd = 20f;
+
+    public Vector3 diveRotationEnd;
 
     private DashPattern dashPattern;
 
