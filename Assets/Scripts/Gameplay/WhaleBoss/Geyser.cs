@@ -43,7 +43,10 @@ public class Geyser : MonoBehaviour {
         numberOfExplosionsDone = 0;
         elapsedTime = 0;
         isMoving = true;
+
+        transform.localScale = new Vector3(radius[0], radius[0], radius[0]);
     }
+
 
     // Update is called once per frame
     void Update ()
@@ -116,6 +119,8 @@ public class Geyser : MonoBehaviour {
             bubbleFX.Play();
             isMoving = true;
             elapsedTime = 0;
+
+            transform.localScale = new Vector3(radius[numberOfExplosionsDone], radius[numberOfExplosionsDone], radius[numberOfExplosionsDone]);
         }
     }
 
