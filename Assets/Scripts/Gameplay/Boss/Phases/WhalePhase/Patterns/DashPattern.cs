@@ -201,6 +201,8 @@ public class DashPattern : BossPattern {
 
         yield return new WaitWhile(() => (t.IsPlaying()));
 
+        whaleAI.ResetWhaleTransform();
+
         OnPatternFinished();
     }
 }
