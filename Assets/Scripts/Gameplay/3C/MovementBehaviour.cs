@@ -14,6 +14,8 @@ public class MovementBehaviour : MonoBehaviour {
 
 	public PhysicMove physicMove;
 
+	public AudioClip move_player_sound;
+
     private float move;
 
     private void Reset()
@@ -24,6 +26,7 @@ public class MovementBehaviour : MonoBehaviour {
     private void Awake()
     {
         initialDir = targetDir = Quaternion.identity;
+		//GameManager.instance.audioManager.CreatePersistantSound (AudioManager.PossibleSound.MOVE);
     }
 
     public void Move(Vector3 inputDir) {
@@ -32,10 +35,14 @@ public class MovementBehaviour : MonoBehaviour {
         {
             move = 0f;
 
+			//GameManager.instance.audioManager.StopPersistantSound (AudioManager.PossibleSound.MOVE);
+
             return;
         }
 
         move = 1f;
+
+		//GameManager.instance.audioManager.PlayPersistantSound (AudioManager.PossibleSound.MOVE);
 
         initialDir = transform.rotation;
         targetDir = Quaternion.LookRotation(inputDir);
