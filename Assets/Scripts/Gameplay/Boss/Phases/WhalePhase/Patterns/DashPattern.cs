@@ -190,18 +190,17 @@ public class DashPattern : BossPattern {
             dashTween.Kill();
             dashTween = null;
 
+            // Camera Shake
+            GameManager.instance.camMgr.Shake();
+
             boss.StartCoroutine(WhaleDive());
         }
     }
 
     private IEnumerator WhaleDive()
     {
-
         // Splash FX
         whaleAI.whaleReferences.PlaySplashFX();
-
-        // Camera Shake
-        GameManager.instance.camMgr.Shake();
 
         Tween t = whaleAI.WhaleChildTransform.DOLocalMove(whaleAI.WhaleTransform.up * state.diveHeightEnd + whaleAI.WhaleTransform.forward * state.diveForwardEnd, state.divingDuration);
         whaleAI.WhaleChildTransform.DOLocalRotate(state.diveRotationEnd, state.divingDuration);
