@@ -116,7 +116,13 @@ public class Ground : MonoBehaviour {
 
 	private int waveVortexId = -1;
 
+	private bool canBeginUpdate;
+
 	private void Awake() {
+		StartCoroutine(AwakeCoroutine());
+	}
+
+	private IEnumerator AwakeCoroutine() {
 		selfTransform = GetComponent<Transform>();
 		lodPowPower = ((int) Mathf.Pow(2, lodPower));
 		lod = 32 * lodPowPower;
@@ -126,10 +132,15 @@ public class Ground : MonoBehaviour {
 		points = new float[lod * lod];
 		normales = new Vector3[lod * lod];
 
+		yield return null;
+
 		for(int i = 0; i < lod; i++){
 			for(int j = 0; j < lod; j++){
 				points[i*lod + j] = selfTransform.position.y;
 				normales[i*lod + j] = new Vector3(0f, 1f, 0f);
+			}
+			if(i%1000 == 0){
+				yield return null;
 			}
 		}
 		
@@ -157,6 +168,8 @@ public class Ground : MonoBehaviour {
 		frameOptions[0].ratio = (lodPowPower*ratio) / 4;
 		// frameOptions[0].ratio = 0.5f;
 
+		yield return null;
+
 		pointBuffer = new ComputeBuffer(points.Length, sizeof(float));
 		normaleBuffer = new ComputeBuffer(normales.Length, 3 * sizeof(float));
 
@@ -174,6 +187,8 @@ public class Ground : MonoBehaviour {
 		seaCompute.SetBuffer(normaleKernel, "Normales", normaleBuffer);
 		seaCompute.SetTexture(normaleKernel, "NormaleMap", normaleMap);
 
+		yield return null;
+
 		selfRenderer.material = GetComponent<Renderer>().material;
 		selfRenderer.material.SetTexture("_InputHeight", heightMap);
 		selfRenderer.material.SetTexture("_InputNormal", normaleMap);
@@ -187,9 +202,13 @@ public class Ground : MonoBehaviour {
 		}
 
 		waveVortexId = -1;
+		canBeginUpdate = true;
 	}
 
 	private void Update() {
+		if(!canBeginUpdate){
+			return ;
+		}
 
 		if(Input.GetKeyDown(KeyCode.Space)){
 			RenderTexture currentActiveRT = RenderTexture.active;
