@@ -54,7 +54,7 @@ public class BackAttackPattern : BossPattern
             // Shockwave.
             GameManager.instance.ground.CreateImpact(whaleAI.WhaleTransform.position);
 
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(state.waitTimeAfterAttack);
 
             // Dive !!!
             yield return WhaleDive();

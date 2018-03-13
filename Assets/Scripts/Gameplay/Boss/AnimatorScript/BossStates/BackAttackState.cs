@@ -13,6 +13,8 @@ public class BackAttackState : BossState<BackAttackPattern>
 
     public float backAttackTime = 0.5f;
 
+    public float waitTimeAfterAttack = 2f;
+
     [Header("Dive")]
     public float divingDuration = 5f;
     public float diveHeightEnd = -30f;

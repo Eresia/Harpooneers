@@ -144,9 +144,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackAmount: 3
-  emergingDuration: 2.5
-  startHeight: -50
+  emergingDuration: 3.5
+  startHeight: -30
   backAttackTime: 1
+  waitTimeAfterAttack: 1
   divingDuration: 5
   diveHeightEnd: -30
   diveForwardEnd: 20
@@ -351,7 +352,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: NextState
-    m_EventTreshold: 1
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102442778312955678}
   m_Solo: 0
@@ -375,7 +376,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: NextState
-    m_EventTreshold: 0
+    m_EventTreshold: 50
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102125265432943614}
   m_Solo: 0
