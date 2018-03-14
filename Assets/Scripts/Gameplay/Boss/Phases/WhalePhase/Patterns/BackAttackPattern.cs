@@ -45,8 +45,8 @@ public class BackAttackPattern : BossPattern
             whaleAI.WhaleChildTransform.DOScale(Vector3.one, state.emergingDuration);
             whaleAI.WhaleChildTransform.DOLocalMove(target.position, state.emergingDuration);
 
-            whaleAI.bodyCollider.enabled = false;
-            whaleAI.tailCollider.enabled = false;
+            whaleAI.whaleReferences.bodyCollider.enabled = false;
+            whaleAI.whaleReferences.tailCollider.enabled = false;
             yield return new WaitForSeconds(state.emergingDuration - state.backAttackTime);
 
             whaleAI.WhaleAnimator.Play("BackAttack");
@@ -58,14 +58,11 @@ public class BackAttackPattern : BossPattern
             // Splash FX
             whaleAI.whaleReferences.PlaySplashFX();
 
-            whaleAI.bodyCollider.enabled = true;
-            whaleAI.tailCollider.enabled = true;
-
-
-
+            whaleAI.whaleReferences.bodyCollider.enabled = true;
+            whaleAI.whaleReferences.tailCollider.enabled = true;
 
             // Shockwave.
-			Vector2 pos = GameManager.instance.ground.GetSeaPosition(target.position);
+            Vector2 pos = GameManager.instance.ground.GetSeaPosition(target.position);
 			GameManager.instance.ground.waveManager.CreateImpact(pos, 2f, 0f, 0.05f, 2f, 0.5f, 15f);
            
 
