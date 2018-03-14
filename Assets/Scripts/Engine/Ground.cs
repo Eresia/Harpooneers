@@ -31,6 +31,8 @@ public class Ground : MonoBehaviour {
 
 	public float maxWaveHeight;
 
+	public float minVariation;
+
 	public ComputeShader seaCompute;
 
 	public Renderer selfRenderer;
@@ -262,6 +264,7 @@ public class Ground : MonoBehaviour {
 		frameOptions[0].time = waveManager.ActualTime;
 		frameOptions[0].nbWaves = (uint) waveManager.Waves.Count;
 		frameOptions[0].lod = (uint) lod;
+		frameOptions[0].minVariation = minVariation;
 		optionBuffer.SetData(frameOptions);
 
 		ComputeBuffer impacts = new ComputeBuffer(waveManager.Waves.Count, 16 * sizeof(float));

@@ -39,7 +39,8 @@ struct FrameOptions{
 	uint lod;
 	float ratio;
 	uint heigthMapRatio;
-	float2 trash;
+	float minVariation;
+	float trash;
 };
 
 StructuredBuffer<WaveOptions> Impacts;
@@ -58,8 +59,10 @@ void MakeImpact(uint i, WaveOptions wave, float offsetMagnitude, float posAbs, f
 	float timeProgress = wave.amplitude * sin(x) * lerp(1/x, 1, constantWave);
 	float sinTheta = wave.amplitude * (sin(theta* timeProgress) / exp(abs(posAbs) * wave.timeProgression));
 
-	float heightAbs = abs(sinTheta);
-	heightInfo = heightInfo + float2(sinTheta * (heightAbs/ coeff), (heightAbs / coeff));
+	if(sinTheta > Options[0].minVariation){
+		float heightAbs = abs(sinTheta);
+		heightInfo = heightInfo + float2(sinTheta * (heightAbs/ coeff), (heightAbs / coeff));
+	}
 }
 
 void MakeZone(uint i, WaveOptions wave, float offset, float coeff){
