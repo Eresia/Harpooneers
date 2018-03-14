@@ -122,7 +122,7 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
 
         // Shockwave on the sea.
         Vector2 pos = GameManager.instance.ground.GetSeaPosition(transform.position);
-        GameManager.instance.ground.waveManager.CreateImpact(pos, 50f, 0f, 10f, 0.1f, 10f, 0.1f, 20f);
+        GameManager.instance.ground.waveManager.CreateImpact(pos, 300f, 0f, 100f, 15f, 3f, 0.2f, 20f);
 
 
         gameObject.transform.rotation = Quaternion.identity;
