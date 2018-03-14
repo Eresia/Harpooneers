@@ -402,7 +402,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1891175618788794
 GameObject:
   m_ObjectHideFlags: 1
@@ -941,7 +941,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6e650634ed5954daed77fa4d60aaf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 2
+  damageAmount: 1
   hitFX: {fileID: 0}
 --- !u!114 &114629142849921368
 MonoBehaviour:
@@ -954,7 +954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6e650634ed5954daed77fa4d60aaf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 1
+  damageAmount: 2
   hitFX: {fileID: 0}
 --- !u!114 &114667019778771114
 MonoBehaviour:
@@ -990,7 +990,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 10
-  hitFX: {fileID: 198657936415793166}
+  hitFX: {fileID: 0}
 --- !u!114 &114888491273417954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1024,7 +1024,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 10
-  hitFX: {fileID: 198243639391879802}
+  hitFX: {fileID: 0}
 --- !u!136 &136260362373019394
 CapsuleCollider:
   m_ObjectHideFlags: 1
