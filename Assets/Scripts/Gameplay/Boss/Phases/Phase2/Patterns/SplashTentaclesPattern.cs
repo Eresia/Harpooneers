@@ -113,8 +113,6 @@ public class SplashTentaclesPattern : BossPattern {
             {
                 phase2.Tentacles[i].ResetTentacle();
             }
-
-
         }
 
         OnPatternFinished();

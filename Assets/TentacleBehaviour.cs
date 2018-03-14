@@ -17,15 +17,13 @@ public class TentacleBehaviour : MonoBehaviour {
 
     public Animator animGA;
     
-    public IEnumerator Spawning(float spawningDuration)
+    public void Spawning(float spawningDuration)
     {
         gameObject.SetActive(true);
         spawningFX.Play();
-
-        yield return new WaitForSeconds(spawningDuration);
     }
     
-    public IEnumerator Emerge(Vector3 startPos, Vector3 endPos, float emergingDuration)
+    public void Emerge(Vector3 startPos, Vector3 endPos, float emergingDuration)
     {
         spawningFX.Stop();
         childTransform.gameObject.SetActive(true);
@@ -34,32 +32,26 @@ public class TentacleBehaviour : MonoBehaviour {
 
         childTransform.localPosition = startPos;
         childTransform.DOLocalMove(endPos, emergingDuration);
-
-        yield return new WaitForSeconds(emergingDuration);
     }
 
-    public IEnumerator Dive(Vector3 endPos, float divingDuration)
+    public void Dive(Vector3 endPos, float divingDuration)
     {
         childTransform.DOLocalMove(endPos, divingDuration);
-
-        yield return new WaitForSeconds(divingDuration);
     }
 
-    public IEnumerator Attack()
+    public void Attack()
     {
         tentacleCollider.enabled = true;
 
         // TODO Play attack animation.
         // phase2.Tentacles[i].animAttack.Play("");
 
-        // TODO WAIT ANIMATION -> OnStateExit -> 
-        //yield return new WaitWhile(() => (phase2.Tentacles[0].animGA.GetBool("End")));
-        yield return new WaitForSeconds(2f);
+        // TODO WAIT ANIMATION -> OnStateExit ->
 
         tentacleCollider.enabled = false;
     }
 
-    public IEnumerator FocusPlayer(float turnDuration)
+    public void FocusPlayer(float turnDuration)
     {
         Transform target = GameManager.instance.shipMgr.ChoosePlayerToAttack();
 
@@ -69,8 +61,6 @@ public class TentacleBehaviour : MonoBehaviour {
         //Debug.DrawRay(phase2.Tentacles[i].transform.position, dir * 5f, Color.white, 1f);
 
         childTransform.DOLocalRotateQuaternion(Quaternion.LookRotation(dir), turnDuration);
-
-        yield return new WaitForSeconds(turnDuration);
     }
 
     public void ResetTentacle()
