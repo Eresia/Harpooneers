@@ -186,7 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicObject: {fileID: 114952019689056240}
   friction: 3
-  gravity: 100
+  gravity: 0
 --- !u!114 &114952019689056240
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -212,6 +212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direction: {x: 1, y: 0, z: 0}
   speed: 1
+  forwardDirection: 0
 --- !u!135 &135736152326700208
 SphereCollider:
   m_ObjectHideFlags: 1

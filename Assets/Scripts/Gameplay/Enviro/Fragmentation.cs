@@ -4,23 +4,36 @@ using UnityEngine;
 
 public class Fragmentation : MonoBehaviour
 {
-    public GameObject Output;
+    public GameObject baseMesh;
+    public GameObject fractMesh;
 
-    // Attach to all objects which can be disabled or destroyed.
-    private HandleHarpoonWithDestroyable harpoonMgr;
+    private MeshCollider _mycollider;
 
-    private void Awake()
+    void Awake()
     {
-        harpoonMgr = GetComponent<HandleHarpoonWithDestroyable>();
+        _mycollider = GetComponent<MeshCollider>();
+    }
+
+    void Start()
+    {
+        baseMesh.SetActive(true);
+        fractMesh.SetActive(false);
     }
 
     public void OnExplode ()
 	{
-		Debug.Log("BOOM");
+        _mycollider.enabled = false; 
+        fractMesh.SetActive(true);
+        baseMesh.SetActive(false);
 
-        harpoonMgr.DetachHarpoon();
-
-        Output.SetActive(true);
-		gameObject.SetActive(false);
+        Destroy(gameObject, 3f);
 	}
+
+    void OnCollisionEnter(Collision col)
+    {
+        if(col.gameObject.tag == "Whale")
+        {
+            OnExplode();
+        }
+    }
 }
