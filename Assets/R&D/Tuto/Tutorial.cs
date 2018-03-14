@@ -8,6 +8,7 @@ public class Tutorial : MonoBehaviour
 {
     [Header("References")]
     public Text Tuto;
+	public Image Frame;
     public TutoRock Rock;
     public Transform RockTarget;
 
