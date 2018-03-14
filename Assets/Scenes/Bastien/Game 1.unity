@@ -2791,7 +2791,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6e650634ed5954daed77fa4d60aaf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eye: 0
+  damageAmount: 0
+  hitFX: {fileID: 0}
+  hit_sound: {fileID: 0}
 --- !u!1001 &1178815192
 Prefab:
   m_ObjectHideFlags: 0
@@ -3321,11 +3323,6 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
         type: 2}
-      propertyPath: timeProgression
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
       propertyPath: impactAmplitude
       value: 2
       objectReference: {fileID: 0}
@@ -3336,28 +3333,18 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
         type: 2}
-      propertyPath: maxWaveHeight
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
       propertyPath: impactPeriod
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
         type: 2}
       propertyPath: waveSpeed
-      value: 1
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
         type: 2}
-      propertyPath: timeout
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: minVariation
-      value: 0
+      propertyPath: timeProgression
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}

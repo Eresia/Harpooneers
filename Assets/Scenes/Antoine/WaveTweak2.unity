@@ -3293,7 +3293,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6e650634ed5954daed77fa4d60aaf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eye: 0
+  damageAmount: 0
+  hitFX: {fileID: 0}
+  hit_sound: {fileID: 0}
 --- !u!1001 &1178815192
 Prefab:
   m_ObjectHideFlags: 0
@@ -3710,7 +3712,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -1.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
       propertyPath: m_LocalPosition.y
@@ -3718,22 +3720,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 37.4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: displayGizmos
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 23218790605428570, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 7ef55dd79cfc387428e510a1ae9b9336, type: 2}
     - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
       propertyPath: m_LocalRotation.y
       value: 0.7071068
@@ -3742,89 +3734,6 @@ Prefab:
       propertyPath: m_LocalRotation.z
       value: 0.7071068
       objectReference: {fileID: 0}
-    - target: {fileID: 23218790605428570, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4170099001695406, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4170099001695406, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 64977425580068820, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: m_Convex
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: maxWaveHeight
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: impactRadius
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: timeout
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: timeProgression
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: zoneAmplitude
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: waveSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: impactPeriod
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: impactWaveLength
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: lodPower
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: impactAmplitude
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: minVariation
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: zoneWaveLength
-      value: 0.005
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: zonePeriod
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
       propertyPath: m_LocalRotation.x
       value: 0
@@ -3832,30 +3741,6 @@ Prefab:
     - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
       propertyPath: m_LocalRotation.w
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: ratio
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: gizmosColor.r
-      value: 0.6904736
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: gizmosColor.g
-      value: 0.83222264
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: gizmosColor.b
-      value: 0.9485294
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
@@ -4765,7 +4650,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1826616377}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.622077, y: 0.29179156, z: 1.8818452}
+  m_LocalPosition: {x: -4.622077, y: 0.29179156, z: 5.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1487885623}
@@ -4781,7 +4666,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1826616377}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 377c85d9bdad13c4eb47a0b7f86ae9e6, type: 3}
   m_Name: 
