@@ -145,7 +145,7 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
 
         // Waves generation
         Vector2 pos = GameManager.instance.ground.GetSeaPosition(transform.position);
-        GameManager.instance.ground.waveManager.CreateImpact(pos, 0.5f, 0f, 0.05f, 2f, .5f, 5f);
+        GameManager.instance.ground.waveManager.CreateImpact(pos, 0.05f, 0f, 0.05f, 2f, .5f, 5f);
 
         StartCoroutine(DeactiveGameObject());
     }
