@@ -8,7 +8,7 @@ public class Tutorial : MonoBehaviour
 {
     [Header("References")]
     public Text Tuto;
-    public GameObject TutoRock;
+    public TutoRock Rock;
     public Transform RockTarget;
 
     [Header("Values")]
@@ -17,6 +17,7 @@ public class Tutorial : MonoBehaviour
     public float MovementTime = 5f;
     public float WaveTime = 5f;
     public float RockMovementTime = 5f;
+	public float HarpoonTime = 5f;
 
     [Header("Texts")]
     public string[] Texts;
@@ -34,34 +35,31 @@ public class Tutorial : MonoBehaviour
         yield return PrintText(0);
         yield return new WaitForSeconds(IntroTime);
 
-        PassToStep(1);
+        PassToStep(1);        //Unlock Move
 
         //Movement
-        //Unlock Move
         yield return PrintText(1);
         yield return new WaitForSeconds(MovementTime);
         yield return PrintText(2);
+		//Start Waves
         yield return new WaitForSeconds(WaveTime);
 
-        PassToStep(2);
+        PassToStep(2);         //Unlock Harpoon
 
         //Harpoon
-        TutoRock.transform.DOMove(RockTarget.position, RockMovementTime);
-        //Unlock Harpoon
+        Rock.transform.DOMove(RockTarget.position, RockMovementTime);
         yield return PrintText(3);
-        //Wait for Hit on Rock
-        //Unlock Rope
+		yield return new WaitUntil(() => Rock.HarpoonHit);
         yield return PrintText(4);
-        //Wait for Rope Size Change
+        yield return new WaitWhile(() => Rock.HarpoonHit);
         yield return PrintText(5);
-        //wait for cut
+		yield return new WaitForSeconds(HarpoonTime);
 
-        PassToStep(3);
+        PassToStep(3);        //Unlock Bombs
 
         //Bombs
-        //Unlock Bombs
         yield return PrintText(6);
-        //Wait for explosion
+		yield return new WaitUntil(() => Rock.RockExplode);
         yield return PrintText(7);
         yield return new WaitForSeconds(WaveTime);
 

@@ -421,21 +421,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 12
       objectReference: {fileID: 0}
-    - target: {fileID: 114997595628422072, guid: 0427649b71f5bc245bb96b0c8d436a8e,
-        type: 2}
-      propertyPath: _userData.inputBehaviors.Array.data[0]._digitalAxisGravity
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114997595628422072, guid: 0427649b71f5bc245bb96b0c8d436a8e,
-        type: 2}
-      propertyPath: _userData.inputBehaviors.Array.data[0]._joystickAxisSensitivity
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114997595628422072, guid: 0427649b71f5bc245bb96b0c8d436a8e,
-        type: 2}
-      propertyPath: _userData.configVars.defaultJoystickAxis2DDeadZoneType
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0427649b71f5bc245bb96b0c8d436a8e, type: 2}
   m_IsPrefabParent: 0
@@ -892,7 +877,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4671249997116518, guid: fd35359546fab104ebeae7ecf299d689, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 4671249997116518, guid: fd35359546fab104ebeae7ecf299d689, type: 2}
       propertyPath: m_LocalPosition.y
@@ -900,7 +885,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4671249997116518, guid: fd35359546fab104ebeae7ecf299d689, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 4671249997116518, guid: fd35359546fab104ebeae7ecf299d689, type: 2}
       propertyPath: m_LocalRotation.x
@@ -925,6 +910,10 @@ Prefab:
     - target: {fileID: 4671249997116518, guid: fd35359546fab104ebeae7ecf299d689, type: 2}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671249997116518, guid: fd35359546fab104ebeae7ecf299d689, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fd35359546fab104ebeae7ecf299d689, type: 2}
@@ -1563,15 +1552,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
       propertyPath: m_RootOrder
@@ -1589,6 +1578,14 @@ Prefab:
     - target: {fileID: 23218790605428570, guid: d2b3382be80c31c46b0fc06fcd7980f6,
         type: 2}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2094,6 +2091,34 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1203759760}
+--- !u!1 &1222948252
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1222948253}
+  m_Layer: 0
+  m_Name: RockTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1222948253
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1222948252}
+  m_LocalRotation: {x: 0.60876137, y: -0, z: -0, w: 0.7933534}
+  m_LocalPosition: {x: 3, y: 0, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1241417423
 GameObject:
   m_ObjectHideFlags: 0
@@ -2378,6 +2403,22 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9ddfc55a4da66a34982e947a63d697fe, type: 3}
   m_IsPrefabParent: 0
+--- !u!1 &1479748998 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1322250386665120, guid: fd35359546fab104ebeae7ecf299d689,
+    type: 2}
+  m_PrefabInternal: {fileID: 665295511}
+--- !u!114 &1479748999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1479748998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9294e4f0e33c0740a7d58abb0e3ef35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1500953134
 Transform:
   m_ObjectHideFlags: 0
@@ -2507,16 +2548,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tuto: {fileID: 667851803}
+  Rock: {fileID: 1479748999}
+  RockTarget: {fileID: 1222948253}
   TimeBetweenLetters: 0.02
+  IntroTime: 5
   MovementTime: 5
+  WaveTime: 5
+  RockMovementTime: 5
+  HarpoonTime: 5
   Texts:
   - Intro
   - Move
   - Waves
   - Shot
-  - ++ --
-  - Drop Bomb
-  - Bomb Explode
+  - Rope Boost
+  - Harpoon Utility
+  - Bomb
+  - Bomb explode = Waves
   - Good Luck
 --- !u!4 &1728867762
 Transform:
