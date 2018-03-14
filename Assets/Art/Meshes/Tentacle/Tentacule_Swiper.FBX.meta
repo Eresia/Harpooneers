@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: aa61b7bfbf20a6649929568369b16ba0
-timeCreated: 1521046253
+guid: 2338fbcc7f9837947af7978f233b5d17
+timeCreated: 1521037561
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -24,7 +24,7 @@ ModelImporter:
     100032: Circle014
     100034: Circle015
     100036: //RootNode
-    100038: tentacule_hammer_low
+    100038: tentacule_low
     400000: Bone010
     400002: Bone011
     400004: Bone012
@@ -44,17 +44,16 @@ ModelImporter:
     400032: Circle014
     400034: Circle015
     400036: //RootNode
-    400038: tentacule_hammer_low
+    400038: tentacule_low
     2100000: No Name
-    4300000: tentacule_hammer_low
-    7400000: Idle2
-    7400002: Spawn
-    7400004: Idle
-    7400006: Swipe
-    7400008: Attack_Slam
-    7400010: Despawn
+    4300000: tentacule_low
+    7400000: Spawn
+    7400002: Idle
+    7400004: Attack_Swipe
+    7400006: Slam
+    7400008: Despawn
     9500000: //RootNode
-    13700000: tentacule_hammer_low
+    13700000: tentacule_low
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -139,10 +138,10 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Attack_Slam
+      name: Attack_Swipe
       takeName: Take 001
-      firstFrame: 240
-      lastFrame: 300
+      firstFrame: 155
+      lastFrame: 235
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -171,34 +170,6 @@ ModelImporter:
       takeName: Take 001
       firstFrame: 305
       lastFrame: 350
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Idle2
-      takeName: Take 001
-      firstFrame: 355
-      lastFrame: 377
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
