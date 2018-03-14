@@ -5,7 +5,7 @@ using Rewired;
 /// Handle Input associated to each player.
 /// </summary>
 [RequireComponent(typeof(MovementBehaviour))]
-public class PlayerInput : MonoBehaviour
+public class PlayerInputTuto : MonoBehaviour
 {
     [Tooltip("Rewired player id")]
     public int playerId = 0;
@@ -24,8 +24,13 @@ public class PlayerInput : MonoBehaviour
     private bool doPause; // Do the pause if the delay is repected.
 
     private int controllerDisconnected;
-    
-	// public AudioClip pull_sound;
+
+    public int TutoStep
+    {
+        get { return tutoStep; }
+        set { value = tutoStep; }
+    }
+    private int tutoStep;
 
     void Awake()
     {
@@ -51,8 +56,6 @@ public class PlayerInput : MonoBehaviour
 
         // Deactivate the player position indicator
         playerMgr.FeedbackPlayerPos(false, playerId);
-
-		// GameManager.instance.audioManager.CreatePersistantSound (AudioManager.PossibleSound.PULL, pull_sound, 0.05f);
     }
 
     private void Reset()
