@@ -55,5 +55,15 @@ MonoBehaviour:
   seaMask:
     serializedVersion: 2
     m_Bits: 4096
-  horizontalOffset: 0.02
+  horizontalOffset: 0.05
   verticalOffset: 0.05
+  resetHorizontalOffset: 0.03
+  resetVerticalOffset: 0.03
+  trapezeData:
+    xBottomLeft: 0
+    xBottomRight: 0
+    xTopLeft: 0
+    xTopRight: 0
+    zBottom: 0
+    zTop: 0
+    height: 0
