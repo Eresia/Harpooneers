@@ -44,8 +44,10 @@ public class BackAttackPattern : BossPattern
             
             GameManager.instance.audioManager.PlaySoundOneTime(state.backAttackSound, 0.25f);
 
+			Vector3 targetPosition = target.position;
+
             whaleAI.WhaleChildTransform.DOScale(Vector3.one, state.emergingDuration);
-            whaleAI.WhaleChildTransform.DOLocalMove(target.position, state.emergingDuration);
+            whaleAI.WhaleChildTransform.DOLocalMove(targetPosition, state.emergingDuration);
 
             whaleAI.whaleReferences.bodyCollider.enabled = false;
             whaleAI.whaleReferences.tailCollider.enabled = false;
@@ -65,7 +67,7 @@ public class BackAttackPattern : BossPattern
             whaleAI.whaleReferences.tailCollider.enabled = true;
 
             // Shockwave.
-            Vector2 pos = GameManager.instance.ground.GetSeaPosition(target.position);
+            Vector2 pos = GameManager.instance.ground.GetSeaPosition(targetPosition);
 			GameManager.instance.ground.waveManager.CreateImpact(pos, 2f, 0f, 0.05f, 2f, 0.5f, 15f);
            
 
