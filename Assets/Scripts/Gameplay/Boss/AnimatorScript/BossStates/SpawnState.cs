@@ -3,6 +3,8 @@
 public class SpawnState : BossState<SpawnPattern>
 {
     public float depth = 5f;
+
+	public float hight = 2f;
     
     [Header("Effect duration")]
     [Tooltip("Bubble duration before spawning")]

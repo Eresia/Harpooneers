@@ -34,7 +34,7 @@ public class BackAttackPattern : BossPattern
         {
             target = GameManager.instance.shipMgr.ChoosePlayerToAttack();
 
-            whaleAI.WhaleChildTransform.localPosition = target.position + whaleAI.WhaleTransform.up * state.startHeight;
+            whaleAI.WhaleChildTransform.localPosition = target.position + whaleAI.WhaleTransform.up * -state.startHeight;
             whaleAI.WhaleChildTransform.localScale = Vector3.zero;
 
             // Apply Random rotation...

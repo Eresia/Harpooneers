@@ -145,7 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackAmount: 2
   emergingDuration: 3
-  startHeight: -13
+  startHeight: 13
   backAttackTime: 0.75
   waitTimeAfterAttack: 0.75
   divingDuration: 5
@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   depth: 20
+  hight: 5
   WaitBeforeSpawn: 5
 --- !u!114 &114591433400966774
 MonoBehaviour:
@@ -176,10 +177,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad79dcb05caf72d46af2bd728f1ef7eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaitBeforeSpawn: 5
+  depth: 5
+  endDepth: 13
+  timeinSea: 5
   translateSpeed: 10
+  ySpeed: 2
   turnSpeed: 1
   targetChangeTime: 5
+  maxTime: 20
+  endOfPaternTime: 5
+  test: 0
+  test2: 0
 --- !u!114 &114863543440066848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -356,7 +364,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: NextState
-    m_EventTreshold: 50
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102442778312955678}
   m_Solo: 0
@@ -366,7 +374,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -390,7 +398,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -414,7 +422,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -438,7 +446,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -486,7 +494,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1

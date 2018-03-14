@@ -37,7 +37,7 @@ public class SpawnPattern : BossPattern {
 
         whaleAI.spawningFX.Play();
 
-		Tween tween = whaleAI.WhaleTransform.DOMove(pos, spawnState.WaitBeforeSpawn);
+		Tween tween = whaleAI.WhaleTransform.DOMove(pos - new Vector3(0, spawnState.hight, 0), spawnState.WaitBeforeSpawn);
         yield return new WaitWhile(tween.IsPlaying);
 
         whaleAI.spawningFX.Stop();

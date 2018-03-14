@@ -54,6 +54,8 @@ public class WhalePhaseAI : PhaseAI {
 	public AudioClip whale_scream;
 	public AudioClip whale_hit;
 
+	public float resetDepth;
+
     protected override void Awake()
     {
         base.Awake();
@@ -81,6 +83,8 @@ public class WhalePhaseAI : PhaseAI {
         bodyCollider = whaleReferences.bodyCollider;
         tailCollider = whaleReferences.tailCollider;
 
+		whaleReferences.whaleBody.OnWhaleExplode = StopPattern;
+
 		GameManager.instance.audioManager.PlaySoundOneTime (whale_scream, 0.2f);
 
         // Setup eye colliders and scripts.
@@ -89,9 +93,14 @@ public class WhalePhaseAI : PhaseAI {
 
         for (int i = 0; i < eyeColliders.Length; i++)
         {
+			eyeColliders[i] = whaleScript[i].GetComponent<Collider>();
             whaleScript[i].hitCallback = HitWhale;
         }
     }
+
+	public void StopPattern(){
+		CurrentPattern.StopPattern();
+	}
 
     public int DecideNextPhase()
     {
@@ -155,16 +164,21 @@ public class WhalePhaseAI : PhaseAI {
             return;
         }
 
-        CurrentPattern.StopPattern();
+        StopPattern();
     }
 
     // Reset the whale's transform.
     public void ResetWhaleTransform()
     {
+        ResetWhaleTransform(resetDepth);
+    }
+
+	public void ResetWhaleTransform(float depth)
+    {
         Whale.SetActive(false);
 
         WhaleTransform.rotation = Quaternion.identity;
-        WhaleTransform.position = Vector3.zero;
+        WhaleTransform.position = new Vector3(0, -depth, 0);
         WhaleTransform.localScale = Vector3.one;
         
         WhaleChildTransform.localRotation = Quaternion.identity;
