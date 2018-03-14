@@ -5,8 +5,6 @@ public class RoundState : BossState<RoundPattern>
     [Header("Effect duration")]
     [Tooltip("Bubble duration before spawning")]
     public float depth = 2f;
-
-	public float immerseTime = 2f;
     
     public float translateSpeed = 20f;
 
