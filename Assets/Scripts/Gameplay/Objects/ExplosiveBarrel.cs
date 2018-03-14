@@ -127,14 +127,13 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
                 Vector3 repulsDir = c.transform.position - transform.position;
                 c.transform.parent.parent.GetComponent<PhysicMove>().AddForce(repulsDir.normalized * repulsionForce);
             }
+            // Floating Object Repulsion
+            if (c.tag == "Floating Object")
+            {
+                Vector3 repulsDir = c.transform.position - transform.position;
+                c.transform.parent.parent.GetComponent<PhysicMove>().AddForce(repulsDir.normalized * repulsionForce);
+            }
         }
-
-        // Shockwave on the sea.
-        Vector2 pos = GameManager.instance.ground.GetSeaPosition(transform.position);
-     //   GameManager.instance.ground.waveManager.CreateImpact(pos, 1500f, 0f, 500f, 5f, 2f, 0.1f, 20f);
-
-       
-
 
         gameObject.transform.rotation = Quaternion.identity;
 
@@ -149,7 +148,23 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
         explosionFX.Play();
         GameManager.instance.audioManager.PlaySoundOneTime(explosion_sound, 0.1f);
 
+        StartCoroutine(ExplosionWaves());
+
         StartCoroutine(DeactiveGameObject());
+    }
+
+
+    IEnumerator ExplosionWaves()
+    {
+        Vector2 pos = GameManager.instance.ground.GetSeaPosition(transform.position);
+
+        //GameManager.instance.ground.waveManager.CreateImpact(pos, 2f, 0f, 0.05f, 1f, 50f, 50f, 5f);
+        GameManager.instance.ground.waveManager.CreateImpact(pos, 1f, 0f, 10f, 2f, 50f, 100f, 2f);
+
+        yield return new WaitForSeconds(0.05f);
+        GameManager.instance.ground.waveManager.CreateImpact(pos, 1f, 0f,5f, 3.5f, 40f, 100f, 2f);
+        yield return new WaitForSeconds(0.1f);
+        GameManager.instance.ground.waveManager.CreateImpact(pos, 1f, 0f, 2.5f, 5f, 30f, 100f, 2f);
     }
 
     public void OnExplode()

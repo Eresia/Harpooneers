@@ -127,13 +127,13 @@ public class GeyserPattern : BossPattern {
         whaleAI.WhaleAnimator.SetBool("Swim", false);
 
         // Boss is now vulnerable.
-        whaleAI.EnableEyeCollisions(true);
+        //whaleAI.MakeB(true);
 
         // Whale is emerged... WAIT
 
         yield return new WaitForSeconds(state.waitDuration);
 
-        whaleAI.EnableEyeCollisions(false);
+        //whaleAI.MakeB(false);
 
         // Whale dives.
         yield return WhaleDive();

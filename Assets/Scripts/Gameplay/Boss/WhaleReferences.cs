@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WhaleReferences : MonoBehaviour {
-
-    public ParticleSystem[] eyeBloodFX;
+    
     public ParticleSystem splashFX;
 
 	public WhaleBody whaleBody;
@@ -14,12 +13,8 @@ public class WhaleReferences : MonoBehaviour {
 
     public Animator whaleAnimator;
 
-    public HandleHarpoonWithWhale[] eyeScript;
-
-    public void  PlayEyeBloodFX(int i)
-    {
-        eyeBloodFX[i].Play();
-    }
+    public HandleHarpoonWithWhale[] hittableScripts;
+    
     public void PlaySplashFX()
     {
         splashFX.Play();

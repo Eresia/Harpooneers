@@ -262,7 +262,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -293,6 +293,7 @@ MonoBehaviour:
   forceBreak: 4000
   slingForce: 5
   ropeAttach: {fileID: 4456592517545518}
+  pull_sound: {fileID: 8300000, guid: a3bd229b7f118ba4e918087ddce4582f, type: 3}
 --- !u!120 &120266009548636656
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -390,7 +391,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 3
+  m_Radius: 2
+  m_Height: 10
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}

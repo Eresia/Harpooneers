@@ -69,17 +69,6 @@ MonoBehaviour:
   maxX: 0
   minZ: 0
   maxZ: 0
---- !u!114 &114069053192788778
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 748fe0db4bd06ac44a98927466ce3a6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114189773915921930
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -104,50 +93,6 @@ MonoBehaviour:
   maxX: 0
   minZ: 0
   maxZ: 0
---- !u!114 &114213638502781192
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95cef13b95a628c4fb9fc27d8e0d0cb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delayAfterGeyserChase: 0.5
-  emergingDuration: 5
-  emergePosStart: {x: 0, y: -20, z: -10}
-  emergePosEnd: {x: 0, y: 1.75, z: 8}
-  emergeRotationStart: {x: 0, y: 0, z: 0}
-  emergeRotationEnd: {x: -20, y: 0, z: 0}
-  waitDuration: 10
-  divingDuration: 5
-  diveHeightEnd: -30
-  diveForwardEnd: 20
-  diveRotationEnd: {x: 30, y: 0, z: 0}
---- !u!114 &114297485447214800
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95cef13b95a628c4fb9fc27d8e0d0cb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delayAfterGeyserChase: 0.5
-  emergingDuration: 5
-  emergePosStart: {x: 0, y: -20, z: -10}
-  emergePosEnd: {x: 0, y: 1.75, z: 8}
-  emergeRotationStart: {x: 0, y: 0, z: 0}
-  emergeRotationEnd: {x: -20, y: 0, z: 0}
-  waitDuration: 10
-  divingDuration: 5
-  diveHeightEnd: -30
-  diveForwardEnd: 20
-  diveRotationEnd: {x: 30, y: 0, z: 0}
 --- !u!114 &114395155682329492
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -189,10 +134,11 @@ MonoBehaviour:
   minAngle: 45
   maxAngle: 315
   startPos: {x: 0, y: -24, z: 0}
-  emergingDuration: 3
-  attackPos: {x: 0, y: -5, z: 0}
+  emergingDuration: 0.5
+  attackPos: {x: 0, y: 0, z: 0}
   turnDuration: 0.5
-  divingDuration: 2
+  waitBeforeAttack: 0.5
+  divingDuration: 1
 --- !u!114 &114863543440066848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -817,32 +763,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &1102384072511504890
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: New State
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours:
-  - {fileID: 114069053192788778}
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 0}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1102 &1102572780283113106
 AnimatorState:
   serializedVersion: 5
@@ -880,8 +800,7 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101508607598531122}
-  m_StateMachineBehaviours:
-  - {fileID: 114213638502781192}
+  m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -992,8 +911,7 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101121954096313188}
-  m_StateMachineBehaviours:
-  - {fileID: 114297485447214800}
+  m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -1040,9 +958,6 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1102792872858872516}
     m_Position: {x: 576, y: 204, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 1102384072511504890}
-    m_Position: {x: 421.28418, y: 314.205, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

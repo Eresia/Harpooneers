@@ -149,8 +149,8 @@ MonoBehaviour:
   lodPower: 5
   heigtMapPower: 5
   ratio: 1
-  maxWaveHeight: 200
-  minVariation: 0
+  maxWaveHeight: 5
+  minVariation: 0.03
   seaCompute: {fileID: 7200000, guid: c38a7e0af28a2f143b23bc17e4ef5d30, type: 3}
   selfRenderer: {fileID: 23218790605428570}
   displayGizmos: 0
@@ -160,15 +160,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 12288
   zoneAmplitude: 1.5
-  zoneWaveLength: 0.1
+  zoneWaveLength: 0.5
   zonePeriod: 5
-  impactAmplitude: 2
+  impactAmplitude: 10
   impactRadius: 0
   vortexSmooth: 100
-  impactWaveLength: 0.05
-  impactPeriod: 1
-  waveSpeed: 50
-  timeProgression: 50
+  impactWaveLength: 100
+  impactPeriod: 200
+  waveSpeed: 5
+  timeProgression: 5
   timeout: 5
   waveSize: {x: 0, y: 0}
   rawImage: {fileID: 0}

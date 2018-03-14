@@ -141,8 +141,10 @@ MonoBehaviour:
   eyeColliders: []
   bodyCollider: {fileID: 0}
   tailCollider: {fileID: 0}
-  eyesScript: []
+  whaleScript: []
   hitByEyeNeeded: 0
+  whale_scream: {fileID: 8300000, guid: 06638536874cc0b4eac01e4d7e9161cf, type: 3}
+  whale_hit: {fileID: 8300000, guid: 6ef5d8cc08d8e804ebd2fb79df81ff0b, type: 3}
 --- !u!198 &198339463121073478
 ParticleSystem:
   m_ObjectHideFlags: 1

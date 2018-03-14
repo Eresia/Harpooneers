@@ -6,19 +6,26 @@ using System;
 
 public class HandleHarpoonWithWhale : HandleHarpoonHit
 {
-    public bool eye;
+    public float damageAmount;
 
-    public Action<bool> hitCallback;
+    public Action<float> hitCallback;
+    public ParticleSystem hitFX;
+	public AudioClip hit_sound;
 
     protected override void ActionWhenHarpoonAttach(Harpoon harpoon)
     {
         harpoon.Cut();
 
-        // TODO FX and sound
+        // Play FX and sound
 
-        // TODO anim
+        if(hitFX)
+        {
+            hitFX.Play();
+        }
 
-        hitCallback(eye);
+		GameManager.instance.audioManager.PlaySoundOneTime (hit_sound, 0.2f);
+
+        hitCallback(damageAmount);
     }
 
     protected override void ActionWhenHarpoonDetach()
