@@ -43,7 +43,7 @@ public class PlayerInput : MonoBehaviour
 
         // Main features
         player.AddInputEventDelegate(DropBomb, UpdateLoopType.Update, InputActionEventType.ButtonPressed, "Drop Bomb");
-        player.AddInputEventDelegate(PullingOnRope, UpdateLoopType.Update, "Pull On Rope");
+        player.AddInputEventDelegate(PullingRope, UpdateLoopType.Update, "Pull On Rope");
 
         // Utility
         player.AddInputEventDelegate(TogglePause, UpdateLoopType.Update, "Toggle Pause");
@@ -114,31 +114,16 @@ public class PlayerInput : MonoBehaviour
         // HandleCutRope();
     }
 
-    private void TogglePause(InputActionEventData data)
+    private void PullingRope(InputActionEventData data)
     {
-        // If game is paused : direct unpause.
-        if (GameManager.instance.IsPause)
+        if (playerMgr.IsDead)
         {
-            if(data.GetButtonDown())
-            {
-                GameManager.instance.PauseGame();
-                doPause = false;
-            }
+            return;
         }
 
-        // If game is unpaused.
-        else
+        if (data.GetButton())
         {
-            if (!doPause)
-            {
-                // Use this to pause after a delay.
-                doPause = data.GetButtonTimePressed() > timeBeforePause;
-
-                if (doPause)
-                {
-                    GameManager.instance.PauseGame();
-                }
-            }
+            harpoonLauncher.Pull();
         }
     }
 
@@ -162,7 +147,7 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    // CUT - touch the boat to rez an ally !
+    // CUT - Now collide with the boat to rez an ally !
     /*
     private void ResurrectAlly(InputActionEventData data)
     {
@@ -194,24 +179,6 @@ public class PlayerInput : MonoBehaviour
     }
     */
 
-    private void PullingOnRope(InputActionEventData data)
-    {
-        if (playerMgr.IsDead)
-        {
-            return;
-        }
-
-        if (data.GetButton())
-        {
-			GameManager.instance.audioManager.PlayPersistantSound (AudioManager.PossibleSound.PULL, 0.1f);
-            harpoonLauncher.Pull();
-        }
-		else
-		{
-			GameManager.instance.audioManager.StopPersistantSound (AudioManager.PossibleSound.PULL, 0.1f);
-		}
-    }
-
     // CUT !
     private void HandleCutRope()
     {
@@ -226,6 +193,35 @@ public class PlayerInput : MonoBehaviour
             )
         {
             harpoonLauncher.Cut();
+        }
+    }
+
+    // UTILITY :
+    private void TogglePause(InputActionEventData data)
+    {
+        // If game is paused : direct unpause.
+        if (GameManager.instance.IsPause)
+        {
+            if (data.GetButtonDown())
+            {
+                GameManager.instance.PauseGame();
+                doPause = false;
+            }
+        }
+
+        // If game is unpaused.
+        else
+        {
+            if (!doPause)
+            {
+                // Use this to pause after a delay.
+                doPause = data.GetButtonTimePressed() > timeBeforePause;
+
+                if (doPause)
+                {
+                    GameManager.instance.PauseGame();
+                }
+            }
         }
     }
 

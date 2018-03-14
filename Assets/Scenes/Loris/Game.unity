@@ -1195,7 +1195,7 @@ Prefab:
       objectReference: {fileID: 775109685}
     - target: {fileID: 1645532644759068, guid: 067cdd2b7bc7c2f48bf143fbdd61132e, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114362013403539180, guid: 067cdd2b7bc7c2f48bf143fbdd61132e,
         type: 2}
@@ -2642,24 +2642,6 @@ Prefab:
       propertyPath: m_Name
       value: SeaCamera
       objectReference: {fileID: 0}
-    - target: {fileID: 20321886670881084, guid: cf60f7543f7e1db428fab33ef4b98f6d,
-        type: 2}
-      propertyPath: m_CullingMask.m_Bits
-      value: 4294942719
-      objectReference: {fileID: 0}
-    - target: {fileID: 20450562675694636, guid: cf60f7543f7e1db428fab33ef4b98f6d,
-        type: 2}
-      propertyPath: m_CullingMask.m_Bits
-      value: 16416
-      objectReference: {fileID: 0}
-    - target: {fileID: 1508635868289804, guid: cf60f7543f7e1db428fab33ef4b98f6d, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4514111679289856, guid: cf60f7543f7e1db428fab33ef4b98f6d, type: 2}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cf60f7543f7e1db428fab33ef4b98f6d, type: 2}
   m_IsPrefabParent: 0
@@ -3189,6 +3171,21 @@ Prefab:
     - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
+        type: 2}
+      propertyPath: zoneWaveLength
+      value: 0.0016
+      objectReference: {fileID: 0}
+    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
+        type: 2}
+      propertyPath: zoneAmplitude
+      value: 0.125
+      objectReference: {fileID: 0}
+    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
+        type: 2}
+      propertyPath: zonePeriod
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}

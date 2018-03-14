@@ -197,18 +197,22 @@ public class Harpoon : MonoBehaviour {
 		}
 	}
 
-	public void Pull(){
-		if(state == State.GRIPPED){
-
+	public void Pull()
+    {
+		if(state == State.GRIPPED)
+        {
             Cut();
             launcher.physicMove.AddForce((harpoonPivotDir + launcher.physicMove.Velocity.normalized) * 25f);
 
+            GameManager.instance.audioManager.StopPersistantSound(AudioManager.PossibleSound.PULL, 0.1f);
+
+            // Old behaviour.
             /*
 			actualDistance -= tractionSpeed * Time.deltaTime;
 			if(actualDistance < minDistance){
 				Cut();
-                
-        }*/
+            }
+            */
         }
     }
 

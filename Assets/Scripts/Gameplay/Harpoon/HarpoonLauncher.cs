@@ -97,8 +97,8 @@ public class HarpoonLauncher : MonoBehaviour {
 
 	public void LaunchHarpoon(Vector3 direction){
 
-		if(harpoon == null){
-            
+		if(harpoon == null)
+        {
 			if(direction.sqrMagnitude > joystickError)
             {
 				if(!isLaunching)
@@ -106,23 +106,27 @@ public class HarpoonLauncher : MonoBehaviour {
 					BeginLaunching();
 				}
 
-				if(power == 1f)
+                // Cut behaviour.
                 {
-					if(timeBeforeLaunch >= castTimeMax)
+                    /*
+                    if(power == 1f)
                     {
-						EndLaunching(direction, power);
-						return ;
-					}
+                        if(timeBeforeLaunch >= castTimeMax)
+                        {
+                            EndLaunching(direction, power);
+                            return ;
+                        }
 
-					timeBeforeLaunch += Time.deltaTime;
-				}
+                        timeBeforeLaunch += Time.deltaTime;
+                    }
 
-				else
-                {
-					power = Mathf.Min(1f, power + (Time.deltaTime / castTime));
-				}
+                    else
+                    {
+                        power = Mathf.Min(1f, power + (Time.deltaTime / castTime));
+                    }*/
+                }
 
-				DisplayLaunching(direction, power);
+				DisplayLaunching(direction, 1f);
 				lastDirection = direction;
 			}
 
