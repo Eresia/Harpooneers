@@ -135,6 +135,7 @@ public class WhalePhaseAI : PhaseAI {
         }
 
         lifepoints -= damageAmount;
+        Debug.Log(lifepoints);
         //lifepoints = Mathf.Clamp(lifepoints, 0f, maxLifepoints);
 
         // No any PVs
