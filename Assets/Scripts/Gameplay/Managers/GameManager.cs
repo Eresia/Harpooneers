@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour {
     }
     private bool gamePaused;
 
+    public Pause pauseScript;
+
     /// <summary>
     /// Return the number of players for the current game.
     /// </summary>
@@ -142,22 +144,21 @@ public class GameManager : MonoBehaviour {
         sceneMgr.LoadMainMenuScene();
     }
     
-    public void PauseGame()
-    {
-        gamePaused = !gamePaused;
-
-        Time.timeScale = gamePaused ? 0f : 1f;
-
+    public void PauseGame(int playerID)
+    {      
         if(gamePaused)
         {
             Debug.Log("PAUSE !!!");
-
-            // TODO Display PAUSE PANEL.
+            pauseScript.PauseGame(playerID);
         }
+    }
 
-        else
+    public void UnPauseGame()
+    {
+        if (gamePaused)
         {
-            // TODO Undisplay PAUSE PANEL.
+            Debug.Log("UNPAUSE !!!");
+            pauseScript.UnPauseGame();
         }
     }
 
