@@ -32,10 +32,10 @@ public class TentacleBehaviour : MonoBehaviour {
         spawningFX.Stop();
         childTransform.gameObject.SetActive(true);
 
-        // TODO Play animation tournoiement...
+        animAttack.SetTrigger("Spawn");
 
         childTransform.localPosition = startPos;
-        childTransform.DOLocalMove(endPos, emergingDuration);
+        childTransform.DOLocalMove(endPos, emergingDuration).SetEase(Ease.InCubic);
     }
 
     public void Dive(Vector3 endPos, float divingDuration)
@@ -43,9 +43,9 @@ public class TentacleBehaviour : MonoBehaviour {
         childTransform.DOLocalMove(endPos, divingDuration);
     }
 
-    public void Attack()
+    public void TriggerAttackAnim(string attack)
     {
-        animAttack.SetTrigger("Slam");
+        animAttack.SetTrigger(attack);
 
         // TODO Play attack animation.
         // phase2.Tentacles[i].animAttack.Play("");

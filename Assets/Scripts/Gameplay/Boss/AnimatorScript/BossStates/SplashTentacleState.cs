@@ -21,8 +21,9 @@ public class SplashTentacleState : BossState<SplashTentaclesPattern>
     public float emergingDuration;
     public Vector3 attackPos;
 
-    [Header("Targetting")]
+    [Header("Attack")]
     public float turnDuration = 1f;
+    public float waitBeforeAttack = 0.5f;
 
     public float divingDuration;
 

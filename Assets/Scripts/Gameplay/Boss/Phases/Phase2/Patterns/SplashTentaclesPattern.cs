@@ -83,6 +83,7 @@ public class SplashTentaclesPattern : BossPattern {
 
             for (int i = 0; i < state.tentacleCount; i++)
             {
+                phase2.Tentacles[i].TriggerAttackAnim("Spawn");
                 phase2.Tentacles[i].Emerge(state.startPos, state.attackPos, state.emergingDuration);
             }
 
@@ -96,9 +97,11 @@ public class SplashTentaclesPattern : BossPattern {
 
             yield return new WaitForSeconds(state.turnDuration);
 
+            yield return new WaitForSeconds(state.waitBeforeAttack);
+
             for (int i = 0; i < state.tentacleCount; i++)
             {
-                phase2.Tentacles[i].Attack();
+                phase2.Tentacles[i].TriggerAttackAnim("Slam");
             }
 
             yield return new WaitUntil(() => (phase2.Tentacles[0].animAttack.GetBool("End")));

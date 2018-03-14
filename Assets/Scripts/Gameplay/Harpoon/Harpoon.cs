@@ -61,6 +61,8 @@ public class Harpoon : MonoBehaviour {
 
     public Transform ropeAttach;
 
+	public AudioClip pull_sound;
+
     // Current gameObject where the harpoon is attached.
     private IHarpoonable iHarpoonable;
 
@@ -188,6 +190,7 @@ public class Harpoon : MonoBehaviour {
             {
 				actualDistance = maxDistance;
                 doSling = true;
+				GameManager.instance.audioManager.PlaySoundOneTime (pull_sound, 0.1f);
             }
 
             else
