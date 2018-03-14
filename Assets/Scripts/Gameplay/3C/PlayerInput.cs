@@ -24,8 +24,13 @@ public class PlayerInput : MonoBehaviour
     private bool doPause; // Do the pause if the delay is repected.
 
     private int controllerDisconnected;
-    
-	// public AudioClip pull_sound;
+
+    public int TutoStep
+    {
+        get { return tutoStep; }
+        set { tutoStep = value; }
+    }
+    private int tutoStep;
 
     void Awake()
     {
@@ -71,6 +76,11 @@ public class PlayerInput : MonoBehaviour
             return;
         }
 
+        if(tutoStep < 1)
+        {
+            return;
+        }
+
         // Handle movement.
         {
             float moveX = player.GetAxis("Move Horizontal");
@@ -79,6 +89,11 @@ public class PlayerInput : MonoBehaviour
             Vector3 moveDir = new Vector3(moveX, 0f, moveZ);
 
             movement.Move(moveDir.normalized);
+        }
+
+        if (tutoStep < 2)
+        {
+            return;
         }
 
         // Handle harpoon rotation.
@@ -128,6 +143,11 @@ public class PlayerInput : MonoBehaviour
     private void DropBomb(InputActionEventData data)
     {
         if (playerMgr.IsDead)
+        {
+            return;
+        }
+
+        if(tutoStep < 3)
         {
             return;
         }

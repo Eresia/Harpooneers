@@ -26,6 +26,15 @@ public class ShipManager : MonoBehaviour {
     
     private ShipModulesManager[] shipModuleMgrs;
     private PlayerManager[] playerMgrs;
+
+    /// <summary>
+    /// Get player inputs managers
+    /// </summary>
+    public PlayerInput[] PlayerInputs
+    {
+        get { return playerInputs; }
+    }
+    private PlayerInput[] playerInputs;
     
     private int playerAlive = 0;
 
@@ -45,6 +54,7 @@ public class ShipManager : MonoBehaviour {
             {
                 shipModuleMgrs[i] = players[i].GetComponentInChildren<ShipModulesManager>();
                 playerMgrs[i] = shipModuleMgrs[i].GetComponent<PlayerManager>();
+                playerInputs[i] = playerMgrs[i].GetComponent<PlayerInput>();
             }
         }
 

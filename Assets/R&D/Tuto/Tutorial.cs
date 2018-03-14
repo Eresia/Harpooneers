@@ -6,44 +6,88 @@ using DG.Tweening;
 
 public class Tutorial : MonoBehaviour
 {
-	public Text Tuto;
-	
-	[Header("Values")]
-	public float TimeBetweenLetters = 0.02f;
-	public float MovementTime = 5f;
+    [Header("References")]
+    public Text Tuto;
+    public GameObject TutoRock;
+    public Transform RockTarget;
 
-	[Header("Texts")]
-	public string[] Texts;
+    [Header("Values")]
+    public float TimeBetweenLetters = 0.02f;
+    public float IntroTime = 5f;
+    public float MovementTime = 5f;
+    public float WaveTime = 5f;
+    public float RockMovementTime = 5f;
 
-	private void Start()
-	{
-		StartCoroutine(Progression());
-	}
+    [Header("Texts")]
+    public string[] Texts;
 
-	IEnumerator Progression()
-	{
-		//Intro
-		yield return PrintText(0);
-		yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space)); //Input A @ Player0
-		//Tuto Mouvement
-		yield return PrintText(1);
-		yield return new WaitForSeconds(MovementTime);
+    private void Start()
+    {
+        StartCoroutine(Progression());
 
-		//Tuto Harpon
-		yield return PrintText(2);
+        // Get all fishing boats to lock inputs.
+    }
 
-		//Tuto Bombe
+    IEnumerator Progression()
+    {
+        //Intro
+        yield return PrintText(0);
+        yield return new WaitForSeconds(IntroTime);
 
-		
-	}
+        PassToStep(1);
 
-	IEnumerator PrintText(int i)
-	{
-		Tuto.text = "";
-		foreach(char c in Texts[i])
-		{
-			Tuto.text += c;
-			yield return new WaitForSeconds(TimeBetweenLetters);
-		}
-	}
+        //Movement
+        //Unlock Move
+        yield return PrintText(1);
+        yield return new WaitForSeconds(MovementTime);
+        yield return PrintText(2);
+        yield return new WaitForSeconds(WaveTime);
+
+        PassToStep(2);
+
+        //Harpoon
+        TutoRock.transform.DOMove(RockTarget.position, RockMovementTime);
+        //Unlock Harpoon
+        yield return PrintText(3);
+        //Wait for Hit on Rock
+        //Unlock Rope
+        yield return PrintText(4);
+        //Wait for Rope Size Change
+        yield return PrintText(5);
+        //wait for cut
+
+        PassToStep(3);
+
+        //Bombs
+        //Unlock Bombs
+        yield return PrintText(6);
+        //Wait for explosion
+        yield return PrintText(7);
+        yield return new WaitForSeconds(WaveTime);
+
+        //End
+        yield return PrintText(8);
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+
+        //Start Boss
+    }
+
+    IEnumerator PrintText(int i)
+    {
+        Tuto.text = "";
+        foreach (char c in Texts[i])
+        {
+            Tuto.text += c;
+            yield return new WaitForSeconds(TimeBetweenLetters);
+        }
+    }
+
+    private void PassToStep(int step)
+    {
+        for (int i = 0; i < GameManager.instance.nbOfPlayers; i++)
+        {
+            // Player Input step ++
+            GameManager.instance.shipMgr.PlayerInputs[i].TutoStep = step;
+        }
+    }
 }
