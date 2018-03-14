@@ -46,6 +46,8 @@ public class TentacleBehaviour : MonoBehaviour {
 
     public void Dive(Vector3 endPos, float divingDuration)
     {
+        // TODO Disable colliders when dive.
+
         animAttack.SetTrigger("Despawn");
         childTransform.DOLocalMove(endPos, divingDuration);
     }
