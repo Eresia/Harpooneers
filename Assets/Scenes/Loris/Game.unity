@@ -1268,8 +1268,13 @@ Prefab:
     - target: {fileID: 114362013403539180, guid: 067cdd2b7bc7c2f48bf143fbdd61132e,
         type: 2}
       propertyPath: phaseId
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
+    - target: {fileID: 114362013403539180, guid: 067cdd2b7bc7c2f48bf143fbdd61132e,
+        type: 2}
+      propertyPath: lifepointsBar
+      value: 
+      objectReference: {fileID: 2143910666}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 067cdd2b7bc7c2f48bf143fbdd61132e, type: 2}
   m_IsPrefabParent: 0
@@ -2896,6 +2901,11 @@ Prefab:
       propertyPath: spreadCustomCurve.m_RotationOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114170656061699002, guid: ffe9efaa29c336a468f47656dc4092d6,
+        type: 2}
+      propertyPath: bossMgr
+      value: 
+      objectReference: {fileID: 2019429252}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ffe9efaa29c336a468f47656dc4092d6, type: 2}
   m_IsPrefabParent: 0
@@ -4829,6 +4839,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bcb020c15f3c1b743bbfb1c28ddcd351, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &2019429252 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114362013403539180, guid: 067cdd2b7bc7c2f48bf143fbdd61132e,
+    type: 2}
+  m_PrefabInternal: {fileID: 493793024}
+  m_Script: {fileID: 11500000, guid: 44094364098704640b3a00ff47c8e2c6, type: 3}
 --- !u!1001 &2075530341
 Prefab:
   m_ObjectHideFlags: 0

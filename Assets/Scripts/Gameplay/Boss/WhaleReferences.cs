@@ -6,6 +6,7 @@ public class WhaleReferences : MonoBehaviour {
     
     public ParticleSystem splashFX;
 
+	public WhaleBody whaleBody;
     public Collider bodyCollider;
     public Collider tailCollider;
     public Transform whaleChildTransform;

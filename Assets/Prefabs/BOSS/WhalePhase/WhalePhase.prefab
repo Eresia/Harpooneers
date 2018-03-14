@@ -129,23 +129,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b930c3ecdd86349a83962a0fe03992, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxLifepoints: 100
   bossMgr: {fileID: 0}
+  whaleReferences: {fileID: 0}
   whalePrefab: {fileID: 1890487500777386, guid: 063fc181f42e064499bf5e0fe39f60b5,
     type: 2}
-  FX: {fileID: 4545501658588088}
+  FXTransform: {fileID: 4545501658588088}
   spawningFX: {fileID: 198223805626864814}
-  whaleReferences: {fileID: 0}
   geyserPrefab: {fileID: 114058333544853980, guid: 9fe4bcfee86ae324a98496a6a8e7279a,
     type: 2}
   noHittablePatternCount: 0
   numberOfPatternsWithoutHit: 2
-  eyeColliders: []
-  bodyCollider: {fileID: 0}
-  tailCollider: {fileID: 0}
-  whaleScript: []
-  hitByEyeNeeded: 0
+  damageMinToHaveScream: 10
   whale_scream: {fileID: 8300000, guid: 06638536874cc0b4eac01e4d7e9161cf, type: 3}
-  whale_hit: {fileID: 8300000, guid: 6ef5d8cc08d8e804ebd2fb79df81ff0b, type: 3}
+  resetDepth: 13
 --- !u!198 &198223805626864814
 ParticleSystem:
   m_ObjectHideFlags: 1

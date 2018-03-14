@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using System;
+using UnityEngine.UI;
 
 public class BossManager : MonoBehaviour {
 
@@ -15,6 +15,9 @@ public class BossManager : MonoBehaviour {
     public Transform south;
     public Transform west;
 
+    [Header("UI")]
+    public Image lifepointsBar;
+
     [HideInInspector]
     public float width;
     [HideInInspector]
@@ -24,16 +27,18 @@ public class BossManager : MonoBehaviour {
 
     public int phaseId = -1;
 
-    public GameObject CurrentPhase
+    public GameObject CurrentPhaseGo
     {
-        get { return currentPhase; }
+        get { return currentPhaseGo; }
         set
         {
-            currentPhase = value;
-            currentPhase.SetActive(true);
+            currentPhaseGo = value;
+            currentPhaseGo.SetActive(true);
         }
     }
-    private GameObject currentPhase;
+    private GameObject currentPhaseGo;
+
+    private PhaseAI currentPhase;
 
     private void Awake()
     {
@@ -78,9 +83,9 @@ public class BossManager : MonoBehaviour {
     /// </summary>
     private void NextPhase()
     {
-        if (currentPhase != null)
+        if (currentPhaseGo != null)
         {
-            currentPhase.SetActive(false);
+            currentPhaseGo.SetActive(false);
         }
 
         phaseId++;
@@ -102,6 +107,12 @@ public class BossManager : MonoBehaviour {
     {
         Debug.Log("PHASE " + (phaseId+1) + " starts");
 
-        CurrentPhase = phases[phaseId];
+        CurrentPhaseGo = phases[phaseId];
+        currentPhase = currentPhaseGo.GetComponent<PhaseAI>();
+    }
+
+    public void UpdateLifepoints()
+    {
+        lifepointsBar.fillAmount = currentPhase.Lifepoints / currentPhase.maxLifepoints; 
     }
 }

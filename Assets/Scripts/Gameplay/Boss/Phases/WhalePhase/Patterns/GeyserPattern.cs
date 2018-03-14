@@ -83,8 +83,8 @@ public class GeyserPattern : BossPattern {
         }
 
         // Move the FX containers.
-        whaleAI.FX.transform.position = pos;
-        whaleAI.FX.transform.rotation = rot;
+        whaleAI.FXTransform.transform.position = pos;
+        whaleAI.FXTransform.transform.rotation = rot;
 
         whaleAI.WhaleTransform.position = pos;
         whaleAI.WhaleTransform.rotation = rot;

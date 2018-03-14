@@ -9,14 +9,15 @@ public class WhaleDecisionChooser : StateChooser
 	private int actualPhase;
 
 	protected override int ChooseState(){
+
 		if (whalePhase == null)
         {
             whalePhase = animator.GetComponent<WhalePhaseAI>();
 			actualPhase = 0;
 			return 0;
         }
-
-		switch(actualPhase){
+        
+		switch(actualPhase) {
 			case 0:
 				actualPhase = 1;
 				break;

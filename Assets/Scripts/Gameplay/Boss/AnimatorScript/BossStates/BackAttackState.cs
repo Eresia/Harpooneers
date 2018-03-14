@@ -7,7 +7,7 @@ public class BackAttackState : BossState<BackAttackPattern>
     [Header("Emerging")]
     public float emergingDuration = 5f;
 
-    public float startHeight = -50f;
+    public float startHeight = 50f;
 
     [Space(10)]
 

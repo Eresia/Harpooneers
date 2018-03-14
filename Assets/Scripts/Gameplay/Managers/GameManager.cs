@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
     public BoundaryManager boundaryMgr;
     public ShipManager shipMgr;
     public CameraManager camMgr;
+    public BossManager bossMgr;
 
     public Ground ground;
 
@@ -121,6 +122,7 @@ public class GameManager : MonoBehaviour {
         shipMgr = FindObjectOfType<ShipManager>();
         ground = FindObjectOfType<Ground>();
         camMgr = FindObjectOfType<CameraManager>();
+        bossMgr = FindObjectOfType<BossManager>();
 
         shipMgr.SetupAllShips();
     }

@@ -34,7 +34,7 @@ public class BackAttackPattern : BossPattern
         {
             target = GameManager.instance.shipMgr.ChoosePlayerToAttack();
 
-            whaleAI.WhaleChildTransform.localPosition = target.position + whaleAI.WhaleTransform.up * state.startHeight;
+            whaleAI.WhaleChildTransform.localPosition = target.position + whaleAI.WhaleTransform.up * -state.startHeight;
             whaleAI.WhaleChildTransform.localScale = Vector3.zero;
 
             // Apply Random rotation...
@@ -45,8 +45,8 @@ public class BackAttackPattern : BossPattern
             whaleAI.WhaleChildTransform.DOScale(Vector3.one, state.emergingDuration);
             whaleAI.WhaleChildTransform.DOLocalMove(target.position, state.emergingDuration);
 
-            whaleAI.bodyCollider.enabled = false;
-            whaleAI.tailCollider.enabled = false;
+            whaleAI.whaleReferences.bodyCollider.enabled = false;
+            whaleAI.whaleReferences.tailCollider.enabled = false;
             yield return new WaitForSeconds(state.emergingDuration - state.backAttackTime);
 
             whaleAI.WhaleAnimator.Play("BackAttack");
@@ -58,15 +58,11 @@ public class BackAttackPattern : BossPattern
             // Splash FX
             whaleAI.whaleReferences.PlaySplashFX();
 
-            whaleAI.bodyCollider.enabled = true;
-            whaleAI.tailCollider.enabled = true;
-
-
-
+            whaleAI.whaleReferences.bodyCollider.enabled = true;
+            whaleAI.whaleReferences.tailCollider.enabled = true;
 
             // Shockwave.
             GameManager.instance.ground.CreateImpact(whaleAI.WhaleTransform.position);
-           
 
             yield return new WaitForSeconds(state.waitTimeAfterAttack);
 

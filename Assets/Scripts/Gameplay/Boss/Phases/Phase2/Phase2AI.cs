@@ -116,4 +116,33 @@ public class Phase2AI : PhaseAI {
 
         CurrentPattern.StopPattern();
     }
+
+    public override void HitBoss(float damageAmount)
+    {
+        if (phaseFinished)
+        {
+            // Don't do anything if boss is defeated.
+            return;
+        }
+
+        lifepoints -= damageAmount;
+        // TODO Update UI.
+
+        if (lifepoints <= 0)
+        {
+            if (!phaseFinished)
+            {
+                // TODO death feedback
+
+                phaseFinished = true;
+
+                animator.enabled = false;
+                enabled = false;
+
+                OnPhaseFinished();
+            }
+
+            return;
+        }
+    }
 }
