@@ -262,7 +262,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1437551889933740}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.1757084, y: 0.00000047683716, z: -2.3996398}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4535878451932472}
@@ -558,7 +558,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -617,8 +617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physicObject: {fileID: 114556376633281656}
-  friction: 1
-  limitSpeed: 10
+  friction: 1.5
   gravity: -10
 --- !u!114 &114251907984751064
 MonoBehaviour:
@@ -4224,7 +4223,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -993801041
+  randomSeed: 258985719
   InitialModule:
     serializedVersion: 3
     enabled: 1

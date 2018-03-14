@@ -121,8 +121,10 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
         }
 
         // Shockwave on the sea.
-        GameManager.instance.ground.CreateImpact(transform.position);
-        
+        Vector2 pos = GameManager.instance.ground.GetSeaPosition(transform.position);
+        GameManager.instance.ground.waveManager.CreateImpact(pos, 50f, 0f, 10f, 0.1f, 10f, 0.1f, 20f);
+
+
         gameObject.transform.rotation = Quaternion.identity;
 
         // Disable physic.

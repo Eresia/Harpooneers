@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 4652131994733596}
   - component: {fileID: 198002899789327730}
   - component: {fileID: 199957981259190400}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: MovingFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1627,7 +1627,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicObject: {fileID: 114149151925101046}
   friction: 2
-  gravity: 50
+  gravity: 200
 --- !u!114 &114301401480464612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1788,8 +1788,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 513
   playerMgr: {fileID: 114888584532763218}
-  killingForce: 246
-  bumpForce: 2
+  killingForce: 9999
+  bumpForce: 10
   collision_sound: {fileID: 8300000, guid: ae39102768e5a094dbec5d14c49ea42c, type: 3}
   death_sound: {fileID: 8300000, guid: f888de0ce83a9eb47898bac86e45cd5b, type: 3}
 --- !u!114 &114787632788375122
@@ -1863,8 +1863,8 @@ MonoBehaviour:
   healthNeededForRez: 10
   healthLossPerSec: 0.5
   rezRadius: 4
-  healthPerInput: 0.4
-  rezAmountWhenDead: 0
+  healthPerInput: 10
+  rezAmountWhenDead: 10
   rezBar: {fileID: 114414539537242024}
   deathIcon: {fileID: 114616054903995692}
   playerPositionIndicator: {fileID: 1232968556676988}
@@ -1944,7 +1944,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 765179657
+  randomSeed: 1767683855
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5292,7 +5292,7 @@ ParticleSystemRenderer:
   m_NormalDirection: 1
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0, z: 0}
-  m_UseCustomVertexStreams: 0
+  m_UseCustomVertexStreams: 1
   m_VertexStreams: 00010304
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
