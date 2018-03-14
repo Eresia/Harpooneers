@@ -21,7 +21,7 @@ public class ShipManager : MonoBehaviour {
 
     [Tooltip("Try to update module at runtime, but warning an attribute can not work.")]
     public bool tweaking = false;
-
+    
     public GameObject[] players;
     
     private ShipModulesManager[] shipModuleMgrs;
@@ -48,13 +48,15 @@ public class ShipManager : MonoBehaviour {
     {
         shipModuleMgrs = new ShipModulesManager[players.Length];
         playerMgrs = new PlayerManager[players.Length];
+        playerInputs = new PlayerInput[players.Length];
+
         if (players.Length > 0)
         {
             for (int i = 0; i < players.Length; i++)
             {
                 shipModuleMgrs[i] = players[i].GetComponentInChildren<ShipModulesManager>();
                 playerMgrs[i] = shipModuleMgrs[i].GetComponent<PlayerManager>();
-                playerInputs[i] = playerMgrs[i].GetComponent<PlayerInput>();
+                playerInputs[i] = shipModuleMgrs[i].GetComponent<PlayerInput>();
             }
         }
 
