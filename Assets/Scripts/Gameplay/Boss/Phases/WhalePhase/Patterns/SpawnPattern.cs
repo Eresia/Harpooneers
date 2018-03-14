@@ -24,6 +24,7 @@ public class SpawnPattern : BossPattern {
 	}
 
 	private IEnumerator Spawn(){
+		GameManager.instance.shipMgr.LockInputs();
 		// Move the FX containers.
 		Vector3 pos = boss.bossMgr.north.position + new Vector3(0, 0, -state.offset);
         Quaternion rot = Quaternion.Euler(0f, 180f, 0f);
@@ -49,6 +50,7 @@ public class SpawnPattern : BossPattern {
 		tween = whaleAI.WhaleTransform.DOMove(pos - new Vector3(0, state.endDepth, 0), state.WaitToSurface);
         yield return new WaitWhile(tween.IsPlaying);
 
+		GameManager.instance.shipMgr.UnLockInputs();
 		OnPatternFinished();
 	}
 
