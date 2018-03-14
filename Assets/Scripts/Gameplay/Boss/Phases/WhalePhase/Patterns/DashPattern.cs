@@ -45,7 +45,7 @@ public class DashPattern : BossPattern {
 
 			time += Time.deltaTime;
 
-			if((time >= (timeTarget + state.targetChangeTime)) || (target.isDead)){
+			if((time >= (timeTarget + state.targetChangeTime)) || (target.IsDead)){
 				target = GameManager.instance.shipMgr.ChoosePlayerManagerToAttack();
 				timeTarget = time;
 			}

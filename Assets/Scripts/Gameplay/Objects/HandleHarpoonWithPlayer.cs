@@ -6,9 +6,6 @@ using System;
 
 public class HandleHarpoonWithPlayer : HandleHarpoonHit
 {
-    public float damageAmount;
-
-    public Action<float> hitCallback;
     public ParticleSystem hitFX;
 	public AudioClip hit_sound;
 
@@ -24,8 +21,6 @@ public class HandleHarpoonWithPlayer : HandleHarpoonHit
         }
 
 		GameManager.instance.audioManager.PlaySoundOneTime (hit_sound, 0.2f);
-
-        hitCallback(damageAmount);
     }
 
     protected override void ActionWhenHarpoonDetach()

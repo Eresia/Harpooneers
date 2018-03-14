@@ -15,6 +15,8 @@ public class TentacleBehaviour : MonoBehaviour {
     
     public Animator animAttack;
 
+    public AudioClip bubbleSound;
+
     private void Awake()
     {
         childTransform.gameObject.SetActive(false);
@@ -25,6 +27,8 @@ public class TentacleBehaviour : MonoBehaviour {
     {
         gameObject.SetActive(true);
         spawningFX.Play();
+
+        GameManager.instance.audioManager.PlaySoundOneTime(bubbleSound, 0.5f);
     }
     
     public void Emerge(Vector3 startPos, Vector3 endPos, float emergingDuration)

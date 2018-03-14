@@ -17,7 +17,6 @@ public class CustomCollision : MonoBehaviour {
     public float bumpForce = 15f;
 
 	public AudioClip collision_sound;
-	public AudioClip death_sound;
     
     protected void OnCollisionEnter(Collision collision)
     {
@@ -59,7 +58,6 @@ public class CustomCollision : MonoBehaviour {
         // Kill player if the ship moves too fast.
         if (killPlayer && physic.Velocity.sqrMagnitude > killingForce)
         {
-			GameManager.instance.audioManager.PlaySoundOneTime(death_sound, 0.05f);
             playerMgr.Death();
         }
 

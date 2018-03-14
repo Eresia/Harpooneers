@@ -2307,6 +2307,11 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90.000046
       objectReference: {fileID: 0}
+    - target: {fileID: 114965063249734226, guid: f766ecc83cdd029418b6c9a837601a16,
+        type: 2}
+      propertyPath: bubbleSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 0836f3a9542befb45b12b21219506c8d, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f766ecc83cdd029418b6c9a837601a16, type: 2}
   m_IsPrefabParent: 0
@@ -2754,6 +2759,11 @@ Prefab:
       propertyPath: bossMgr
       value: 
       objectReference: {fileID: 2019429252}
+    - target: {fileID: 82173439072912002, guid: ffe9efaa29c336a468f47656dc4092d6,
+        type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 36d272a40d792974f8cd29cca9391a0f, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ffe9efaa29c336a468f47656dc4092d6, type: 2}
   m_IsPrefabParent: 0
