@@ -692,7 +692,7 @@ MonoBehaviour:
   resetWhenLeaveScreen: {fileID: 114872358802777512}
   physicsScript: {fileID: 114000989618548766}
   explosion_sound: {fileID: 8300000, guid: 66c55efe3735ce74d9c542d12f7856b8, type: 3}
-  repulsionForce: 50
+  repulsionForce: 20
 --- !u!114 &114556376633281656
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4224,7 +4224,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 446314094
+  randomSeed: 2074881719
   InitialModule:
     serializedVersion: 3
     enabled: 1
