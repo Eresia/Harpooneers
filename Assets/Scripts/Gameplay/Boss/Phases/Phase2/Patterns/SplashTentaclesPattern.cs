@@ -120,6 +120,6 @@ public class SplashTentaclesPattern : BossPattern {
 
     protected override void OnStopPattern()
     {
-        throw new System.NotImplementedException();
+        // DO NOTHING
     }
 }

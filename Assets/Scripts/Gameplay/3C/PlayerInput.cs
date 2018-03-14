@@ -36,10 +36,15 @@ public class PlayerInput : MonoBehaviour
 
         // Register delegates for specific actions.
         player.AddInputEventDelegate(DropBomb, UpdateLoopType.Update, InputActionEventType.ButtonPressed, "Drop Bomb");
-        player.AddInputEventDelegate(ResurrectAlly, UpdateLoopType.Update, InputActionEventType.ButtonPressed, "Resurrect");
-        player.AddInputEventDelegate(TogglePause, UpdateLoopType.Update, "Toggle Pause");
+
+
+        // CUT
+        //player.AddInputEventDelegate(ResurrectAlly, UpdateLoopType.Update, InputActionEventType.ButtonPressed, "Resurrect");
+        
         player.AddInputEventDelegate(ReleaseRope, UpdateLoopType.Update, "Release Rope");
         player.AddInputEventDelegate(PullingOnRope, UpdateLoopType.Update, "Pull On Rope");
+
+        player.AddInputEventDelegate(TogglePause, UpdateLoopType.Update, "Toggle Pause");
         player.AddInputEventDelegate(DisplayPlayerPosition, UpdateLoopType.Update, "Display Player");
 
         // Subscribe to events of controller connection
@@ -90,7 +95,8 @@ public class PlayerInput : MonoBehaviour
             harpoonLauncher.LaunchHarpoon(harpoonDir);
         }
 
-        HandleCutRope();
+        // CUT
+        // HandleCutRope();
     }
 
     private void TogglePause(InputActionEventData data)

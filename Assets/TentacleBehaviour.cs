@@ -66,6 +66,7 @@ public class TentacleBehaviour : MonoBehaviour {
     public void ResetTentacle()
     {
         gameObject.SetActive(false);
+        childTransform.gameObject.SetActive(false);
 
         childTransform.localPosition = Vector3.zero;
     }
