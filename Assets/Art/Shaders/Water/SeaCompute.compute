@@ -23,13 +23,13 @@ struct WaveOptions{
 
 	float angularFrequency;
 
-	float waveSpeed;
-
 	float progression;
 
 	float time;
 
 	float timeout;
+
+	float trash;
 };
 
 struct FrameOptions{
@@ -39,8 +39,7 @@ struct FrameOptions{
 	uint lod;
 	float ratio;
 	uint heigthMapRatio;
-	float minVariation;
-	float trash;
+	float2 trash;
 };
 
 StructuredBuffer<WaveOptions> Impacts;
@@ -52,6 +51,7 @@ int lod;
 float currentTime;
 float wt;
 float2 heightInfo;
+float pi;
 
 // void MakeImpact(uint i, WaveOptions wave, float offsetMagnitude, float posAbs, float coeff, float constantWave){
 // 	float theta = (wave.waveNumber * (offsetMagnitude / lod));
@@ -64,15 +64,11 @@ float2 heightInfo;
 // }
 
 void MakeImpact(uint i, WaveOptions wave, float offsetMagnitude, float posAbs, float coeff, float constantWave){
-	float theta = (wave.waveNumber * (offsetMagnitude / lod) +wt);
-	float x =  wave.waveSpeed * currentTime + wave.progression / posAbs;
-	float timeProgress =currentTime;
-	float sinTheta = wave.amplitude * (1/(1+pow((-wt*wave.waveSpeed-posAbs), 2))) * ((1/(1+pow(wt/wave.progression, 2))));
+	float theta = (clamp(wave.waveNumber * (offsetMagnitude / lod) + wt, 0, 2*pi));
+	float sinTheta = wave.amplitude * sin(theta) / exp(-currentTime * wave.progression);
 
-	if(sinTheta > Options[0].minVariation){
-		float heightAbs = abs(sinTheta);
-		heightInfo = heightInfo + float2(sinTheta * (heightAbs/ coeff), (heightAbs / coeff));
-	}
+	float heightAbs = abs(sinTheta);
+	heightInfo = heightInfo + float2(sinTheta * (heightAbs/ coeff), (heightAbs / coeff));
 }
 
 void MakeZone(uint i, WaveOptions wave, float offset, float coeff){
@@ -97,6 +93,7 @@ void CalculatePoint (uint3 id : SV_DispatchThreadID)
 {
 	heightInfo = float2(0, 0);
 	lod = Options[0].lod;
+	pi = 3.141592654;
 
 	int pointId = id.x * lod + id.y;
 
@@ -107,7 +104,7 @@ void CalculatePoint (uint3 id : SV_DispatchThreadID)
 		wave.amplitude = Impacts[i].amplitude;
 		wave.radius = Impacts[i].radius;
 		wave.smooth = Impacts[i].smooth * 10;
-		wave.progression = Impacts[i].progression / 100;
+		wave.progression = Impacts[i].progression;
 
 		wave.waveNumber = Impacts[i].waveNumber;
 		wave.angularFrequency = Impacts[i].angularFrequency;

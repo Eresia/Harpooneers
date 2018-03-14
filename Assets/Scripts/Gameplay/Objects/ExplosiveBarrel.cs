@@ -121,23 +121,8 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
          
             c.SendMessage("OnExplode", SendMessageOptions.DontRequireReceiver);
 
-            // Player Repulsion
-            if(c.tag == "Player")
-            {
-                Vector3 repulsDir = c.transform.position - transform.position;
-                c.transform.parent.parent.GetComponent<PhysicMove>().AddForce(repulsDir.normalized * repulsionForce);
-            }
-        }
-
-        Collider[] colliders2 = Physics.OverlapSphere(transform.position, bombStockModule.bombRadius * 1.5f, damageableLayer);
-        foreach (Collider c in colliders)
-        {
-            if (c == _myCollider)
-            {
-                continue;
-            }
-            // Floating Object Repulsion
-            if (c.tag == "Floating Object")
+            // Player/Object Repulsion
+            if(c.tag == "Player" || c.tag == "Floating Object")
             {
                 Vector3 repulsDir = c.transform.position - transform.position;
                 c.transform.parent.parent.GetComponent<PhysicMove>().AddForce(repulsDir.normalized * repulsionForce);
@@ -157,24 +142,14 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
         explosionFX.Play();
         GameManager.instance.audioManager.PlaySoundOneTime(explosion_sound, 0.1f);
 
-        StartCoroutine(ExplosionWaves());
+
+        // Waves generation
+        Vector2 pos = GameManager.instance.ground.GetSeaPosition(transform.position);
+        GameManager.instance.ground.waveManager.CreateImpact(pos, 0.5f, 0f, 0.05f, 2f, .5f, 5f);
 
         StartCoroutine(DeactiveGameObject());
     }
 
-
-    IEnumerator ExplosionWaves()
-    {
-        Vector2 pos = GameManager.instance.ground.GetSeaPosition(transform.position);
-
-        //GameManager.instance.ground.waveManager.CreateImpact(pos, 2f, 0f, 0.05f, 1f, 50f, 50f, 5f);
-        GameManager.instance.ground.waveManager.CreateImpact(pos, 1f, 0f, 10f, 2f, 50f, 100f, 2f);
-
-        yield return new WaitForSeconds(0.05f);
-        GameManager.instance.ground.waveManager.CreateImpact(pos, 1f, 0f,5f, 3.5f, 40f, 100f, 2f);
-        yield return new WaitForSeconds(0.1f);
-        GameManager.instance.ground.waveManager.CreateImpact(pos, 1f, 0f, 2.5f, 5f, 30f, 100f, 2f);
-    }
 
     public void OnExplode()
     {
