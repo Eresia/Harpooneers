@@ -60,8 +60,6 @@ public class PlayerManager : MonoBehaviour {
     
     public void Death()
     {
-		GameManager.instance.audioManager.PlaySoundOneTime (death_sound);
-
         // Prevents to kill the player again.
         if (isDead)
         {
@@ -80,6 +78,7 @@ public class PlayerManager : MonoBehaviour {
         deathIcon.enabled = true;
         
         GameManager.instance.shipMgr.NotifyDeath();
+		GameManager.instance.audioManager.PlaySoundOneTime (death_sound,0.02f);
     }
 
     // Called when allies are mashing "A" near your shipwreck

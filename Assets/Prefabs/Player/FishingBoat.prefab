@@ -1645,12 +1645,6 @@ MonoBehaviour:
   harpoonLauncher: {fileID: 114609724380578428}
   bombLauncher: {fileID: 0}
   timeBeforePause: 1
-  res_sound:
-  - {fileID: 8300000, guid: 5648064267e321c45b982d7fbcaa4f87, type: 3}
-  - {fileID: 8300000, guid: 7b478b5a12cb95840bbe3df893dbf61d, type: 3}
-  - {fileID: 8300000, guid: b8105c1d035ee584e87105d88c35ef4c, type: 3}
-  - {fileID: 8300000, guid: d979ec94cc3c8104f92480668c4b6542, type: 3}
-  pull_sound: {fileID: 8300000, guid: 879e1c595ca103f42abfc9b1d783e495, type: 3}
 --- !u!114 &114355733020500592
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1854,7 +1848,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coqueModule: {fileID: 11400000, guid: 85a34084e65c96847baa0e932f7e8f1a, type: 2}
   physicMove: {fileID: 114247363230348760}
-  move_player_sound: {fileID: 0}
+  move_player_sound: {fileID: 8300000, guid: fe8f375eba31c6a48882939a47265433, type: 3}
 --- !u!114 &114888584532763218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1876,7 +1870,7 @@ MonoBehaviour:
   playerPositionIndicator: {fileID: 1232968556676988}
   res_sounds: []
   isDead: 0
-  death_sound: {fileID: 0}
+  death_sound: {fileID: 8300000, guid: f888de0ce83a9eb47898bac86e45cd5b, type: 3}
 --- !u!136 &136460695975876572
 CapsuleCollider:
   m_ObjectHideFlags: 1

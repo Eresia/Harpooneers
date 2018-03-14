@@ -125,16 +125,18 @@ public class WhalePhaseAI : PhaseAI {
         {
             leftHitCount++;
             whaleReferences.PlayEyeBloodFX(0);
+			GameManager.instance.audioManager.PlaySoundOneTime(whale_hit, 0.2f);
+			GameManager.instance.audioManager.PlaySoundOneTime(whale_scream, 0.2f);
         }
 
         else
         {
             rightHitCount++;
             whaleReferences.PlayEyeBloodFX(1);
+			GameManager.instance.audioManager.PlaySoundOneTime(whale_hit, 0.2f);
+			GameManager.instance.audioManager.PlaySoundOneTime(whale_scream, 0.2f);
         }
-
-        GameManager.instance.audioManager.PlaySoundOneTime(whale_hit, 0.2f);
-        GameManager.instance.audioManager.PlaySoundOneTime(whale_scream, 0.2f);
+			
         GameManager.instance.camMgr.Shake();
 
         // Whale is dead.
