@@ -163,9 +163,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0468898ffbdca874db8f74f019edfed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  depth: 20
-  hight: 5
-  WaitBeforeSpawn: 5
+  offset: 4
+  beginDepth: 10
+  endDepth: 5
+  WaitToSurface: 2
+  WaitOnSurface: 4
 --- !u!114 &114591433400966774
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -178,7 +180,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   depth: 5
-  endDepth: 13
   timeinSea: 5
   translateSpeed: 10
   ySpeed: 2

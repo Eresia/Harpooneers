@@ -65,7 +65,8 @@ public class BackAttackPattern : BossPattern
 
 
             // Shockwave.
-            GameManager.instance.ground.CreateImpact(whaleAI.WhaleTransform.position);
+			Vector2 pos = GameManager.instance.ground.GetSeaPosition(target.position);
+			GameManager.instance.ground.waveManager.CreateImpact(pos, 2f, 0f, 0.05f, 2f, 0.5f, 15f);
            
 
             yield return new WaitForSeconds(state.waitTimeAfterAttack);
