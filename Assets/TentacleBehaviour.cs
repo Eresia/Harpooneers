@@ -15,12 +15,10 @@ public class TentacleBehaviour : MonoBehaviour {
     
     public Animator animAttack;
 
-    public Animator animGA;
-
     private void Awake()
     {
-        tentacleCollider.enabled = false;
         childTransform.gameObject.SetActive(false);
+        //tentacleCollider.enabled = false;
     }
 
     public void Spawning(float spawningDuration)
@@ -47,22 +45,19 @@ public class TentacleBehaviour : MonoBehaviour {
 
     public void Attack()
     {
-        tentacleCollider.enabled = true;
+        animAttack.SetTrigger("Slam");
 
         // TODO Play attack animation.
         // phase2.Tentacles[i].animAttack.Play("");
 
         // TODO WAIT ANIMATION -> OnStateExit ->
-
-
-        tentacleCollider.enabled = false;
     }
 
     public void FocusPlayer(float turnDuration)
     {
         Transform target = GameManager.instance.shipMgr.ChoosePlayerToAttack();
 
-        Vector3 dir = (childTransform.position - target.position).normalized;
+        Vector3 dir = (target.position - childTransform.position);
         dir.y = 0f;
 
         //Debug.DrawRay(phase2.Tentacles[i].transform.position, dir * 5f, Color.white, 1f);

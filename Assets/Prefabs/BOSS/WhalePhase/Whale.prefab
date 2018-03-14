@@ -530,14 +530,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1388831395008758}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalRotation: {x: -0.13917309, y: 0, z: 0, w: 0.9902681}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4207386676394876}
   m_Father: {fileID: 4696771167551832}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -16, y: 0, z: 0}
 --- !u!4 &4097414409168988
 Transform:
   m_ObjectHideFlags: 1
@@ -1002,9 +1002,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 908a690f799d4974692eb969080e6948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eyeBloodFX:
-  - {fileID: 198243639391879802}
-  - {fileID: 198657936415793166}
   splashFX: {fileID: 198163753155895666}
   bodyCollider: {fileID: 136642434645056956}
   tailCollider: {fileID: 136545287617417526}

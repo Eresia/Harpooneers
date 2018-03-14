@@ -49,10 +49,13 @@ public class SplashTentaclesPattern : BossPattern {
         spawns[0] = center + randPos;
 
         spawns[1] = RotatePointAroundPivot(spawns[0], Vector3.up, new Vector3(0f, Random.Range(state.minAngle, state.maxAngle), 0f));
-
+        
         for (int i = 0; i < 2; i++)
         {
             phase2.Tentacles[i].transform.position = spawns[i];
+
+            Vector3 lookCenter = center - spawns[i];
+            phase2.Tentacles[i].childTransform.localRotation = Quaternion.LookRotation(lookCenter);
         }
     }
 
@@ -98,11 +101,12 @@ public class SplashTentaclesPattern : BossPattern {
                 phase2.Tentacles[i].Attack();
             }
 
-            //yield return new WaitWhile(() => (phase2.Tentacles[0].animGA.GetBool("End")));
-            yield return new WaitForSeconds(3f);
-
+            yield return new WaitUntil(() => (phase2.Tentacles[0].animAttack.GetBool("End")));
+            
             for (int i = 0; i < state.tentacleCount; i++)
             {
+                phase2.Tentacles[i].animAttack.SetBool("End", false);
+
                 phase2.Tentacles[i].Dive(state.startPos, state.divingDuration);
             }
 
