@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 114341871614110768}
   - component: {fileID: 33711866681094324}
   - component: {fileID: 23218790605428570}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Sea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}

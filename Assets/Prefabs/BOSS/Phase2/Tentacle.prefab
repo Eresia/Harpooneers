@@ -138,14 +138,14 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4772539218282974}
-  - component: {fileID: 114917234403769986}
+  - component: {fileID: 114965063249734226}
   m_Layer: 0
   m_Name: Tentacle
   m_TagString: Untagged
   m_Icon: {fileID: -6431860639581277017, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1981827896688338
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,6 +155,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4765430628465110}
   - component: {fileID: 65798230012843982}
+  - component: {fileID: 114855792500598614}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
@@ -458,7 +459,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1981827896688338}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2, y: 2, z: 20}
@@ -480,7 +481,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114917234403769986
+--- !u!114 &114855792500598614
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1981827896688338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2c49a68c3c0deb4da607ca687f05212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114965063249734226
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -488,7 +500,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1785840547380594}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 628a3aa554d06dd41ad252c84bc40e7a, type: 3}
+  m_Script: {fileID: 11500000, guid: fcad1238b6b2ea94ebfeda0341364791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   childTransform: {fileID: 4055268696771942}

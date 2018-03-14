@@ -322,10 +322,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 19
       objectReference: {fileID: 0}
-    - target: {fileID: 1785840547380594, guid: f766ecc83cdd029418b6c9a837601a16, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f766ecc83cdd029418b6c9a837601a16, type: 2}
   m_IsPrefabParent: 0
@@ -2691,12 +2687,12 @@ Prefab:
     - target: {fileID: 20321886670881084, guid: cf60f7543f7e1db428fab33ef4b98f6d,
         type: 2}
       propertyPath: m_CullingMask.m_Bits
-      value: 4294959103
+      value: 4294942719
       objectReference: {fileID: 0}
     - target: {fileID: 20450562675694636, guid: cf60f7543f7e1db428fab33ef4b98f6d,
         type: 2}
       propertyPath: m_CullingMask.m_Bits
-      value: 32
+      value: 16416
       objectReference: {fileID: 0}
     - target: {fileID: 1508635868289804, guid: cf60f7543f7e1db428fab33ef4b98f6d, type: 2}
       propertyPath: m_IsActive
@@ -3235,15 +3231,6 @@ Prefab:
     - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
       propertyPath: m_RootOrder
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 64977425580068820, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: m_Convex
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1932297806522794, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
-      propertyPath: m_Layer
-      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
@@ -3879,11 +3866,6 @@ Prefab:
     - target: {fileID: 224557941847947284, guid: 8d447a651bdff9d4f851fefa8a7a864c,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114149151925101046, guid: 8d447a651bdff9d4f851fefa8a7a864c,
-        type: 2}
-      propertyPath: pivot.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
