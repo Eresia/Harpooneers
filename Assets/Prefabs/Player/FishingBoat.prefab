@@ -530,7 +530,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4034390026598668
 Transform:
   m_ObjectHideFlags: 1
@@ -1860,14 +1860,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eec97649aef1cd46a5d98d16153ddb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthNeededForRez: 10
-  healthLossPerSec: 0.5
-  rezRadius: 4
-  healthPerInput: 10
-  rezAmountWhenDead: 10
-  rezBar: {fileID: 114414539537242024}
   deathIcon: {fileID: 114616054903995692}
   playerPositionIndicator: {fileID: 1232968556676988}
+  playerIndicatorDuration: 5
   res_sounds: []
   isDead: 0
   death_sound: {fileID: 0}
@@ -5354,7 +5349,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224840178862456688}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5392,7 +5387,7 @@ RectTransform:
   - {fileID: 224926275257775818}
   - {fileID: 224537962487659020}
   m_Father: {fileID: 224840178862456688}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5432,7 +5427,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5447,8 +5442,8 @@ RectTransform:
   m_LocalScale: {x: 0.01, y: 0.0100000035, z: 0.0100000035}
   m_Children:
   - {fileID: 224135404612610194}
-  - {fileID: 224249098713023500}
   - {fileID: 224060777697582180}
+  - {fileID: 224249098713023500}
   m_Father: {fileID: 4493171840694980}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}

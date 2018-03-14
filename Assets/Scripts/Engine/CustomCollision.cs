@@ -33,57 +33,35 @@ public class CustomCollision : MonoBehaviour {
     {
         //Debug.Log("Impact force : " + Mathf.RoundToInt(physic.Velocity.sqrMagnitude));
         
-
-
         bool killPlayer = true;
-
-        // Don't kill the player when hit a player or a floating object.
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("FloatingObject"))
+        
+        // Don't kill the player when hit a player
+        if (collision.gameObject.CompareTag("Player"))
         {
-			GameManager.instance.audioManager.PlaySoundOneTime(collision_sound, 0.05f);
+            CustomCollision otherPlayer = collision.gameObject.GetComponent<CustomCollision>();
+            if(!playerMgr.IsDead && otherPlayer.playerMgr.IsDead)
+            {
+                otherPlayer.playerMgr.Resurrect();
+            }
+
 			killPlayer = false;
+        }
+
+        // or a floating object.
+        if (collision.gameObject.CompareTag("FloatingObject"))
+        {
+            killPlayer = false;
         }
 
         // Kill player if the ship moves too fast.
         if (physic.Velocity.sqrMagnitude > killingForce && killPlayer)
         {
-			GameManager.instance.audioManager.PlaySoundOneTime(death_sound, 0.05f);
             playerMgr.Death();
         }
 
+        GameManager.instance.audioManager.PlaySoundOneTime(collision_sound, 0.05f);
         // Bump the player in any case.
         physic.AddForce(-physic.Velocity);
         physic.AddForce(collision.contacts[0].normal * bumpForce);
     }
-
-    /*
-    // Update is called once per frame
-    void FixedUpdate () {
-
-        Vector3 shipCenter = transform.TransformPoint(shipCollider.center);
-        Ray r = new Ray(shipCenter, transform.forward);
-        Ray rRight = new Ray(shipCenter, transform.right);
-        Ray rLeft = new Ray(shipCenter, -transform.right);
-
-        Debug.DrawRay(r.origin, r.direction * rayLengthForward, Color.red, 1f);
-        Debug.DrawRay(rRight.origin, rRight.direction * rayLengthLeftRight, Color.green, 1f);
-        Debug.DrawRay(rLeft.origin, rLeft.direction * rayLengthLeftRight, Color.magenta, 1f);
-
-        HandleRay(r, rayLengthForward);
-        HandleRay(rLeft, rayLengthLeftRight);
-        HandleRay(rRight, rayLengthLeftRight);
-    }
-
-    private void HandleRay(Ray r, float rayLength)
-    {
-        if (Physics.Raycast(r, out hit, rayLength, blockingLayer))
-        {
-            Vector3 currentVelocity = physic.velocity;
-            Debug.Log("Impact force : " + Mathf.RoundToInt(currentVelocity.sqrMagnitude));
-            
-            // Create bump
-            physic.AddForce(-currentVelocity * bumpForce);
-        }
-    }
-    */
 }

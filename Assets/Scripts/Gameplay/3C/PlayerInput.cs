@@ -34,6 +34,8 @@ public class PlayerInput : MonoBehaviour
 
     void Awake()
     {
+        tutoStep = 3;
+
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
 
@@ -55,7 +57,7 @@ public class PlayerInput : MonoBehaviour
         ReInput.ControllerDisconnectedEvent += OnControllerDisconnected;
 
         // Deactivate the player position indicator
-        playerMgr.FeedbackPlayerPos(false, playerId);
+        playerMgr.SetupIndicator(playerId);
 
 		// GameManager.instance.audioManager.CreatePersistantSound (AudioManager.PossibleSound.PULL, pull_sound, 0.05f);
     }
@@ -161,6 +163,7 @@ public class PlayerInput : MonoBehaviour
     }
 
     // CUT - touch the boat to rez an ally !
+    /*
     private void ResurrectAlly(InputActionEventData data)
     {
         if (playerMgr.IsDead)
@@ -173,8 +176,10 @@ public class PlayerInput : MonoBehaviour
             playerMgr.ResurrectFriend();
         }
     }
+    */
 
     // CUT !
+    /*
     private void ReleaseRope(InputActionEventData data)
     {
         if (playerMgr.IsDead)
@@ -187,6 +192,7 @@ public class PlayerInput : MonoBehaviour
             harpoonLauncher.Release();
         }
     }
+    */
 
     private void PullingOnRope(InputActionEventData data)
     {
@@ -227,12 +233,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (data.GetButtonDown())
         {
-            playerMgr.FeedbackPlayerPos(true, playerId);
-        }
-
-        else if(data.GetButtonUp())
-        {
-            playerMgr.FeedbackPlayerPos(false, playerId);
+            playerMgr.FeedbackPlayerPos(1f);
         }
     }
     

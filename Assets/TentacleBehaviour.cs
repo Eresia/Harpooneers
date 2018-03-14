@@ -16,7 +16,13 @@ public class TentacleBehaviour : MonoBehaviour {
     public Animator animAttack;
 
     public Animator animGA;
-    
+
+    private void Awake()
+    {
+        tentacleCollider.enabled = false;
+        childTransform.gameObject.SetActive(false);
+    }
+
     public void Spawning(float spawningDuration)
     {
         gameObject.SetActive(true);
@@ -47,6 +53,7 @@ public class TentacleBehaviour : MonoBehaviour {
         // phase2.Tentacles[i].animAttack.Play("");
 
         // TODO WAIT ANIMATION -> OnStateExit ->
+
 
         tentacleCollider.enabled = false;
     }

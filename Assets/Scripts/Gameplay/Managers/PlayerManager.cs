@@ -5,16 +5,20 @@ using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour {
    
+    /*
     public float healthNeededForRez;
     public float healthLossPerSec;
     public float rezRadius;
     public float healthPerInput;
     public int rezAmountWhenDead = 0;
+    */
 
     [Header("UI")]
-    public Slider rezBar;
+    //public Slider rezBar;
     public Image deathIcon;
     public GameObject playerPositionIndicator;
+    public float playerIndicatorDuration = 5f;
+
     private Text playerPosText;
     private Camera mainCamera;
     
@@ -49,8 +53,9 @@ public class PlayerManager : MonoBehaviour {
 
     void Start()
     {
+        FeedbackPlayerPos(playerIndicatorDuration);
 
-        StartCoroutine(TimedFeedbackPlayerPos());
+        //rezBar.gameObject.SetActive(false);
 
         if (isDead)
         {
@@ -69,8 +74,7 @@ public class PlayerManager : MonoBehaviour {
         }
 
         isDead = true;
-        
-        _rezAmount = rezAmountWhenDead;
+        //_rezAmount = rezAmountWhenDead;
 
         // Freeze the player and cut the harpoon.
         movement.FreezePlayer();
@@ -83,6 +87,7 @@ public class PlayerManager : MonoBehaviour {
     }
 
     // Called when allies are mashing "A" near your shipwreck
+    /*
     public void AddHealth()
     {
         _rezAmount += healthPerInput;    
@@ -92,7 +97,9 @@ public class PlayerManager : MonoBehaviour {
             Resurrect();
         }
     }
+    */
 
+    /*
     // Called when you are mashing "A" near an ally shipwreck
     public void ResurrectFriend()
     {
@@ -130,12 +137,14 @@ public class PlayerManager : MonoBehaviour {
             GameManager.instance.audioManager.PlayRandomSoundOneTimeIn(res_sounds, 0.05f);
         }
     }
+    */
 
     // Losing rez bar progression while downed
     void Update()
     {
         if(isDead)
         {
+            /*
             if (_rezAmount > 0)
             {
                 _rezAmount -= Time.deltaTime * healthLossPerSec;
@@ -150,16 +159,21 @@ public class PlayerManager : MonoBehaviour {
                 deathIcon.enabled = true;
                 rezBar.gameObject.SetActive(false);
             }
+            */
+
+            deathIcon.enabled = true;
+            // Look the cam.
+            deathIcon.transform.LookAt(transform.position - mainCamera.transform.position);
         }
         else
         {
             deathIcon.enabled = false;
-            rezBar.gameObject.SetActive(false);
+            //rezBar.gameObject.SetActive(false);
         }
 
         if(playerPositionIndicator.activeSelf)
         {
-            OrientPositionText();
+            OrientatePositionText();
         }
     }
 
@@ -167,16 +181,14 @@ public class PlayerManager : MonoBehaviour {
     public void Resurrect()
     {
         isDead = false;
-
-        _rezAmount = 0;
-
         GameManager.instance.shipMgr.NotifyAlive();
+
+        //_rezAmount = 0;
     }
 
-    public void FeedbackPlayerPos(bool displayed, int playerId)
+    public void SetupIndicator(int playerId)
     {
-        playerPositionIndicator.SetActive(displayed);
-        switch(playerId)
+        switch (playerId)
         {
             case 0:
                 playerPosText.text = "P1";
@@ -200,16 +212,23 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
-    private void OrientPositionText()
+    public void FeedbackPlayerPos(float displayedTime)
+    {
+        StartCoroutine(TimedFeedbackPlayerPos(displayedTime));
+    }
+
+    private void OrientatePositionText()
     {
         playerPositionIndicator.transform.LookAt(transform.position - mainCamera.transform.position);
     }
 
-    IEnumerator TimedFeedbackPlayerPos()
+    // Display a feedback to locate player during a certain time at start.
+    IEnumerator TimedFeedbackPlayerPos(float displayedTime)
     {
-        int playerID = GetComponent<PlayerInput>().playerId;
-        FeedbackPlayerPos(true, playerID);
-        yield return new WaitForSeconds(5f);
-        FeedbackPlayerPos(false, playerID);
+        playerPositionIndicator.SetActive(true);
+
+        yield return new WaitForSeconds(displayedTime);
+
+        playerPositionIndicator.SetActive(false);
     }
 }
