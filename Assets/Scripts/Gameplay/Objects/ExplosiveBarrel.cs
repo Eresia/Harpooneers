@@ -33,6 +33,8 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
 
 	public AudioClip explosion_sound;
 
+    public float repulsionForce;
+
     public void Awake()
     {
         transform.parent = null;
@@ -116,13 +118,22 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
             {
                 continue;
             }
-
+         
             c.SendMessage("OnExplode", SendMessageOptions.DontRequireReceiver);
+
+            // Player Repulsion
+            if(c.tag == "Player")
+            {
+                Vector3 repulsDir = c.transform.position - transform.position;
+                c.transform.parent.parent.GetComponent<PhysicMove>().AddForce(repulsDir.normalized * repulsionForce);
+            }
         }
 
         // Shockwave on the sea.
         Vector2 pos = GameManager.instance.ground.GetSeaPosition(transform.position);
-        GameManager.instance.ground.waveManager.CreateImpact(pos, 300f, 0f, 100f, 15f, 3f, 0.2f, 20f);
+     //   GameManager.instance.ground.waveManager.CreateImpact(pos, 1500f, 0f, 500f, 5f, 2f, 0.1f, 20f);
+
+       
 
 
         gameObject.transform.rotation = Quaternion.identity;
