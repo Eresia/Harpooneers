@@ -134,14 +134,18 @@ MonoBehaviour:
     type: 2}
   FX: {fileID: 4545501658588088}
   spawningFX: {fileID: 198223805626864814}
+  whaleReferences: {fileID: 0}
   geyserPrefab: {fileID: 114058333544853980, guid: 9fe4bcfee86ae324a98496a6a8e7279a,
     type: 2}
-  NoHittablePatternCount: 2
+  noHittablePatternCount: 0
   numberOfPatternsWithoutHit: 2
-  eyes:
-  - {fileID: 0}
-  - {fileID: 0}
+  eyeColliders: []
+  bodyCollider: {fileID: 0}
+  tailCollider: {fileID: 0}
+  whaleScript: []
   hitByEyeNeeded: 0
+  whale_scream: {fileID: 8300000, guid: 06638536874cc0b4eac01e4d7e9161cf, type: 3}
+  whale_hit: {fileID: 8300000, guid: 6ef5d8cc08d8e804ebd2fb79df81ff0b, type: 3}
 --- !u!198 &198223805626864814
 ParticleSystem:
   m_ObjectHideFlags: 1

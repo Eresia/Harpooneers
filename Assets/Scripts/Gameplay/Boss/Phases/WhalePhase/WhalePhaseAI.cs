@@ -55,7 +55,6 @@ public class WhalePhaseAI : PhaseAI {
     private float lifepoints;
 
 	public AudioClip whale_scream;
-	public AudioClip whale_hit;
 
     protected override void Awake()
     {
@@ -125,8 +124,6 @@ public class WhalePhaseAI : PhaseAI {
             // Don't do anything if boss is defeated.
             return;
         }
-
-        GameManager.instance.audioManager.PlaySoundOneTime(whale_hit, 0.2f);
 
         if(damageAmount >= weakPointDamageMinAmount)
         {

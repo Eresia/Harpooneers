@@ -1848,7 +1848,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coqueModule: {fileID: 11400000, guid: 85a34084e65c96847baa0e932f7e8f1a, type: 2}
   physicMove: {fileID: 114247363230348760}
-  move_player_sound: {fileID: 0}
+  move_player_sound: {fileID: 8300000, guid: fe8f375eba31c6a48882939a47265433, type: 3}
 --- !u!114 &114888584532763218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1865,7 +1865,7 @@ MonoBehaviour:
   playerIndicatorDuration: 5
   res_sounds: []
   isDead: 0
-  death_sound: {fileID: 0}
+  death_sound: {fileID: 8300000, guid: f888de0ce83a9eb47898bac86e45cd5b, type: 3}
 --- !u!136 &136460695975876572
 CapsuleCollider:
   m_ObjectHideFlags: 1
