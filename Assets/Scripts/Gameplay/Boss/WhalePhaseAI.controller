@@ -13,19 +13,19 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: NextState
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: PatternHit
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -176,24 +176,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad79dcb05caf72d46af2bd728f1ef7eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offsetX: 0.3
-  offsetY: 0.1
-  TurnMin: 3
-  TurnMax: 5
   WaitBeforeSpawn: 5
-  WaitBeforeDash: 0.5
   translateSpeed: 10
-  dashSpeed: 40
-  whaleOffset: 18
-  diveOnExplode: 1
-  divingDuration: 5
-  diveHeightEnd: -30
-  diveForwardEnd: 20
-  diveRotationEnd: {x: 0, y: 0, z: 0}
-  minX: 0
-  maxX: 0
-  minZ: 0
-  maxZ: 0
+  turnSpeed: 1
+  targetChangeTime: 5
 --- !u!114 &114863543440066848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -658,10 +644,10 @@ AnimatorStateMachine:
     m_Position: {x: 288, y: 216, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102442778312955678}
-    m_Position: {x: 324, y: 348, z: 0}
+    m_Position: {x: 540, y: 300, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102889705949303782}
-    m_Position: {x: 552, y: 288, z: 0}
+    m_Position: {x: 672, y: 204, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102651782821878876}
     m_Position: {x: 288, y: 132, z: 0}
