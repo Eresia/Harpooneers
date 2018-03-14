@@ -68,7 +68,8 @@ public class AudioManager : MonoBehaviour
 	{
         if(sound == null)
         {
-            Debug.LogWarning("Audio clip missing !");
+            // Debug.LogWarning("Audio clip missing !");
+			return ;
         }
 
 		//AudioSource newSource = targetObject.AddComponent<AudioSource>();
@@ -94,8 +95,10 @@ public class AudioManager : MonoBehaviour
 
 	public void PlayRandomSoundOneTimeIn (AudioClip[] soundArray, float volume)
 	{
-		int choice = Random.Range (0, soundArray.Length);
-		PlaySoundOneTime (soundArray [choice], volume);
+		if(soundArray != null){
+			int choice = Random.Range (0, soundArray.Length);
+			PlaySoundOneTime (soundArray [choice], volume);
+		}
 	}
 
 	public void CreatePersistantSound (PossibleSound id, AudioClip sound, float volume)

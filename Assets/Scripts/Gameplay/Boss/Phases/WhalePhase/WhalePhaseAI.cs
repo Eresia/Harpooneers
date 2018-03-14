@@ -43,7 +43,7 @@ public class WhalePhaseAI : PhaseAI {
     public Collider[] eyeColliders;
     public Collider bodyCollider;
     public Collider tailCollider;
-    public HandleHarpoonWithEye[] eyesScript;
+    public HandleHarpoonWithWhale[] whaleScript;
     public int hitByEyeNeeded;
 
     private int passCount = 0;
@@ -84,17 +84,12 @@ public class WhalePhaseAI : PhaseAI {
 		GameManager.instance.audioManager.PlaySoundOneTime (whale_scream, 0.2f);
 
         // Setup eye colliders and scripts.
-        eyesScript = whaleReferences.eyeScript;
-        eyeColliders = new Collider[eyesScript.Length];
+        whaleScript = whaleReferences.eyeScript;
+        eyeColliders = new Collider[whaleScript.Length];
 
         for (int i = 0; i < eyeColliders.Length; i++)
         {
-            // Get and disable by default.
-            eyeColliders[i] = eyesScript[i].GetComponent<Collider>();
-            eyeColliders[i].enabled = false;
-
-            // Add callback when hit eye.
-            eyesScript[i].hitCallback = HitEye;
+            whaleScript[i].hitCallback = HitWhale;
         }
     }
 
@@ -118,7 +113,7 @@ public class WhalePhaseAI : PhaseAI {
         return nextState;
     }
 
-    public void HitEye(bool left)
+    public void HitWhale(bool left)
     {
         if(phaseFinished)
         {

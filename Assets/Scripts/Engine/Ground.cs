@@ -114,7 +114,7 @@ public class Ground : MonoBehaviour {
 
 	public RawImage rawImage;
 
-	private int waveVortexId = -1;
+	// private int waveVortexId = -1;
 
 	private bool canBeginUpdate;
 
@@ -200,8 +200,6 @@ public class Ground : MonoBehaviour {
 		if(rawImage != null){
 			rawImage.texture = heightMap;
 		}
-
-		waveVortexId = -1;
 		canBeginUpdate = true;
 	}
 
@@ -221,43 +219,43 @@ public class Ground : MonoBehaviour {
 			RenderTexture.active = currentActiveRT;
 		}
 
-		bool leftClick = Input.GetMouseButtonDown(0);
-		bool rightClick = Input.GetMouseButtonDown(1);
-		if((GameManager.instance.actualPlayer == -1)){
-			if(leftClick || rightClick){
-				RaycastHit hit;
-				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		// bool leftClick = Input.GetMouseButtonDown(0);
+		// bool rightClick = Input.GetMouseButtonDown(1);
+		// if((GameManager.instance.actualPlayer == -1)){
+		// 	if(leftClick || rightClick){
+		// 		RaycastHit hit;
+		// 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-				// Debug.DrawRay()
+		// 		// Debug.DrawRay()
 
-				if (Physics.Raycast(ray, out hit, Mathf.Infinity, testLayer)) {
-					float iFloat = ((hit.point.x / (4*ratio / lodPowPower)) + halfLod) - selfTransform.position.x;
-					float jFloat = ((hit.point.z / (4*ratio / lodPowPower)) + halfLod) - selfTransform.position.z;
-					if(leftClick){
-						// AddWave(Wave.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactWaveLength, impactPeriod, time, waveSpeed, timeProgression, timeout));
-						waveManager.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, impactWaveLength, impactPeriod, waveSpeed, timeProgression, timeout);
-					}
-					else{
-						waveVortexId = waveManager.CreateVortex(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, vortexSmooth, impactWaveLength, impactPeriod, timeProgression, timeout);
-						// AddWave(Wave.CreateRectImpact(new Vector2(iFloat, jFloat), waveSize, impactAmplitude, impactWaveLength, impactPeriod, time, waveSpeed, timeProgression, timeout));
-					}
-				}
-			}
+		// 		if (Physics.Raycast(ray, out hit, Mathf.Infinity, testLayer)) {
+		// 			float iFloat = ((hit.point.x / (4*ratio / lodPowPower)) + halfLod) - selfTransform.position.x;
+		// 			float jFloat = ((hit.point.z / (4*ratio / lodPowPower)) + halfLod) - selfTransform.position.z;
+		// 			if(leftClick){
+		// 				// AddWave(Wave.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactWaveLength, impactPeriod, time, waveSpeed, timeProgression, timeout));
+		// 				waveManager.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, impactWaveLength, impactPeriod, waveSpeed, timeProgression, timeout);
+		// 			}
+		// 			else{
+		// 				waveVortexId = waveManager.CreateVortex(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, vortexSmooth, impactWaveLength, impactPeriod, timeProgression, timeout);
+		// 				// AddWave(Wave.CreateRectImpact(new Vector2(iFloat, jFloat), waveSize, impactAmplitude, impactWaveLength, impactPeriod, time, waveSpeed, timeProgression, timeout));
+		// 			}
+		// 		}
+		// 	}
 
-			if(waveManager.Waves.ContainsKey(waveVortexId)){
-				WaveOptions vortex = waveManager.Waves[waveVortexId];
-				impactAmplitude += Input.GetAxis("Mouse ScrollWheel");
-				vortex.amplitude = impactAmplitude;
-				vortex.radius = impactRadius;
-				vortex.smooth = vortexSmooth;
-				vortex.waveNumber = (2 * Mathf.PI) / impactWaveLength;
-				vortex.angularFrequency = (2 * Mathf.PI) / impactPeriod;
-				vortex.waveSpeed = waveSpeed;
-				vortex.timeProgression = timeProgression;
-				waveManager.ChangeWave(waveVortexId, vortex);
-			}
+		// 	if(waveManager.Waves.ContainsKey(waveVortexId)){
+		// 		WaveOptions vortex = waveManager.Waves[waveVortexId];
+		// 		impactAmplitude += Input.GetAxis("Mouse ScrollWheel");
+		// 		vortex.amplitude = impactAmplitude;
+		// 		vortex.radius = impactRadius;
+		// 		vortex.smooth = vortexSmooth;
+		// 		vortex.waveNumber = (2 * Mathf.PI) / impactWaveLength;
+		// 		vortex.angularFrequency = (2 * Mathf.PI) / impactPeriod;
+		// 		vortex.waveSpeed = waveSpeed;
+		// 		vortex.timeProgression = timeProgression;
+		// 		waveManager.ChangeWave(waveVortexId, vortex);
+		// 	}
 			
-		}
+		// }
 
 		waveManager.IncrementTime(Time.deltaTime);
 		
@@ -292,6 +290,13 @@ public class Ground : MonoBehaviour {
 		float jFloat = ((position.z / (4*ratio / lodPowPower)) + halfLod) - selfTransform.position.z;
 
 		waveManager.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, impactWaveLength, impactPeriod, waveSpeed, timeProgression, timeout);
+	}
+
+	public Vector2 GetSeaPosition(Vector3 position){
+		float iFloat = ((position.x / (4*ratio / lodPowPower)) + halfLod) - selfTransform.position.x;
+		float jFloat = ((position.z / (4*ratio / lodPowPower)) + halfLod) - selfTransform.position.z;
+
+		return new Vector2(iFloat, jFloat);
 	}
 
 	private void OnDrawGizmos() {
@@ -331,7 +336,7 @@ public class Ground : MonoBehaviour {
 		}
 	}
 
-	public TransformInfo GetTransformInfo(Vector2 position, float yAngle){
+	public TransformInfo GetTransformInfo(Vector3 position){
 		float minX = GetX(0);
 		float maxX = GetX(lod - 1);
 		float minZ = GetZ(0);
@@ -349,10 +354,10 @@ public class Ground : MonoBehaviour {
 			result.position.x = position.x;
 		}
 
-		if(position.y < minZ){
+		if(position.z < minZ){
 			result.position.z = minZ;
 		}
-		else if(position.y > maxZ){
+		else if(position.z > maxZ){
 			result.position.z = maxZ;
 		}
 		else{
@@ -361,7 +366,7 @@ public class Ground : MonoBehaviour {
 
 		HeightInfo info = GetHeightInfo(result.position.x, result.position.z);
 		result.position.y = GetHeight(info);
-		result.normal = GetNormal(info, result.position, result.position.y, yAngle);
+		result.normal = GetNormal(info, result.position, result.position.y);
 
 		return result;
 	}
@@ -395,7 +400,7 @@ public class Ground : MonoBehaviour {
 		return vector;
 	}
 
-	private Vector3 GetNormal(HeightInfo info, Vector3 position, float height, float yAngle)
+	private Vector3 GetNormal(HeightInfo info, Vector3 position, float height)
     {
 		Vector3 result;
 

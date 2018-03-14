@@ -36,12 +36,10 @@ public class PlayerInput : MonoBehaviour
 
         // Register delegates for specific actions.
         player.AddInputEventDelegate(DropBomb, UpdateLoopType.Update, InputActionEventType.ButtonPressed, "Drop Bomb");
-
-
+        
         // CUT
         //player.AddInputEventDelegate(ResurrectAlly, UpdateLoopType.Update, InputActionEventType.ButtonPressed, "Resurrect");
         
-        player.AddInputEventDelegate(ReleaseRope, UpdateLoopType.Update, "Release Rope");
         player.AddInputEventDelegate(PullingOnRope, UpdateLoopType.Update, "Pull On Rope");
 
         player.AddInputEventDelegate(TogglePause, UpdateLoopType.Update, "Toggle Pause");
@@ -134,7 +132,7 @@ public class PlayerInput : MonoBehaviour
             return;
         }
 
-        if (data.GetButtonDown() && !bombLauncher.gameObject.activeSelf)
+        if (data.GetButton() && !bombLauncher.gameObject.activeSelf)
         {
             // Spawn the bomb behind the boat
             bombLauncher.gameObject.SetActive(true);
@@ -142,6 +140,7 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
+    // CUT - touch the boat to rez an ally !
     private void ResurrectAlly(InputActionEventData data)
     {
         if (playerMgr.IsDead)
@@ -155,6 +154,7 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
+    // CUT !
     private void ReleaseRope(InputActionEventData data)
     {
         if (playerMgr.IsDead)
@@ -186,6 +186,7 @@ public class PlayerInput : MonoBehaviour
 		}
     }
 
+    // CUT !
     private void HandleCutRope()
     {
         if (playerMgr.IsDead)
@@ -213,7 +214,6 @@ public class PlayerInput : MonoBehaviour
         {
             playerMgr.FeedbackPlayerPos(false, playerId);
         }
-       
     }
     
     // Controller connection - disconnection.

@@ -199,12 +199,18 @@ public class Harpoon : MonoBehaviour {
 
 	public void Pull(){
 		if(state == State.GRIPPED){
+
+            Cut();
+            launcher.physicMove.AddForce((harpoonPivotDir + launcher.physicMove.Velocity.normalized) * 25f);
+
+            /*
 			actualDistance -= tractionSpeed * Time.deltaTime;
 			if(actualDistance < minDistance){
 				Cut();
-			}
-		}
-	}
+                
+        }*/
+        }
+    }
 
     // Try to attach to a collider.
     private void OnTriggerEnter(Collider other)

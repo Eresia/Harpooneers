@@ -149,7 +149,7 @@ MonoBehaviour:
   lodPower: 5
   heigtMapPower: 5
   ratio: 1
-  maxWaveHeight: 10
+  maxWaveHeight: 20
   seaCompute: {fileID: 7200000, guid: c38a7e0af28a2f143b23bc17e4ef5d30, type: 3}
   selfRenderer: {fileID: 23218790605428570}
   displayGizmos: 0
@@ -158,8 +158,8 @@ MonoBehaviour:
   testLayer:
     serializedVersion: 2
     m_Bits: 12288
-  zoneAmplitude: 0.56
-  zoneWaveLength: 0.005
+  zoneAmplitude: 0.14
+  zoneWaveLength: 0.0025
   zonePeriod: 1
   impactAmplitude: 37.4
   impactRadius: 35.6

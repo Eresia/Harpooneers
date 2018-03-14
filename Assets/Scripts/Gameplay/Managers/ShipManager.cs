@@ -67,7 +67,9 @@ public class ShipManager : MonoBehaviour {
                 if(useDefaultConfig)
                 {
                     if (randomDefaultConfig)
+                    {
                         RandomConfig();
+                    }
 
                     shipModuleMgrs[i].ActivateShipModules(GameManager.instance.shipMgr.defaultConfig, this, playerMaterials[i]);
                 }
@@ -110,13 +112,8 @@ public class ShipManager : MonoBehaviour {
         playerAlive++;
     }
 
-    /// <summary>
-    /// Return a random player alive to attack.
-    /// </summary>
-    /// <returns>Transform</returns>
-    public Transform ChoosePlayerToAttack()
-    {
-        List<int> playerIds = new List<int>();
+	private int ChoosePlayerToAttackId(){
+		List<int> playerIds = new List<int>();
         for (int i = 0; i < GameManager.instance.nbOfPlayers; i++)
         {
             playerIds.Add(i);
@@ -141,6 +138,24 @@ public class ShipManager : MonoBehaviour {
             }
         }
 
-        return players[playerId].transform.GetChild(0);
+		return playerId;
+	}
+
+    /// <summary>
+    /// Return a random player alive to attack.
+    /// </summary>
+    /// <returns>Transform</returns>
+    public Transform ChoosePlayerToAttack()
+    {
+        return players[ChoosePlayerToAttackId()].transform.GetChild(0);
+    }
+
+	/// <summary>
+    /// Return a random player alive to attack.
+    /// </summary>
+    /// <returns>PlayerManager</returns>
+	public PlayerManager ChoosePlayerManagerToAttack()
+    {
+        return playerMgrs[ChoosePlayerToAttackId()];
     }
 }
