@@ -127,6 +127,15 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
                 Vector3 repulsDir = c.transform.position - transform.position;
                 c.transform.parent.parent.GetComponent<PhysicMove>().AddForce(repulsDir.normalized * repulsionForce);
             }
+        }
+
+        Collider[] colliders2 = Physics.OverlapSphere(transform.position, bombStockModule.bombRadius * 1.5f, damageableLayer);
+        foreach (Collider c in colliders)
+        {
+            if (c == _myCollider)
+            {
+                continue;
+            }
             // Floating Object Repulsion
             if (c.tag == "Floating Object")
             {
