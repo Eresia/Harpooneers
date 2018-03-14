@@ -4,12 +4,12 @@ using DG.Tweening;
 
 public class DashPattern : BossPattern {
 
-    private DashState dashState;
+    private DashState state;
     private WhalePhaseAI whaleAI;
 
-    public DashPattern(DashState dashState)
+    public DashPattern(DashState state)
     {
-        this.dashState = dashState;
+        this.state = state;
     }
 
     public override void SetBoss(PhaseAI boss)
@@ -17,6 +17,9 @@ public class DashPattern : BossPattern {
         base.SetBoss(boss);
 
         whaleAI = boss as WhalePhaseAI;
+
+        // Callback when a bomb explodes.
+        
     }
 
     protected override void ExecutePattern() {
@@ -31,15 +34,15 @@ public class DashPattern : BossPattern {
 
 		while(true){
 			time += Time.deltaTime;
-			if((time >= dashState.targetChangeTime) || (target.isDead)){
+			if((time >= state.targetChangeTime) || (target.isDead)){
 				target = GameManager.instance.shipMgr.ChoosePlayerManagerToAttack();
 				time = 0;
 			}
 			Vector3 whalePosition = whaleAI.WhaleTransform.position;
 			Vector3 targetDirection = target.transform.position - whalePosition;
 			Quaternion angleDirection = Quaternion.LookRotation(targetDirection);
-			whaleAI.WhaleTransform.rotation = Quaternion.Slerp(whaleAI.WhaleTransform.rotation, angleDirection, Time.deltaTime * dashState.turnSpeed);
-			whalePosition += dashState.translateSpeed * whaleAI.WhaleTransform.forward * Time.deltaTime;
+			whaleAI.WhaleTransform.rotation = Quaternion.Slerp(whaleAI.WhaleTransform.rotation, angleDirection, Time.deltaTime * state.turnSpeed);
+			whalePosition += state.translateSpeed * whaleAI.WhaleTransform.forward * Time.deltaTime;
 			whaleAI.WhaleTransform.position = GameManager.instance.ground.GetTransformInfo(whalePosition).position;
 			float y = angleDirection.eulerAngles.y;
 			int driftDirection;
@@ -61,6 +64,6 @@ public class DashPattern : BossPattern {
 
     protected override void OnStopPattern()
     {
-        // Dash isn't stoppable.
+        // Can't stop pattern
     }
 }

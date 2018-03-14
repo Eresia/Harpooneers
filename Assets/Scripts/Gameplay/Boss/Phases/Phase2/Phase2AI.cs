@@ -6,14 +6,14 @@ public class Phase2AI : PhaseAI {
 
     [Header("Gameobjects of Krakens.")]
 
-    public TentacleReferences tentaclePrefab;
+    public TentacleBehaviour tentaclePrefab;
     public int tentaclesNeeded = 4;
 
-    public TentacleReferences[] Tentacles
+    public TentacleBehaviour[] Tentacles
     {
         get { return tentacles; }
     }
-    private TentacleReferences[] tentacles;
+    private TentacleBehaviour[] tentacles;
 
     [Header("Patterns and hit")]
     public int hitOnEyesNeeded = 2;
@@ -38,11 +38,11 @@ public class Phase2AI : PhaseAI {
 
     private void SpawnTentacles()
     {
-        tentacles = new TentacleReferences[tentaclesNeeded];
+        tentacles = new TentacleBehaviour[tentaclesNeeded];
 
         for (int i = 0; i < tentacles.Length; i++)
         {
-            tentacles[i] = Instantiate<TentacleReferences>(tentaclePrefab, transform);
+            tentacles[i] = Instantiate<TentacleBehaviour>(tentaclePrefab, transform);
             tentacles[i].gameObject.SetActive(false);
         }
     }

@@ -474,7 +474,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4407487545123544}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Model
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1520,7 +1520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef241b3197fe84847919d79dfcd8e30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pivot: {x: 0, y: -0.09, z: 0.08}
+  pivot: {x: 0, y: 0, z: 0.08}
 --- !u!114 &114154351893707770
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1627,8 +1627,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physicObject: {fileID: 114149151925101046}
   friction: 2
-  limitSpeed: 7
-  gravity: 50
+  gravity: 200
 --- !u!114 &114301401480464612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1795,8 +1794,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 513
   playerMgr: {fileID: 114888584532763218}
-  killingForce: 246
-  bumpForce: 2
+  killingForce: 9999
+  bumpForce: 5
   collision_sound: {fileID: 8300000, guid: ae39102768e5a094dbec5d14c49ea42c, type: 3}
   death_sound: {fileID: 8300000, guid: f888de0ce83a9eb47898bac86e45cd5b, type: 3}
 --- !u!114 &114787632788375122
@@ -1855,7 +1854,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coqueModule: {fileID: 11400000, guid: 85a34084e65c96847baa0e932f7e8f1a, type: 2}
   physicMove: {fileID: 114247363230348760}
-  move_player_sound: {fileID: 8300000, guid: fe8f375eba31c6a48882939a47265433, type: 3}
+  move_player_sound: {fileID: 0}
 --- !u!114 &114888584532763218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1870,11 +1869,12 @@ MonoBehaviour:
   healthNeededForRez: 10
   healthLossPerSec: 0.5
   rezRadius: 4
-  healthPerInput: 0.4
+  healthPerInput: 10
+  rezAmountWhenDead: 10
   rezBar: {fileID: 114414539537242024}
   deathIcon: {fileID: 114616054903995692}
   playerPositionIndicator: {fileID: 1232968556676988}
-  rezAmountWhenDead: 0
+  res_sounds: []
   isDead: 0
   death_sound: {fileID: 0}
 --- !u!136 &136460695975876572
@@ -1950,7 +1950,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1650565335
+  randomSeed: -348373716
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -2102,7 +2102,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.25
+      scalar: 0.15
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -5266,7 +5266,7 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c8bc1e08618d2e7498f3994de1236c48, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
