@@ -45,6 +45,8 @@ public class BossManager : MonoBehaviour {
         phaseTransitionMgr.OnTransitionFinished = BeginPhase;
 
         SetupPhases();
+
+        DisplayLifeBar(false);
     }
 
     private void Start()
@@ -109,6 +111,14 @@ public class BossManager : MonoBehaviour {
 
         CurrentPhaseGo = phases[phaseId];
         currentPhase = currentPhaseGo.GetComponent<PhaseAI>();
+
+        DisplayLifeBar(true);
+        UpdateLifepoints();
+    }
+
+    public void DisplayLifeBar(bool enabled)
+    {
+        lifepointsBar.gameObject.SetActive(enabled);
     }
 
     public void UpdateLifepoints()
