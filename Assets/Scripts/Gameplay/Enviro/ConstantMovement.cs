@@ -7,15 +7,15 @@ public class ConstantMovement : MonoBehaviour {
     public Vector3 direction;
     public float speed;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
+    public bool forwardDirection;
+
+
 	// Update is called once per frame
 	void Update () {
 
-        transform.position += direction.normalized * speed * Time.deltaTime;
-		
-	}
+        if(!forwardDirection)
+          transform.position += direction.normalized * speed * Time.deltaTime;	
+        else
+          transform.position += transform.forward * speed * Time.deltaTime;
+    }
 }
