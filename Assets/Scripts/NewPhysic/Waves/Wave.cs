@@ -53,7 +53,8 @@ struct FrameOptions{
 	public uint lod;
 	public float ratio;
 	public uint heigtMapRatio;
-	public Vector2 trash;
+	public float minVariation;
+	public float trash;
 };
 
 public class WaveManager{

@@ -617,7 +617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physicObject: {fileID: 114556376633281656}
-  friction: 0.5
+  friction: 1.5
   gravity: -10
 --- !u!114 &114251907984751064
 MonoBehaviour:
@@ -692,6 +692,7 @@ MonoBehaviour:
   resetWhenLeaveScreen: {fileID: 114872358802777512}
   physicsScript: {fileID: 114000989618548766}
   explosion_sound: {fileID: 8300000, guid: 66c55efe3735ce74d9c542d12f7856b8, type: 3}
+  repulsionForce: 20
 --- !u!114 &114556376633281656
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -751,7 +752,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1203749701508270}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 1.5
   m_Height: 5
@@ -4223,7 +4224,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 258985719
+  randomSeed: 2074881719
   InitialModule:
     serializedVersion: 3
     enabled: 1

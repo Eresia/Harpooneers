@@ -1457,6 +1457,10 @@ Prefab:
       propertyPath: phaseTransitionMgr
       value: 
       objectReference: {fileID: 775109685}
+    - target: {fileID: 1645532644759068, guid: 067cdd2b7bc7c2f48bf143fbdd61132e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 067cdd2b7bc7c2f48bf143fbdd61132e, type: 2}
   m_IsPrefabParent: 0
@@ -2257,38 +2261,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114181008368525658, guid: 1b48cf6c6e073994ab1e8ddf7068f326,
-        type: 2}
-      propertyPath: eyes.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114181008368525658, guid: 1b48cf6c6e073994ab1e8ddf7068f326,
-        type: 2}
-      propertyPath: eyes.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114181008368525658, guid: 1b48cf6c6e073994ab1e8ddf7068f326,
-        type: 2}
-      propertyPath: numberOfPatternsWithoutHit
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114181008368525658, guid: 1b48cf6c6e073994ab1e8ddf7068f326,
-        type: 2}
-      propertyPath: hitByEyeNeeded
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114181008368525658, guid: 1b48cf6c6e073994ab1e8ddf7068f326,
-        type: 2}
-      propertyPath: cam
-      value: 
-      objectReference: {fileID: 1202940207}
-    - target: {fileID: 114181008368525658, guid: 1b48cf6c6e073994ab1e8ddf7068f326,
-        type: 2}
-      propertyPath: NoHittablePatternCount
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 0}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1b48cf6c6e073994ab1e8ddf7068f326, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &849807329 stripped
@@ -3327,19 +3300,9 @@ Prefab:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: displayGizmos
+      propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 23218790605428570, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 7ef55dd79cfc387428e510a1ae9b9336, type: 2}
     - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
       propertyPath: m_LocalRotation.y
       value: 0.7071068
@@ -3348,23 +3311,53 @@ Prefab:
       propertyPath: m_LocalRotation.z
       value: 0.7071068
       objectReference: {fileID: 0}
-    - target: {fileID: 23218790605428570, guid: d2b3382be80c31c46b0fc06fcd7980f6,
-        type: 2}
-      propertyPath: m_Enabled
+    - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4260039452909052, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
+      propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4170099001695406, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4170099001695406, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 64977425580068820, guid: d2b3382be80c31c46b0fc06fcd7980f6,
+    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
         type: 2}
-      propertyPath: m_Convex
+      propertyPath: timeProgression
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
+        type: 2}
+      propertyPath: impactAmplitude
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
+        type: 2}
+      propertyPath: impactWaveLength
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
+        type: 2}
+      propertyPath: maxWaveHeight
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
+        type: 2}
+      propertyPath: impactPeriod
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
+        type: 2}
+      propertyPath: waveSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
+        type: 2}
+      propertyPath: timeout
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114341871614110768, guid: d2b3382be80c31c46b0fc06fcd7980f6,
+        type: 2}
+      propertyPath: minVariation
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d2b3382be80c31c46b0fc06fcd7980f6, type: 2}

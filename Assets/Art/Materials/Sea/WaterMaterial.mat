@@ -47,7 +47,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _InputHeight:
-        m_Texture: {fileID: 2800000, guid: 07f41aceb20f41d4591e13249b743313, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4c5ce67680318c54d9471a7f9560a2bb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _InputNormal:
@@ -82,12 +82,16 @@ Material:
         m_Texture: {fileID: 2800000, guid: 9789d23040cb1fb45ad60392430c3c15, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SeaFoamMask:
+        m_Texture: {fileID: 2800000, guid: 53e80c66896550e48869d76c1787d340, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _T_SeaFoam:
         m_Texture: {fileID: 2800000, guid: a1f6c3aff67d32e43ac0855c4b137fae, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureSample0:
-        m_Texture: {fileID: 2800000, guid: 53de136ad7d6270459920e3a2e7813e6, type: 3}
+        m_Texture: {fileID: 2800000, guid: 53e80c66896550e48869d76c1787d340, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -104,16 +108,16 @@ Material:
     - _FarDeepDistance: 0.084
     - _Float0: 0.85
     - _Float1: 3.8
-    - _Float6: 2.6470587
-    - _Float7: 3.4117646
-    - _FoamDistance: 3.25
-    - _FoamSpeed: 0.25
-    - _FoamTiling: 14.1
+    - _Float6: 3.02
+    - _Float7: 1.42
+    - _FoamDistance: 2.26
+    - _FoamSpeed: 0.288
+    - _FoamTiling: 13.5
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HeightCoeff: 200
-    - _HeightColorStrength: 1
+    - _HeightCoeff: 0
+    - _HeightColorStrength: 0.85
     - _Metallic: 0
     - _MidWaterDistance: 0.378
     - _Mode: 0
@@ -123,11 +127,11 @@ Material:
     - _NormalTiling1: 5.3
     - _NormalTiling2: 1.4
     - _OcclusionStrength: 1
-    - _Opacity: 1
+    - _Opacity: 0
     - _OverallDepth: 3
     - _Parallax: 0.02
     - _Refraction: 0
-    - _SeaFoamIntensity: 1.95
+    - _SeaFoamIntensity: 2.31
     - _ShallowWaterDistance: 0.598
     - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
@@ -135,6 +139,8 @@ Material:
     - _SrcBlend: 1
     - _Tiling: 3.8
     - _UVSec: 0
+    - _WaveDeepDistance: 1.46
+    - _WaveDeepIntensity: 2.88
     - _WaveSpeed: 0.184
     - _ZWrite: 1
     - __dirty: 0

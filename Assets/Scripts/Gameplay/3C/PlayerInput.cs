@@ -12,7 +12,6 @@ public class PlayerInput : MonoBehaviour
 
     [Header("Main components")]
     public MovementBehaviour movement;
-    //public MovementBehaviour movement;
     public PlayerManager playerMgr;
     public HarpoonLauncher harpoonLauncher;
     public ExplosiveBarrel bombLauncher;
@@ -23,30 +22,44 @@ public class PlayerInput : MonoBehaviour
     private Player player; // Rewired player.
 
     private bool doPause; // Do the pause if the delay is repected.
+
     private int controllerDisconnected;
+
+    public int TutoStep
+    {
+        get { return tutoStep; }
+        set { tutoStep = value; }
+    }
+    private int tutoStep;
 
     void Awake()
     {
+        tutoStep = 3;
+
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
 
         playerMgr = GetComponent<PlayerManager>();
 
-        // Register delegates for specific actions.
+        // Main features
         player.AddInputEventDelegate(DropBomb, UpdateLoopType.Update, InputActionEventType.ButtonPressed, "Drop Bomb");
-        player.AddInputEventDelegate(ResurrectAlly, UpdateLoopType.Update, InputActionEventType.ButtonPressed, "Resurrect");
+        player.AddInputEventDelegate(PullingRope, UpdateLoopType.Update, "Pull On Rope");
+
+        // Utility
         player.AddInputEventDelegate(TogglePause, UpdateLoopType.Update, "Toggle Pause");
-        player.AddInputEventDelegate(ReleaseRope, UpdateLoopType.Update, "Release Rope");
-        player.AddInputEventDelegate(PullingOnRope, UpdateLoopType.Update, "Pull On Rope");
         player.AddInputEventDelegate(DisplayPlayerPosition, UpdateLoopType.Update, "Display Player");
+
+        // CUT
+        //player.AddInputEventDelegate(ResurrectAlly, UpdateLoopType.Update, InputActionEventType.ButtonPressed, "Resurrect");
 
         // Subscribe to events of controller connection
         ReInput.ControllerConnectedEvent += OnControllerConnected;
         ReInput.ControllerDisconnectedEvent += OnControllerDisconnected;
 
         // Deactivate the player position indicator
-        playerMgr.FeedbackPlayerPos(false, playerId);
+        playerMgr.SetupIndicator(playerId);
 
+		// GameManager.instance.audioManager.CreatePersistantSound (AudioManager.PossibleSound.PULL, pull_sound, 0.05f);
     }
 
     private void Reset()
@@ -65,6 +78,11 @@ public class PlayerInput : MonoBehaviour
             return;
         }
 
+        if(tutoStep < 1)
+        {
+            return;
+        }
+
         // Handle movement.
         {
             float moveX = player.GetAxis("Move Horizontal");
@@ -73,6 +91,11 @@ public class PlayerInput : MonoBehaviour
             Vector3 moveDir = new Vector3(moveX, 0f, moveZ);
 
             movement.Move(moveDir.normalized);
+        }
+
+        if (tutoStep < 2)
+        {
+            return;
         }
 
         // Handle harpoon rotation.
@@ -87,15 +110,99 @@ public class PlayerInput : MonoBehaviour
             harpoonLauncher.LaunchHarpoon(harpoonDir);
         }
 
-        HandleCutRope();
+        // CUT
+        // HandleCutRope();
     }
 
+    private void PullingRope(InputActionEventData data)
+    {
+        if (playerMgr.IsDead)
+        {
+            return;
+        }
+
+        if (data.GetButton())
+        {
+            harpoonLauncher.Pull();
+        }
+    }
+
+    private void DropBomb(InputActionEventData data)
+    {
+        if (playerMgr.IsDead)
+        {
+            return;
+        }
+
+        if(tutoStep < 3)
+        {
+            return;
+        }
+
+        if (data.GetButton() && !bombLauncher.gameObject.activeSelf)
+        {
+            // Spawn the bomb behind the boat
+            bombLauncher.gameObject.SetActive(true);
+            bombLauncher.SpawnTheBomb(transform.position - bombLauncher.behindOffset * transform.forward, movement.physicMove.Velocity);
+        }
+    }
+
+    // CUT - Now collide with the boat to rez an ally !
+    /*
+    private void ResurrectAlly(InputActionEventData data)
+    {
+        if (playerMgr.IsDead)
+        {
+            return;
+        }
+
+        if (data.GetButtonDown())
+        {
+            playerMgr.ResurrectFriend();
+        }
+    }
+    */
+
+    // CUT !
+    /*
+    private void ReleaseRope(InputActionEventData data)
+    {
+        if (playerMgr.IsDead)
+        {
+            return;
+        }
+
+        if (data.GetButton())
+        {
+            harpoonLauncher.Release();
+        }
+    }
+    */
+
+    // CUT !
+    private void HandleCutRope()
+    {
+        if (playerMgr.IsDead)
+        {
+            return;
+        }
+
+        if (player.GetButtonDown("Pull On Rope") && player.GetButton("Release Rope")
+            || player.GetButton("Pull On Rope") && player.GetButtonDown("Release Rope")
+            || player.GetButtonDown("Pull On Rope") && player.GetButtonDown("Release Rope")
+            )
+        {
+            harpoonLauncher.Cut();
+        }
+    }
+
+    // UTILITY :
     private void TogglePause(InputActionEventData data)
     {
         // If game is paused : direct unpause.
         if (GameManager.instance.IsPause)
         {
-            if(data.GetButtonDown())
+            if (data.GetButtonDown())
             {
                 GameManager.instance.PauseGame();
                 doPause = false;
@@ -118,89 +225,12 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    private void DropBomb(InputActionEventData data)
-    {
-        if (playerMgr.IsDead)
-        {
-            return;
-        }
-
-        if (data.GetButtonDown() && !bombLauncher.gameObject.activeSelf)
-        {
-            // Spawn the bomb behind the boat
-            bombLauncher.gameObject.SetActive(true);
-            bombLauncher.SpawnTheBomb(transform.position - bombLauncher.behindOffset * transform.forward, movement.physicMove.Velocity);
-        }
-    }
-
-    private void ResurrectAlly(InputActionEventData data)
-    {
-        if (playerMgr.IsDead)
-        {
-            return;
-        }
-
-        if (data.GetButtonDown())
-        {
-            playerMgr.ResurrectFriend();
-        }
-    }
-
-    private void ReleaseRope(InputActionEventData data)
-    {
-        if (playerMgr.IsDead)
-        {
-            return;
-        }
-
-        if (data.GetButton())
-        {
-            harpoonLauncher.Release();
-        }
-    }
-
-    private void PullingOnRope(InputActionEventData data)
-    {
-        if (playerMgr.IsDead)
-        {
-            return;
-        }
-
-        if (data.GetButton())
-        {
-
-            harpoonLauncher.Pull();
-        }
-    }
-
-    private void HandleCutRope()
-    {
-        if (playerMgr.IsDead)
-        {
-            return;
-        }
-
-        if (player.GetButtonDown("Pull On Rope") && player.GetButton("Release Rope")
-            || player.GetButton("Pull On Rope") && player.GetButtonDown("Release Rope")
-            || player.GetButtonDown("Pull On Rope") && player.GetButtonDown("Release Rope")
-            )
-        {
-            harpoonLauncher.Cut();
-        }
-    }
-
     private void DisplayPlayerPosition(InputActionEventData data)
     {
         if (data.GetButtonDown())
         {
-            playerMgr.FeedbackPlayerPos(true, playerId);
+            playerMgr.FeedbackPlayerPos(1f);
         }
-
-        else if(data.GetButtonUp())
-        {
-            playerMgr.FeedbackPlayerPos(false, playerId);
-        }
-       
     }
     
     // Controller connection - disconnection.
