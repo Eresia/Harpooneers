@@ -1,4 +1,7 @@
 ﻿using UnityEngine;
+using System.Collections;
+using DG.Tweening;
+
 
 public class WhalePhaseAI : PhaseAI {
     
@@ -37,6 +40,8 @@ public class WhalePhaseAI : PhaseAI {
     public float damageMinToHaveScream = 10f;
     
 	public AudioClip whale_scream;
+
+	public float endPhaseTime = 4f;
 
 	public float resetDepth;
 
@@ -122,4 +127,12 @@ public class WhalePhaseAI : PhaseAI {
         WhaleChildTransform.localPosition = Vector3.zero;
         WhaleChildTransform.localScale = Vector3.one;
     }
+
+	public override IEnumerator OnPhaseFinishedCoroutine(){
+		Vector3 pos = WhaleTransform.position;
+		Vector3 target = pos;
+		target.y = -20f;
+		Tween tween = WhaleTransform.DOMove(target, 4f);
+        yield return new WaitWhile(tween.IsPlaying);
+	}
 }
