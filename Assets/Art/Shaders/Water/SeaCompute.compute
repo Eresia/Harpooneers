@@ -64,10 +64,10 @@ float2 heightInfo;
 // }
 
 void MakeImpact(uint i, WaveOptions wave, float offsetMagnitude, float posAbs, float coeff, float constantWave){
-	float theta = (wave.waveNumber * (lod / offsetMagnitude));
-	float x = currentTime;
-	float timeProgress = wave.waveSpeed * currentTime;
-	float sinTheta = wave.amplitude * ((sin(theta - timeProgress)) / exp(-currentTime * wave.progression));
+	float theta = (wave.waveNumber * (offsetMagnitude / lod) +wt);
+	float x =  wave.waveSpeed * currentTime + wave.progression / posAbs;
+	float timeProgress =currentTime;
+	float sinTheta = wave.amplitude * (1/(1+pow((-wt*wave.waveSpeed-posAbs), 2))) * ((1/(1+pow(wt/wave.progression, 2))));
 
 	if(sinTheta > Options[0].minVariation){
 		float heightAbs = abs(sinTheta);
