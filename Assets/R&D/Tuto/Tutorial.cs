@@ -18,7 +18,7 @@ public class Tutorial : MonoBehaviour
 	public float StartTime = 3f;
 	public float FrameSpawnTime = 1f;
     public float IntroTime = 5f;
-    public float MovementTime = 5f;
+    public float ToyTime = 5f;
     public float RockMovementTime = 5f;
 	public float HarpoonTime = 5f;
 	public float TutoEndTime = 3f;
@@ -49,10 +49,10 @@ public class Tutorial : MonoBehaviour
 
         //Movement
         yield return PrintText(1);
-        yield return new WaitForSeconds(MovementTime);
+        yield return new WaitForSeconds(ToyTime);
         yield return PrintText(2);
 		//Start Waves --------------------------------------------------BASTIEN ICI------------------------------------------
-        yield return new WaitForSeconds(MovementTime);
+        yield return new WaitForSeconds(ToyTime);
 
         PassToStep(2);         //Unlock Harpoon
 
@@ -71,11 +71,11 @@ public class Tutorial : MonoBehaviour
         yield return PrintText(6);
 		yield return new WaitUntil(() => Rock.RockExplode);
         yield return PrintText(7);
-        yield return new WaitForSeconds(MovementTime);
+        yield return new WaitForSeconds(ToyTime);
 
         //End
         yield return PrintText(8);
-        yield return new WaitForSeconds(MovementTime);
+        yield return new WaitForSeconds(ToyTime);
 
         //Start Boss
 		Frame.DOFade(0f, FrameSpawnTime);
@@ -87,11 +87,31 @@ public class Tutorial : MonoBehaviour
 
     IEnumerator PrintText(int i)
     {
+		string stock = "";
+		bool inTag = false;
+
         Tuto.text = "";
+		Texts[i] = Texts[i].Replace('\\', '\n');
+
         foreach (char c in Texts[i])
         {
-            Tuto.text += c;
-            yield return new WaitForSeconds(TimeBetweenLetters);
+			if (c == '>')
+			{
+				inTag= false;
+				Tuto.text += stock + c;
+			}
+			else if (c == '<' || inTag)
+			{
+				inTag = true;
+				stock += c;
+			}
+			else
+			{
+				Tuto.text += c;
+				yield return new WaitForSeconds(TimeBetweenLetters);
+			}
+
+
         }
     }
 
