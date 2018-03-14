@@ -86,35 +86,35 @@ public class Ground : MonoBehaviour {
 
 	[Header("Impact Waves options")]
 
-	[Range(0, 100)]
+	[Range(0, 1000)]
 	public float impactAmplitude;
 
-	[Range(0, 100)]
+	[Range(0, 1000)]
 	public float impactRadius;
 
-	[Range(0, 100)]
+	[Range(0, 1000)]
 	public float vortexSmooth;
 
-	[Range(0, 100)]
+	[Range(0, 1000)]
 	public float impactWaveLength;
 
-	[Range(0, 3)]
+	[Range(0, 1000)]
 	public float impactPeriod;
 
-	[Range(0, 2)]
+	[Range(0, 1000)]
 	public float waveSpeed;
 
-	[Range(0, 1)]
+	[Range(0, 1000)]
 	public float timeProgression;
 
-	[Range(0, 100)]
+	[Range(0, 1000)]
 	public float timeout;
 
 	public Vector2 waveSize;
 
 	public RawImage rawImage;
 
-	// private int waveVortexId = -1;
+	private int waveVortexId = -1;
 
 	private bool canBeginUpdate;
 
@@ -219,43 +219,43 @@ public class Ground : MonoBehaviour {
 			RenderTexture.active = currentActiveRT;
 		}
 
-		// bool leftClick = Input.GetMouseButtonDown(0);
-		// bool rightClick = Input.GetMouseButtonDown(1);
-		// if((GameManager.instance.actualPlayer == -1)){
-		// 	if(leftClick || rightClick){
-		// 		RaycastHit hit;
-		// 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		bool leftClick = Input.GetMouseButtonDown(0);
+		bool rightClick = Input.GetMouseButtonDown(1);
+		if((GameManager.instance.actualPlayer == -1)){
+			if(leftClick || rightClick){
+				RaycastHit hit;
+				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-		// 		// Debug.DrawRay()
+				// Debug.DrawRay()
 
-		// 		if (Physics.Raycast(ray, out hit, Mathf.Infinity, testLayer)) {
-		// 			float iFloat = ((hit.point.x / (4*ratio / lodPowPower)) + halfLod) - selfTransform.position.x;
-		// 			float jFloat = ((hit.point.z / (4*ratio / lodPowPower)) + halfLod) - selfTransform.position.z;
-		// 			if(leftClick){
-		// 				// AddWave(Wave.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactWaveLength, impactPeriod, time, waveSpeed, timeProgression, timeout));
-		// 				waveManager.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, impactWaveLength, impactPeriod, waveSpeed, timeProgression, timeout);
-		// 			}
-		// 			else{
-		// 				waveVortexId = waveManager.CreateVortex(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, vortexSmooth, impactWaveLength, impactPeriod, timeProgression, timeout);
-		// 				// AddWave(Wave.CreateRectImpact(new Vector2(iFloat, jFloat), waveSize, impactAmplitude, impactWaveLength, impactPeriod, time, waveSpeed, timeProgression, timeout));
-		// 			}
-		// 		}
-		// 	}
+				if (Physics.Raycast(ray, out hit, Mathf.Infinity, testLayer)) {
+					float iFloat = ((hit.point.x / (4*ratio / lodPowPower)) + halfLod) - selfTransform.position.x;
+					float jFloat = ((hit.point.z / (4*ratio / lodPowPower)) + halfLod) - selfTransform.position.z;
+					if(leftClick){
+						// AddWave(Wave.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactWaveLength, impactPeriod, time, waveSpeed, timeProgression, timeout));
+						waveManager.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, impactWaveLength, impactPeriod, waveSpeed, timeProgression, timeout);
+					}
+					else{
+						waveVortexId = waveManager.CreateVortex(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, vortexSmooth, impactWaveLength, impactPeriod, timeProgression, timeout);
+						// AddWave(Wave.CreateRectImpact(new Vector2(iFloat, jFloat), waveSize, impactAmplitude, impactWaveLength, impactPeriod, time, waveSpeed, timeProgression, timeout));
+					}
+				}
+			}
 
-		// 	if(waveManager.Waves.ContainsKey(waveVortexId)){
-		// 		WaveOptions vortex = waveManager.Waves[waveVortexId];
-		// 		impactAmplitude += Input.GetAxis("Mouse ScrollWheel");
-		// 		vortex.amplitude = impactAmplitude;
-		// 		vortex.radius = impactRadius;
-		// 		vortex.smooth = vortexSmooth;
-		// 		vortex.waveNumber = (2 * Mathf.PI) / impactWaveLength;
-		// 		vortex.angularFrequency = (2 * Mathf.PI) / impactPeriod;
-		// 		vortex.waveSpeed = waveSpeed;
-		// 		vortex.timeProgression = timeProgression;
-		// 		waveManager.ChangeWave(waveVortexId, vortex);
-		// 	}
+			if(waveManager.Waves.ContainsKey(waveVortexId)){
+				WaveOptions vortex = waveManager.Waves[waveVortexId];
+				impactAmplitude += Input.GetAxis("Mouse ScrollWheel");
+				vortex.amplitude = impactAmplitude;
+				vortex.radius = impactRadius;
+				vortex.smooth = vortexSmooth;
+				vortex.waveNumber = (2 * Mathf.PI) / impactWaveLength;
+				vortex.angularFrequency = (2 * Mathf.PI) / impactPeriod;
+				vortex.waveSpeed = waveSpeed;
+				vortex.timeProgression = timeProgression;
+				waveManager.ChangeWave(waveVortexId, vortex);
+			}
 			
-		// }
+		}
 
 		waveManager.IncrementTime(Time.deltaTime);
 		

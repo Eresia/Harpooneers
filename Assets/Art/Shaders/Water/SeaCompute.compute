@@ -56,7 +56,7 @@ void MakeImpact(uint i, WaveOptions wave, float offsetMagnitude, float posAbs, f
 	float theta = (wave.waveNumber * (offsetMagnitude / lod));
 	float x = currentTime / (1 / (1 + wave.waveSpeed)) + posAbs;
 	float timeProgress = wave.amplitude * sin(x) * lerp(1/x, 1, constantWave);
-	float sinTheta = sin(theta* timeProgress) / exp(abs(posAbs) * wave.timeProgression);
+	float sinTheta = wave.amplitude * (sin(theta* timeProgress) / exp(abs(posAbs) * wave.timeProgression));
 
 	float heightAbs = abs(sinTheta);
 	heightInfo = heightInfo + float2(sinTheta * (heightAbs/ coeff), (heightAbs / coeff));
@@ -95,7 +95,7 @@ void CalculatePoint (uint3 id : SV_DispatchThreadID)
 		wave.radius = Options[0].ratio * Impacts[i].radius;
 		wave.smooth = Options[0].ratio * Impacts[i].smooth * 10;
 		wave.waveSpeed = Options[0].ratio * Impacts[i].waveSpeed;
-		wave.timeProgression = Options[0].ratio * Impacts[i].timeProgression;
+		wave.timeProgression = Impacts[i].timeProgression;
 
 		wave.waveNumber = Impacts[i].waveNumber / (Options[0].ratio * 10);
 		wave.angularFrequency = Impacts[i].angularFrequency / Options[0].ratio;
