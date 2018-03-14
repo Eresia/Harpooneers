@@ -159,16 +159,16 @@ MonoBehaviour:
   testLayer:
     serializedVersion: 2
     m_Bits: 12288
-  zoneAmplitude: 0.25
+  zoneAmplitude: 0
   zoneWaveLength: 0.0025
   zonePeriod: 1
-  impactAmplitude: 100
+  impactAmplitude: 10
   impactRadius: 0
   vortexSmooth: 100
   impactWaveLength: 100
-  impactPeriod: 1
-  waveSpeed: 3
-  timeProgression: 0.2
+  impactPeriod: 200
+  waveSpeed: 5
+  timeProgression: 5
   timeout: 5
   waveSize: {x: 0, y: 0}
   rawImage: {fileID: 0}
