@@ -82,7 +82,7 @@ public class InputInMainMenu : MonoBehaviour
     {
         for (int i = 0; i < players.Length; i++)
         {
-            if (players[i].GetAxisRaw("Module - L Joystick") < 0)
+            if (players[i].GetAxisRaw("Module - L Joystick") < -0.5f)
             {
                 if (_isAxisInUse[i] == false)
                 {
@@ -92,13 +92,40 @@ public class InputInMainMenu : MonoBehaviour
                 }
             }
 
-            if (players[i].GetAxisRaw("Module - L Joystick") > 0)
+            if (players[i].GetAxisRaw("Module - L Joystick") > 0.5f)
             {
                 if (_isAxisInUse[i] == false)
                 {
                     pointer = new PointerEventData(EventSystem.current);
                     ExecuteEvents.Execute(playerInputs[i].inputs[1].gameObject, pointer, ExecuteEvents.submitHandler);
                     _isAxisInUse[i] = true;
+                }
+            }
+
+            if (players[i].GetAxisRaw("Module - L Joystick") == 0)
+            {
+                _isAxisInUse[i] = false;
+            }
+
+            if (players[i].GetAxisRaw("Tab - L Joystick") > 0.5f)
+            {
+                if (_isAxisInUse[i] == false)
+                {
+                 //   pointer = new PointerEventData(EventSystem.current);
+                 //   ExecuteEvents.Execute(playerInputs[i].inputs[3].gameObject, pointer, ExecuteEvents.submitHandler);
+                    _isAxisInUse[i] = true;
+                    NextModuleTab(i, -1);
+                }
+            }
+
+            if (players[i].GetAxisRaw("Tab - L Joystick") < -0.5f)
+            {
+                if (_isAxisInUse[i] == false)
+                {
+                 //   pointer = new PointerEventData(EventSystem.current);
+                 //   ExecuteEvents.Execute(playerInputs[i].inputs[4].gameObject, pointer, ExecuteEvents.submitHandler);
+                    _isAxisInUse[i] = true;
+                    NextModuleTab(i, 1);
                 }
             }
 
@@ -184,6 +211,7 @@ public class InputInMainMenu : MonoBehaviour
                 }
             }
 
+            /*
             // Change module family
             if (players[i].GetButtonDown("PreviousTab"))
             {
@@ -193,7 +221,7 @@ public class InputInMainMenu : MonoBehaviour
             {
                 NextModuleTab(i, 1);
             }
-
+            */
 
             // Change module
             if (players[i].GetButtonDown("PreviousModule"))
@@ -224,11 +252,15 @@ public class InputInMainMenu : MonoBehaviour
 
         for (int i = 0; i < playerTabs[playerID].moduleSelectionGO.Length; i++)
         {
-            playerTabs[playerID].moduleSelectionGO[i].SetActive(false);
+            //playerTabs[playerID].moduleSelectionGO[i].SetActive(false);
             playerTabs[playerID].tabs[i].color = Color.gray;
         }
         playerShips[playerID].currentTabID = currentModuleTabIndex[playerID];
-        playerTabs[playerID].moduleSelectionGO[currentModuleTabIndex[playerID]].SetActive(true);
+       // playerTabs[playerID].moduleSelectionGO[currentModuleTabIndex[playerID]].gameObject.SetActive(true);
+
         playerTabs[playerID].tabs[currentModuleTabIndex[playerID]].color = Color.white;
+
+        playerInputs[playerID].inputs[0].transform.position = new Vector3(playerInputs[playerID].inputs[0].transform.position.x, playerTabs[playerID].moduleSelectionGO[currentModuleTabIndex[playerID]].transform.position.y, playerInputs[playerID].inputs[0].transform.position.z);
+        playerInputs[playerID].inputs[1].transform.position = new Vector3(playerInputs[playerID].inputs[1].transform.position.x, playerTabs[playerID].moduleSelectionGO[currentModuleTabIndex[playerID]].transform.position.y, playerInputs[playerID].inputs[1].transform.position.z);
     }
 }
