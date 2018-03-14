@@ -31,8 +31,6 @@ public class Ground : MonoBehaviour {
 
 	public float maxWaveHeight;
 
-	public float minVariation;
-
 	public ComputeShader seaCompute;
 
 	public Renderer selfRenderer;
@@ -102,9 +100,6 @@ public class Ground : MonoBehaviour {
 
 	[Range(0, 1000)]
 	public float impactPeriod;
-
-	[Range(0, 1000)]
-	public float waveSpeed;
 
 	[Range(0, 1000)]
 	public float timeProgression;
@@ -235,7 +230,7 @@ public class Ground : MonoBehaviour {
 					float jFloat = ((hit.point.z / (4*ratio / lodPowPower)) + halfLod) - selfTransform.position.z;
 					if(leftClick){
 						// AddWave(Wave.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactWaveLength, impactPeriod, time, waveSpeed, timeProgression, timeout));
-						waveManager.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, impactWaveLength, impactPeriod, waveSpeed, timeProgression, timeout);
+						waveManager.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, impactWaveLength, impactPeriod, timeProgression, timeout);
 					}
 					else{
 						waveVortexId = waveManager.CreateVortex(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, vortexSmooth, impactWaveLength, impactPeriod, timeProgression, timeout);
@@ -252,8 +247,7 @@ public class Ground : MonoBehaviour {
 				vortex.smooth = vortexSmooth;
 				vortex.waveNumber = (2 * Mathf.PI) / impactWaveLength;
 				vortex.angularFrequency = (2 * Mathf.PI) / impactPeriod;
-				vortex.waveSpeed = waveSpeed;
-				vortex.timeProgression = timeProgression;
+				vortex.progression = timeProgression;
 				waveManager.ChangeWave(waveVortexId, vortex);
 			}
 			
@@ -264,7 +258,6 @@ public class Ground : MonoBehaviour {
 		frameOptions[0].time = waveManager.ActualTime;
 		frameOptions[0].nbWaves = (uint) waveManager.Waves.Count;
 		frameOptions[0].lod = (uint) lod;
-		frameOptions[0].minVariation = minVariation;
 		optionBuffer.SetData(frameOptions);
 
 		ComputeBuffer impacts = new ComputeBuffer(waveManager.Waves.Count, 16 * sizeof(float));
@@ -292,7 +285,7 @@ public class Ground : MonoBehaviour {
 		float iFloat = ((position.x / (4*ratio / lodPowPower)) + halfLod) - selfTransform.position.x;
 		float jFloat = ((position.z / (4*ratio / lodPowPower)) + halfLod) - selfTransform.position.z;
 
-		waveManager.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, impactWaveLength, impactPeriod, waveSpeed, timeProgression, timeout);
+		waveManager.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, impactWaveLength, impactPeriod, timeProgression, timeout);
 	}
 
 	public Vector2 GetSeaPosition(Vector3 position){
