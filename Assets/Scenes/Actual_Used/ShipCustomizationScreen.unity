@@ -1185,11 +1185,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcd9d1f0102f1cb4a99604b12342ab78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joinPanel: []
-  shipPanel: []
-  readyPanel: []
-  notReadyPanel: []
-  moduleSelectionPanel: []
+  joinPanel:
+  - {fileID: 32005688}
+  - {fileID: 215998794}
+  - {fileID: 1604379330}
+  - {fileID: 1497388046}
+  shipPanel:
+  - {fileID: 1650326781}
+  - {fileID: 9069784}
+  - {fileID: 2080355119}
+  - {fileID: 624153274}
+  readyPanel:
+  - {fileID: 765064585}
+  - {fileID: 1052288734}
+  - {fileID: 942462916}
+  - {fileID: 480411648}
+  notReadyPanel:
+  - {fileID: 1103154404}
+  - {fileID: 945139623}
+  - {fileID: 1123943054}
+  - {fileID: 1417058412}
+  moduleSelectionPanel:
+  - {fileID: 1021816182}
+  - {fileID: 1835499943}
+  - {fileID: 54009589}
+  - {fileID: 392363662}
 --- !u!4 &342763118
 Transform:
   m_ObjectHideFlags: 0
@@ -7550,6 +7570,11 @@ Prefab:
       propertyPath: playerInputs.Array.data[3].inputs.Array.data[2]
       value: 
       objectReference: {fileID: 864408841}
+    - target: {fileID: 114926960549148790, guid: 2383a6a4a0051ac4eb378e5e19ce66ff,
+        type: 2}
+      propertyPath: prepareGamePanel
+      value: 
+      objectReference: {fileID: 342763117}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2383a6a4a0051ac4eb378e5e19ce66ff, type: 2}
   m_IsPrefabParent: 0
