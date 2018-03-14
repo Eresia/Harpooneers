@@ -22,24 +22,24 @@ public struct WaveOptions{
 	public float smooth;
 	public float waveNumber;
 	public float angularFrequency;
-	public float waveSpeed;
-	public float timeProgression;
+	public float progression;
 	public float time;
 	public float timeout;
+	public float trash;
 
-	public WaveOptions(WaveType type, Vector2 position, float amplitude, float radius, float smooth, float waveLength, float period, float time, Vector2 size = new Vector2(), float waveSpeed= 0f, float timeProgression= 0f, float timeout= 0f){
+	public WaveOptions(WaveType type, Vector2 position, float amplitude, float radius, float smooth, float waveLength, float period, float time, Vector2 size = new Vector2(), float timeProgression= 0f, float timeout= 0f){
 		this.type = (uint) type;
 		this.position = position;
 		this.size = size;
 		this.amplitude = amplitude;
 		this.radius = radius;
 		this.smooth = smooth;
-		this.waveSpeed = waveSpeed;
-		this.timeProgression = timeProgression;
+		this.progression = timeProgression;
 		this.time = time;
 		this.timeout = timeout;
 		this.state = 0;
 		this.stateTimeChange = 0f;
+		this.trash = 0f;
 
 		this.waveNumber = (2 * Mathf.PI) / waveLength;
 		this.angularFrequency = (2 * Mathf.PI) / period;
@@ -53,8 +53,7 @@ struct FrameOptions{
 	public uint lod;
 	public float ratio;
 	public uint heigtMapRatio;
-	public float minVariation;
-	public float trash;
+	public Vector2 trash;
 };
 
 public class WaveManager{
@@ -71,15 +70,15 @@ public class WaveManager{
 		Waves = new Dictionary<int, WaveOptions>();
 	}
 
-	public int CreateImpact(Vector2 position, float amplitude, float radius, float waveLength, float period, float waveSpeed, float timeDigress, float timeout){
-		WaveOptions newWave = new WaveOptions(WaveType.IMPACT, position, amplitude, radius, 0f, waveLength, period, ActualTime, new Vector2(), waveSpeed, timeDigress, timeout);
+	public int CreateImpact(Vector2 position, float amplitude, float radius, float waveLength, float period, float timeDigress, float timeout){
+		WaveOptions newWave = new WaveOptions(WaveType.IMPACT, position, amplitude, radius, 0f, waveLength, period, ActualTime, new Vector2(), timeDigress, timeout);
 		Waves.Add(actualId, newWave);
 		actualId++;
 		return actualId -1;
 	}
 
-	public int CreateRectImpact(Vector2 position, Vector2 size, float amplitude, float waveLength, float period, float waveSpeed, float timeDigress, float timeout){
-		WaveOptions newWave = new WaveOptions(WaveType.RECT_IMPACT, position, amplitude, 0f, 0f, waveLength, period, ActualTime, size, waveSpeed, timeDigress, timeout);
+	public int CreateRectImpact(Vector2 position, Vector2 size, float amplitude, float waveLength, float period, float timeDigress, float timeout){
+		WaveOptions newWave = new WaveOptions(WaveType.RECT_IMPACT, position, amplitude, 0f, 0f, waveLength, period, ActualTime, size, timeDigress, timeout);
 		Waves.Add(actualId, newWave);
 		actualId++;
 		return actualId -1;
@@ -100,7 +99,7 @@ public class WaveManager{
 	}
 
 	public int CreateVortex(Vector2 position, float amplitude, float radius, float smooth, float waveLength, float period, float timeDigress, float timeout){
-		WaveOptions newWave = new WaveOptions(WaveType.VORTEX, position, amplitude, radius, smooth, waveLength, period, ActualTime, new Vector2(), 0f, timeDigress, timeout);
+		WaveOptions newWave = new WaveOptions(WaveType.VORTEX, position, amplitude, radius, smooth, waveLength, period, ActualTime, new Vector2(), timeDigress, timeout);
 		Waves.Add(actualId, newWave);
 		actualId++;
 		return actualId -1;
