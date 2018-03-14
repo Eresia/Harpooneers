@@ -43,13 +43,16 @@ public class WhalePhaseAI : PhaseAI {
     public Collider[] eyeColliders;
     public Collider bodyCollider;
     public Collider tailCollider;
-    public HandleHarpoonWithWhale[] whaleScript;
-    public int hitByEyeNeeded;
 
+    public HandleHarpoonWithWhale[] whaleScript;
+    
     private int passCount = 0;
 
-    private int leftHitCount;
-    private int rightHitCount;
+    public float weakPointDamageMinAmount = 10f;
+
+    public float maxLifepoints = 100f;
+    
+    private float lifepoints;
 
 	public AudioClip whale_scream;
 	public AudioClip whale_hit;
@@ -57,6 +60,8 @@ public class WhalePhaseAI : PhaseAI {
     protected override void Awake()
     {
         base.Awake();
+
+        lifepoints = maxLifepoints;
 
         SpawnWhale();
     }
@@ -75,7 +80,7 @@ public class WhalePhaseAI : PhaseAI {
         geysers = new Geyser[GameManager.instance.nbOfPlayers];
         for (int i = 0; i < geysers.Length; i++)
         {
-            geysers[i] = Instantiate<Geyser>(geyserPrefab);
+            geysers[i] = Instantiate(geyserPrefab);
         }
 
         bodyCollider = whaleReferences.bodyCollider;
@@ -84,12 +89,12 @@ public class WhalePhaseAI : PhaseAI {
 		GameManager.instance.audioManager.PlaySoundOneTime (whale_scream, 0.2f);
 
         // Setup eye colliders and scripts.
-        whaleScript = whaleReferences.eyeScript;
+        whaleScript = whaleReferences.hittableScripts;
         eyeColliders = new Collider[whaleScript.Length];
 
-        for (int i = 0; i < eyeColliders.Length; i++)
+        for (int i = 0; i < whaleReferences.hittableScripts.Length; i++)
         {
-            whaleScript[i].hitCallback = HitWhale;
+            whaleReferences.hittableScripts[i].hitCallback = HitWhale;
         }
     }
 
@@ -113,7 +118,7 @@ public class WhalePhaseAI : PhaseAI {
         return nextState;
     }
 
-    public void HitWhale(bool left)
+    public void HitWhale(float damageAmount)
     {
         if(phaseFinished)
         {
@@ -121,24 +126,19 @@ public class WhalePhaseAI : PhaseAI {
             return;
         }
 
-		if(left)
-        {
-            leftHitCount++;
-            whaleReferences.PlayEyeBloodFX(0);
-        }
-
-        else
-        {
-            rightHitCount++;
-            whaleReferences.PlayEyeBloodFX(1);
-        }
-
         GameManager.instance.audioManager.PlaySoundOneTime(whale_hit, 0.2f);
-        GameManager.instance.audioManager.PlaySoundOneTime(whale_scream, 0.2f);
-        GameManager.instance.camMgr.Shake();
 
-        // Whale is dead.
-        if(leftHitCount >= hitByEyeNeeded && rightHitCount >= hitByEyeNeeded)
+        if(damageAmount >= weakPointDamageMinAmount)
+        {
+            GameManager.instance.audioManager.PlaySoundOneTime(whale_scream, 0.2f);
+            GameManager.instance.camMgr.Shake();
+        }
+
+        lifepoints -= damageAmount;
+        //lifepoints = Mathf.Clamp(lifepoints, 0f, maxLifepoints);
+
+        // No any PVs
+        if(lifepoints <= 0)
         {
             if(!phaseFinished)
             {
@@ -170,14 +170,5 @@ public class WhalePhaseAI : PhaseAI {
         WhaleChildTransform.localRotation = Quaternion.identity;
         WhaleChildTransform.localPosition = Vector3.zero;
         WhaleChildTransform.localScale = Vector3.one;
-    }
-
-    // Make whale vulnerable.
-    public void EnableEyeCollisions(bool enabled)
-    {
-        for (int i = 0; i < eyeColliders.Length; i++)
-        {
-            eyeColliders[i].enabled = enabled;
-        }
     }
 }

@@ -19,7 +19,6 @@ public class DashPattern : BossPattern {
         whaleAI = boss as WhalePhaseAI;
 
         // Callback when a bomb explodes.
-        
     }
 
     protected override void ExecutePattern() {
@@ -32,12 +31,14 @@ public class DashPattern : BossPattern {
 		whaleAI.WhaleAnimator.SetBool("Swim", true);
 		float time = 0;
 
-		while(true){
+		while(true)
+        {
 			time += Time.deltaTime;
 			if((time >= state.targetChangeTime) || (target.isDead)){
 				target = GameManager.instance.shipMgr.ChoosePlayerManagerToAttack();
 				time = 0;
 			}
+
 			Vector3 whalePosition = whaleAI.WhaleTransform.position;
 			Vector3 targetDirection = target.transform.position - whalePosition;
 			Quaternion angleDirection = Quaternion.LookRotation(targetDirection);

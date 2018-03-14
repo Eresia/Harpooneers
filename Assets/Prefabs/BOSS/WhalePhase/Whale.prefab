@@ -178,7 +178,8 @@ GameObject:
   - component: {fileID: 136437374226372490}
   - component: {fileID: 114538699957242802}
   - component: {fileID: 114689434279392862}
-  m_Layer: 9
+  - component: {fileID: 114608468820723240}
+  m_Layer: 11
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -443,7 +444,8 @@ GameObject:
   - component: {fileID: 136545287617417526}
   - component: {fileID: 136260362373019394}
   - component: {fileID: 114667019778771114}
-  m_Layer: 9
+  - component: {fileID: 114629142849921368}
+  m_Layer: 11
   m_Name: Tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -529,7 +531,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1388831395008758}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4207386676394876}
@@ -928,6 +930,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2c49a68c3c0deb4da607ca687f05212, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114608468820723240
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1210436050189464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca6e650634ed5954daed77fa4d60aaf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 2
+  hitFX: {fileID: 0}
+--- !u!114 &114629142849921368
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1963655090298806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca6e650634ed5954daed77fa4d60aaf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 1
+  hitFX: {fileID: 0}
 --- !u!114 &114667019778771114
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -961,7 +989,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6e650634ed5954daed77fa4d60aaf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftEye: 0
+  damageAmount: 10
+  hitFX: {fileID: 198657936415793166}
 --- !u!114 &114888491273417954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -981,7 +1010,9 @@ MonoBehaviour:
   tailCollider: {fileID: 136545287617417526}
   whaleChildTransform: {fileID: 4041903357088550}
   whaleAnimator: {fileID: 95187027426919842}
-  eyeScript:
+  hittableScripts:
+  - {fileID: 114608468820723240}
+  - {fileID: 114629142849921368}
   - {fileID: 114925522054814648}
   - {fileID: 114777120295722414}
 --- !u!114 &114925522054814648
@@ -995,7 +1026,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6e650634ed5954daed77fa4d60aaf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftEye: 1
+  damageAmount: 10
+  hitFX: {fileID: 198243639391879802}
 --- !u!136 &136260362373019394
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1088,7 +1120,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 8104cc93b87f4a444b42a53c1fdac1ec, type: 3}
+  - {fileID: 2100000, guid: f58de26caf110784992da70a802c2ae2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
