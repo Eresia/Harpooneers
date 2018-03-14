@@ -152,6 +152,7 @@ MonoBehaviour:
   diveHeightEnd: -30
   diveForwardEnd: 20
   diveRotationEnd: {x: 45, y: 0, z: 0}
+  backAttackSound: {fileID: 8300000, guid: 8a46be78e07a2864480ffaeaf23aa375, type: 3}
 --- !u!114 &114560548113288434
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -168,6 +169,7 @@ MonoBehaviour:
   endDepth: 5
   WaitToSurface: 2
   WaitOnSurface: 4
+  spawnSound: {fileID: 8300000, guid: 06638536874cc0b4eac01e4d7e9161cf, type: 3}
 --- !u!114 &114591433400966774
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -365,7 +367,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: NextState
-    m_EventTreshold: 1
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102442778312955678}
   m_Solo: 0
@@ -389,7 +391,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: NextState
-    m_EventTreshold: 0
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102125265432943614}
   m_Solo: 0

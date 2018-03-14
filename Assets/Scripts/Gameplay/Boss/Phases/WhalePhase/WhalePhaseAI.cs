@@ -71,9 +71,6 @@ public class WhalePhaseAI : PhaseAI {
         {
             whaleReferences.hittableScripts[i].hitCallback = HitBoss;
         }
-
-        // SPAWN SCREAM !!!
-        GameManager.instance.audioManager.PlaySoundOneTime(whale_scream, 0.2f);
     }
 
     public override void HitBoss(float damageAmount)

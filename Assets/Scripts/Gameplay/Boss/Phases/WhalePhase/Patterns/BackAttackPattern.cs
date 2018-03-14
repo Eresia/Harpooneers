@@ -41,14 +41,17 @@ public class BackAttackPattern : BossPattern
             whaleAI.WhaleChildTransform.localRotation = Quaternion.Euler(0f, Random.Range(-180f, 180f), 0f);
 
             whaleAI.Whale.SetActive(true);
+            
+            GameManager.instance.audioManager.PlaySoundOneTime(state.backAttackSound, 0.25f);
 
             whaleAI.WhaleChildTransform.DOScale(Vector3.one, state.emergingDuration);
             whaleAI.WhaleChildTransform.DOLocalMove(target.position, state.emergingDuration);
 
             whaleAI.whaleReferences.bodyCollider.enabled = false;
             whaleAI.whaleReferences.tailCollider.enabled = false;
-            yield return new WaitForSeconds(state.emergingDuration - state.backAttackTime);
 
+            yield return new WaitForSeconds(state.emergingDuration - state.backAttackTime);
+            
             whaleAI.WhaleAnimator.Play("BackAttack");
             // Splash FX
             whaleAI.whaleReferences.PlaySplashFX();

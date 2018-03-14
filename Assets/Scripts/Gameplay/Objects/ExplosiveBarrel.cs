@@ -153,8 +153,6 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
 
     public void OnExplode()
     {
-        Debug.Log(gameObject + " EXPLODE");
-
         if(hasAlreadyExplode)
         {
             return;

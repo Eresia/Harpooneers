@@ -14,6 +14,8 @@ public class SpawnState : BossState<SpawnPattern>
 
 	public float WaitOnSurface = 4f;
 
+    public AudioClip spawnSound;
+
 	protected override SpawnPattern Init()
     {
         return new SpawnPattern(this);
