@@ -11,10 +11,7 @@ public class HandleHarpoonWithPlayer : HandleHarpoonHit
 
     protected override void ActionWhenHarpoonAttach(Harpoon harpoon)
     {
-        harpoon.Cut();
-
         // Play FX and sound
-
         if(hitFX)
         {
             hitFX.Play();
