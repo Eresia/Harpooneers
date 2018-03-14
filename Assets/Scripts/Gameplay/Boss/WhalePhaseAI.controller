@@ -143,12 +143,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01168ed66f2760842bf3ef05eb548352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackAmount: 2
+  attackAmount: 3
   emergingDuration: 3
   startHeight: 13
   backAttackTime: 0.75
   waitTimeAfterAttack: 0.75
-  divingDuration: 5
+  divingDuration: 3
   diveHeightEnd: -30
   diveForwardEnd: 20
   diveRotationEnd: {x: 45, y: 0, z: 0}
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   depth: 20
-  hight: 5
+  hight: 2
   WaitBeforeSpawn: 5
 --- !u!114 &114591433400966774
 MonoBehaviour:
@@ -177,15 +177,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad79dcb05caf72d46af2bd728f1ef7eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  depth: 5
-  endDepth: 13
+  depth: 2
   timeinSea: 5
-  translateSpeed: 10
-  ySpeed: 2
-  turnSpeed: 1
-  targetChangeTime: 5
+  translateSpeed: 11
+  ySpeed: 3
+  turnSpeed: 1.2
+  targetChangeTime: 6
   maxTime: 20
-  endOfPaternTime: 5
+  endOfPaternTime: 2
   test: 0
   test2: 0
 --- !u!114 &114863543440066848
