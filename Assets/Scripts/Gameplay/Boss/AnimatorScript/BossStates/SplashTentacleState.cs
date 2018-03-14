@@ -12,6 +12,9 @@ public class SplashTentacleState : BossState<SplashTentaclesPattern>
 
     [Header("Spawn")]
     public float spawnRadius = 10f;
+    public float minAngle = 45f;
+    public float maxAngle = 315f;
+
     public Vector3 startPos;
 
     [Header("Emergence")]

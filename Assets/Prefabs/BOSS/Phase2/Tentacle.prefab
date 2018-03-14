@@ -38,7 +38,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4052942626277786}
   - component: {fileID: 33577609839623196}
-  - component: {fileID: 136594771101507466}
   - component: {fileID: 23494876071313100}
   m_Layer: 0
   m_Name: Model
@@ -57,7 +56,7 @@ GameObject:
   - component: {fileID: 4925607899228680}
   - component: {fileID: 198468049208255542}
   - component: {fileID: 199471405888751724}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: SpawningFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +129,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1785840547380594
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,7 +142,7 @@ GameObject:
   m_Layer: 0
   m_Name: Tentacle
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -6431860639581277017, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -162,7 +161,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4052942626277786
 Transform:
   m_ObjectHideFlags: 1
@@ -495,7 +494,8 @@ MonoBehaviour:
   childTransform: {fileID: 4055268696771942}
   spawningFX: {fileID: 198468049208255542}
   tentacleCollider: {fileID: 65798230012843982}
-  anim: {fileID: 95434715825370166}
+  animAttack: {fileID: 95434715825370166}
+  animGA: {fileID: 0}
 --- !u!135 &135141933797269794
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -504,7 +504,7 @@ SphereCollider:
   m_GameObject: {fileID: 1462902255265202}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -516,7 +516,7 @@ SphereCollider:
   m_GameObject: {fileID: 1133345553640856}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -528,22 +528,9 @@ SphereCollider:
   m_GameObject: {fileID: 1447110444347966}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &136594771101507466
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1347340113543910}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!198 &198468049208255542
 ParticleSystem:
@@ -1507,7 +1494,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
+        key0: {r: 1, g: 1, b: 1, a: 0.5019608}
         key1: {r: 1, g: 1, b: 1, a: 0}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}

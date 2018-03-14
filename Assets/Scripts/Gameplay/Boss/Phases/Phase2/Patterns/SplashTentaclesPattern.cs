@@ -33,94 +33,91 @@ public class SplashTentaclesPattern : BossPattern {
         boss.StartCoroutine(ActivateTentacles());
     }
 
+    /// <summary>
+    /// Spawn 2 tentacles 
+    /// </summary>
     private void SpawnTentacles()
     {
         Vector3 center = phase2.bossMgr.center.position;
 
-        for (int i = 0; i < state.tentacleCount; i++)
-        {
-            // Random a position on a circle (in X and Z).
-            Vector3 randPos = Vector3.zero;
-            Vector2 randCircle = Random.insideUnitCircle.normalized * state.spawnRadius;
-            randPos.x = randCircle.x;
-            randPos.z = randCircle.y;
+        // Random a position on a circle (in X and Z).
+        Vector3 randPos = Vector3.zero;
+        Vector2 randCircle = Random.insideUnitCircle.normalized * state.spawnRadius;
+        randPos.x = randCircle.x;
+        randPos.z = randCircle.y;
 
-            spawns[i] = center + randPos;
-            phase2.Tentacles[i].childTransform.position = spawns[i] + state.startPos;
+        spawns[0] = center + randPos;
+
+        spawns[1] = RotatePointAroundPivot(spawns[0], Vector3.up, new Vector3(0f, Random.Range(state.minAngle, state.maxAngle), 0f));
+
+        for (int i = 0; i < 2; i++)
+        {
+            phase2.Tentacles[i].transform.position = spawns[i];
         }
+    }
+
+    private Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Vector3 angles) {
+
+        Vector3 dir = point - pivot; // get point direction relative to pivot
+        dir = Quaternion.Euler(angles) * dir; // rotate it
+        point = dir + pivot; // calculate rotated point
+
+        return point; // return it
     }
 
     IEnumerator ActivateTentacles()
     {
         for (int attack = 0; attack < state.attackCount; attack++)
         {
-            // Play FX !
-            for (int i = 0; i < 2; i++)
-            {
-                phase2.Tentacles[i].spawningFX.Play();
-            }
-
             SpawnTentacles();
 
-            yield return new WaitForSeconds(state.bubblingDuration);
-            
             for (int i = 0; i < state.tentacleCount; i++)
             {
-                phase2.Tentacles[i].spawningFX.Stop();
-                phase2.Tentacles[i].gameObject.SetActive(true);
+                phase2.Tentacles[i].Spawning(state.bubblingDuration);
+            }
 
-                // TODO Play animation tournoiement...
+            yield return new WaitForSeconds(state.bubblingDuration);
 
-                phase2.Tentacles[i].childTransform.DOLocalMove(spawns[i] + state.attackPos, state.emergingDuration);
+            for (int i = 0; i < state.tentacleCount; i++)
+            {
+                phase2.Tentacles[i].Emerge(state.startPos, state.attackPos, state.emergingDuration);
             }
 
             yield return new WaitForSeconds(state.emergingDuration);
 
-            // SPLASH
-            
-            // Focus a player.
+            // Each tentacles focus a player.
             for (int i = 0; i < state.tentacleCount; i++)
             {
-                Transform target = GameManager.instance.shipMgr.ChoosePlayerToAttack();
-
-                Vector3 dir = (phase2.Tentacles[i].childTransform.position - target.position).normalized;
-                dir.y = 0f;
-
-                //Debug.DrawRay(phase2.Tentacles[i].transform.position, dir * 5f, Color.white, 1f);
-
-                phase2.Tentacles[i].childTransform.DOLocalRotateQuaternion(Quaternion.LookRotation(dir), state.turnDuration);
+                phase2.Tentacles[i].FocusPlayer(state.turnDuration);
             }
 
             yield return new WaitForSeconds(state.turnDuration);
 
             for (int i = 0; i < state.tentacleCount; i++)
             {
-                phase2.Tentacles[i].childTransform.DOLocalMove(spawns[i] + state.startPos, state.divingDuration);
-                phase2.Tentacles[i].tentacleCollider.enabled = true;
-                
-                // TODO Play attack animation.
-                //phase2.Tentacles[i].animAttack.Play("");
+                phase2.Tentacles[i].Attack();
             }
 
-            // TODO WAIT ANIMATION -> OnStateExit -> 
             //yield return new WaitWhile(() => (phase2.Tentacles[0].animGA.GetBool("End")));
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(3f);
 
             for (int i = 0; i < state.tentacleCount; i++)
             {
-                phase2.Tentacles[i].tentacleCollider.enabled = false;
+                phase2.Tentacles[i].Dive(state.startPos, state.divingDuration);
             }
 
-            // woob wooob woooob
+            yield return new WaitForSeconds(state.divingDuration);
 
             // Reset pos.
             for (int i = 0; i < state.tentacleCount; i++)
             {
-                //phase2.Tentacles[i].gameObject.SetActive(false);
+                phase2.Tentacles[i].ResetTentacle();
             }
 
-            yield return new WaitForSeconds(30f);
+
         }
+
+        OnPatternFinished();
     }
 
     protected override void OnStopPattern()
