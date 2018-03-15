@@ -13,7 +13,9 @@ public class HandleHarpoonWithPlayer : HandleHarpoonHit
             hitFX.Play();
         }
 
-		GameManager.instance.audioManager.PlaySoundOneTime (hit_sound, 0.2f);
+		Debug.Log ("HIT");
+
+		GameManager.instance.audioManager.PlaySoundOneTime (hit_sound, 1f);
     }
 
     protected override void ActionWhenHarpoonDetach()

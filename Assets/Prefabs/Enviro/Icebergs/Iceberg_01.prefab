@@ -766,7 +766,7 @@ MeshCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Convex: 1
-  m_CookingOptions: -1
+  m_CookingOptions: 14
   m_SkinWidth: 0.1
   m_Mesh: {fileID: 4300000, guid: 9d70f24948cd1af48beb0197e1ba29d0, type: 3}
 --- !u!64 &64032195848285818
@@ -904,7 +904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d874c5047fc409f46ab1443a0013a2c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hit_sound: {fileID: 0}
+  hit_sound: {fileID: 8300000, guid: c045ed470aad9b949bf9fe755f7d4894, type: 3}
 --- !u!114 &114842579020878706
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -920,6 +920,7 @@ MonoBehaviour:
   fractMesh: {fileID: 1570478505955396}
   harpoonColliders:
   - {fileID: 135894656112167618}
+  break_sound: {fileID: 8300000, guid: 90f97b102255e704cb77a514c776baec, type: 3}
 --- !u!135 &135894656112167618
 SphereCollider:
   m_ObjectHideFlags: 1

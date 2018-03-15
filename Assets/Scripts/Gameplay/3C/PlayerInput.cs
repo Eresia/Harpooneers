@@ -197,12 +197,22 @@ public class PlayerInput : MonoBehaviour
     // UTILITY :
     private void TogglePause(InputActionEventData data)
     {
+		//If on Tuto
+		if (data.GetButtonDown())
+        {
+			if(GameManager.instance.onTuto){
+				GameManager.instance.tutorial.KillTuto();
+				return ;
+			}
+		}
+		
+
         // If game is paused : direct unpause.
         if (GameManager.instance.IsPause)
         {
             if (data.GetButtonDown())
             {
-                GameManager.instance.PauseGame(data.playerId);
+                GameManager.instance.UnPauseGame();
                 doPause = false;
             }
         }
@@ -210,15 +220,9 @@ public class PlayerInput : MonoBehaviour
         // If game is unpaused.
         else
         {
-            if (!doPause)
+            if (data.GetButtonDown())
             {
-                // Use this to pause after a delay.
-                doPause = data.GetButtonTimePressed() > timeBeforePause;
-
-                if (doPause)
-                {
-                    GameManager.instance.UnPauseGame();
-                }
+                GameManager.instance.PauseGame(data.playerId);
             }
         }
     }

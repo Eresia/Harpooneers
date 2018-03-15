@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4182855868782078}
   - component: {fileID: 33758283539168872}
   - component: {fileID: 23821559657858282}
+  - component: {fileID: 114985059043751350}
   m_Layer: 0
   m_Name: SM_Big_LDpart3
   m_TagString: Untagged
@@ -946,3 +947,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1323036982643554}
   m_Mesh: {fileID: 4300000, guid: 42f264caf932901488b00426c51f953b, type: 3}
+--- !u!114 &114985059043751350
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1011005254160752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 377c85d9bdad13c4eb47a0b7f86ae9e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: {x: 1, y: 0, z: 0}
+  speed: 1
+  forwardDirection: 0

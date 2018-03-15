@@ -18,6 +18,7 @@ public class PlayerManager : MonoBehaviour {
     public Image deathIcon;
     public ParticleSystem deathFX;
     public ParticleSystem loopDeathFX;
+    public Animator boatAnimator;
     public GameObject playerPositionIndicator;
     public float playerIndicatorDuration = 5f;
 
@@ -30,7 +31,7 @@ public class PlayerManager : MonoBehaviour {
         get { return isDead; }
     }
     
-    private bool isDead = false;
+    public bool isDead = false;
     
     private float _rezAmount;
     private float _allyDistance;
@@ -40,7 +41,10 @@ public class PlayerManager : MonoBehaviour {
     private MovementBehaviour movement;
     private HarpoonLauncher harpoon;
 
-	public AudioClip death_sound;
+    private float deathIconDelay = 3f;
+    private float deathIconTimer;
+
+    public AudioClip death_sound;
 
     private void Awake()
     {
@@ -79,12 +83,14 @@ public class PlayerManager : MonoBehaviour {
         movement.FreezePlayer();
         harpoon.Cut();
 
-        // Display the dead icon
-        deathIcon.enabled = true;
-
         // Display FX
         deathFX.Play();
         loopDeathFX.Play();
+
+        // Reset timer
+        deathIconTimer = 0f; ;
+
+        boatAnimator.Play("BoatDeathAnim");
 
         GameManager.instance.audioManager.PlaySoundOneTime(death_sound, 0.05f);
         GameManager.instance.shipMgr.NotifyDeath();
@@ -165,10 +171,14 @@ public class PlayerManager : MonoBehaviour {
                 rezBar.gameObject.SetActive(false);
             }
             */
+            deathIconTimer += Time.deltaTime;
 
-            deathIcon.enabled = true;
-            // Look the cam.
-            deathIcon.transform.LookAt(transform.position - mainCamera.transform.position);
+            if(deathIconTimer >= deathIconDelay)
+            {
+                deathIcon.enabled = true;
+                deathIcon.transform.LookAt(transform.position - mainCamera.transform.position);
+            }
+                  
         }
         else
         {
@@ -185,9 +195,12 @@ public class PlayerManager : MonoBehaviour {
     // Player is back in the game
     public void Resurrect()
     {
+        boatAnimator.Play("BoatRezAnim");
         loopDeathFX.Stop();
         isDead = false;
         GameManager.instance.shipMgr.NotifyAlive();
+
+        movement.IsRez();
 
         //_rezAmount = 0;
     }

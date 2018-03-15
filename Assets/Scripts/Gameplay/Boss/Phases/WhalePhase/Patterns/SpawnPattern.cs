@@ -24,7 +24,7 @@ public class SpawnPattern : BossPattern {
 	}
 
 	private IEnumerator Spawn(){
-		GameManager.instance.shipMgr.LockInputs();
+		GameManager.instance.shipMgr.LockInputs(1);
 		// Move the FX containers.
 		Vector3 pos = boss.bossMgr.north.position + new Vector3(0, 0, -state.offset);
         Quaternion rot = Quaternion.Euler(0f, 180f, 0f);

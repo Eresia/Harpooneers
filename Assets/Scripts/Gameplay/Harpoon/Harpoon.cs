@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(LineRenderer))]
 public class Harpoon : MonoBehaviour {
@@ -209,8 +206,6 @@ public class Harpoon : MonoBehaviour {
         {
             Cut();
             launcher.physicMove.AddForce((harpoonPivotDir + launcher.physicMove.Velocity.normalized) * 25f);
-
-            GameManager.instance.audioManager.StopPersistantSound(AudioManager.PossibleSound.PULL, 0.1f);
 
             // Old behaviour.
             /*

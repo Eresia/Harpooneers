@@ -57,8 +57,6 @@ public abstract class PhaseAI : MonoBehaviour {
         {
             if (!phaseFinished)
             {
-                // TODO death feedback
-
                 phaseFinished = true;
 
                 animator.enabled = false;

@@ -664,7 +664,7 @@ GameObject:
   - component: {fileID: 224135404612610194}
   - component: {fileID: 222476651086028804}
   - component: {fileID: 114616054903995692}
-  - component: {fileID: 114786670840928476}
+  - component: {fileID: 95932895599367312}
   m_Layer: 5
   m_Name: PlayerDeadIcon
   m_TagString: Untagged
@@ -680,6 +680,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4407487545123544}
+  - component: {fileID: 95790105951201754}
   m_Layer: 0
   m_Name: Model
   m_TagString: Player
@@ -2007,6 +2008,40 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.7, y: 5, z: 1.75}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &95790105951201754
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1818368145150354}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9819152a4e94fe4488fc976c01ce8e4a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &95932895599367312
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1791624962092918}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d0aa5a94f5032534788d8323c9e5bf42, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114149151925101046
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2137,7 +2172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db4cc8993307c6349b0927c5c0e81c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerId: 2
+  playerId: 0
   movement: {fileID: 114834410021121528}
   playerMgr: {fileID: 114888584532763218}
   harpoonLauncher: {fileID: 114609724380578428}
@@ -2304,17 +2339,6 @@ MonoBehaviour:
   bumpForce: 5
   collision_sound: {fileID: 8300000, guid: ae39102768e5a094dbec5d14c49ea42c, type: 3}
   hitFX: {fileID: 198328918260222246}
---- !u!114 &114786670840928476
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1791624962092918}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd29fa5fc4cc3b44fb5de59c6ab8eb5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114787632788375122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2386,8 +2410,10 @@ MonoBehaviour:
   deathIcon: {fileID: 114616054903995692}
   deathFX: {fileID: 198041291286965466}
   loopDeathFX: {fileID: 198047237130506152}
+  boatAnimator: {fileID: 95790105951201754}
   playerPositionIndicator: {fileID: 1232968556676988}
   playerIndicatorDuration: 10
+  isDead: 0
   death_sound: {fileID: 8300000, guid: f888de0ce83a9eb47898bac86e45cd5b, type: 3}
 --- !u!136 &136460695975876572
 CapsuleCollider:
@@ -2462,7 +2488,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1364587782
+  randomSeed: -911619119
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -16041,7 +16067,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 501413941
+  randomSeed: 896146587
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -22808,7 +22834,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1194551298
+  randomSeed: 1320178645
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -43154,7 +43180,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1494305835
+  randomSeed: -800899306
   InitialModule:
     serializedVersion: 3
     enabled: 1

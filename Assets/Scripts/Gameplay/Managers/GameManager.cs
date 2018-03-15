@@ -14,10 +14,15 @@ public class GameManager : MonoBehaviour {
     public ShipManager shipMgr;
     public CameraManager camMgr;
     public BossManager bossMgr;
+	public Tutorial tutorial;
 
     public Ground ground;
 
 	public AudioManager audioManager;
+
+	[Space]
+
+	public bool onTuto = true;
 
 	public static GameManager instance {get; private set;}
 
@@ -74,6 +79,9 @@ public class GameManager : MonoBehaviour {
         {
             players[i] = true;
         }
+
+		bossMgr.enabled = !onTuto;
+
     }
 
     private void OnEnable()
@@ -145,21 +153,17 @@ public class GameManager : MonoBehaviour {
     }
     
     public void PauseGame(int playerID)
-    {      
-        if(gamePaused)
-        {
-            Debug.Log("PAUSE !!!");
-            pauseScript.PauseGame(playerID);
-        }
+    {             
+        Debug.Log("PAUSE !!!");
+        pauseScript.PauseGame(playerID);
+        gamePaused = true;
     }
 
     public void UnPauseGame()
     {
-        if (gamePaused)
-        {
-            Debug.Log("UNPAUSE !!!");
-            pauseScript.UnPauseGame();
-        }
+        Debug.Log("UNPAUSE !!!");
+        pauseScript.UnPauseGame();
+        gamePaused = false;
     }
 
     public void GameOver()
@@ -183,4 +187,10 @@ public class GameManager : MonoBehaviour {
         win = true;
         Debug.Log("GAME FINISHED !!!");
     }
+
+	public void OnEndTuto(){
+		onTuto = false;
+		bossMgr.enabled = true;
+		shipMgr.ResurrectAll();
+	}
 }
