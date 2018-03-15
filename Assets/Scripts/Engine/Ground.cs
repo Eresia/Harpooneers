@@ -78,6 +78,8 @@ public class Ground : MonoBehaviour {
 
 	public float zoneAmplitude;
 
+	public float zoneRotation;
+
 	public float zoneWaveLength;
 
 	public float zonePeriod;
@@ -143,7 +145,7 @@ public class Ground : MonoBehaviour {
 		
 		waveManager = new WaveManager();
 
-		waveManager.CreateZone(zoneAmplitude, zoneWaveLength, zonePeriod);
+		waveManager.CreateZone(zoneAmplitude, zoneRotation, zoneWaveLength, zonePeriod);
 		// waveManager.CreateZoneTest(zoneAmplitude * 2, zoneWaveLength * 2, zonePeriod);
 
 		int heightMapLod = 32 * ((int) Mathf.Pow(2, heigtMapPower));
@@ -230,7 +232,7 @@ public class Ground : MonoBehaviour {
 					float jFloat = ((hit.point.z / (4*ratio / lodPowPower)) + halfLod) - selfTransform.position.z;
 					if(leftClick){
 						// AddWave(Wave.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactWaveLength, impactPeriod, time, waveSpeed, timeProgression, timeout));
-						waveManager.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, impactWaveLength, impactPeriod, timeProgression, timeout);
+						waveManager.CreateTraceImpact(new Vector2(iFloat, jFloat), waveSize.x, 0f, impactAmplitude, impactWaveLength, impactPeriod, timeProgression, timeout);
 					}
 					else{
 						waveVortexId = waveManager.CreateVortex(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, vortexSmooth, impactWaveLength, impactPeriod, timeProgression, timeout);
