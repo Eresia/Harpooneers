@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4889404493798880}
   - component: {fileID: 65450666214549584}
   - component: {fileID: 114118534077632422}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,7 +83,7 @@ GameObject:
   - component: {fileID: 4247354822264092}
   - component: {fileID: 198419752848197442}
   - component: {fileID: 199005333363410048}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: SpawningFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 114803095377364564}
   - component: {fileID: 65031996303913968}
   - component: {fileID: 114659542856081910}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: BodyCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -405,7 +405,7 @@ GameObject:
   - component: {fileID: 4740442931311506}
   - component: {fileID: 198545307440273434}
   - component: {fileID: 199301272771321450}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: AttackFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -797,7 +797,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1632272977927312}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4378,7 +4378,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -952866181
+  randomSeed: 1206374704
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4827,9 +4827,9 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 0
     donutRadius: 0.2
-    m_Position: {x: 0, y: -7, z: 0}
+    m_Position: {x: 0, y: -12, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 2, y: 14, z: 1}
+    m_Scale: {x: 2, y: 24, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0

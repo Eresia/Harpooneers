@@ -60,7 +60,10 @@ public class TentacleBehaviour : MonoBehaviour {
 
     public void Dive(Vector3 endPos, float divingDuration)
     {
-        attackCollider.enabled = false;
+        if(attackCollider)
+        {
+            attackCollider.enabled = false;
+        }
 
         animator.SetTrigger("Despawn");
         childTransform.DOLocalMove(endPos, divingDuration);

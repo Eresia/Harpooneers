@@ -64,10 +64,10 @@ public class XSmashTentaclesPattern : BossPattern {
     /// </summary>
     private void SpawnCorners()
     {
-        spawns[0] = boss.bossMgr.north.position + boss.bossMgr.east.position;
-        spawns[1] = boss.bossMgr.south.position + boss.bossMgr.east.position;
-        spawns[2] = boss.bossMgr.south.position + boss.bossMgr.west.position;
-        spawns[3] = boss.bossMgr.north.position + boss.bossMgr.west.position;
+        spawns[0] = new Vector3(boss.bossMgr.east.position.x, 0f, boss.bossMgr.north.position.z);
+        spawns[1] = new Vector3(boss.bossMgr.west.position.x, 0f, boss.bossMgr.south.position.z);
+        spawns[2] = new Vector3(boss.bossMgr.east.position.x, 0f, boss.bossMgr.south.position.z);
+        spawns[3] = new Vector3(boss.bossMgr.west.position.x, 0f, boss.bossMgr.north.position.z);
 
         Vector3 center = phase2.bossMgr.center.position;
 
