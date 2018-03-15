@@ -1735,9 +1735,9 @@ Transform:
   m_LocalPosition: {x: -15, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1343739243}
   - {fileID: 16634944}
   - {fileID: 802090458}
+  - {fileID: 1343739243}
   m_Father: {fileID: 712353343}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1908,7 +1908,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4334383366883838, guid: 3ed6227f943e6bd41b5a93e3ca605351, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114136578988902598, guid: 3ed6227f943e6bd41b5a93e3ca605351,
         type: 2}
@@ -2633,6 +2633,10 @@ Prefab:
       propertyPath: m_Name
       value: SeaCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 1304983143867414, guid: cf60f7543f7e1db428fab33ef4b98f6d, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cf60f7543f7e1db428fab33ef4b98f6d, type: 2}
   m_IsPrefabParent: 0
@@ -3349,7 +3353,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4018076426948940, guid: bac4336b7303bee4aa64fef9b6be88c1, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114872358802777512, guid: bac4336b7303bee4aa64fef9b6be88c1,
         type: 2}
@@ -3976,7 +3980,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4493171840694980, guid: 8d447a651bdff9d4f851fefa8a7a864c, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114301401480464612, guid: 8d447a651bdff9d4f851fefa8a7a864c,
         type: 2}
@@ -4651,7 +4655,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2143910666 stripped
 MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114227175962324476, guid: 20d2f651efa30be42b6c8ecd7b4c74d9,
+  m_PrefabParentObject: {fileID: 114173769449893062, guid: 20d2f651efa30be42b6c8ecd7b4c74d9,
     type: 2}
   m_PrefabInternal: {fileID: 1402082912}
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
