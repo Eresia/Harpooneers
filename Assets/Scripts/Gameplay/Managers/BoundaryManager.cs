@@ -30,9 +30,20 @@ public class BoundaryManager : MonoBehaviour {
 
     public BoundariesData trapezeData;
 
+    public bool debug;
+
     private void Awake()
     {
         UpdateBoundaries();
+    }
+
+    private void Update()
+    {
+        if(debug)
+        {
+            UpdateBoundaries();
+        }
+        
     }
 
     public void UpdateBoundaries()
@@ -89,7 +100,7 @@ public class BoundaryManager : MonoBehaviour {
         float xMax = Mathf.Lerp(trapezeData.xBottomRight, trapezeData.xTopRight, t);
 
         clampedPos.x = Mathf.Clamp(clampedPos.x, xMin - xMin * horizontalOffset, xMax - xMax * horizontalOffset);
-        clampedPos.z = Mathf.Clamp(clampedPos.z, trapezeData.zBottom + trapezeData.zBottom * verticalOffset, trapezeData.zTop - trapezeData.zTop * verticalOffset);
+        clampedPos.z = Mathf.Clamp(clampedPos.z, trapezeData.zBottom - trapezeData.zBottom * verticalOffset, trapezeData.zTop - trapezeData.zTop * verticalOffset);
 
         return clampedPos;
     }
