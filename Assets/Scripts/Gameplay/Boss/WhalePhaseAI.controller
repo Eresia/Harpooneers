@@ -143,16 +143,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01168ed66f2760842bf3ef05eb548352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackAmount: 2
+  attackAmount: 3
   emergingDuration: 3
   startHeight: 13
   backAttackTime: 0.75
   waitTimeAfterAttack: 0.75
-  divingDuration: 5
+  divingDuration: 3
   diveHeightEnd: -30
   diveForwardEnd: 20
   diveRotationEnd: {x: 45, y: 0, z: 0}
-  backAttackSound: {fileID: 8300000, guid: 8a46be78e07a2864480ffaeaf23aa375, type: 3}
 --- !u!114 &114560548113288434
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -164,12 +163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0468898ffbdca874db8f74f019edfed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: 4
-  beginDepth: 10
-  endDepth: 5
-  WaitToSurface: 2
-  WaitOnSurface: 4
-  spawnSound: {fileID: 8300000, guid: 06638536874cc0b4eac01e4d7e9161cf, type: 3}
+  depth: 20
+  hight: 2
+  WaitBeforeSpawn: 5
 --- !u!114 &114591433400966774
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -181,14 +177,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad79dcb05caf72d46af2bd728f1ef7eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  depth: 5
+  depth: 2
   timeinSea: 5
-  translateSpeed: 10
-  ySpeed: 2
-  turnSpeed: 1
-  targetChangeTime: 5
+  translateSpeed: 11
+  ySpeed: 3
+  turnSpeed: 1.2
+  targetChangeTime: 6
   maxTime: 20
-  endOfPaternTime: 5
+  endOfPaternTime: 2
   test: 0
   test2: 0
 --- !u!114 &114863543440066848
@@ -367,7 +363,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: NextState
-    m_EventTreshold: 0
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102442778312955678}
   m_Solo: 0
@@ -391,7 +387,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: NextState
-    m_EventTreshold: 1
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102125265432943614}
   m_Solo: 0
