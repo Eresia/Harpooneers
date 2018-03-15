@@ -10,6 +10,7 @@ public class Phase2AI : PhaseAI {
     public TentacleBehaviour hammerPrefab;
     public TentacleBehaviour chargerPrefab;
     public TentacleBehaviour eyeTentaclePrefab;
+    public TentacleBehaviour aspiTentaclePrefab;
 
     public int tentaclesNeeded = 4;
 
@@ -37,6 +38,12 @@ public class Phase2AI : PhaseAI {
     }
     private TentacleBehaviour[] tentaclesEye;
 
+    public TentacleBehaviour[] TentaclesAspi
+    {
+        get { return tentaclesAspi; }
+    }
+    private TentacleBehaviour[] tentaclesAspi;
+
     [Header("Patterns and hit")]
     public int hitOnEyesNeeded = 2;
     private int hitOnEyesCount = 0;
@@ -55,6 +62,8 @@ public class Phase2AI : PhaseAI {
     {
         base.Awake();
 
+        GameManager.instance.shipMgr.UnLockInputs();
+
         SpawnTentacles();
     }
 
@@ -64,6 +73,7 @@ public class Phase2AI : PhaseAI {
         tentaclesHammer = new TentacleBehaviour[tentaclesNeeded];
         tentaclesCharger = new TentacleBehaviour[tentaclesNeeded];
         tentaclesEye = new TentacleBehaviour[tentaclesNeeded];
+        tentaclesAspi = new TentacleBehaviour[tentaclesNeeded];
 
         for (int i = 0; i < tentaclesNeeded; i++)
         {
@@ -76,8 +86,11 @@ public class Phase2AI : PhaseAI {
             tentaclesCharger[i] = Instantiate<TentacleBehaviour>(chargerPrefab, transform);
             tentaclesCharger[i].gameObject.SetActive(false);
 
-            //tentaclesEye[i] = Instantiate<TentacleBehaviour>(eyeTentaclePrefab, transform);
-            //tentaclesEye[i].gameObject.SetActive(false);
+            tentaclesEye[i] = Instantiate<TentacleBehaviour>(eyeTentaclePrefab, transform);
+            tentaclesEye[i].gameObject.SetActive(false);
+
+            tentaclesAspi[i] = Instantiate<TentacleBehaviour>(aspiTentaclePrefab, transform);
+            tentaclesAspi[i].gameObject.SetActive(false);
         }
     }
 
@@ -153,30 +166,10 @@ public class Phase2AI : PhaseAI {
 
     public override void HitBoss(float damageAmount)
     {
-        if (phaseFinished)
-        {
-            // Don't do anything if boss is defeated.
-            return;
-        }
-
-        lifepoints -= damageAmount;
-        // TODO Update UI.
-
-        if (lifepoints <= 0)
-        {
-            if (!phaseFinished)
-            {
-                // TODO death feedback
-
-                phaseFinished = true;
-
-                animator.enabled = false;
-                enabled = false;
-
-                OnPhaseFinished();
-            }
-
-            return;
-        }
+        base.HitBoss(damageAmount);
     }
+
+	public override IEnumerator OnPhaseFinishedCoroutine(){
+		yield return null;
+	}
 }

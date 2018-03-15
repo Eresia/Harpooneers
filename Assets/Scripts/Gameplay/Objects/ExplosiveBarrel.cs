@@ -122,7 +122,7 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
             c.SendMessage("OnExplode", SendMessageOptions.DontRequireReceiver);
 
             // Player/Object Repulsion
-            if(c.tag == "Player" || c.tag == "Floating Object")
+            if(c.tag == "Player")
             {
                 Vector3 repulsDir = c.transform.position - transform.position;
                 c.transform.parent.parent.GetComponent<PhysicMove>().AddForce(repulsDir.normalized * repulsionForce);

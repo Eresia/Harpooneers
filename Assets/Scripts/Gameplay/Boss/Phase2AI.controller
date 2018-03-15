@@ -93,6 +93,24 @@ MonoBehaviour:
   maxX: 0
   minZ: 0
   maxZ: 0
+--- !u!114 &114258627345445216
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b1821027c973844e9d66311e9879953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tentacleCount: 1
+  bubblingDuration: 3
+  startPos: {x: 0, y: -24, z: 0}
+  emergingDuration: 0.5
+  attackPos: {x: 0, y: 0, z: 0}
+  waitBeforeAttack: 0.5
+  divingDuration: 1
 --- !u!114 &114395155682329492
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -138,6 +156,24 @@ MonoBehaviour:
   attackPos: {x: 0, y: 0, z: 0}
   turnDuration: 0.5
   waitBeforeAttack: 0.5
+  divingDuration: 1
+--- !u!114 &114671761881577010
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66f467e23e7e91748b53013beadedd86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tentacleCount: 4
+  bubblingDuration: 3
+  startPos: {x: 0, y: -24, z: 0}
+  emergingDuration: 0.5
+  attackPos: {x: 0, y: 0, z: 0}
+  waitBeforeAttack: 1.5
   divingDuration: 1
 --- !u!114 &114863543440066848
 MonoBehaviour:
@@ -410,7 +446,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: NextState
-    m_EventTreshold: 2
+    m_EventTreshold: 5
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102799164465752214}
   m_Solo: 0
@@ -503,7 +539,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: NextState
-    m_EventTreshold: 3
+    m_EventTreshold: 5
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102846592417197196}
   m_Solo: 0
@@ -671,7 +707,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: NextState
-    m_EventTreshold: 4
+    m_EventTreshold: 2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102057140704739664}
   m_Solo: 0
@@ -721,7 +757,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101316797188958470}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 114671761881577010}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -742,7 +779,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: SplashTentacles
+  m_Name: Splash Tentacles
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -769,12 +806,13 @@ AnimatorState:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Pattern 2
+  m_Name: Sweep Tentacles
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101953194009903022}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 114258627345445216}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -954,7 +992,7 @@ AnimatorStateMachine:
     m_Position: {x: -24, y: 300, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102057140704739664}
-    m_Position: {x: 12, y: 360, z: 0}
+    m_Position: {x: 12, y: 372, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102792872858872516}
     m_Position: {x: 576, y: 204, z: 0}

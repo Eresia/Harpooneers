@@ -34,8 +34,6 @@ public class PlayerInput : MonoBehaviour
 
     void Awake()
     {
-        tutoStep = 3;
-
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
 
@@ -229,7 +227,11 @@ public class PlayerInput : MonoBehaviour
     {
         if (data.GetButtonDown())
         {
-            playerMgr.FeedbackPlayerPos(1f);
+            playerMgr.FeedbackPlayerPos(true);
+        }
+        if (data.GetButtonUp())
+        {
+            playerMgr.FeedbackPlayerPos(false);
         }
     }
     

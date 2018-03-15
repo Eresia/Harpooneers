@@ -23,8 +23,8 @@ public class SpawnPattern : BossPattern {
 		whaleAI.StartCoroutine(Spawn());
 	}
 
-	private IEnumerator Spawn() {
-
+	private IEnumerator Spawn(){
+		GameManager.instance.shipMgr.LockInputs();
 		// Move the FX containers.
 		Vector3 pos = boss.bossMgr.north.position + new Vector3(0, 0, -state.offset);
         Quaternion rot = Quaternion.Euler(0f, 180f, 0f);
@@ -36,9 +36,7 @@ public class SpawnPattern : BossPattern {
 
 		whaleAI.Whale.SetActive(true);
 
-        GameManager.instance.audioManager.PlaySoundOneTime(state.spawnSound, 0.5f);
-
-        yield return new WaitForSeconds(2f);
+		yield return new WaitForSeconds(2f);
 
         whaleAI.spawningFX.Play();
 
@@ -52,6 +50,7 @@ public class SpawnPattern : BossPattern {
 		tween = whaleAI.WhaleTransform.DOMove(pos - new Vector3(0, state.endDepth, 0), state.WaitToSurface);
         yield return new WaitWhile(tween.IsPlaying);
 
+		GameManager.instance.shipMgr.UnLockInputs();
 		OnPatternFinished();
 	}
 

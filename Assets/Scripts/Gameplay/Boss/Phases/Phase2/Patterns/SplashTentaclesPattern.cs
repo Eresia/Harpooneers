@@ -103,6 +103,11 @@ public class SplashTentaclesPattern : BossPattern {
 
             yield return new WaitForSeconds(state.turnDuration);
 
+            for (int i = 0; i < state.tentacleCount; i++)
+            {
+                tentaclesToUse[i].FeedbackAttackArea();
+            }
+
             yield return new WaitForSeconds(state.waitBeforeAttack);
 
             for (int i = 0; i < state.tentacleCount; i++)
@@ -110,11 +115,11 @@ public class SplashTentaclesPattern : BossPattern {
                 tentaclesToUse[i].TriggerAttackAnim();
             }
 
-            yield return new WaitUntil(() => (tentaclesToUse[0].animAttack.GetBool("End")));
+            yield return new WaitUntil(() => (tentaclesToUse[0].animator.GetBool("End")));
             
             for (int i = 0; i < state.tentacleCount; i++)
             {
-                tentaclesToUse[i].animAttack.SetBool("End", false);
+                tentaclesToUse[i].animator.SetBool("End", false);
 
                 tentaclesToUse[i].Dive(state.startPos, state.divingDuration);
             }

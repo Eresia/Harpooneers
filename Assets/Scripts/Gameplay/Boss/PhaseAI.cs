@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System;
 
 [RequireComponent(typeof(Animator))]
@@ -63,10 +64,17 @@ public abstract class PhaseAI : MonoBehaviour {
                 animator.enabled = false;
                 enabled = false;
 
-                OnPhaseFinished();
+                StartCoroutine(EndPhaseCoroutine());
             }
         }
     }
+
+	public virtual IEnumerator EndPhaseCoroutine(){
+		yield return OnPhaseFinishedCoroutine();
+		OnPhaseFinished();
+	}
+
+	public abstract IEnumerator OnPhaseFinishedCoroutine();
 
     protected virtual void Awake()
     {
