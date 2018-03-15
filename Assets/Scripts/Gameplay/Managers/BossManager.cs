@@ -9,11 +9,11 @@ public class BossManager : MonoBehaviour {
     public GameObject[] phases;
 
     [Header("Spawns")]
-    public Transform center;
-    public Transform north;
-    public Transform east;
-    public Transform south;
-    public Transform west;
+
+    public Vector3 bossAreaCenter;
+    public Vector3 bossArea;
+    [HideInInspector]
+    public Transform center, north, east, south, west;
 
     [Header("UI")]
     public GameObject lifepointsBar;
@@ -60,14 +60,14 @@ public class BossManager : MonoBehaviour {
 
     private void SetupSpawns()
     {
-        center.position = GameManager.instance.boundaryMgr.ScreenToWorldPos(new Vector2(0.5f, 0.425f));
-        south.position = GameManager.instance.boundaryMgr.ScreenToWorldPos(new Vector2(0.5f, 0f));
-        north.position = GameManager.instance.boundaryMgr.ScreenToWorldPos(new Vector2(0.5f, 1f));
-        east.position = GameManager.instance.boundaryMgr.ScreenToWorldPos(new Vector2(0f, 0.425f));
-        west.position = GameManager.instance.boundaryMgr.ScreenToWorldPos(new Vector2(1f, 0.425f));
+        width = bossArea.x;
+        height = bossArea.z;
+        center.position = bossAreaCenter;
 
-        width = Vector3.Distance(east.position, west.position);
-        height = Vector3.Distance(north.position, south.position);
+        west.position = bossAreaCenter + new Vector3(-width*0.5f, 0f, 0f);
+        east.position = bossAreaCenter + new Vector3(width * 0.5f, 0f, 0f);
+        north.position = bossAreaCenter + new Vector3(0f, 0f, height * 0.5f);
+        south.position = bossAreaCenter + new Vector3(0f, 0f, -height * 0.5f);
     }
 
     private void SetupPhases()
@@ -125,5 +125,16 @@ public class BossManager : MonoBehaviour {
     public void UpdateLifepoints()
     {
         lifepointsFilling.fillAmount = currentPhase.Lifepoints / currentPhase.maxLifepoints; 
+    }
+
+    private void OnValidate()
+    {
+        SetupSpawns();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(bossAreaCenter, bossArea);
     }
 }
