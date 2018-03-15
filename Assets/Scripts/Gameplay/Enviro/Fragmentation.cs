@@ -11,6 +11,8 @@ public class Fragmentation : MonoBehaviour
     private MeshCollider _mycollider;
     private PhysicMove _physicScript;
     private ConstantMovement _movementScript;
+
+	public AudioClip break_sound;
     
 
     void Awake()
@@ -32,12 +34,13 @@ public class Fragmentation : MonoBehaviour
         {
             col.enabled = false;
         }
-
+			
         _movementScript.enabled = false;
         _physicScript.enabled = false;
         _mycollider.enabled = false; 
         fractMesh.SetActive(true);
         baseMesh.SetActive(false);
+		GameManager.instance.audioManager.PlaySoundOneTime (break_sound, 0.1f);
 
         Destroy(gameObject, 3f);
 	}

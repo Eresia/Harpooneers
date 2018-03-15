@@ -40,6 +40,7 @@ public class WhalePhaseAI : PhaseAI {
     public float damageMinToHaveScream = 10f;
     
 	public AudioClip whale_scream;
+	public AudioClip whale_spawn;
 
 	public float endPhaseTime = 4f;
 
@@ -57,6 +58,8 @@ public class WhalePhaseAI : PhaseAI {
     {
         whale = Instantiate(whalePrefab);
         whale.SetActive(false);
+
+		GameManager.instance.audioManager.PlaySoundOneTime(whale_spawn, 0.3f);
 
         whaleReferences = whale.GetComponent<WhaleReferences>();
 
