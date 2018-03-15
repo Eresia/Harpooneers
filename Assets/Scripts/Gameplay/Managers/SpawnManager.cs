@@ -4,36 +4,49 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour {
 
-    public GameObject mouettePrefab;
-    public GameObject dauphinPrefab;
-    public GameObject poissonPrefab;
-    public GameObject rocherPrefab;
-    public GameObject icebergPrefab;
+    public GameObject[] mouettePrefab;
+    public GameObject[] dauphinPrefab;
+    public GameObject[] poissonPrefab;
+    public GameObject[] rocherPrefab;
+    public GameObject[] icebergPrefab;
 
     public Transform[] spawnPositions;
- 
+
+    public Transform[] icebergSpawnPositions;
+
     void Start()
     {
-        StartCoroutine(SpawnMouettes());
+        StartCoroutine(LDCoroutine());
     }
 
-    public void Spawn(GameObject prefab, Transform prefabTransform, bool isRandom)
+    public void Spawn(GameObject prefab, Transform prefabTransform, bool isRandom, Transform[] spawnArray)
     {
         if (isRandom)
         {
             int index = Random.Range(0, spawnPositions.Length);
-            prefabTransform = spawnPositions[index];
+            prefabTransform = spawnArray[index];
         }
 
        GameObject inst =  Instantiate(prefab, prefabTransform.position, prefabTransform.rotation, transform);
     }
 
-    IEnumerator SpawnMouettes()
+    IEnumerator LDCoroutine()
     {
-        for(int i = 0; i < 4; i++)
+        while(true)
         {
-            Spawn(mouettePrefab, transform, true);
-            yield return new WaitForSeconds(5f);
+            Debug.Log("ICEBEEERG");
+            int prefabIndex = Random.Range(0, icebergPrefab.Length);
+            int transformIndex = Random.Range(0, icebergSpawnPositions.Length);
+            GameObject inst = Instantiate(icebergPrefab[prefabIndex], icebergSpawnPositions[transformIndex].position, Quaternion.identity, transform);
+            inst.transform.rotation *= Quaternion.Euler(0f, Random.Range(0, 360), 0f);
+
+            float randomScale = Random.Range(0.3f, 0.5f);
+            inst.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
+
+            float randomSpeed = Random.Range(1f, 1.5f);
+            inst.GetComponent<ConstantMovement>().speed = randomSpeed;
+
+            yield return new WaitForSeconds(10f);
         }          
     }
 }

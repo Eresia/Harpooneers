@@ -11,9 +11,11 @@ public class TentacleBehaviour : MonoBehaviour {
 
     public ParticleSystem spawningFX;
 
+    public ParticleSystem attackFx;
+
     public Collider tentacleCollider;
     
-    public Animator animAttack;
+    public Animator animator;
 
     public AudioClip bubbleSound;
 
@@ -38,23 +40,29 @@ public class TentacleBehaviour : MonoBehaviour {
         spawningFX.Stop();
         childTransform.gameObject.SetActive(true);
 
-        animAttack.SetTrigger("Spawn");
+        animator.SetTrigger("Spawn");
 
         childTransform.localPosition = startPos;
         childTransform.DOLocalMove(endPos, emergingDuration).SetEase(Ease.InCubic);
+    }
+
+    public void FeedbackAttackArea()
+    {
+        attackFx.Play();
     }
 
     public void Dive(Vector3 endPos, float divingDuration)
     {
         // TODO Disable colliders when dive.
 
-        animAttack.SetTrigger("Despawn");
+        animator.SetTrigger("Despawn");
         childTransform.DOLocalMove(endPos, divingDuration);
     }
 
     public void TriggerAttackAnim()
     {
-        animAttack.SetTrigger("Attack");
+        attackFx.Stop();
+        animator.SetTrigger("Attack");
 
         //GameManager.instance.audioManager.PlaySoundOneTime(attackSound, 0.2f);
     }

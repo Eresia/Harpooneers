@@ -7,6 +7,8 @@ struct WaveOptions{
 
 	float2 position;
 
+	float rotation;
+
 	float2 size;
 
 	uint state;
@@ -28,8 +30,6 @@ struct WaveOptions{
 	float time;
 
 	float timeout;
-
-	float trash;
 };
 
 struct FrameOptions{
@@ -98,7 +98,10 @@ void CalculatePoint (uint3 id : SV_DispatchThreadID)
 	int pointId = id.x * lod + id.y;
 
 	for(uint i = 0; i < Options[0].nbWaves; i++){
-		float2 offset = float2(Impacts[i].position.x - id.x, Impacts[i].position.y - id.y);
+		float2 pureOffset = float2(Impacts[i].position.x - id.x, Impacts[i].position.y - id.y);
+		float x = pureOffset.x * cos(Impacts[i].rotation) - pureOffset.y * sin(Impacts[i].rotation);
+		float y = pureOffset.x * sin(Impacts[i].rotation) + pureOffset.y * cos(Impacts[i].rotation);
+		float2 offset = float2(x, y);
 		WaveOptions wave = Impacts[i];
 
 		wave.amplitude = Impacts[i].amplitude;
@@ -172,7 +175,15 @@ void CalculatePoint (uint3 id : SV_DispatchThreadID)
 			
 			MakeImpact(i, wave, offsetMagnitude, -posAbs, coeff, 1);
 		}
-		
+		else if(wave.type == 5){
+			if(abs(offset.y) < Impacts[i].size.x){
+				float posAbs = abs(offset.x);
+
+				float coeff = (2 + posAbs);
+				
+				MakeImpact(i, wave, distance(float2(0, 0), offset), posAbs, coeff, 0);
+			}
+		}
 	}
 
 	if(heightInfo.y == 0){

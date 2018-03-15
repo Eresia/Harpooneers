@@ -110,11 +110,11 @@ public class SplashTentaclesPattern : BossPattern {
                 tentaclesToUse[i].TriggerAttackAnim();
             }
 
-            yield return new WaitUntil(() => (tentaclesToUse[0].animAttack.GetBool("End")));
+            yield return new WaitUntil(() => (tentaclesToUse[0].animator.GetBool("End")));
             
             for (int i = 0; i < state.tentacleCount; i++)
             {
-                tentaclesToUse[i].animAttack.SetBool("End", false);
+                tentaclesToUse[i].animator.SetBool("End", false);
 
                 tentaclesToUse[i].Dive(state.startPos, state.divingDuration);
             }

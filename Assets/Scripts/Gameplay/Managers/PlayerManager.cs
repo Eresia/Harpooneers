@@ -52,7 +52,7 @@ public class PlayerManager : MonoBehaviour {
 
     void Start()
     {
-        FeedbackPlayerPos(playerIndicatorDuration);
+        StartCoroutine(TimedFeedbackPlayerPos(playerIndicatorDuration));
 
         //rezBar.gameObject.SetActive(false);
 
@@ -211,9 +211,10 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
-    public void FeedbackPlayerPos(float displayedTime)
+    public void FeedbackPlayerPos(bool state)
     {
-        StartCoroutine(TimedFeedbackPlayerPos(displayedTime));
+        playerPositionIndicator.SetActive(state);
+        //  StartCoroutine(TimedFeedbackPlayerPos(displayedTime));
     }
 
     private void OrientatePositionText()
