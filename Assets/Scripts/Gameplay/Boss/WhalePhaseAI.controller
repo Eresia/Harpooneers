@@ -152,6 +152,7 @@ MonoBehaviour:
   diveHeightEnd: -30
   diveForwardEnd: 20
   diveRotationEnd: {x: 45, y: 0, z: 0}
+  backAttackSound: {fileID: 0}
 --- !u!114 &114560548113288434
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -163,9 +164,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0468898ffbdca874db8f74f019edfed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  depth: 20
-  hight: 2
-  WaitBeforeSpawn: 5
+  offset: 4
+  beginDepth: 10
+  endDepth: 5
+  WaitToSurface: 2
+  WaitOnSurface: 4
+  spawnSound: {fileID: 0}
 --- !u!114 &114591433400966774
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -179,11 +183,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   depth: 2
   timeinSea: 5
-  translateSpeed: 11
+  translateSpeed: 10.5
   ySpeed: 3
   turnSpeed: 1.2
   targetChangeTime: 6
-  maxTime: 20
+  maxTime: 14
   endOfPaternTime: 2
   test: 0
   test2: 0
