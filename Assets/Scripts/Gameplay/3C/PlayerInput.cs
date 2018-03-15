@@ -212,7 +212,7 @@ public class PlayerInput : MonoBehaviour
         {
             if (data.GetButtonDown())
             {
-                GameManager.instance.PauseGame(data.playerId);
+                GameManager.instance.UnPauseGame();
                 doPause = false;
             }
         }
@@ -220,15 +220,9 @@ public class PlayerInput : MonoBehaviour
         // If game is unpaused.
         else
         {
-            if (!doPause)
+            if (data.GetButtonDown())
             {
-                // Use this to pause after a delay.
-                doPause = data.GetButtonTimePressed() > timeBeforePause;
-
-                if (doPause)
-                {
-                    GameManager.instance.UnPauseGame();
-                }
+                GameManager.instance.PauseGame(data.playerId);
             }
         }
     }

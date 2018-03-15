@@ -17,7 +17,8 @@ public class ChargerTentaclesPattern : BossPattern {
     {
         this.state = state;
 
-        spawns = new Vector3[4];
+        spawns = new Vector3[state.tentacleCount];
+        tentaclesToUse = new TentacleBehaviour[state.tentacleCount];
     }
 
     public override void SetBoss(PhaseAI boss)
@@ -29,8 +30,12 @@ public class ChargerTentaclesPattern : BossPattern {
 
     protected override void ExecutePattern()
     {
-        // Spawn 2 tentacles random around center.
-        
+        // Spawn 4 tentacles random around center.
+        for (int i = 0; i < state.tentacleCount; i++)
+        {
+            tentaclesToUse[i] = phase2.TentaclesCharger[i];
+        }
+
         // woob wooob woooob
         boss.StartCoroutine(ActivateTentacles());
     }

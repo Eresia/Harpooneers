@@ -33,8 +33,6 @@ public class BoundaryManager : MonoBehaviour {
     [HideInInspector]
     public BoundariesData trapezeData;
 
-    public bool debug;
-
     [HideInInspector]
     public Vector3 screenCenterInWorldSpace;
 

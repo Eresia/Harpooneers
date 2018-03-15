@@ -153,21 +153,17 @@ public class GameManager : MonoBehaviour {
     }
     
     public void PauseGame(int playerID)
-    {      
-        if(gamePaused)
-        {
-            Debug.Log("PAUSE !!!");
-            pauseScript.PauseGame(playerID);
-        }
+    {             
+        Debug.Log("PAUSE !!!");
+        pauseScript.PauseGame(playerID);
+        gamePaused = true;
     }
 
     public void UnPauseGame()
     {
-        if (gamePaused)
-        {
-            Debug.Log("UNPAUSE !!!");
-            pauseScript.UnPauseGame();
-        }
+        Debug.Log("UNPAUSE !!!");
+        pauseScript.UnPauseGame();
+        gamePaused = false;
     }
 
     public void GameOver()

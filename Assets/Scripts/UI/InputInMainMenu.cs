@@ -4,6 +4,7 @@ using Rewired;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 
 [System.Serializable]
@@ -46,8 +47,15 @@ public class InputInMainMenu : MonoBehaviour
     private float[] _timeSinceJoystick;
     public float timeBetweenJoystickInput;
 
+    public TextMeshProUGUI[] playerText;
+
+    public Color[] playerNameColors;
+
+    public GameObject rdyText;
+
     private void Awake()
     {
+        nbOfPlayers = 0;
         playerReady = new bool[4];
         playerHasJoined = new bool[4];
         players = new Player[4];
@@ -73,11 +81,38 @@ public class InputInMainMenu : MonoBehaviour
 
     void Start()
     {
+
+        rdyText.SetActive(false);
+
+
         for (int i = 0; i < players.Length; i++)
         {
             NextModuleTab(i, 0);
+
+            switch (i)
+            {
+                case 0:
+                    playerText[i].text = "Player 1";
+                    break;
+
+                case 1:
+                    playerText[i].text = "Player 2";
+                    break;
+
+                case 2:
+                    playerText[i].text = "Player 3";
+                    break;
+
+                case 3:
+                    playerText[i].text = "Player 4";
+                    break;
+            }
+
+            playerText[i].color = playerNameColors[i];
         }
     }
+
+   
     private void Update()
     {
         for (int i = 0; i < players.Length; i++)
@@ -157,7 +192,7 @@ public class InputInMainMenu : MonoBehaviour
                 {
                     playerHasJoined[i] = true;
                     nbOfPlayers++;
-
+                    rdyText.SetActive(true);
                     prepareGamePanel.PlayerJoin(i);
                 }
             }
@@ -180,6 +215,10 @@ public class InputInMainMenu : MonoBehaviour
                     {
                         playerHasJoined[i] = false;
                         nbOfPlayers--;
+                        if (nbOfPlayers == 0)
+                            rdyText.SetActive(false);
+
+                        Debug.Log(nbOfPlayers);
 
                         prepareGamePanel.PlayerLeave(i);
                     }
@@ -206,7 +245,7 @@ public class InputInMainMenu : MonoBehaviour
                 {
                     playerReady[i] = true;
                     nbOfPlayersReady++;
-
+                    
                     prepareGamePanel.PlayerReady(i);
                 }
             }
@@ -252,13 +291,13 @@ public class InputInMainMenu : MonoBehaviour
 
         for (int i = 0; i < playerTabs[playerID].moduleSelectionGO.Length; i++)
         {
-            //playerTabs[playerID].moduleSelectionGO[i].SetActive(false);
-            playerTabs[playerID].tabs[i].color = Color.gray;
+            // playerTabs[playerID].moduleSelectionGO[i].SetActive(false);
+             playerTabs[playerID].tabs[i].enabled = false;
         }
         playerShips[playerID].currentTabID = currentModuleTabIndex[playerID];
-       // playerTabs[playerID].moduleSelectionGO[currentModuleTabIndex[playerID]].gameObject.SetActive(true);
+        // playerTabs[playerID].moduleSelectionGO[currentModuleTabIndex[playerID]].gameObject.SetActive(true);
 
-        playerTabs[playerID].tabs[currentModuleTabIndex[playerID]].color = Color.white;
+        playerTabs[playerID].tabs[currentModuleTabIndex[playerID]].enabled = true;
 
         playerInputs[playerID].inputs[0].transform.position = new Vector3(playerInputs[playerID].inputs[0].transform.position.x, playerTabs[playerID].moduleSelectionGO[currentModuleTabIndex[playerID]].transform.position.y, playerInputs[playerID].inputs[0].transform.position.z);
         playerInputs[playerID].inputs[1].transform.position = new Vector3(playerInputs[playerID].inputs[1].transform.position.x, playerTabs[playerID].moduleSelectionGO[currentModuleTabIndex[playerID]].transform.position.y, playerInputs[playerID].inputs[1].transform.position.z);

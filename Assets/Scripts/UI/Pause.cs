@@ -16,11 +16,18 @@ public class Pause : MonoBehaviour {
         _playerNb = GameManager.instance.nbOfPlayers;
     }
 
+    void Update()
+    {
+       
+    }
+
     public void PauseGame(int playerID)
     {
         _isGamePaused = true;
         pauseGo.SetActive(true);
+        GameManager.instance.bossMgr.DisplayLifeBar(false);
         Time.timeScale = 0f;
+        Debug.Log(playerID);
     }
 
     public void QuitGame()
@@ -32,6 +39,7 @@ public class Pause : MonoBehaviour {
     {
         _isGamePaused = false;
         pauseGo.SetActive(false);
+        GameManager.instance.bossMgr.DisplayLifeBar(true);
         Time.timeScale = 1f;
     }
 }

@@ -134,6 +134,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Boss>k__BackingField: {fileID: 0}
+--- !u!114 &114553577738638766
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9272e7b3bdf59a2448b307c41a911f5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tentacleCount: 4
+  swimPos: {x: 0, y: -15, z: 0}
 --- !u!114 &114567050792692294
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -913,7 +926,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101895310403051198}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 114553577738638766}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -1035,10 +1049,10 @@ AnimatorStateMachine:
     m_Position: {x: -96, y: 180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102799164465752214}
-    m_Position: {x: -48, y: 276, z: 0}
+    m_Position: {x: -60, y: 264, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102057140704739664}
-    m_Position: {x: 36, y: 360, z: 0}
+    m_Position: {x: 0, y: 336, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102792872858872516}
     m_Position: {x: 576, y: 204, z: 0}
