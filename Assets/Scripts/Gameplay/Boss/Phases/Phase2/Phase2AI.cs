@@ -11,6 +11,7 @@ public class Phase2AI : PhaseAI {
     public TentacleBehaviour chargerPrefab;
     public TentacleBehaviour eyeTentaclePrefab;
     public TentacleBehaviour aspiTentaclePrefab;
+    public TentacleBehaviour tentacleSharkPrefab;
 
     public int tentaclesNeeded = 4;
 
@@ -43,6 +44,12 @@ public class Phase2AI : PhaseAI {
         get { return tentaclesAspi; }
     }
     private TentacleBehaviour[] tentaclesAspi;
+
+    public TentacleBehaviour TentacleShark
+    {
+        get { return tentacleShark; }
+    }
+    private TentacleBehaviour tentacleShark;
 
     [Header("Patterns and hit")]
     public int hitOnEyesNeeded = 2;
@@ -92,6 +99,8 @@ public class Phase2AI : PhaseAI {
             tentaclesAspi[i] = Instantiate<TentacleBehaviour>(aspiTentaclePrefab, transform);
             tentaclesAspi[i].gameObject.SetActive(false);
         }
+
+        tentacleShark = Instantiate<TentacleBehaviour>(tentacleSharkPrefab, transform);
     }
 
     public int DecideNextPhase()

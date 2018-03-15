@@ -18,7 +18,12 @@ public class MovementBehaviour : MonoBehaviour {
 
     private float move;
 
+    public bool IsOutOfScreen
+    {
+        get { return isOutOfScreen; }
+    }
     private bool isBumpInScreen;
+    private bool isOutOfScreen;
 
     private void Reset()
     {
@@ -78,13 +83,14 @@ public class MovementBehaviour : MonoBehaviour {
         // FEEDBACK leave screen.
         if (outOfScreen == 1)
         {
-            
+            isOutOfScreen = true;
         }
 
         // DEATH if too far.
         else if (outOfScreen == 2 && !isBumpInScreen)
         {
             isBumpInScreen = true;
+            isOutOfScreen = false;
 
             GetComponent<PlayerManager>().Death();
 

@@ -20,8 +20,8 @@ public class BoundaryManager : MonoBehaviour {
     public Camera cam;
     public LayerMask seaMask;
 
-    public float horizontalOffset = 0.1f;
-    public float verticalOffset = 0.1f;
+    public float horizontalOffset = 100f;
+    public float verticalOffset = 100f;
 
     public float resetHorizontalOffset = 0.1f;
     public float resetVerticalOffset = 0.1f;
@@ -123,7 +123,7 @@ public class BoundaryManager : MonoBehaviour {
 
         if (boatPos.x < xMin || boatPos.x > xMax)
         {
-            if (boatPos.x < xMin + xMin * verticalOffset || boatPos.x > xMax + xMax * verticalOffset)
+            if (boatPos.x < xMin - horizontalOffset || boatPos.x > xMax + horizontalOffset)
             {
                 return 2;
             }
@@ -133,9 +133,8 @@ public class BoundaryManager : MonoBehaviour {
 
         else if (boatPos.z < zMin || boatPos.z > zMax)
         {
-            float offset = zMin * verticalOffset;
 
-            if (boatPos.z < zMin + zMin * offset || boatPos.z > zMax + zMax * offset)
+            if (boatPos.z < zMin - verticalOffset || boatPos.z > zMax + verticalOffset)
             {
                 return 2;
             }
