@@ -1180,7 +1180,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1346554964407274, guid: 24757e9a82aa59041a894c33a0cd3d9f, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1050432084890248, guid: 24757e9a82aa59041a894c33a0cd3d9f, type: 2}
       propertyPath: m_Layer
@@ -2366,10 +2366,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 25
       objectReference: {fileID: 0}
-    - target: {fileID: 1072177587283626, guid: 618f6944c05a9d8469df045859bbb75b, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 618f6944c05a9d8469df045859bbb75b, type: 2}
   m_IsPrefabParent: 0
@@ -2920,6 +2916,11 @@ Prefab:
       propertyPath: pauseScript
       value: 
       objectReference: {fileID: 861733617}
+    - target: {fileID: 114170656061699002, guid: ffe9efaa29c336a468f47656dc4092d6,
+        type: 2}
+      propertyPath: onTuto
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ffe9efaa29c336a468f47656dc4092d6, type: 2}
   m_IsPrefabParent: 0
@@ -4644,6 +4645,11 @@ Prefab:
       propertyPath: directionImage
       value: 
       objectReference: {fileID: 802090460}
+    - target: {fileID: 114301401480464612, guid: 8d447a651bdff9d4f851fefa8a7a864c,
+        type: 2}
+      propertyPath: playerId
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8d447a651bdff9d4f851fefa8a7a864c, type: 2}
   m_IsPrefabParent: 0

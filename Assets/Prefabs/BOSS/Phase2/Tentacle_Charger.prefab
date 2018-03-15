@@ -103,7 +103,7 @@ GameObject:
   m_Icon: {fileID: -6431860639581277017, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1097433231620412
 GameObject:
   m_ObjectHideFlags: 1
@@ -804,7 +804,7 @@ MonoBehaviour:
   attackSound: {fileID: 8300000, guid: 4a0ce011778c91448a9a2634da78cbf7, type: 3}
   attackCollider: {fileID: 0}
   bodyCollider: {fileID: 65291606483088196}
-  harpoonScript: {fileID: 0}
+  harpoonScript: {fileID: 114595763583967738}
 --- !u!137 &137011972588678668
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
