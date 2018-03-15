@@ -22,7 +22,7 @@ public class PlayerManager : MonoBehaviour {
     private Text playerPosText;
     private Camera mainCamera;
     
-    //public AudioClip[] res_sounds;
+    //public AudioClip[] res_sounds; 
 
     public bool IsDead {
         get { return isDead; }
