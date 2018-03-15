@@ -64,6 +64,7 @@ public class Harpoon : MonoBehaviour {
 	public AudioClip pull_sound;
 
     public ParticleSystem bloodFx;
+    public ParticleSystem impactFx;
 
     // Current gameObject where the harpoon is attached.
     private IHarpoonable iHarpoonable;
@@ -254,11 +255,12 @@ public class Harpoon : MonoBehaviour {
                 iHarpoonable.OnHarpoonAttach(this);
             }
 
+            // Feedback on hit
+            impactFx.Play();
 
             // Feedback on whale hit
-            if(other.tag == "Whale")
+            if (other.tag == "Whale")
             {
-                Debug.Log("yolo");
                 bloodFx.Play();
             }
         }

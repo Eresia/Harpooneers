@@ -16,6 +16,8 @@ public class PlayerManager : MonoBehaviour {
     [Header("UI")]
     //public Slider rezBar;
     public Image deathIcon;
+    public ParticleSystem deathFX;
+    public ParticleSystem loopDeathFX;
     public GameObject playerPositionIndicator;
     public float playerIndicatorDuration = 5f;
 
@@ -52,7 +54,7 @@ public class PlayerManager : MonoBehaviour {
 
     void Start()
     {
-        FeedbackPlayerPos(playerIndicatorDuration);
+        StartCoroutine(TimedFeedbackPlayerPos(playerIndicatorDuration));
 
         //rezBar.gameObject.SetActive(false);
 
@@ -79,6 +81,10 @@ public class PlayerManager : MonoBehaviour {
 
         // Display the dead icon
         deathIcon.enabled = true;
+
+        // Display FX
+        deathFX.Play();
+        loopDeathFX.Play();
 
         GameManager.instance.audioManager.PlaySoundOneTime(death_sound, 0.05f);
         GameManager.instance.shipMgr.NotifyDeath();
@@ -179,6 +185,7 @@ public class PlayerManager : MonoBehaviour {
     // Player is back in the game
     public void Resurrect()
     {
+        loopDeathFX.Stop();
         isDead = false;
         GameManager.instance.shipMgr.NotifyAlive();
 
@@ -211,9 +218,10 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
-    public void FeedbackPlayerPos(float displayedTime)
+    public void FeedbackPlayerPos(bool state)
     {
-        StartCoroutine(TimedFeedbackPlayerPos(displayedTime));
+        playerPositionIndicator.SetActive(state);
+        //  StartCoroutine(TimedFeedbackPlayerPos(displayedTime));
     }
 
     private void OrientatePositionText()

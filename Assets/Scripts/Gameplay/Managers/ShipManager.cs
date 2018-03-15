@@ -11,6 +11,8 @@ public class ShipManager : MonoBehaviour {
     public bool useDefaultConfig = false;
     public bool randomDefaultConfig = false;
 
+    public bool doCinematic = true;
+
     public ShipConfiguration defaultConfig = new ShipConfiguration
     {
         cabinId = 0,
@@ -63,6 +65,11 @@ public class ShipManager : MonoBehaviour {
         if (useDefaultConfig)
         {
             SetupAllShips();
+        }
+
+        if(!doCinematic)
+        {
+            UnLockInputs();
         }
     }
 

@@ -66,8 +66,12 @@ public class HarpoonLauncher : MonoBehaviour {
  
     public Transform harpoonPivot;
     public Transform harpoonMuzzle;
+    public ParticleSystem harpoonLaunchFX;
+
     public Image directionImage;
     private int playerID;
+
+   
 
     private void Awake()
 	{
@@ -212,6 +216,8 @@ public class HarpoonLauncher : MonoBehaviour {
 
         //   harpoon.Launch(this, harpoonPivot.position, direction * harpoonModule.fireSpeed + physicMove.Velocity, distanceToReach, harpoonModule.returnSpeed);
         harpoon.Launch(this, harpoonMuzzle.transform.position, direction * harpoonModule.fireSpeed + new Vector3(physicMove.Velocity.x, 0f, physicMove.Velocity.z), distanceToReach, harpoonModule.returnSpeed);
+
+        harpoonLaunchFX.Play();
     }
 
     private Vector3 TryToAutoAim(Vector3 currentDir)
