@@ -12,8 +12,6 @@ public class TentacleBehaviour : MonoBehaviour {
     public ParticleSystem spawningFX;
 
     public ParticleSystem attackFx;
-
-    public Collider tentacleCollider;
     
     public Animator animator;
 
@@ -21,10 +19,18 @@ public class TentacleBehaviour : MonoBehaviour {
 
     public AudioClip attackSound;
 
+    public Collider attackCollider;
+
+    public Collider bodyCollider;
+
     private void Awake()
     {
         childTransform.gameObject.SetActive(false);
-        //tentacleCollider.enabled = false;
+
+        if(attackCollider)
+        {
+            attackCollider.enabled = false;
+        }
     }
 
     public void Spawning(float spawningDuration)
@@ -39,6 +45,7 @@ public class TentacleBehaviour : MonoBehaviour {
     {
         spawningFX.Stop();
         childTransform.gameObject.SetActive(true);
+        bodyCollider.enabled = true;
 
         animator.SetTrigger("Spawn");
 
@@ -53,7 +60,7 @@ public class TentacleBehaviour : MonoBehaviour {
 
     public void Dive(Vector3 endPos, float divingDuration)
     {
-        // TODO Disable colliders when dive.
+        attackCollider.enabled = false;
 
         animator.SetTrigger("Despawn");
         childTransform.DOLocalMove(endPos, divingDuration);
@@ -61,10 +68,22 @@ public class TentacleBehaviour : MonoBehaviour {
 
     public void TriggerAttackAnim()
     {
-        attackFx.Stop();
         animator.SetTrigger("Attack");
+        GameManager.instance.audioManager.PlaySoundOneTime(attackSound, 0.2f);
 
-        //GameManager.instance.audioManager.PlaySoundOneTime(attackSound, 0.2f);
+        StartCoroutine(Attack());
+    }
+
+    private IEnumerator Attack()
+    {
+        yield return new WaitUntil(() => (animator.GetBool("IsAttacking")));
+        attackFx.Stop();
+
+        attackCollider.enabled = true;
+
+        yield return new WaitUntil(() => (!animator.GetBool("IsAttacking")));
+
+        attackCollider.enabled = false;
     }
 
     public void FocusPlayer(float turnDuration)
@@ -82,6 +101,7 @@ public class TentacleBehaviour : MonoBehaviour {
     public void ResetTentacle()
     {
         gameObject.SetActive(false);
+        bodyCollider.enabled = false;
         childTransform.gameObject.SetActive(false);
 
         childTransform.localPosition = Vector3.zero;

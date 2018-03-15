@@ -92,10 +92,11 @@ public class SweepTentaclesPattern : BossPattern {
         }
 
         yield return new WaitUntil(() => (tentaclesToUse[0].animator.GetBool("End")));
-
+        
         for (int i = 0; i < state.tentacleCount; i++)
         {
             tentaclesToUse[i].animator.SetBool("End", false);
+            tentaclesToUse[i].attackCollider.enabled = false;
 
             tentaclesToUse[i].Dive(state.startPos, state.divingDuration);
         }
