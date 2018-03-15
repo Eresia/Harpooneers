@@ -210,15 +210,9 @@ public class PlayerInput : MonoBehaviour
         // If game is unpaused.
         else
         {
-            if (!doPause)
+            if (data.GetButtonDown())
             {
-                // Use this to pause after a delay.
-                doPause = data.GetButtonTimePressed() > timeBeforePause;
-
-                if (doPause)
-                {
-                    GameManager.instance.PauseGame(data.playerId);
-                }
+                GameManager.instance.PauseGame(data.playerId);
             }
         }
     }

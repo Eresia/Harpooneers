@@ -72,6 +72,9 @@ public class BackAttackPattern : BossPattern
 
             yield return new WaitForSeconds(state.waitTimeAfterAttack);
 
+             // Splash FX
+            whaleAI.whaleReferences.PlaySplashFX();
+
             // Dive !!!
             yield return WhaleDive();
         }
