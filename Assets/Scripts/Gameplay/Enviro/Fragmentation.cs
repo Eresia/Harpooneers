@@ -31,7 +31,7 @@ public class Fragmentation : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        if(col.gameObject.tag == "Whale")
+        if(col.gameObject.tag == "Whale" || col.gameObject.tag == "Rocks")
         {
             OnExplode();
         }
