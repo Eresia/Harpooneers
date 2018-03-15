@@ -13,7 +13,7 @@ public class WhaleReferences : MonoBehaviour {
 
     public Animator whaleAnimator;
 
-    public HandleHarpoonWithWhale[] hittableScripts;
+    public HandleHarpoonWithEnnemy[] hittableScripts;
 
 	public LayerMask toAvoidLayers;
     

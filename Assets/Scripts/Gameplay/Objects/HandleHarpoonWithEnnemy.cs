@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 using System;
 
-public class HandleHarpoonWithWhale : HandleHarpoonHit
+public class HandleHarpoonWithEnnemy : HandleHarpoonHit
 {
     public float damageAmount;
 
@@ -17,15 +15,20 @@ public class HandleHarpoonWithWhale : HandleHarpoonHit
         harpoon.Cut();
 
         // Play FX and sound
-
         if(hitFX)
         {
             hitFX.Play();
         }
 
-		GameManager.instance.audioManager.PlaySoundOneTime (hit_sound, 0.2f);
+        if(hit_sound)
+        {
+            GameManager.instance.audioManager.PlaySoundOneTime(hit_sound, 0.2f);
+        }
 
-        hitCallback(damageAmount);
+        if(hitCallback != null)
+        {
+            hitCallback(damageAmount);
+        }
     }
 
     protected override void ActionWhenHarpoonDetach()

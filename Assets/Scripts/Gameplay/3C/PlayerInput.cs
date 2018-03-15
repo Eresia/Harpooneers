@@ -202,7 +202,7 @@ public class PlayerInput : MonoBehaviour
         {
             if (data.GetButtonDown())
             {
-                GameManager.instance.PauseGame(data.playerId);
+                GameManager.instance.UnPauseGame();
                 doPause = false;
             }
         }
@@ -217,7 +217,7 @@ public class PlayerInput : MonoBehaviour
 
                 if (doPause)
                 {
-                    GameManager.instance.UnPauseGame();
+                    GameManager.instance.PauseGame(data.playerId);
                 }
             }
         }

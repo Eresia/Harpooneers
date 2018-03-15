@@ -33,11 +33,11 @@ public class Phase2AI : PhaseAI {
     }
     private TentacleBehaviour[] tentaclesHammer;
 
-    public TentacleBehaviour[] TentaclesEye
+    public TentacleBehaviour TentaclesEye
     {
         get { return tentaclesEye; }
     }
-    private TentacleBehaviour[] tentaclesEye;
+    private TentacleBehaviour tentaclesEye;
 
     public TentacleBehaviour[] TentaclesAspi
     {
@@ -81,28 +81,34 @@ public class Phase2AI : PhaseAI {
         tentaclesSwipper = new TentacleBehaviour[tentaclesNeeded];
         tentaclesHammer = new TentacleBehaviour[tentaclesNeeded];
         tentaclesCharger = new TentacleBehaviour[tentaclesNeeded];
-        tentaclesEye = new TentacleBehaviour[tentaclesNeeded];
         tentaclesAspi = new TentacleBehaviour[tentaclesNeeded];
 
         for (int i = 0; i < tentaclesNeeded; i++)
         {
             tentaclesSwipper[i] = Instantiate<TentacleBehaviour>(swipperPrefab, transform);
             tentaclesSwipper[i].gameObject.SetActive(false);
+            tentaclesSwipper[i].harpoonScript.hitCallback = HitBoss;
 
             tentaclesHammer[i] = Instantiate<TentacleBehaviour>(hammerPrefab, transform);
             tentaclesHammer[i].gameObject.SetActive(false);
-
+            tentaclesHammer[i].harpoonScript.hitCallback = HitBoss;
+            
             tentaclesCharger[i] = Instantiate<TentacleBehaviour>(chargerPrefab, transform);
             tentaclesCharger[i].gameObject.SetActive(false);
-
-            tentaclesEye[i] = Instantiate<TentacleBehaviour>(eyeTentaclePrefab, transform);
-            tentaclesEye[i].gameObject.SetActive(false);
+            tentaclesCharger[i].harpoonScript.hitCallback = HitBoss;
 
             tentaclesAspi[i] = Instantiate<TentacleBehaviour>(aspiTentaclePrefab, transform);
             tentaclesAspi[i].gameObject.SetActive(false);
+            tentaclesAspi[i].harpoonScript.hitCallback = HitBoss;
         }
 
+        tentaclesEye = Instantiate<TentacleBehaviour>(eyeTentaclePrefab, transform);
+        tentaclesEye.gameObject.SetActive(false);
+        tentaclesEye.harpoonScript.hitCallback = HitBoss;
+
         tentacleShark = Instantiate<TentacleBehaviour>(tentacleSharkPrefab, transform);
+        tentacleShark.gameObject.SetActive(false);
+        tentacleShark.harpoonScript.hitCallback = HitBoss;
     }
 
     public int DecideNextPhase()

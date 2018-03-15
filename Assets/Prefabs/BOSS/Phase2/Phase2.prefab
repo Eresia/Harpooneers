@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70815fa73953f764489a011a6001abca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLifepoints: 200
+  maxLifepoints: 500
   bossMgr: {fileID: 0}
   swipperPrefab: {fileID: 114965063249734226, guid: f766ecc83cdd029418b6c9a837601a16,
     type: 2}
@@ -84,7 +84,7 @@ MonoBehaviour:
   tentacleSharkPrefab: {fileID: 114508048561888928, guid: 24757e9a82aa59041a894c33a0cd3d9f,
     type: 2}
   tentaclesNeeded: 5
-  noHittablePatternCount: 3
+  noHittablePatternCount: 1
   numberOfPatternsWithoutHit: 0300000003000000
   lifepointsToPassStep:
   - 0.75

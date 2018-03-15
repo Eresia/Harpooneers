@@ -20,8 +20,8 @@ public class TentacleBehaviour : MonoBehaviour {
     public AudioClip attackSound;
 
     public Collider attackCollider;
-
     public Collider bodyCollider;
+    public HandleHarpoonWithEnnemy harpoonScript;
 
     private void Awake()
     {
@@ -66,6 +66,11 @@ public class TentacleBehaviour : MonoBehaviour {
         childTransform.DOLocalMove(endPos, divingDuration);
     }
 
+    public void TriggerAnim(string anim)
+    {
+        animator.SetTrigger(anim);
+    }
+
     public void TriggerAttackAnim()
     {
         animator.SetTrigger("Attack");
@@ -77,9 +82,16 @@ public class TentacleBehaviour : MonoBehaviour {
     private IEnumerator Attack()
     {
         yield return new WaitUntil(() => (animator.GetBool("IsAttacking")));
-        attackFx.Stop();
+        
+        if(attackFx)
+        {
+            attackFx.Stop();
+        }
 
-        attackCollider.enabled = true;
+        if(attackCollider)
+        {
+            attackCollider.enabled = true;
+        }
 
         yield return new WaitUntil(() => (!animator.GetBool("IsAttacking")));
 
