@@ -36,7 +36,7 @@ public class ShipManager : MonoBehaviour {
     }
     private PlayerInput[] playerInputs;
     
-    private int playerAlive = 0;
+    public int playerAlive {get; private set;}
 
     [Header("Modules for boat (Scriptable objects)")]
     public HarpoonModule[] harpoonsScriptObjs;
@@ -171,9 +171,9 @@ public class ShipManager : MonoBehaviour {
         return playerMgrs[ChoosePlayerToAttackId()];
     }
 
-	public void LockInputs(){
+	public void LockInputs(int lockDegree){
 		foreach(PlayerInput input in playerInputs){
-			input.TutoStep = -1;
+			input.TutoStep = lockDegree;
 		}
 	}
 

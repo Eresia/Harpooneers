@@ -40,9 +40,6 @@ public class DashPattern : BossPattern {
 		
 
 		while(true){
-			state.test = isImmersed;
-			state.test2 = targetY;
-
 			time += Time.deltaTime;
 
 			if((time >= (timeTarget + state.targetChangeTime)) || (target.IsDead)){
