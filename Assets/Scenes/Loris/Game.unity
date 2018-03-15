@@ -4550,11 +4550,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 497174348}
     m_Modifications:
-    - target: {fileID: 114307452495708046, guid: f4ba95784a6e9474e86bd633ad26dc3c,
-        type: 2}
-      propertyPath: lifepointsToPassStep.Array.size
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4183200746040408, guid: f4ba95784a6e9474e86bd633ad26dc3c, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4586,16 +4581,6 @@ Prefab:
     - target: {fileID: 4183200746040408, guid: f4ba95784a6e9474e86bd633ad26dc3c, type: 2}
       propertyPath: m_RootOrder
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114307452495708046, guid: f4ba95784a6e9474e86bd633ad26dc3c,
-        type: 2}
-      propertyPath: lifepointsToPassStep.Array.data[0]
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 114307452495708046, guid: f4ba95784a6e9474e86bd633ad26dc3c,
-        type: 2}
-      propertyPath: lifepointsToPassStep.Array.data[1]
-      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f4ba95784a6e9474e86bd633ad26dc3c, type: 2}
