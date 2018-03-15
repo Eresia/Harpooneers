@@ -23,7 +23,7 @@ public class TentacleBehaviour : MonoBehaviour {
     public Collider bodyCollider;
     public HandleHarpoonWithEnnemy harpoonScript;
 
-    private void Awake()
+    protected void Awake()
     {
         childTransform.gameObject.SetActive(false);
 

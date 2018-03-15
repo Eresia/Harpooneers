@@ -18,6 +18,7 @@ public class SplashTentaclesHITPattern : BossPattern {
         this.state = state;
 
         spawns = new Vector3[state.tentacleCount];
+        tentaclesToUse = new TentacleBehaviour[state.tentacleCount];
     }
 
     public override void SetBoss(PhaseAI boss)
@@ -30,6 +31,8 @@ public class SplashTentaclesHITPattern : BossPattern {
     protected override void ExecutePattern()
     {
         // Spawn 2 tentacles random around center.
+
+        SpawnTentacles();
         
         // woob wooob woooob
         boss.StartCoroutine(ActivateTentacles());
@@ -40,32 +43,13 @@ public class SplashTentaclesHITPattern : BossPattern {
     /// </summary>
     private void SpawnTentacles()
     {
-        /*
-        Vector3 center = phase2.bossMgr.center.position;
+        spawns[0] = boss.bossMgr.center.position;
 
-        // Random a position on a circle (in X and Z).
-        Vector3 randPos = Vector3.zero;
-        Vector2 randCircle = Random.insideUnitCircle.normalized * state.spawnRadius;
-        randPos.x = randCircle.x;
-        randPos.z = randCircle.y;
+        tentaclesToUse[0] = phase2.TentaclesEye;
+        tentaclesToUse[0].transform.position = spawns[0];
 
-        spawns[0] = center + randPos;
-
-        spawns[1] = RotatePointAroundPivot(spawns[0], Vector3.up, new Vector3(0f, Random.Range(state.minAngle, state.maxAngle), 0f));
-
-        // Store and spawn tentacles.
-        tentaclesToUse = new TentacleBehaviour[2];
-        for (int i = 0; i < 2; i++)
-        {
-            tentaclesToUse[i] = phase2.TentaclesHammer[i];
-
-            tentaclesToUse[i].transform.position = spawns[i];
-
-            // Focus the center.
-            Vector3 lookCenter = center - spawns[i];
-            tentaclesToUse[i].childTransform.localRotation = Quaternion.LookRotation(lookCenter);
-        }
-        */
+        Vector3 south = boss.bossMgr.south.position;
+        Vector3 dir = south - spawns[0];
     }
 
     private Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Vector3 angles) {
@@ -79,7 +63,6 @@ public class SplashTentaclesHITPattern : BossPattern {
 
     IEnumerator ActivateTentacles()
     {
-        /*
         for (int attack = 0; attack < state.attackCount; attack++)
         {
             SpawnTentacles();
@@ -129,8 +112,7 @@ public class SplashTentaclesHITPattern : BossPattern {
             {
                 tentaclesToUse[i].ResetTentacle();
             }
-            }
-            */
+        }
 
         yield return null;
 
