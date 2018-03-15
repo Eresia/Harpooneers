@@ -58,8 +58,6 @@ public class HarpoonLauncher : MonoBehaviour {
 
 	private bool isLaunching;
 
-	private float timeBeforeLaunch;
-
 	private float power;
 
 	private Vector3 lastDirection;
@@ -175,7 +173,6 @@ public class HarpoonLauncher : MonoBehaviour {
 	private void BeginLaunching(){
 		isLaunching = true;
 		power = 0f;
-		timeBeforeLaunch = 0f;
 		directionObject.gameObject.SetActive(true);
 	}
 
