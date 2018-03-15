@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
+using System;
 
 public class Tutorial : MonoBehaviour
 {
@@ -37,13 +38,48 @@ public class Tutorial : MonoBehaviour
 
 	private bool hasExploded;
 
+	private Coroutine progressionCoroutine;
+
     private void Start()
     {
-		Tuto.text = "";
-		hasExploded = true;
-        StartCoroutine(Progression());
-        // Get all fishing boats to lock inputs.
+		GameManager.instance.tutorial = this;
+		if(GameManager.instance.onTuto){
+			Tuto.text = "";
+			hasExploded = true;
+			progressionCoroutine = StartCoroutine(Progression());
+			// Get all fishing boats to lock inputs.
+		}
+		else{
+			Destroy(tutoParent);
+		}
     }
+
+	public void KillTuto(){
+		StopCoroutine(progressionCoroutine);
+		StartCoroutine(EndTutoCoroutine());
+	}
+
+	private IEnumerator EndTutoCoroutine(){
+		Vector3 endPos = Rock.Mover.SelfTransform.position;
+		endPos.y -= 10f;
+
+		int waveId = GameManager.instance.ground.ZoneWaveId;
+		WaveOptions wave = GameManager.instance.ground.waveManager.Waves[waveId];
+		wave.amplitude = waveAmplitude;
+		GameManager.instance.ground.waveManager.ChangeWave(waveId, wave);
+
+		Rock.Mover.enabled = false;
+
+		Rock.Mover.SelfTransform.DOMove(endPos, 10f / rockSpeed);
+        //Start Boss
+		Frame.DOFade(0f, FrameSpawnTime);
+		Tuto.DOFade(0f, FrameSpawnTime);
+		GameManager.instance.shipMgr.ResurrectAll();
+		yield return new WaitWhile(() => DOTween.IsTweening(Frame));
+		yield return new WaitForSeconds(TutoEndTime);
+		GameManager.instance.OnEndTuto();
+		Destroy(tutoParent);
+	}
 
     IEnumerator Progression()
     {
@@ -124,20 +160,7 @@ public class Tutorial : MonoBehaviour
         yield return PrintText(11);
         yield return new WaitForSeconds(ToyTime);
 
-		Vector3 endPos = Rock.Mover.SelfTransform.position;
-		endPos.y -= 10f;
-
-		Rock.Mover.enabled = false;
-
-		Rock.Mover.SelfTransform.DOMove(endPos, 10f / rockSpeed);
-        //Start Boss
-		Frame.DOFade(0f, FrameSpawnTime);
-		Tuto.DOFade(0f, FrameSpawnTime);
-		yield return new WaitWhile(() => DOTween.IsTweening(Frame));
-		yield return new WaitForSeconds(TutoEndTime);
-		bossManager.enabled = true;
-		Destroy(tutoParent);
-
+		StartCoroutine(EndTutoCoroutine());
     }
 
     IEnumerator PrintText(int i)

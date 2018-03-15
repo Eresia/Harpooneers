@@ -197,6 +197,16 @@ public class PlayerInput : MonoBehaviour
     // UTILITY :
     private void TogglePause(InputActionEventData data)
     {
+		//If on Tuto
+		if (data.GetButtonDown())
+        {
+			if(GameManager.instance.onTuto){
+				GameManager.instance.tutorial.KillTuto();
+				return ;
+			}
+		}
+		
+
         // If game is paused : direct unpause.
         if (GameManager.instance.IsPause)
         {

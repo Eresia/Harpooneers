@@ -201,4 +201,12 @@ public class ShipManager : MonoBehaviour {
 			input.TutoStep = 3;
 		}
 	}
+
+	public void ResurrectAll(){
+		foreach(PlayerManager player in playerMgrs){
+			if(player.IsDead){
+				player.Resurrect();
+			}
+		}
+	}
 }

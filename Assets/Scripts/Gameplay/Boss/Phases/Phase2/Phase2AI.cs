@@ -122,7 +122,7 @@ public class Phase2AI : PhaseAI {
         {
             passageCount = 0;
             
-            nextState = 5 + step;
+            nextState = noHittablePatternCount + step;
         }
 
         else
