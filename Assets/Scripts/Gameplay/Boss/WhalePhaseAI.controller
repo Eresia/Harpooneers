@@ -144,11 +144,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackAmount: 3
-  emergingDuration: 3
+  emergingDuration: 2.5
   startHeight: 13
-  backAttackTime: 0.75
-  waitTimeAfterAttack: 0.75
-  divingDuration: 3
+  backAttackTime: 0.5
+  waitTimeAfterAttack: 0.5
+  divingDuration: 2
   diveHeightEnd: -30
   diveForwardEnd: 20
   diveRotationEnd: {x: 45, y: 0, z: 0}
@@ -184,11 +184,11 @@ MonoBehaviour:
   depth: 2
   timeinSea: 5
   translateSpeed: 10.5
-  ySpeed: 3
-  turnSpeed: 1.2
+  ySpeed: 2.5
+  turnSpeed: 1.1
   targetChangeTime: 6
   maxTime: 14
-  endOfPaternTime: 2
+  endOfPaternTime: 4
   test: 0
   test2: 0
 --- !u!114 &114863543440066848
