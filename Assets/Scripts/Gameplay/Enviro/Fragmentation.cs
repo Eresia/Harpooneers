@@ -42,7 +42,7 @@ public class Fragmentation : MonoBehaviour
         Destroy(gameObject, 3f);
 	}
 
-    void OnCollisionEnter(Collision col)
+    void OnCollisionEnter(Collision col) 
     {
         if(col.gameObject.tag == "Whale" || col.gameObject.tag == "Rocks")
         {

@@ -17,9 +17,6 @@ public class DashState : BossState<DashPattern>
 
 	public float endOfPaternTime = 2f;
 
-	public bool test;
-	public float test2;
-
     private DashPattern dashPattern;
 
 	protected override DashPattern Init()

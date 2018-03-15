@@ -14,6 +14,8 @@ public class WhaleReferences : MonoBehaviour {
     public Animator whaleAnimator;
 
     public HandleHarpoonWithWhale[] hittableScripts;
+
+	public LayerMask toAvoidLayers;
     
     public void PlaySplashFX()
     {
