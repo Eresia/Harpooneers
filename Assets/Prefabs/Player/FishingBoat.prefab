@@ -139,6 +139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4758839221072308}
   - component: {fileID: 65409385241251224}
+  - component: {fileID: 114569843101771680}
   m_Layer: 11
   m_Name: HookCollider
   m_TagString: Untagged
@@ -1714,6 +1715,20 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114569843101771680
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1282116803322024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e38690bb550293145b25473ba3db5d69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 0
+  hitFX: {fileID: 0}
+  hit_sound: {fileID: 8300000, guid: a3bd229b7f118ba4e918087ddce4582f, type: 3}
 --- !u!114 &114609724380578428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1848,7 +1863,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coqueModule: {fileID: 11400000, guid: 85a34084e65c96847baa0e932f7e8f1a, type: 2}
   physicMove: {fileID: 114247363230348760}
-  move_player_sound: {fileID: 8300000, guid: fe8f375eba31c6a48882939a47265433, type: 3}
+  move_player_sound: {fileID: 0}
 --- !u!114 &114888584532763218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1939,7 +1954,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -989048385
+  randomSeed: -994495576
   InitialModule:
     serializedVersion: 3
     enabled: 1

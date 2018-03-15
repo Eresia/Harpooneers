@@ -1,15 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 using System;
 
+/// <summary>
+/// Handle bomb damage with the whale body.
+/// </summary>
 public class WhaleBody : MonoBehaviour {
 
-    public Action OnWhaleExplode;
+    public float damageWithBomb = 10f;
+
+    public Action<float> OnWhaleExplode;
 
 	public void OnExplode()
     {
-        OnWhaleExplode();
+        OnWhaleExplode(damageWithBomb);
     }
 }

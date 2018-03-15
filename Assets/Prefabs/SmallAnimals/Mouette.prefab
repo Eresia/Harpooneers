@@ -50,6 +50,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4753070009591784}
   - component: {fileID: 95633997736517924}
+  - component: {fileID: 114812957623986086}
   m_Layer: 0
   m_Name: Mouette
   m_TagString: Untagged
@@ -236,7 +237,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1248099165297758}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.8067937, y: 2.3, z: -5.41967}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4203481199852226}
@@ -261,6 +262,20 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114812957623986086
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1248099165297758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 377c85d9bdad13c4eb47a0b7f86ae9e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: {x: 0, y: 0, z: 0}
+  speed: 10
+  forwardDirection: 1
 --- !u!137 &137220977970721794
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

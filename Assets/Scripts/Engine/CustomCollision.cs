@@ -17,7 +17,6 @@ public class CustomCollision : MonoBehaviour {
     public float bumpForce = 15f;
 
 	public AudioClip collision_sound;
-	public AudioClip death_sound;
     
     protected void OnCollisionEnter(Collision collision)
     {
@@ -32,8 +31,6 @@ public class CustomCollision : MonoBehaviour {
     void HandleCollision(Collision collision)
     {
         //Debug.Log("Impact force : " + Mathf.RoundToInt(physic.Velocity.sqrMagnitude));
-        
-        GameManager.instance.audioManager.PlaySoundOneTime(collision_sound, 0.05f);
 
         bool killPlayer = true;
         bool bump = true;
@@ -41,6 +38,7 @@ public class CustomCollision : MonoBehaviour {
         // Don't kill the player when hit a player
         if (collision.gameObject.CompareTag("Player"))
         {
+			GameManager.instance.audioManager.PlaySoundOneTime(collision_sound, 0.05f);
             CustomCollision otherPlayer = collision.gameObject.GetComponent<CustomCollision>();
             if(!playerMgr.IsDead && otherPlayer.playerMgr.IsDead)
             {

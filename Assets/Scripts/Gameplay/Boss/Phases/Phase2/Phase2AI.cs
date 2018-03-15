@@ -6,14 +6,36 @@ public class Phase2AI : PhaseAI {
 
     [Header("Gameobjects of Krakens.")]
 
-    public TentacleBehaviour tentaclePrefab;
+    public TentacleBehaviour swipperPrefab;
+    public TentacleBehaviour hammerPrefab;
+    public TentacleBehaviour chargerPrefab;
+    public TentacleBehaviour eyeTentaclePrefab;
+
     public int tentaclesNeeded = 4;
 
-    public TentacleBehaviour[] Tentacles
+    public TentacleBehaviour[] TentaclesSwipper
     {
-        get { return tentacles; }
+        get { return tentaclesSwipper; }
     }
-    private TentacleBehaviour[] tentacles;
+    private TentacleBehaviour[] tentaclesSwipper;
+
+    public TentacleBehaviour[] TentaclesCharger
+    {
+        get { return tentaclesCharger; }
+    }
+    private TentacleBehaviour[] tentaclesCharger;
+
+    public TentacleBehaviour[] TentaclesHammer
+    {
+        get { return tentaclesHammer; }
+    }
+    private TentacleBehaviour[] tentaclesHammer;
+
+    public TentacleBehaviour[] TentaclesEye
+    {
+        get { return tentaclesEye; }
+    }
+    private TentacleBehaviour[] tentaclesEye;
 
     [Header("Patterns and hit")]
     public int hitOnEyesNeeded = 2;
@@ -38,12 +60,24 @@ public class Phase2AI : PhaseAI {
 
     private void SpawnTentacles()
     {
-        tentacles = new TentacleBehaviour[tentaclesNeeded];
+        tentaclesSwipper = new TentacleBehaviour[tentaclesNeeded];
+        tentaclesHammer = new TentacleBehaviour[tentaclesNeeded];
+        tentaclesCharger = new TentacleBehaviour[tentaclesNeeded];
+        tentaclesEye = new TentacleBehaviour[tentaclesNeeded];
 
-        for (int i = 0; i < tentacles.Length; i++)
+        for (int i = 0; i < tentaclesNeeded; i++)
         {
-            tentacles[i] = Instantiate<TentacleBehaviour>(tentaclePrefab, transform);
-            tentacles[i].gameObject.SetActive(false);
+            tentaclesSwipper[i] = Instantiate<TentacleBehaviour>(swipperPrefab, transform);
+            tentaclesSwipper[i].gameObject.SetActive(false);
+
+            tentaclesHammer[i] = Instantiate<TentacleBehaviour>(hammerPrefab, transform);
+            tentaclesHammer[i].gameObject.SetActive(false);
+
+            tentaclesCharger[i] = Instantiate<TentacleBehaviour>(chargerPrefab, transform);
+            tentaclesCharger[i].gameObject.SetActive(false);
+
+            //tentaclesEye[i] = Instantiate<TentacleBehaviour>(eyeTentaclePrefab, transform);
+            //tentaclesEye[i].gameObject.SetActive(false);
         }
     }
 
@@ -116,4 +150,13 @@ public class Phase2AI : PhaseAI {
 
         CurrentPattern.StopPattern();
     }
+
+    public override void HitBoss(float damageAmount)
+    {
+        base.HitBoss(damageAmount);
+    }
+
+	public override IEnumerator OnPhaseFinishedCoroutine(){
+		yield return null;
+	}
 }

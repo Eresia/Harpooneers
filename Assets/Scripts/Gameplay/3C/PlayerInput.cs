@@ -34,8 +34,6 @@ public class PlayerInput : MonoBehaviour
 
     void Awake()
     {
-        tutoStep = 3;
-
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
         player = ReInput.players.GetPlayer(playerId);
 
@@ -204,7 +202,7 @@ public class PlayerInput : MonoBehaviour
         {
             if (data.GetButtonDown())
             {
-                GameManager.instance.PauseGame();
+                GameManager.instance.PauseGame(data.playerId);
                 doPause = false;
             }
         }
@@ -219,7 +217,7 @@ public class PlayerInput : MonoBehaviour
 
                 if (doPause)
                 {
-                    GameManager.instance.PauseGame();
+                    GameManager.instance.UnPauseGame();
                 }
             }
         }
@@ -244,7 +242,8 @@ public class PlayerInput : MonoBehaviour
 
         if (GameManager.instance.IsPause && controllerDisconnected == 0)
         {
-            GameManager.instance.PauseGame();
+            //GameManager.instance.PauseGame(-1);
+            Time.timeScale = 0f;
         }
     }
 
@@ -258,7 +257,8 @@ public class PlayerInput : MonoBehaviour
         {
             controllerDisconnected++;
 
-            GameManager.instance.PauseGame();
+            // GameManager.instance.PauseGame(-1);
+            Time.timeScale = 1f;
         }
     }
 

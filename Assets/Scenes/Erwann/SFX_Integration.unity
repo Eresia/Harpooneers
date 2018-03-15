@@ -2507,6 +2507,16 @@ Prefab:
       propertyPath: audioManager
       value: 
       objectReference: {fileID: 1611156435}
+    - target: {fileID: 82173439072912002, guid: ffe9efaa29c336a468f47656dc4092d6,
+        type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 36d272a40d792974f8cd29cca9391a0f, type: 3}
+    - target: {fileID: 82173439072912002, guid: ffe9efaa29c336a468f47656dc4092d6,
+        type: 2}
+      propertyPath: m_Volume
+      value: 0.391
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ffe9efaa29c336a468f47656dc4092d6, type: 2}
   m_IsPrefabParent: 0
@@ -3915,6 +3925,52 @@ Transform:
   m_PrefabParentObject: {fileID: 4715467816171786, guid: 4275da3191f17554c9782b4fc0e13d23,
     type: 2}
   m_PrefabInternal: {fileID: 1770392133}
+--- !u!1001 &1773350140
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4211613366085594, guid: 1383ededc92ebf94d831c692734b252c, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4211613366085594, guid: 1383ededc92ebf94d831c692734b252c, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4211613366085594, guid: 1383ededc92ebf94d831c692734b252c, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 21.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 4211613366085594, guid: 1383ededc92ebf94d831c692734b252c, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4211613366085594, guid: 1383ededc92ebf94d831c692734b252c, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4211613366085594, guid: 1383ededc92ebf94d831c692734b252c, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4211613366085594, guid: 1383ededc92ebf94d831c692734b252c, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4211613366085594, guid: 1383ededc92ebf94d831c692734b252c, type: 2}
+      propertyPath: m_RootOrder
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380738567295356, guid: 1383ededc92ebf94d831c692734b252c, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.03
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 1383ededc92ebf94d831c692734b252c, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &1788154156
 Prefab:
   m_ObjectHideFlags: 0
@@ -3954,16 +4010,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114301401480464612, guid: 8d447a651bdff9d4f851fefa8a7a864c,
-        type: 2}
-      propertyPath: bombLauncher
-      value: 
-      objectReference: {fileID: 16634945}
-    - target: {fileID: 114231393646165644, guid: 8d447a651bdff9d4f851fefa8a7a864c,
-        type: 2}
-      propertyPath: _bombScript
-      value: 
-      objectReference: {fileID: 16634945}
     - target: {fileID: 114609724380578428, guid: 8d447a651bdff9d4f851fefa8a7a864c,
         type: 2}
       propertyPath: boatFollower
@@ -3979,21 +4025,16 @@ Prefab:
       propertyPath: directionImage
       value: 
       objectReference: {fileID: 802090460}
-    - target: {fileID: 224557941847947284, guid: 8d447a651bdff9d4f851fefa8a7a864c,
+    - target: {fileID: 114301401480464612, guid: 8d447a651bdff9d4f851fefa8a7a864c,
         type: 2}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224557941847947284, guid: 8d447a651bdff9d4f851fefa8a7a864c,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114834410021121528, guid: 8d447a651bdff9d4f851fefa8a7a864c,
-        type: 2}
-      propertyPath: move_player_sound
+      propertyPath: bombLauncher
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 16634945}
+    - target: {fileID: 114231393646165644, guid: 8d447a651bdff9d4f851fefa8a7a864c,
+        type: 2}
+      propertyPath: _bombScript
+      value: 
+      objectReference: {fileID: 16634945}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8d447a651bdff9d4f851fefa8a7a864c, type: 2}
   m_IsPrefabParent: 0

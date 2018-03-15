@@ -22,14 +22,13 @@ public class PlayerManager : MonoBehaviour {
     private Text playerPosText;
     private Camera mainCamera;
     
-    public AudioClip[] res_sounds;
+    //public AudioClip[] res_sounds;
 
     public bool IsDead {
         get { return isDead; }
     }
-
-    // TODO Hide after !!
-    public bool isDead = false;
+    
+    private bool isDead = false;
     
     private float _rezAmount;
     private float _allyDistance;
@@ -80,7 +79,8 @@ public class PlayerManager : MonoBehaviour {
 
         // Display the dead icon
         deathIcon.enabled = true;
-        
+
+        GameManager.instance.audioManager.PlaySoundOneTime(death_sound, 0.05f);
         GameManager.instance.shipMgr.NotifyDeath();
 		GameManager.instance.audioManager.PlaySoundOneTime (death_sound,0.02f);
     }

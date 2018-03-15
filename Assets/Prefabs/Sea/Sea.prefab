@@ -67,7 +67,7 @@ Transform:
   m_GameObject: {fileID: 1932297806522794}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 1}
+  m_LocalScale: {x: 15, y: 15, z: 1}
   m_Children:
   - {fileID: 4170099001695406}
   m_Father: {fileID: 0}
@@ -148,9 +148,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lodPower: 5
   heigtMapPower: 5
-  ratio: 1
-  maxWaveHeight: 5
-  minVariation: 0.03
+  ratio: 1.5
+  maxWaveHeight: 10
   seaCompute: {fileID: 7200000, guid: c38a7e0af28a2f143b23bc17e4ef5d30, type: 3}
   selfRenderer: {fileID: 23218790605428570}
   displayGizmos: 0
@@ -165,9 +164,8 @@ MonoBehaviour:
   impactAmplitude: 10
   impactRadius: 0
   vortexSmooth: 100
-  impactWaveLength: 100
-  impactPeriod: 200
-  waveSpeed: 5
+  impactWaveLength: 0.05
+  impactPeriod: 2
   timeProgression: 5
   timeout: 5
   waveSize: {x: 0, y: 0}

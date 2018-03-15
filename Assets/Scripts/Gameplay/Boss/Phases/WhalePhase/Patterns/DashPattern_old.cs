@@ -66,8 +66,8 @@ public class DashPattern_old : BossPattern {
         }
 
         // Move the FX containers.
-        whaleAI.FX.transform.position = pos;
-        whaleAI.FX.transform.rotation = rot;
+        whaleAI.FXTransform.transform.position = pos;
+        whaleAI.FXTransform.transform.rotation = rot;
 
         whaleAI.spawningFX.Play();
 

@@ -3,35 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class Tutorial : MonoBehaviour
 {
     [Header("References")]
-    public Text Tuto;
+    public TextMeshProUGUI Tuto;
 	public Image Frame;
     public TutoRock Rock;
     public Transform RockTarget;
 
     [Header("Values")]
-    public float TimeBetweenLetters = 0.02f;
+	public float TimeBetweenLetters = 0.02f;
+	public float StartTime = 3f;
+	public float FrameSpawnTime = 1f;
     public float IntroTime = 5f;
-    public float MovementTime = 5f;
-    public float WaveTime = 5f;
+    public float ToyTime = 5f;
     public float RockMovementTime = 5f;
 	public float HarpoonTime = 5f;
+	public float TutoEndTime = 3f;
 
     [Header("Texts")]
     public string[] Texts;
 
     private void Start()
     {
+		Tuto.text = "";
         StartCoroutine(Progression());
-
         // Get all fishing boats to lock inputs.
     }
 
     IEnumerator Progression()
     {
+		yield return new WaitForSeconds(StartTime);
+
+		//UI
+		Frame.DOFade(1f, FrameSpawnTime);
+		yield return new WaitWhile(() => DOTween.IsTweening(Frame));
+
         //Intro
         yield return PrintText(0);
         yield return new WaitForSeconds(IntroTime);
@@ -40,10 +49,10 @@ public class Tutorial : MonoBehaviour
 
         //Movement
         yield return PrintText(1);
-        yield return new WaitForSeconds(MovementTime);
+        yield return new WaitForSeconds(ToyTime);
         yield return PrintText(2);
-		//Start Waves
-        yield return new WaitForSeconds(WaveTime);
+		//Start Waves --------------------------------------------------BASTIEN ICI------------------------------------------
+        yield return new WaitForSeconds(ToyTime);
 
         PassToStep(2);         //Unlock Harpoon
 
@@ -62,22 +71,47 @@ public class Tutorial : MonoBehaviour
         yield return PrintText(6);
 		yield return new WaitUntil(() => Rock.RockExplode);
         yield return PrintText(7);
-        yield return new WaitForSeconds(WaveTime);
+        yield return new WaitForSeconds(ToyTime);
 
         //End
         yield return PrintText(8);
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+        yield return new WaitForSeconds(ToyTime);
 
         //Start Boss
+		Frame.DOFade(0f, FrameSpawnTime);
+		Tuto.DOFade(0f, FrameSpawnTime);
+		yield return new WaitWhile(() => DOTween.IsTweening(Frame));
+		yield return new WaitForSeconds(TutoEndTime);
+
     }
 
     IEnumerator PrintText(int i)
     {
+		string stock = "";
+		bool inTag = false;
+
         Tuto.text = "";
+		Texts[i] = Texts[i].Replace('\\', '\n');
+
         foreach (char c in Texts[i])
         {
-            Tuto.text += c;
-            yield return new WaitForSeconds(TimeBetweenLetters);
+			if (c == '>')
+			{
+				inTag= false;
+				Tuto.text += stock + c;
+			}
+			else if (c == '<' || inTag)
+			{
+				inTag = true;
+				stock += c;
+			}
+			else
+			{
+				Tuto.text += c;
+				yield return new WaitForSeconds(TimeBetweenLetters);
+			}
+
+
         }
     }
 
