@@ -119,11 +119,16 @@ public class Ground : MonoBehaviour {
 
 	private bool canBeginUpdate;
 
-	private void Awake() {
-		StartCoroutine(AwakeCoroutine());
+	private void Awake()
+    {
+        waveManager = new WaveManager();
+        ZoneWaveId = waveManager.CreateZone(0f, zoneRotation, zoneWaveLength, zonePeriod);
+
+        StartCoroutine(AwakeCoroutine());
 	}
 
-	private IEnumerator AwakeCoroutine() {
+	private IEnumerator AwakeCoroutine()
+    {
 		selfTransform = GetComponent<Transform>();
 		lodPowPower = ((int) Mathf.Pow(2, lodPower));
 		lod = 32 * lodPowPower;
@@ -144,10 +149,7 @@ public class Ground : MonoBehaviour {
 				yield return null;
 			}
 		}
-		
-		waveManager = new WaveManager();
-
-		ZoneWaveId = waveManager.CreateZone(0f, zoneRotation, zoneWaveLength, zonePeriod);
+        
 		// waveManager.CreateZoneTest(zoneAmplitude * 2, zoneWaveLength * 2, zonePeriod);
 
 		int heightMapLod = 32 * ((int) Mathf.Pow(2, heigtMapPower));

@@ -154,16 +154,18 @@ public class GameManager : MonoBehaviour {
     
     public void PauseGame(int playerID)
     {             
-        Debug.Log("PAUSE !!!");
         pauseScript.PauseGame(playerID);
         gamePaused = true;
+
+        bossMgr.DisplayLifeBar(false);
     }
 
     public void UnPauseGame()
     {
-        Debug.Log("UNPAUSE !!!");
         pauseScript.UnPauseGame();
         gamePaused = false;
+
+        bossMgr.DisplayLifeBar(true);
     }
 
     public void GameOver()

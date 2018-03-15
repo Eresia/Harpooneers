@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using DG.Tweening;
-
 public class AspirationTentaclesPattern : BossPattern {
 
     private AspirationTentacleState state;
@@ -27,8 +25,10 @@ public class AspirationTentaclesPattern : BossPattern {
         this.state = state;
 		swipperCount = 2;
 		tentacleCoroutines = new Coroutine[2];
+
 		waveId = GameManager.instance.ground.ZoneWaveId;
 		wave = GameManager.instance.ground.waveManager.Waves[waveId];
+
 		baseAmplitude = wave.amplitude;
     }
 
