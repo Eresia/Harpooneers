@@ -17,6 +17,7 @@ public class CustomCollision : MonoBehaviour {
     public float bumpForce = 15f;
 
 	public AudioClip collision_sound;
+    public ParticleSystem hitFX;
     
     protected void OnCollisionEnter(Collision collision)
     {
@@ -46,7 +47,10 @@ public class CustomCollision : MonoBehaviour {
                 otherPlayer.playerMgr.Resurrect();
             }
 
-			killPlayer = false;
+            hitFX.transform.position = collision.contacts[0].point;
+            hitFX.Play();
+
+            killPlayer = false;
         }
 
         // or a floating object.
