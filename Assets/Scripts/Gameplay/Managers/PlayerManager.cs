@@ -30,7 +30,7 @@ public class PlayerManager : MonoBehaviour {
         get { return isDead; }
     }
     
-    private bool isDead = false;
+    public bool isDead = false;
     
     private float _rezAmount;
     private float _allyDistance;
