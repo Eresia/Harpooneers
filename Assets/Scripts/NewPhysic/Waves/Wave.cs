@@ -8,12 +8,14 @@ public enum WaveType{
 	RECT_IMPACT = 1,
 	ZONE = 2,
 	ZONE_TEST = 3,
-	VORTEX = 4
+	VORTEX = 4,
+	TRACE_IMPACT = 5
 }
 
 public struct WaveOptions{
 	public uint type;
 	public Vector2 position;
+	public float rotation;
 	public Vector2 size;
 	public uint state;
 	public float stateTimeChange;
@@ -25,11 +27,11 @@ public struct WaveOptions{
 	public float progression;
 	public float time;
 	public float timeout;
-	public float trash;
 
-	public WaveOptions(WaveType type, Vector2 position, float amplitude, float radius, float smooth, float waveLength, float period, float time, Vector2 size = new Vector2(), float timeProgression= 0f, float timeout= 0f){
+	public WaveOptions(WaveType type, Vector2 position, float rotation, float amplitude, float radius, float smooth, float waveLength, float period, float time, Vector2 size = new Vector2(), float timeProgression= 0f, float timeout= 0f){
 		this.type = (uint) type;
 		this.position = position;
+		this.rotation = rotation * Mathf.Deg2Rad;
 		this.size = size;
 		this.amplitude = amplitude;
 		this.radius = radius;
@@ -39,7 +41,6 @@ public struct WaveOptions{
 		this.timeout = timeout;
 		this.state = 0;
 		this.stateTimeChange = 0f;
-		this.trash = 0f;
 
 		this.waveNumber = (2 * Mathf.PI) / waveLength;
 		this.angularFrequency = (2 * Mathf.PI) / period;
@@ -71,35 +72,42 @@ public class WaveManager{
 	}
 
 	public int CreateImpact(Vector2 position, float amplitude, float radius, float waveLength, float period, float timeDigress, float timeout){
-		WaveOptions newWave = new WaveOptions(WaveType.IMPACT, position, amplitude, radius, 0f, waveLength, period, ActualTime, new Vector2(), timeDigress, timeout);
+		WaveOptions newWave = new WaveOptions(WaveType.IMPACT, position, 0f, amplitude, radius, 0f, waveLength, period, ActualTime, new Vector2(), timeDigress, timeout);
 		Waves.Add(actualId, newWave);
 		actualId++;
 		return actualId -1;
 	}
 
-	public int CreateRectImpact(Vector2 position, Vector2 size, float amplitude, float waveLength, float period, float timeDigress, float timeout){
-		WaveOptions newWave = new WaveOptions(WaveType.RECT_IMPACT, position, amplitude, 0f, 0f, waveLength, period, ActualTime, size, timeDigress, timeout);
+	public int CreateRectImpact(Vector2 position, Vector2 size, float rotation, float amplitude, float waveLength, float period, float timeDigress, float timeout){
+		WaveOptions newWave = new WaveOptions(WaveType.RECT_IMPACT, position, rotation, amplitude, 0f, 0f, waveLength, period, ActualTime, size, timeDigress, timeout);
 		Waves.Add(actualId, newWave);
 		actualId++;
 		return actualId -1;
 	}
 
-	public int CreateZone(float amplitude, float waveLength, float period){
-		WaveOptions newWave = new WaveOptions(WaveType.ZONE, new Vector2(), amplitude, 0f, 0f, waveLength, period, ActualTime);
+	public int CreateZone(float amplitude, float rotation, float waveLength, float period){
+		WaveOptions newWave = new WaveOptions(WaveType.ZONE, new Vector2(), rotation, amplitude, 0f, 0f, waveLength, period, ActualTime);
 		Waves.Add(actualId, newWave);
 		actualId++;
 		return actualId -1;
 	}
 
-	public int CreateZoneTest(float amplitude, float waveLength, float period){
-		WaveOptions newWave = new WaveOptions(WaveType.ZONE_TEST, new Vector2(), amplitude, 0f, 0f, waveLength, period, ActualTime + 1);
-		Waves.Add(actualId, newWave);
-		actualId++;
-		return actualId -1;
-	}
+	// public int CreateZoneTest(float amplitude, float waveLength, float period){
+	// 	WaveOptions newWave = new WaveOptions(WaveType.ZONE_TEST, new Vector2(), amplitude, 0f, 0f, waveLength, period, ActualTime + 1);
+	// 	Waves.Add(actualId, newWave);
+	// 	actualId++;
+	// 	return actualId -1;
+	// }
 
 	public int CreateVortex(Vector2 position, float amplitude, float radius, float smooth, float waveLength, float period, float timeDigress, float timeout){
-		WaveOptions newWave = new WaveOptions(WaveType.VORTEX, position, amplitude, radius, smooth, waveLength, period, ActualTime, new Vector2(), timeDigress, timeout);
+		WaveOptions newWave = new WaveOptions(WaveType.VORTEX, position, 0f, amplitude, radius, smooth, waveLength, period, ActualTime, new Vector2(), timeDigress, timeout);
+		Waves.Add(actualId, newWave);
+		actualId++;
+		return actualId -1;
+	}
+
+	public int CreateTraceImpact(Vector2 position, float size, float rotation, float amplitude, float waveLength, float period, float timeDigress, float timeout){
+		WaveOptions newWave = new WaveOptions(WaveType.TRACE_IMPACT, position, rotation, amplitude, 0f, 0f, waveLength, period, ActualTime, new Vector2(size, 0), timeDigress, timeout);
 		Waves.Add(actualId, newWave);
 		actualId++;
 		return actualId -1;

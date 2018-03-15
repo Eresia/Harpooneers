@@ -16,7 +16,8 @@ public class BossManager : MonoBehaviour {
     public Transform west;
 
     [Header("UI")]
-    public Image lifepointsBar;
+    public GameObject lifepointsBar;
+    public Image lifepointsFilling;
 
     [HideInInspector]
     public float width;
@@ -123,6 +124,6 @@ public class BossManager : MonoBehaviour {
 
     public void UpdateLifepoints()
     {
-        lifepointsBar.fillAmount = currentPhase.Lifepoints / currentPhase.maxLifepoints; 
+        lifepointsFilling.fillAmount = currentPhase.Lifepoints / currentPhase.maxLifepoints; 
     }
 }

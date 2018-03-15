@@ -22,6 +22,8 @@ public class BackAttackState : BossState<BackAttackPattern>
 
     public Vector3 diveRotationEnd;
 
+    public AudioClip backAttackSound;
+
     protected override BackAttackPattern Init()
     {
         return new BackAttackPattern(this);

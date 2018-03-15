@@ -170,4 +170,16 @@ public class ShipManager : MonoBehaviour {
     {
         return playerMgrs[ChoosePlayerToAttackId()];
     }
+
+	public void LockInputs(){
+		foreach(PlayerInput input in playerInputs){
+			input.TutoStep = -1;
+		}
+	}
+
+	public void UnLockInputs(){
+		foreach(PlayerInput input in playerInputs){
+			input.TutoStep = 3;
+		}
+	}
 }
