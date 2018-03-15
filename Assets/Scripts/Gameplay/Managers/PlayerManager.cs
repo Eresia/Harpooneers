@@ -189,6 +189,8 @@ public class PlayerManager : MonoBehaviour {
         isDead = false;
         GameManager.instance.shipMgr.NotifyAlive();
 
+        movement.IsRez();
+
         //_rezAmount = 0;
     }
 
