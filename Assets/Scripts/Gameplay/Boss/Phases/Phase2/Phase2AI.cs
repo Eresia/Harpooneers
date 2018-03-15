@@ -13,7 +13,7 @@ public class Phase2AI : PhaseAI {
     public TentacleBehaviour aspiTentaclePrefab;
     public TentacleBehaviour tentacleSharkPrefab;
 
-    public int tentaclesNeeded = 4;
+    public int tentaclesNeeded;
 
     public TentacleBehaviour[] TentaclesSwipper
     {
@@ -52,21 +52,23 @@ public class Phase2AI : PhaseAI {
     private TentacleBehaviour tentacleShark;
 
     [Header("Patterns and hit")]
-    public int hitOnEyesNeeded = 2;
-    private int hitOnEyesCount = 0;
-
-    public int bombInMouthNeeded = 2;
-    private int bombInMouthCount = 0;
 
     public int noHittablePatternCount = 2;
+
+    [Tooltip("Number of random patterns in each step")]
     public int[] numberOfPatternsWithoutHit;
 
-    private int step = 0; // Actual step of the phase.
+    public float[] lifepointsToPassStep;
 
-    private int passageCount = 0;
+    private int step; // Actual step of the phase.
+
+    private int passageCount;
 
     protected override void Awake()
     {
+        step = 0;
+        passageCount = 0;
+
         base.Awake();
 
         GameManager.instance.shipMgr.UnLockInputs();
@@ -113,16 +115,8 @@ public class Phase2AI : PhaseAI {
         if (hitPattern)
         {
             passageCount = 0;
-
-            if(step == 0)
-            {
-                nextState = 5;
-            }
-
-            else
-            {
-                nextState = 6;
-            }
+            
+            nextState = 5 + step;
         }
 
         else
@@ -132,50 +126,21 @@ public class Phase2AI : PhaseAI {
 
         return nextState;
     }
-
-    public void HitBoss()
-    {
-        // Handle step eyes.
-        if(step == 0)
-        {
-            hitOnEyesCount++;
-
-            // Step 1 beaten.
-            if(hitOnEyesCount >= hitOnEyesNeeded)
-            {
-                step = 1;
-            }
-        }
-
-        // Handle step mouth.
-        else if(step == 1)
-        {
-            bombInMouthCount++;
-            
-            // Phase 2 is beaten.
-            if (bombInMouthCount >= bombInMouthNeeded)
-            {
-                step = 2;
-
-                phaseFinished = true;
-                enabled = false;
-
-                animator.enabled = false;
-
-                // TODO death feedback
-
-                OnPhaseFinished();
-            }
-        }
-
-        GameManager.instance.camMgr.Shake();
-
-        CurrentPattern.StopPattern();
-    }
-
+    
     public override void HitBoss(float damageAmount)
     {
         base.HitBoss(damageAmount);
+
+        float lifepointsRatio = lifepoints / maxLifepoints;
+
+        if(step < 2)
+        {
+            if (lifepointsRatio < lifepointsToPassStep[step])
+            {
+                step++;
+                Debug.Log("Next step");
+            }
+        }
     }
 
 	public override IEnumerator OnPhaseFinishedCoroutine(){
