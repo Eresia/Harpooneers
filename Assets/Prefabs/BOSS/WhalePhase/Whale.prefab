@@ -178,7 +178,8 @@ GameObject:
   - component: {fileID: 136437374226372490}
   - component: {fileID: 114538699957242802}
   - component: {fileID: 114689434279392862}
-  m_Layer: 9
+  - component: {fileID: 114272912553743034}
+  m_Layer: 11
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -402,7 +403,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1891175618788794
 GameObject:
   m_ObjectHideFlags: 1
@@ -444,7 +445,8 @@ GameObject:
   - component: {fileID: 136545287617417526}
   - component: {fileID: 136260362373019394}
   - component: {fileID: 114667019778771114}
-  m_Layer: 9
+  - component: {fileID: 114179862504161334}
+  m_Layer: 11
   m_Name: Tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -998,6 +1000,34 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114179862504161334
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1963655090298806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca6e650634ed5954daed77fa4d60aaf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 5
+  hitFX: {fileID: 0}
+  hit_sound: {fileID: 8300000, guid: 6ef5d8cc08d8e804ebd2fb79df81ff0b, type: 3}
+--- !u!114 &114272912553743034
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1210436050189464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca6e650634ed5954daed77fa4d60aaf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 4
+  hitFX: {fileID: 0}
+  hit_sound: {fileID: 8300000, guid: 6ef5d8cc08d8e804ebd2fb79df81ff0b, type: 3}
 --- !u!114 &114538699957242802
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1031,6 +1061,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda282011bbf80641907391b04eebce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageWithBomb: 5
 --- !u!114 &114777120295722414
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1042,9 +1073,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6e650634ed5954daed77fa4d60aaf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eye: 0
-  hit_sound: {fileID: 0}
-  scream_sound: {fileID: 0}
+  damageAmount: 15
+  hitFX: {fileID: 198657936415793166}
+  hit_sound: {fileID: 8300000, guid: 6ef5d8cc08d8e804ebd2fb79df81ff0b, type: 3}
 --- !u!114 &114888491273417954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1056,17 +1087,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 908a690f799d4974692eb969080e6948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eyeBloodFX:
-  - {fileID: 198243639391879802}
-  - {fileID: 198657936415793166}
   splashFX: {fileID: 198163753155895666}
+  whaleBody: {fileID: 114689434279392862}
   bodyCollider: {fileID: 136642434645056956}
   tailCollider: {fileID: 136545287617417526}
   whaleChildTransform: {fileID: 4041903357088550}
   whaleAnimator: {fileID: 95187027426919842}
-  eyeScript:
+  hittableScripts:
   - {fileID: 114925522054814648}
   - {fileID: 114777120295722414}
+  - {fileID: 114272912553743034}
+  - {fileID: 114179862504161334}
 --- !u!114 &114925522054814648
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1078,9 +1109,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6e650634ed5954daed77fa4d60aaf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eye: 0
-  hit_sound: {fileID: 0}
-  scream_sound: {fileID: 0}
+  damageAmount: 15
+  hitFX: {fileID: 198243639391879802}
+  hit_sound: {fileID: 8300000, guid: 6ef5d8cc08d8e804ebd2fb79df81ff0b, type: 3}
 --- !u!136 &136260362373019394
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1114,7 +1145,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1138877173143116}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 1
   m_Height: 3
@@ -1153,7 +1184,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1544977358277660}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 1
   m_Height: 3
@@ -1173,7 +1204,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 8104cc93b87f4a444b42a53c1fdac1ec, type: 3}
+  - {fileID: 2100000, guid: f58de26caf110784992da70a802c2ae2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1282,7 +1313,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 715738475
+  randomSeed: 341274171
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4643,7 +4674,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 913923869
+  randomSeed: -1858077774
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -8049,7 +8080,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -42829325
+  randomSeed: 518128505
   InitialModule:
     serializedVersion: 3
     enabled: 1

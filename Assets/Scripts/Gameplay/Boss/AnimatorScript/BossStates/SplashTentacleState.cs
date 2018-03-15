@@ -5,8 +5,9 @@ using UnityEngine;
 public class SplashTentacleState : BossState<SplashTentaclesPattern>
 {
     public int attackCount = 2;
-
-    public int tentacleCount = 5;
+    
+    [HideInInspector]
+    public int tentacleCount = 2;
 
     public float bubblingDuration = 3f;
 

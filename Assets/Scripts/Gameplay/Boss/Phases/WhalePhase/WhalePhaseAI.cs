@@ -1,18 +1,18 @@
-﻿using System;
+﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using DG.Tweening;
+
 
 public class WhalePhaseAI : PhaseAI {
-
-    public GameObject whalePrefab;
-    public Transform FX;
-    public ParticleSystem spawningFX;
-
+    
     [HideInInspector]
     public WhaleReferences whaleReferences;
 
-    [Header("Patterns components")]
+    public GameObject whalePrefab;
+    public Transform FXTransform;
+    public ParticleSystem spawningFX;
+
+    [Header("Patterns objects")]
     public Geyser geyserPrefab;
 
     public Geyser[] Geysers
@@ -24,7 +24,6 @@ public class WhalePhaseAI : PhaseAI {
     public Transform WhaleTransform { get; private set; }
     public Transform WhaleChildTransform { get; private set; }
     public Animator WhaleAnimator { get; private set; }
-
     public GameObject Whale
     {
         get
@@ -34,33 +33,21 @@ public class WhalePhaseAI : PhaseAI {
     }
     private GameObject whale;
     
-    [Header("Patterns")]
+    [Header("Pattern config")]
     public int noHittablePatternCount;
     public int numberOfPatternsWithoutHit;
 
-    [Header("Boss attributes")]
-
-    public Collider[] eyeColliders;
-    public Collider bodyCollider;
-    public Collider tailCollider;
-
-    public HandleHarpoonWithWhale[] whaleScript;
+    public float damageMinToHaveScream = 10f;
     
-    private int passCount = 0;
-
-    public float weakPointDamageMinAmount = 10f;
-
-    public float maxLifepoints = 100f;
-    
-    private float lifepoints;
-
 	public AudioClip whale_scream;
+
+	public float endPhaseTime = 4f;
+
+	public float resetDepth;
 
     protected override void Awake()
     {
         base.Awake();
-
-        lifepoints = maxLifepoints;
 
         SpawnWhale();
     }
@@ -72,7 +59,8 @@ public class WhalePhaseAI : PhaseAI {
         whale.SetActive(false);
 
         whaleReferences = whale.GetComponent<WhaleReferences>();
-        WhaleTransform = whale.GetComponent<Transform>();
+
+        WhaleTransform = whaleReferences.transform;
         WhaleChildTransform = whaleReferences.whaleChildTransform;
         WhaleAnimator = whaleReferences.whaleAnimator;
 
@@ -82,91 +70,66 @@ public class WhalePhaseAI : PhaseAI {
             geysers[i] = Instantiate(geyserPrefab);
         }
 
-        bodyCollider = whaleReferences.bodyCollider;
-        tailCollider = whaleReferences.tailCollider;
-
-		GameManager.instance.audioManager.PlaySoundOneTime (whale_scream, 0.2f);
-
-        // Setup eye colliders and scripts.
-        whaleScript = whaleReferences.hittableScripts;
-        eyeColliders = new Collider[whaleScript.Length];
-
+		whaleReferences.whaleBody.OnWhaleExplode = HitBoss;
+        
         for (int i = 0; i < whaleReferences.hittableScripts.Length; i++)
         {
-            whaleReferences.hittableScripts[i].hitCallback = HitWhale;
+            whaleReferences.hittableScripts[i].hitCallback = HitBoss;
         }
     }
 
-    public int DecideNextPhase()
+    public override void HitBoss(float damageAmount)
     {
-        passCount++;
+        base.HitBoss(damageAmount);
 
-        int nextState = 0;
-        bool hitPattern = (passCount % (numberOfPatternsWithoutHit + 1)) == 0;
-
-        if (hitPattern)
-        {
-            passCount = 0;
-            nextState = 2;
-        }
-        else
-        {
-            nextState = UnityEngine.Random.Range(0, noHittablePatternCount);
-        }
-
-        return nextState;
+        OnWhaleHit(damageAmount);
     }
 
-    public void HitWhale(float damageAmount)
+    /// <summary>
+    /// Specific action when whale is hitten.
+    /// </summary>
+    /// <param name="damageAmount"></param>
+    private void OnWhaleHit(float damageAmount)
     {
-        if(phaseFinished)
-        {
-            // Don't do anything if boss is defeated.
-            return;
-        }
-
-        if(damageAmount >= weakPointDamageMinAmount)
+        if (damageAmount >= damageMinToHaveScream)
         {
             GameManager.instance.audioManager.PlaySoundOneTime(whale_scream, 0.2f);
             GameManager.instance.camMgr.Shake();
         }
+    }
 
-        lifepoints -= damageAmount;
-        Debug.Log(lifepoints);
-        //lifepoints = Mathf.Clamp(lifepoints, 0f, maxLifepoints);
-
-        // No any PVs
-        if(lifepoints <= 0)
-        {
-            if(!phaseFinished)
-            {
-                // TODO death feedback
-
-                phaseFinished = true;
-
-                animator.enabled = false;
-                enabled = false;
-                
-                OnPhaseFinished();
-            }
-
-            return;
-        }
-
+    /// <summary>
+    /// Stop the current pattern !
+    /// </summary>
+    public void StopPattern()
+    {
         CurrentPattern.StopPattern();
     }
 
     // Reset the whale's transform.
     public void ResetWhaleTransform()
     {
+        ResetWhaleTransform(resetDepth);
+    }
+
+	public void ResetWhaleTransform(float depth)
+    {
         Whale.SetActive(false);
 
         WhaleTransform.rotation = Quaternion.identity;
-        WhaleTransform.position = Vector3.zero;
+        WhaleTransform.position = new Vector3(0, -depth, 0);
         WhaleTransform.localScale = Vector3.one;
         
         WhaleChildTransform.localRotation = Quaternion.identity;
         WhaleChildTransform.localPosition = Vector3.zero;
         WhaleChildTransform.localScale = Vector3.one;
     }
+
+	public override IEnumerator OnPhaseFinishedCoroutine(){
+		Vector3 pos = WhaleTransform.position;
+		Vector3 target = pos;
+		target.y = -20f;
+		Tween tween = WhaleTransform.DOMove(target, 4f);
+        yield return new WaitWhile(tween.IsPlaying);
+	}
 }

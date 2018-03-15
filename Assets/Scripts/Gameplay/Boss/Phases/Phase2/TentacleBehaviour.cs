@@ -15,6 +15,10 @@ public class TentacleBehaviour : MonoBehaviour {
     
     public Animator animAttack;
 
+    public AudioClip bubbleSound;
+
+    public AudioClip attackSound;
+
     private void Awake()
     {
         childTransform.gameObject.SetActive(false);
@@ -25,6 +29,8 @@ public class TentacleBehaviour : MonoBehaviour {
     {
         gameObject.SetActive(true);
         spawningFX.Play();
+
+        GameManager.instance.audioManager.PlaySoundOneTime(bubbleSound, 0.5f);
     }
     
     public void Emerge(Vector3 startPos, Vector3 endPos, float emergingDuration)
@@ -40,17 +46,17 @@ public class TentacleBehaviour : MonoBehaviour {
 
     public void Dive(Vector3 endPos, float divingDuration)
     {
+        // TODO Disable colliders when dive.
+
+        animAttack.SetTrigger("Despawn");
         childTransform.DOLocalMove(endPos, divingDuration);
     }
 
-    public void TriggerAttackAnim(string attack)
+    public void TriggerAttackAnim()
     {
-        animAttack.SetTrigger(attack);
+        animAttack.SetTrigger("Attack");
 
-        // TODO Play attack animation.
-        // phase2.Tentacles[i].animAttack.Play("");
-
-        // TODO WAIT ANIMATION -> OnStateExit ->
+        //GameManager.instance.audioManager.PlaySoundOneTime(attackSound, 0.2f);
     }
 
     public void FocusPlayer(float turnDuration)

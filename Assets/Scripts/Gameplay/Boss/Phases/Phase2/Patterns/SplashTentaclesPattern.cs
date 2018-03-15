@@ -11,6 +11,8 @@ public class SplashTentaclesPattern : BossPattern {
 
     private Vector3[] spawns;
 
+    private TentacleBehaviour[] tentaclesToUse;
+
     public SplashTentaclesPattern(SplashTentacleState state)
     {
         this.state = state;
@@ -34,7 +36,7 @@ public class SplashTentaclesPattern : BossPattern {
     }
 
     /// <summary>
-    /// Spawn 2 tentacles 
+    /// Spawn 2 tentacles ON a circle with a minimum distance between the 2 tentacles.
     /// </summary>
     private void SpawnTentacles()
     {
@@ -49,13 +51,18 @@ public class SplashTentaclesPattern : BossPattern {
         spawns[0] = center + randPos;
 
         spawns[1] = RotatePointAroundPivot(spawns[0], Vector3.up, new Vector3(0f, Random.Range(state.minAngle, state.maxAngle), 0f));
-        
+
+        // Store and spawn tentacles.
+        tentaclesToUse = new TentacleBehaviour[2];
         for (int i = 0; i < 2; i++)
         {
-            phase2.Tentacles[i].transform.position = spawns[i];
+            tentaclesToUse[i] = phase2.TentaclesHammer[i];
 
+            tentaclesToUse[i].transform.position = spawns[i];
+
+            // Focus the center.
             Vector3 lookCenter = center - spawns[i];
-            phase2.Tentacles[i].childTransform.localRotation = Quaternion.LookRotation(lookCenter);
+            tentaclesToUse[i].childTransform.localRotation = Quaternion.LookRotation(lookCenter);
         }
     }
 
@@ -76,15 +83,14 @@ public class SplashTentaclesPattern : BossPattern {
 
             for (int i = 0; i < state.tentacleCount; i++)
             {
-                phase2.Tentacles[i].Spawning(state.bubblingDuration);
+                tentaclesToUse[i].Spawning(state.bubblingDuration);
             }
 
             yield return new WaitForSeconds(state.bubblingDuration);
 
             for (int i = 0; i < state.tentacleCount; i++)
             {
-                phase2.Tentacles[i].TriggerAttackAnim("Spawn");
-                phase2.Tentacles[i].Emerge(state.startPos, state.attackPos, state.emergingDuration);
+                tentaclesToUse[i].Emerge(state.startPos, state.attackPos, state.emergingDuration);
             }
 
             yield return new WaitForSeconds(state.emergingDuration);
@@ -92,7 +98,7 @@ public class SplashTentaclesPattern : BossPattern {
             // Each tentacles focus a player.
             for (int i = 0; i < state.tentacleCount; i++)
             {
-                phase2.Tentacles[i].FocusPlayer(state.turnDuration);
+                tentaclesToUse[i].FocusPlayer(state.turnDuration);
             }
 
             yield return new WaitForSeconds(state.turnDuration);
@@ -101,16 +107,16 @@ public class SplashTentaclesPattern : BossPattern {
 
             for (int i = 0; i < state.tentacleCount; i++)
             {
-                phase2.Tentacles[i].TriggerAttackAnim("Slam");
+                tentaclesToUse[i].TriggerAttackAnim();
             }
 
-            yield return new WaitUntil(() => (phase2.Tentacles[0].animAttack.GetBool("End")));
+            yield return new WaitUntil(() => (tentaclesToUse[0].animAttack.GetBool("End")));
             
             for (int i = 0; i < state.tentacleCount; i++)
             {
-                phase2.Tentacles[i].animAttack.SetBool("End", false);
+                tentaclesToUse[i].animAttack.SetBool("End", false);
 
-                phase2.Tentacles[i].Dive(state.startPos, state.divingDuration);
+                tentaclesToUse[i].Dive(state.startPos, state.divingDuration);
             }
 
             yield return new WaitForSeconds(state.divingDuration);
@@ -118,7 +124,7 @@ public class SplashTentaclesPattern : BossPattern {
             // Reset pos.
             for (int i = 0; i < state.tentacleCount; i++)
             {
-                phase2.Tentacles[i].ResetTentacle();
+                tentaclesToUse[i].ResetTentacle();
             }
         }
 

@@ -7,7 +7,7 @@ public class BackAttackState : BossState<BackAttackPattern>
     [Header("Emerging")]
     public float emergingDuration = 5f;
 
-    public float startHeight = -50f;
+    public float startHeight = 50f;
 
     [Space(10)]
 
@@ -21,6 +21,8 @@ public class BackAttackState : BossState<BackAttackPattern>
     public float diveForwardEnd = 20f;
 
     public Vector3 diveRotationEnd;
+
+    public AudioClip backAttackSound;
 
     protected override BackAttackPattern Init()
     {
