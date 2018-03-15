@@ -105,7 +105,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _FarDeepDistance: 0.084
+    - _FarDeepDistance: 0.095
     - _Float0: 0.85
     - _Float1: 3.8
     - _Float6: 3.02
@@ -119,10 +119,10 @@ Material:
     - _HeightCoeff: 0
     - _HeightColorStrength: 0.85
     - _Metallic: 0
-    - _MidWaterDistance: 0.378
+    - _MidWaterDistance: 0.18
     - _Mode: 0
     - _NormalScale: 0.6
-    - _NormalStrenght: 0.185
+    - _NormalStrenght: 0.135
     - _NormalTiling: 10
     - _NormalTiling1: 5.3
     - _NormalTiling2: 1.4
@@ -132,7 +132,7 @@ Material:
     - _Parallax: 0.02
     - _Refraction: 0
     - _SeaFoamIntensity: 3.21
-    - _ShallowWaterDistance: 0.598
+    - _ShallowWaterDistance: 1
     - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -150,25 +150,25 @@ Material:
     - _Color1: {r: 0.29411763, g: 0.2814401, b: 0.11029411, a: 0}
     - _Color2: {r: 0.3455882, g: 0.08893815, b: 0.08893815, a: 0}
     - _DeepColor: {r: 0.09083042, g: 0.41176474, b: 0.30552444, a: 0}
-    - _DeepColor1: {r: 0.19301471, g: 0.49987322, b: 0.625, a: 0}
-    - _DeepColor2: {r: 0.02979023, g: 0.21323529, b: 0.07660029, a: 0}
-    - _DeepColor3: {r: 0.090196066, g: 0.24705881, b: 0.14117643, a: 0}
-    - _DeepColor4: {r: 0.105882324, g: 0.2745098, b: 0.23921567, a: 0}
+    - _DeepColor1: {r: 0.1248918, g: 0.3809017, b: 0.485294, a: 0}
+    - _DeepColor2: {r: 0.02979023, g: 0.2132353, b: 0.07660026, a: 0}
+    - _DeepColor3: {r: 0.09019602, g: 0.2470588, b: 0.1411764, a: 0}
+    - _DeepColor4: {r: 0.1058823, g: 0.2745098, b: 0.2392156, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FarDeepColor: {r: 0.0405493, g: 0.041537393, b: 0.18382353, a: 0}
-    - _FarDeepColor1: {r: 0.12316174, g: 0.16602433, b: 0.24999997, a: 0}
-    - _FarDeepColor2: {r: 0.10331962, g: 0.12904188, b: 0.15441176, a: 0}
-    - _FarDeepColor3: {r: 0.078431346, g: 0.1333333, b: 0.07450979, a: 0}
-    - _FarDeepColor4: {r: 0.0292984, g: 0.0441176, b: 0.014273352, a: 0}
+    - _FarDeepColor1: {r: 0.05547144, g: 0.114829, b: 0.2794118, a: 0}
+    - _FarDeepColor2: {r: 0.1033196, g: 0.1290419, b: 0.1544117, a: 0}
+    - _FarDeepColor3: {r: 0.07843132, g: 0.1333333, b: 0.07450978, a: 0}
+    - _FarDeepColor4: {r: 0.0292984, g: 0.04411758, b: 0.01427335, a: 0}
     - _FoamSpeed: {r: 0.01, g: 0.05, b: 0, a: 0}
     - _FoamSpeedVector: {r: 0.01, g: 0.05, b: 0, a: 0}
     - _MidWaterColor: {r: 0.31877163, g: 0.64705884, b: 0.565553, a: 0}
-    - _MidWaterColor1: {r: 0.30817473, g: 0.42399153, b: 0.5588235, a: 0}
-    - _MidWaterColor2: {r: 0.18823528, g: 0.4, b: 0.5803921, a: 0}
-    - _MidWaterColor3: {r: 0.26666665, g: 0.42745098, b: 0.39607844, a: 0}
-    - _MidWaterColor4: {r: 0.48529404, g: 0.09991347, b: 0.09991347, a: 0}
+    - _MidWaterColor1: {r: 0.4132785, g: 0.4535466, b: 0.7205882, a: 0}
+    - _MidWaterColor2: {r: 0.1882353, g: 0.4, b: 0.5803921, a: 0}
+    - _MidWaterColor3: {r: 0.2666666, g: 0.427451, b: 0.3960784, a: 0}
+    - _MidWaterColor4: {r: 0.485294, g: 0.09991343, b: 0.09991343, a: 0}
     - _ShallowColor: {r: 0.75178415, g: 0.9428133, b: 0.99264705, a: 0}
-    - _ShallowColor1: {r: 1, g: 1, b: 1, a: 0}
+    - _ShallowColor1: {r: 0.71453285, g: 0.76489687, b: 0.8235294, a: 0}
     - _ShallowColor2: {r: 0.5882353, g: 0.7803922, b: 0.9058824, a: 0}
-    - _ShallowColor3: {r: 0.49895078, g: 0.6911764, b: 0.25919116, a: 0}
-    - _ShallowColor4: {r: 0.77205884, g: 0.10218424, b: 0.10218424, a: 0}
+    - _ShallowColor3: {r: 0.4989508, g: 0.6911764, b: 0.2591911, a: 0}
+    - _ShallowColor4: {r: 0.7720588, g: 0.1021842, b: 0.1021842, a: 0}
