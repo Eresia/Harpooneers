@@ -229,7 +229,11 @@ public class PlayerInput : MonoBehaviour
     {
         if (data.GetButtonDown())
         {
-            playerMgr.FeedbackPlayerPos(1f);
+            playerMgr.FeedbackPlayerPos(true);
+        }
+        if (data.GetButtonUp())
+        {
+            playerMgr.FeedbackPlayerPos(false);
         }
     }
     
