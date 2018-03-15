@@ -152,7 +152,7 @@ MonoBehaviour:
   diveDepthEnd: 16
   diveForwardEnd: 20
   diveRotationEnd: {x: 25, y: 0, z: 0}
-  backAttackSound: {fileID: 0}
+  backAttackSound: {fileID: 8300000, guid: 4a0ce011778c91448a9a2634da78cbf7, type: 3}
 --- !u!114 &114560548113288434
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -189,8 +189,6 @@ MonoBehaviour:
   targetChangeTime: 6
   maxTime: 14
   endOfPaternTime: 4
-  test: 0
-  test2: 0
 --- !u!114 &114863543440066848
 MonoBehaviour:
   m_ObjectHideFlags: 1
