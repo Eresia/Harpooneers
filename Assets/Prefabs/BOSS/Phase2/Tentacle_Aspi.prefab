@@ -1296,10 +1296,11 @@ MonoBehaviour:
   childTransform: {fileID: 4923914481316230}
   spawningFX: {fileID: 198468854460273186}
   attackFx: {fileID: 198903641765337534}
-  tentacleCollider: {fileID: 0}
   animator: {fileID: 95383594334331420}
   bubbleSound: {fileID: 8300000, guid: 0836f3a9542befb45b12b21219506c8d, type: 3}
-  attackSound: {fileID: 0}
+  attackSound: {fileID: 8300000, guid: 9a8b245289f00234ab0d975a34df5e72, type: 3}
+  attackCollider: {fileID: 0}
+  bodyCollider: {fileID: 0}
 --- !u!137 &137341637700086904
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

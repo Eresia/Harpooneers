@@ -2160,6 +2160,7 @@ MonoBehaviour:
   harpoonColliders:
   - {fileID: 65446410814521716}
   - {fileID: 65985259040068016}
+  break_sound: {fileID: 8300000, guid: 90f97b102255e704cb77a514c776baec, type: 3}
 --- !u!114 &114068505924903936
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2171,7 +2172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d874c5047fc409f46ab1443a0013a2c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hit_sound: {fileID: 0}
+  hit_sound: {fileID: 8300000, guid: c045ed470aad9b949bf9fe755f7d4894, type: 3}
 --- !u!114 &114248159678294954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2223,4 +2224,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d874c5047fc409f46ab1443a0013a2c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hit_sound: {fileID: 0}
+  hit_sound: {fileID: 8300000, guid: c045ed470aad9b949bf9fe755f7d4894, type: 3}

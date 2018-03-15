@@ -42,8 +42,6 @@ public class BackAttackPattern : BossPattern
             whaleAI.WhaleChildTransform.localRotation = Quaternion.Euler(0f, Random.Range(-180f, 180f), 0f);
 
             whaleAI.Whale.SetActive(true);
-            
-			Vector3 targetPosition = target.position;
 
             whaleAI.WhaleChildTransform.DOScale(Vector3.one, state.emergingDuration);
             whaleAI.WhaleChildTransform.DOLocalMove(targetPosition, state.emergingDuration);

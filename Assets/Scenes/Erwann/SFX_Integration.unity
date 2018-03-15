@@ -405,7 +405,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &168638915
 Prefab:
@@ -444,7 +444,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4413206932209708, guid: 0427649b71f5bc245bb96b0c8d436a8e, type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0427649b71f5bc245bb96b0c8d436a8e, type: 2}
@@ -1166,7 +1166,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4012793707585258, guid: 067cdd2b7bc7c2f48bf143fbdd61132e, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 114362013403539180, guid: 067cdd2b7bc7c2f48bf143fbdd61132e,
         type: 2}
@@ -1315,7 +1315,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &531228341
 Prefab:
@@ -2375,7 +2375,7 @@ Prefab:
         type: 2}
       propertyPath: audioManager
       value: 
-      objectReference: {fileID: 1611156435}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ffe9efaa29c336a468f47656dc4092d6, type: 2}
   m_IsPrefabParent: 0
@@ -3020,16 +3020,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114301401480464612, guid: 8d447a651bdff9d4f851fefa8a7a864c,
-        type: 2}
-      propertyPath: bombLauncher
-      value: 
-      objectReference: {fileID: 16634945}
-    - target: {fileID: 114231393646165644, guid: 8d447a651bdff9d4f851fefa8a7a864c,
-        type: 2}
-      propertyPath: _bombScript
-      value: 
-      objectReference: {fileID: 16634945}
     - target: {fileID: 114609724380578428, guid: 8d447a651bdff9d4f851fefa8a7a864c,
         type: 2}
       propertyPath: boatFollower
@@ -3045,6 +3035,16 @@ Prefab:
       propertyPath: directionImage
       value: 
       objectReference: {fileID: 802090460}
+    - target: {fileID: 114301401480464612, guid: 8d447a651bdff9d4f851fefa8a7a864c,
+        type: 2}
+      propertyPath: bombLauncher
+      value: 
+      objectReference: {fileID: 16634945}
+    - target: {fileID: 114231393646165644, guid: 8d447a651bdff9d4f851fefa8a7a864c,
+        type: 2}
+      propertyPath: _bombScript
+      value: 
+      objectReference: {fileID: 16634945}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8d447a651bdff9d4f851fefa8a7a864c, type: 2}
   m_IsPrefabParent: 0
@@ -3592,12 +3592,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1522016564}
   m_Mesh: {fileID: 4300000, guid: 8715cf083627eb147b309b709a7f6427, type: 3}
---- !u!114 &1611156435 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114267514294067602, guid: c0c197d560074b1489fc820ce70f86c5,
-    type: 2}
-  m_PrefabInternal: {fileID: 859148955}
-  m_Script: {fileID: 11500000, guid: 15aa913e5ee86dc45bc965a97d1b3191, type: 3}
 --- !u!1 &1625365240
 GameObject:
   m_ObjectHideFlags: 0
