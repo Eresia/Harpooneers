@@ -4,20 +4,20 @@ using UnityEngine;
 
 using DG.Tweening;
 
-public class SplashTentaclesPattern : BossPattern {
+public class ChargerTentaclesPattern : BossPattern {
 
-    private SplashTentacleState state;
+    private ChargerTentacleState state;
     private Phase2AI phase2;
 
     private Vector3[] spawns;
 
     private TentacleBehaviour[] tentaclesToUse;
 
-    public SplashTentaclesPattern(SplashTentacleState state)
+    public ChargerTentaclesPattern(ChargerTentacleState state)
     {
         this.state = state;
 
-        spawns = new Vector3[state.tentacleCount];
+        spawns = new Vector3[4];
     }
 
     public override void SetBoss(PhaseAI boss)
@@ -40,6 +40,7 @@ public class SplashTentaclesPattern : BossPattern {
     /// </summary>
     private void SpawnTentacles()
     {
+        /*
         Vector3 center = phase2.bossMgr.center.position;
 
         // Random a position on a circle (in X and Z).
@@ -64,6 +65,7 @@ public class SplashTentaclesPattern : BossPattern {
             Vector3 lookCenter = center - spawns[i];
             tentaclesToUse[i].childTransform.localRotation = Quaternion.LookRotation(lookCenter);
         }
+        */
     }
 
     private Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Vector3 angles) {
@@ -77,56 +79,7 @@ public class SplashTentaclesPattern : BossPattern {
 
     IEnumerator ActivateTentacles()
     {
-        for (int attack = 0; attack < state.attackCount; attack++)
-        {
-            SpawnTentacles();
-
-            for (int i = 0; i < state.tentacleCount; i++)
-            {
-                tentaclesToUse[i].Spawning(state.bubblingDuration);
-            }
-
-            yield return new WaitForSeconds(state.bubblingDuration);
-
-            for (int i = 0; i < state.tentacleCount; i++)
-            {
-                tentaclesToUse[i].Emerge(state.startPos, state.attackPos, state.emergingDuration);
-            }
-
-            yield return new WaitForSeconds(state.emergingDuration);
-
-            // Each tentacles focus a player.
-            for (int i = 0; i < state.tentacleCount; i++)
-            {
-                tentaclesToUse[i].FocusPlayer(state.turnDuration);
-            }
-
-            yield return new WaitForSeconds(state.turnDuration);
-
-            yield return new WaitForSeconds(state.waitBeforeAttack);
-
-            for (int i = 0; i < state.tentacleCount; i++)
-            {
-                tentaclesToUse[i].TriggerAttackAnim();
-            }
-
-            yield return new WaitUntil(() => (tentaclesToUse[0].animator.GetBool("End")));
-            
-            for (int i = 0; i < state.tentacleCount; i++)
-            {
-                tentaclesToUse[i].animator.SetBool("End", false);
-
-                tentaclesToUse[i].Dive(state.startPos, state.divingDuration);
-            }
-
-            yield return new WaitForSeconds(state.divingDuration);
-
-            // Reset pos.
-            for (int i = 0; i < state.tentacleCount; i++)
-            {
-                tentaclesToUse[i].ResetTentacle();
-            }
-        }
+        yield return new WaitForSeconds(5f);
 
         OnPatternFinished();
     }

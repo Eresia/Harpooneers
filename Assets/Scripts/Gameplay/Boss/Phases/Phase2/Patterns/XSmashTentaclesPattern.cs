@@ -2,18 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using DG.Tweening;
+public class XSmashTentaclesPattern : BossPattern {
 
-public class SplashTentaclesPattern : BossPattern {
-
-    private SplashTentacleState state;
+    private XSmashTentacleState state;
     private Phase2AI phase2;
 
     private Vector3[] spawns;
 
     private TentacleBehaviour[] tentaclesToUse;
 
-    public SplashTentaclesPattern(SplashTentacleState state)
+    public XSmashTentaclesPattern(XSmashTentacleState state)
     {
         this.state = state;
 
@@ -38,23 +36,18 @@ public class SplashTentaclesPattern : BossPattern {
     /// <summary>
     /// Spawn 2 tentacles ON a circle with a minimum distance between the 2 tentacles.
     /// </summary>
-    private void SpawnTentacles()
+    private void SpawnCross()
     {
+        spawns[0] = boss.bossMgr.east.position;
+        spawns[1] = boss.bossMgr.north.position;
+        spawns[2] = boss.bossMgr.west.position;
+        spawns[3] = boss.bossMgr.south.position;
+
         Vector3 center = phase2.bossMgr.center.position;
 
-        // Random a position on a circle (in X and Z).
-        Vector3 randPos = Vector3.zero;
-        Vector2 randCircle = Random.insideUnitCircle.normalized * state.spawnRadius;
-        randPos.x = randCircle.x;
-        randPos.z = randCircle.y;
-
-        spawns[0] = center + randPos;
-
-        spawns[1] = RotatePointAroundPivot(spawns[0], Vector3.up, new Vector3(0f, Random.Range(state.minAngle, state.maxAngle), 0f));
-
         // Store and spawn tentacles.
-        tentaclesToUse = new TentacleBehaviour[2];
-        for (int i = 0; i < 2; i++)
+        tentaclesToUse = new TentacleBehaviour[state.tentacleCount];
+        for (int i = 0; i < state.tentacleCount; i++)
         {
             tentaclesToUse[i] = phase2.TentaclesHammer[i];
 
@@ -66,20 +59,45 @@ public class SplashTentaclesPattern : BossPattern {
         }
     }
 
-    private Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Vector3 angles) {
+    /// <summary>
+    /// Spawn 2 tentacles ON a circle with a minimum distance between the 2 tentacles.
+    /// </summary>
+    private void SpawnCorners()
+    {
+        spawns[0] = boss.bossMgr.north.position + boss.bossMgr.east.position;
+        spawns[1] = boss.bossMgr.south.position + boss.bossMgr.east.position;
+        spawns[2] = boss.bossMgr.south.position + boss.bossMgr.west.position;
+        spawns[3] = boss.bossMgr.north.position + boss.bossMgr.west.position;
 
-        Vector3 dir = point - pivot; // get point direction relative to pivot
-        dir = Quaternion.Euler(angles) * dir; // rotate it
-        point = dir + pivot; // calculate rotated point
+        Vector3 center = phase2.bossMgr.center.position;
 
-        return point; // return it
+        // Store and spawn tentacles.
+        tentaclesToUse = new TentacleBehaviour[state.tentacleCount];
+        for (int i = 0; i < state.tentacleCount; i++)
+        {
+            tentaclesToUse[i] = phase2.TentaclesHammer[i];
+
+            tentaclesToUse[i].transform.position = spawns[i];
+
+            // Focus the center.
+            Vector3 lookCenter = center - spawns[i];
+            tentaclesToUse[i].childTransform.localRotation = Quaternion.LookRotation(lookCenter);
+        }
     }
 
     IEnumerator ActivateTentacles()
     {
-        for (int attack = 0; attack < state.attackCount; attack++)
+        for (int attack = 0; attack < 2; attack++)
         {
-            SpawnTentacles();
+            if (attack == 0)
+            {
+                SpawnCross();
+            }
+
+            else
+            {
+                SpawnCorners();
+            }
 
             for (int i = 0; i < state.tentacleCount; i++)
             {
@@ -95,13 +113,10 @@ public class SplashTentaclesPattern : BossPattern {
 
             yield return new WaitForSeconds(state.emergingDuration);
 
-            // Each tentacles focus a player.
             for (int i = 0; i < state.tentacleCount; i++)
             {
-                tentaclesToUse[i].FocusPlayer(state.turnDuration);
+                tentaclesToUse[i].FeedbackAttackArea();
             }
-
-            yield return new WaitForSeconds(state.turnDuration);
 
             yield return new WaitForSeconds(state.waitBeforeAttack);
 
@@ -111,7 +126,7 @@ public class SplashTentaclesPattern : BossPattern {
             }
 
             yield return new WaitUntil(() => (tentaclesToUse[0].animator.GetBool("End")));
-            
+
             for (int i = 0; i < state.tentacleCount; i++)
             {
                 tentaclesToUse[i].animator.SetBool("End", false);
