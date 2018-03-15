@@ -21,7 +21,7 @@ public class PlayerInput : MonoBehaviour
 
     private Player player; // Rewired player.
 
-    private bool doPause; // Do the pause if the delay is repected.
+    public bool doPause; // Do the pause if the delay is repected.
 
     private int controllerDisconnected;
 

@@ -6,25 +6,25 @@ using DG.Tweening;
 
 public class SplashTentaclesHITPattern : BossPattern {
 
-    private SplashTentacleHITState state;
-    private Phase2AI phase2;
+    // private SplashTentacleHITState state;
+    // private Phase2AI phase2;
 
-    private Vector3[] spawns;
+    // private Vector3[] spawns;
 
     private TentacleBehaviour[] tentaclesToUse;
 
     public SplashTentaclesHITPattern(SplashTentacleHITState state)
     {
-        this.state = state;
+        // this.state = state;
 
-        spawns = new Vector3[state.tentacleCount];
+        // spawns = new Vector3[state.tentacleCount];
     }
 
     public override void SetBoss(PhaseAI boss)
     {
         base.SetBoss(boss);
 
-        phase2 = boss as Phase2AI;
+        // phase2 = boss as Phase2AI;
     }
 
     protected override void ExecutePattern()
