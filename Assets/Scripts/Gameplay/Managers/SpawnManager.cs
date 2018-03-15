@@ -2,23 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct LDCategory{
+
+    public GameObject[] prefabs;
+}
+
+
 public class SpawnManager : MonoBehaviour {
 
     public GameObject[] mouettePrefab;
     public GameObject[] dauphinPrefab;
     public GameObject[] poissonPrefab;
     public GameObject[] rocherPrefab;
+ 
+    [Header("Icebergs")]
     public GameObject[] icebergPrefab;
-
-    public Transform[] spawnPositions;
-
     public Transform[] icebergSpawnPositions;
+    public float minIcebergSpawnTime;
+    public float maxIcebergSpawnTime;
+
+
+    [Header("LD Chunks")]
+    public LDCategory[] prefabCategory;
+    public Transform[] spawnPositionsLD;
+    public float minLDSpawnTime;
+    public float maxLDSpawnTime;
+    private int lastPrefabIndex = -1;
+    private int lastCategoryIndex = -1;
+    private int lastTransformIndex = -1;
+
+
+
 
     void Start()
     {
+      //  StartCoroutine(IcebergCoroutine());
         StartCoroutine(LDCoroutine());
     }
 
+
+    /*
     public void Spawn(GameObject prefab, Transform prefabTransform, bool isRandom, Transform[] spawnArray)
     {
         if (isRandom)
@@ -30,11 +54,12 @@ public class SpawnManager : MonoBehaviour {
        Instantiate(prefab, prefabTransform.position, prefabTransform.rotation, transform);
     }
 
-    IEnumerator LDCoroutine()
+    */
+
+    IEnumerator IcebergCoroutine()
     {
         while(true)
         {
-            Debug.Log("ICEBEEERG");
             int prefabIndex = Random.Range(0, icebergPrefab.Length);
             int transformIndex = Random.Range(0, icebergSpawnPositions.Length);
             GameObject inst = Instantiate(icebergPrefab[prefabIndex], icebergSpawnPositions[transformIndex].position, Quaternion.identity, transform);
@@ -46,7 +71,47 @@ public class SpawnManager : MonoBehaviour {
             float randomSpeed = Random.Range(1f, 1.5f);
             inst.GetComponent<ConstantMovement>().speed = randomSpeed;
 
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(Random.Range(minIcebergSpawnTime, maxIcebergSpawnTime));
         }          
+    }
+
+    IEnumerator LDCoroutine()
+    {
+        while (true)
+        {
+            int prefabcategoryIndex = Random.Range(0, prefabCategory.Length);
+            int prefabIndex = Random.Range(0, prefabCategory[prefabcategoryIndex].prefabs.Length);
+            int transformIndex = Random.Range(0, spawnPositionsLD.Length);
+
+
+            // Pas possible d'instancier 2 fois de suite le même prefab
+            while (prefabIndex == lastPrefabIndex && prefabcategoryIndex == lastCategoryIndex)
+            {
+                prefabcategoryIndex = Random.Range(0, prefabCategory.Length);
+                prefabIndex = Random.Range(0, prefabCategory[prefabcategoryIndex].prefabs.Length);
+            }
+
+    
+            // Pas possible d'instancier 2 fois de suite au même endroit
+            while (transformIndex == lastTransformIndex)
+            {
+                transformIndex = Random.Range(0, spawnPositionsLD.Length);
+            }
+           
+            // Instantiate
+            GameObject inst = Instantiate(prefabCategory[prefabcategoryIndex].prefabs[prefabIndex], spawnPositionsLD[transformIndex].position, Quaternion.identity, transform);
+
+            float randomRot = Random.Range(0f, 360f);
+            inst.transform.rotation = Quaternion.Euler(0f, randomRot, 0f);
+
+                       
+            inst.GetComponent<ConstantMovement>().speed = 0.5f;
+
+            lastTransformIndex = transformIndex;
+            lastPrefabIndex = prefabIndex;
+            lastCategoryIndex = prefabcategoryIndex;
+
+            yield return new WaitForSeconds(Random.Range(minLDSpawnTime, maxLDSpawnTime));
+        }
     }
 }
