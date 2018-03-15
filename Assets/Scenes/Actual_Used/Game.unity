@@ -1182,7 +1182,7 @@ Prefab:
         type: 2}
       propertyPath: lifepointsBar
       value: 
-      objectReference: {fileID: 2143910666}
+      objectReference: {fileID: 976676461}
     - target: {fileID: 114362013403539180, guid: 067cdd2b7bc7c2f48bf143fbdd61132e,
         type: 2}
       propertyPath: phaseTransitionMgr
@@ -1192,6 +1192,11 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114362013403539180, guid: 067cdd2b7bc7c2f48bf143fbdd61132e,
+        type: 2}
+      propertyPath: lifepointsFilling
+      value: 
+      objectReference: {fileID: 2143910666}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 067cdd2b7bc7c2f48bf143fbdd61132e, type: 2}
   m_IsPrefabParent: 0
@@ -2136,6 +2141,11 @@ Transform:
   m_PrefabParentObject: {fileID: 4715467816171786, guid: 4275da3191f17554c9782b4fc0e13d23,
     type: 2}
   m_PrefabInternal: {fileID: 967309429}
+--- !u!1 &976676461 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1683476937657598, guid: 20d2f651efa30be42b6c8ecd7b4c74d9,
+    type: 2}
+  m_PrefabInternal: {fileID: 1402082912}
 --- !u!1001 &997361260
 Prefab:
   m_ObjectHideFlags: 0
