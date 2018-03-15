@@ -4,16 +4,16 @@ using UnityEngine;
 
 using DG.Tweening;
 
-public class SplashTentaclesPattern : BossPattern {
+public class SplashTentaclesHITPattern : BossPattern {
 
-    private SplashTentacleState state;
+    private SplashTentacleHITState state;
     private Phase2AI phase2;
 
     private Vector3[] spawns;
 
     private TentacleBehaviour[] tentaclesToUse;
 
-    public SplashTentaclesPattern(SplashTentacleState state)
+    public SplashTentaclesHITPattern(SplashTentacleHITState state)
     {
         this.state = state;
 
@@ -40,6 +40,7 @@ public class SplashTentaclesPattern : BossPattern {
     /// </summary>
     private void SpawnTentacles()
     {
+        /*
         Vector3 center = phase2.bossMgr.center.position;
 
         // Random a position on a circle (in X and Z).
@@ -64,6 +65,7 @@ public class SplashTentaclesPattern : BossPattern {
             Vector3 lookCenter = center - spawns[i];
             tentaclesToUse[i].childTransform.localRotation = Quaternion.LookRotation(lookCenter);
         }
+        */
     }
 
     private Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Vector3 angles) {
@@ -77,6 +79,7 @@ public class SplashTentaclesPattern : BossPattern {
 
     IEnumerator ActivateTentacles()
     {
+        /*
         for (int attack = 0; attack < state.attackCount; attack++)
         {
             SpawnTentacles();
@@ -103,11 +106,6 @@ public class SplashTentaclesPattern : BossPattern {
 
             yield return new WaitForSeconds(state.turnDuration);
 
-            for (int i = 0; i < state.tentacleCount; i++)
-            {
-                tentaclesToUse[i].FeedbackAttackArea();
-            }
-
             yield return new WaitForSeconds(state.waitBeforeAttack);
 
             for (int i = 0; i < state.tentacleCount; i++)
@@ -131,7 +129,10 @@ public class SplashTentaclesPattern : BossPattern {
             {
                 tentaclesToUse[i].ResetTentacle();
             }
-        }
+            }
+            */
+
+        yield return null;
 
         OnPatternFinished();
     }

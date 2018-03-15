@@ -69,11 +69,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70815fa73953f764489a011a6001abca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxLifepoints: 100
   bossMgr: {fileID: 0}
-  tentaclePrefab: {fileID: 114965063249734226, guid: f766ecc83cdd029418b6c9a837601a16,
+  swipperPrefab: {fileID: 114965063249734226, guid: f766ecc83cdd029418b6c9a837601a16,
     type: 2}
-  tentaclesNeeded: 10
+  hammerPrefab: {fileID: 114825656562980056, guid: 65c28948163b1e545b007af4bb70ac67,
+    type: 2}
+  chargerPrefab: {fileID: 114873807325633118, guid: 618f6944c05a9d8469df045859bbb75b,
+    type: 2}
+  eyeTentaclePrefab: {fileID: 114730312700449272, guid: 04d937db97ed03c4b86fd2b7954a3062,
+    type: 2}
+  tentaclesNeeded: 5
   hitOnEyesNeeded: 2
   bombInMouthNeeded: 2
   noHittablePatternCount: 1
-  numberOfPatternsWithoutHit: 0200000002000000
+  numberOfPatternsWithoutHit: 3200000032000000
