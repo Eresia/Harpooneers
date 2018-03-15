@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class AspirationTentacleState : BossState<AspirationTentaclesPattern>
 {
-    public int attackCount = 2;
-
     public float bubblingDuration = 3f;
 
     [Header("Spawn")]
-    public float spawnRadius = 10f;
-    public float minAngle = 45f;
-    public float maxAngle = 315f;
 	public float offset = 1f;
 	public float distanceBeetweenTentacles = 2f;
+	public float waveDuration = 2f;
+	public float waveAmplitude = 3f;
 
     public Vector3 startPos;
 
@@ -22,8 +19,10 @@ public class AspirationTentacleState : BossState<AspirationTentaclesPattern>
     public Vector3 attackPos;
 
     [Header("Attack")]
-    public float turnDuration = 1f;
     public float waitBeforeAttack = 0.5f;
+
+	[Space]
+	public float maxTime = 20f;
 
     public float divingDuration;
 
