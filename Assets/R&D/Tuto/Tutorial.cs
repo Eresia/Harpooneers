@@ -11,24 +11,36 @@ public class Tutorial : MonoBehaviour
     public TextMeshProUGUI Tuto;
 	public Image Frame;
     public TutoRock Rock;
-    public Transform RockTarget;
+	public BossManager bossManager;
+
+	public GameObject tutoParent;
 
     [Header("Values")]
 	public float TimeBetweenLetters = 0.02f;
+    public float TimeBetweenTextTransitions = 1f;
 	public float StartTime = 3f;
 	public float FrameSpawnTime = 1f;
     public float IntroTime = 5f;
     public float ToyTime = 5f;
-    public float RockMovementTime = 5f;
-	public float HarpoonTime = 5f;
+    public float rockSpeed = 5f;
+	public float rockDepth = 5f;
 	public float TutoEndTime = 3f;
+
+	[Space]
+
+	public float waveAmplitude;
+
+	public float waveAppearTime;
 
     [Header("Texts")]
     public string[] Texts;
 
+	private bool hasExploded;
+
     private void Start()
     {
 		Tuto.text = "";
+		hasExploded = true;
         StartCoroutine(Progression());
         // Get all fishing boats to lock inputs.
     }
@@ -50,77 +62,135 @@ public class Tutorial : MonoBehaviour
         //Movement
         yield return PrintText(1);
         yield return new WaitForSeconds(ToyTime);
+		
+		int waveId = GameManager.instance.ground.ZoneWaveId;
+		WaveOptions wave = GameManager.instance.ground.waveManager.Waves[waveId];
+
+		float time = 0;
+
+		do{
+			wave.amplitude = (waveAmplitude / waveAppearTime) * time;
+			GameManager.instance.ground.waveManager.ChangeWave(waveId, wave);
+			yield return null;
+			time += Time.deltaTime;
+		}while(time < waveAppearTime);
+
         yield return PrintText(2);
-		//Start Waves --------------------------------------------------BASTIEN ICI------------------------------------------
         yield return new WaitForSeconds(ToyTime);
 
         PassToStep(2);         //Unlock Harpoon
 
         //Harpoon
-        Rock.transform.DOMove(RockTarget.position, RockMovementTime);
+		Vector3 rockPosition = Rock.Mover.SelfTransform.position;		
+
+		do{
+			yield return null;
+			rockPosition.y += rockSpeed * Time.deltaTime;
+			Rock.Mover.SelfTransform.position = rockPosition;
+		}while(rockPosition.y < GameManager.instance.ground.GetTransformInfo(rockPosition).position.y);
+
+		Rock.Mover.enabled = true;
+
         yield return PrintText(3);
-		yield return new WaitUntil(() => Rock.HarpoonHit);
+        yield return new WaitForSeconds(TimeBetweenTextTransitions);
         yield return PrintText(4);
-        yield return new WaitWhile(() => Rock.HarpoonHit);
+        yield return new WaitForSeconds(TimeBetweenTextTransitions);
+		yield return new WaitUntil(() => Rock.HarpoonHit);
         yield return PrintText(5);
-		yield return new WaitForSeconds(HarpoonTime);
+        yield return new WaitWhile(() => Rock.HarpoonHit);
+		yield return new WaitForSeconds(ToyTime);
 
         PassToStep(3);        //Unlock Bombs
 
         //Bombs
         yield return PrintText(6);
-		yield return new WaitUntil(() => Rock.RockExplode);
+		hasExploded = false;
+		yield return new WaitUntil(() => hasExploded);
         yield return PrintText(7);
         yield return new WaitForSeconds(ToyTime);
 
-        //End
+        //Death & Resurect
         yield return PrintText(8);
+        yield return new WaitForSeconds(TimeBetweenTextTransitions);
+        GameManager.instance.shipMgr.ChoosePlayerManagerToAttack().Death();
+        yield return PrintText(9);
+        yield return new WaitUntil(AllPlayerAlive);
+
+        //Lost
+        yield return PrintText(10);
         yield return new WaitForSeconds(ToyTime);
 
+        //End
+        yield return PrintText(11);
+        yield return new WaitForSeconds(ToyTime);
+
+		Vector3 endPos = Rock.Mover.SelfTransform.position;
+		endPos.y -= 10f;
+
+		Rock.Mover.enabled = false;
+
+		Rock.Mover.SelfTransform.DOMove(endPos, 10f / rockSpeed);
         //Start Boss
 		Frame.DOFade(0f, FrameSpawnTime);
 		Tuto.DOFade(0f, FrameSpawnTime);
 		yield return new WaitWhile(() => DOTween.IsTweening(Frame));
 		yield return new WaitForSeconds(TutoEndTime);
+		bossManager.enabled = true;
+		Destroy(tutoParent);
 
     }
 
     IEnumerator PrintText(int i)
     {
-		string stock = "";
-		bool inTag = false;
+        Texts[i] = Texts[i].Replace('\\', '\n');
+        Tuto.text = Texts[i];
 
-        Tuto.text = "";
-		Texts[i] = Texts[i].Replace('\\', '\n');
+        int visibleCharacters = Texts[i].Length;
+        
+        for(int j = 0; j < visibleCharacters+1; j++){
 
-        foreach (char c in Texts[i])
-        {
-			if (c == '>')
-			{
-				inTag= false;
-				Tuto.text += stock + c;
-			}
-			else if (c == '<' || inTag)
-			{
-				inTag = true;
-				stock += c;
-			}
-			else
-			{
-				Tuto.text += c;
-				yield return new WaitForSeconds(TimeBetweenLetters);
-			}
-
-
+            Tuto.maxVisibleCharacters = j;
+            yield return new WaitForSeconds(TimeBetweenLetters);
         }
+
+		// string stock = "";
+		// bool inTag = false;
+
+        // Tuto.text = "";
+		// Texts[i] = Texts[i].Replace('\\', '\n');
+
+        // foreach (char c in Texts[i])
+        // {
+		// 	if (c == '>')
+		// 	{
+		// 		inTag= false;
+		// 		Tuto.text += stock + c;
+		// 	}
+		// 	else if (c == '<' || inTag)
+		// 	{
+		// 		inTag = true;
+		// 		stock += c;
+		// 	}
+		// 	else
+		// 	{
+		// 		Tuto.text += c;
+		// 		yield return new WaitForSeconds(TimeBetweenLetters);
+		// 	}
+        // }
     }
+
+	private bool AllPlayerAlive(){
+		return (GameManager.instance.shipMgr.playerAlive == GameManager.instance.nbOfPlayers);
+	}
 
     private void PassToStep(int step)
     {
-        for (int i = 0; i < GameManager.instance.nbOfPlayers; i++)
-        {
-            // Player Input step ++
-            GameManager.instance.shipMgr.PlayerInputs[i].TutoStep = step;
-        }
+        GameManager.instance.shipMgr.LockInputs(step);
     }
+	
+	private void OnExplode(){
+		if(!hasExploded){
+			hasExploded = true;
+		}
+	}
 }

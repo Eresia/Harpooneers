@@ -11,6 +11,8 @@ public class ShipManager : MonoBehaviour {
     public bool useDefaultConfig = false;
     public bool randomDefaultConfig = false;
 
+    public bool doCinematic = true;
+
     public ShipConfiguration defaultConfig = new ShipConfiguration
     {
         cabinId = 0,
@@ -26,6 +28,7 @@ public class ShipManager : MonoBehaviour {
     
     private ShipModulesManager[] shipModuleMgrs;
     private PlayerManager[] playerMgrs;
+    private MovementBehaviour[] moveScript;
 
     /// <summary>
     /// Get player inputs managers
@@ -36,7 +39,7 @@ public class ShipManager : MonoBehaviour {
     }
     private PlayerInput[] playerInputs;
     
-    private int playerAlive = 0;
+    public int playerAlive {get; private set;}
 
     [Header("Modules for boat (Scriptable objects)")]
     public HarpoonModule[] harpoonsScriptObjs;
@@ -49,6 +52,7 @@ public class ShipManager : MonoBehaviour {
         shipModuleMgrs = new ShipModulesManager[players.Length];
         playerMgrs = new PlayerManager[players.Length];
         playerInputs = new PlayerInput[players.Length];
+        moveScript = new MovementBehaviour[players.Length];
 
         if (players.Length > 0)
         {
@@ -57,12 +61,18 @@ public class ShipManager : MonoBehaviour {
                 shipModuleMgrs[i] = players[i].GetComponentInChildren<ShipModulesManager>();
                 playerMgrs[i] = shipModuleMgrs[i].GetComponent<PlayerManager>();
                 playerInputs[i] = shipModuleMgrs[i].GetComponent<PlayerInput>();
+                moveScript[i] = shipModuleMgrs[i].GetComponent<MovementBehaviour>();
             }
         }
 
         if (useDefaultConfig)
         {
             SetupAllShips();
+        }
+
+        if(!doCinematic)
+        {
+            UnLockInputs();
         }
     }
 
@@ -141,7 +151,11 @@ public class ShipManager : MonoBehaviour {
 
             if (!playerMgrs[playerId].IsDead)
             {
-                targetFound = true;
+                // Check if player is targettable.
+                if(!moveScript[playerId].IsOutOfScreen)
+                {
+                    targetFound = true;
+                }
             }
 
             else
@@ -171,10 +185,15 @@ public class ShipManager : MonoBehaviour {
         return playerMgrs[ChoosePlayerToAttackId()];
     }
 
-	public void LockInputs(){
-		foreach(PlayerInput input in playerInputs){
-			input.TutoStep = -1;
-		}
+	public void LockInputs(int lockDegree)
+    {
+        for (int i = 0; i < playerInputs.Length; i++)
+        {
+            playerInputs[i].TutoStep = lockDegree;
+
+            // Freeze movement.
+            moveScript[i].FreezePlayer();
+        }
 	}
 
 	public void UnLockInputs(){

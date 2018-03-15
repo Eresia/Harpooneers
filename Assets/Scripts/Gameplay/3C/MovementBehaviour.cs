@@ -18,6 +18,13 @@ public class MovementBehaviour : MonoBehaviour {
 
     private float move;
 
+    public bool IsOutOfScreen
+    {
+        get { return isOutOfScreen; }
+    }
+    private bool isBumpInScreen;
+    private bool isOutOfScreen;
+
     private void Reset()
     {
         physicMove = GetComponent<PhysicMove>();
@@ -66,7 +73,37 @@ public class MovementBehaviour : MonoBehaviour {
         // Limit position in the boundaries of the screen.
         Vector3 pos = transform.position;
 
-        transform.position = GameManager.instance.boundaryMgr.InScreenPosition(pos);
+        //transform.position = GameManager.instance.boundaryMgr.LimitPosition(pos);
+
+        // Check if pos is out of screen.
+        // Feedback out of screen
+
+        int outOfScreen = GameManager.instance.boundaryMgr.CheckPos(pos);
+        
+        // FEEDBACK leave screen.
+        if (outOfScreen == 1)
+        {
+            isOutOfScreen = true;
+        }
+
+        // DEATH if too far.
+        else if (outOfScreen == 2 && !isBumpInScreen)
+        {
+            isBumpInScreen = true;
+            isOutOfScreen = false;
+
+            GetComponent<PlayerManager>().Death();
+
+            Vector3 dir = (GameManager.instance.boundaryMgr.screenCenterInWorldSpace - transform.position).normalized;
+
+            physicMove.AddForce(-physicMove.Velocity);
+            physicMove.AddForce(dir * GameManager.instance.boundaryMgr.forceWhenKillByBOundaries);
+        }
+    }
+
+    public void IsRez()
+    {
+        isBumpInScreen = false;
     }
 
     // Freeze player at his position.

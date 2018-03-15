@@ -28,7 +28,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &1023190409309946
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
@@ -511,6 +511,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4975876370933352}
+  - {fileID: 4613307154236008}
   m_Father: {fileID: 4643361837982220}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -566,7 +567,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4711463730645594}
-  m_Father: {fileID: 4643361837982220}
+  m_Father: {fileID: 4494518694669886}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4643361837982220
@@ -580,7 +581,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4494518694669886}
-  - {fileID: 4613307154236008}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -742,10 +742,11 @@ MonoBehaviour:
   childTransform: {fileID: 4494518694669886}
   spawningFX: {fileID: 198797716111743408}
   attackFx: {fileID: 0}
-  tentacleCollider: {fileID: 0}
   animator: {fileID: 95489531342982424}
   bubbleSound: {fileID: 8300000, guid: 0836f3a9542befb45b12b21219506c8d, type: 3}
   attackSound: {fileID: 0}
+  attackCollider: {fileID: 0}
+  bodyCollider: {fileID: 0}
 --- !u!137 &137011972588678668
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

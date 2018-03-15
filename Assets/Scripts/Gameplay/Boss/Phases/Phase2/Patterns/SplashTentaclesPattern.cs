@@ -103,6 +103,11 @@ public class SplashTentaclesPattern : BossPattern {
 
             yield return new WaitForSeconds(state.turnDuration);
 
+            for (int i = 0; i < state.tentacleCount; i++)
+            {
+                tentaclesToUse[i].FeedbackAttackArea();
+            }
+
             yield return new WaitForSeconds(state.waitBeforeAttack);
 
             for (int i = 0; i < state.tentacleCount; i++)

@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class TutoRock : HandleHarpoonHit
 {
+	public PhysicMove Mover;
+
 	public bool HarpoonHit
 	{
 		get {return _harpoonHit;}
 	}
 	private bool _harpoonHit = false;
-
-	public bool RockExplode
-	{
-		get {return _rockExplode;}
-	}
-	private bool _rockExplode = false;
 
     protected override void ActionWhenHarpoonAttach(Harpoon harpoon)
 	{
@@ -24,10 +20,5 @@ public class TutoRock : HandleHarpoonHit
     protected override void ActionWhenHarpoonDetach()
 	{
 		_harpoonHit = false;
-	}
-
-	public void OnExplode()
-	{
-			_rockExplode = true;
 	}
 }

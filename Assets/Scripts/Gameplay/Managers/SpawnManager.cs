@@ -27,7 +27,7 @@ public class SpawnManager : MonoBehaviour {
             prefabTransform = spawnArray[index];
         }
 
-       GameObject inst =  Instantiate(prefab, prefabTransform.position, prefabTransform.rotation, transform);
+       Instantiate(prefab, prefabTransform.position, prefabTransform.rotation, transform);
     }
 
     IEnumerator LDCoroutine()
@@ -38,7 +38,7 @@ public class SpawnManager : MonoBehaviour {
             int prefabIndex = Random.Range(0, icebergPrefab.Length);
             int transformIndex = Random.Range(0, icebergSpawnPositions.Length);
             GameObject inst = Instantiate(icebergPrefab[prefabIndex], icebergSpawnPositions[transformIndex].position, Quaternion.identity, transform);
-            inst.transform.rotation *= Quaternion.Euler(0f, Random.Range(0, 360), 0f);
+            inst.transform.LookAt(Vector3.zero);
 
             float randomScale = Random.Range(0.3f, 0.5f);
             inst.transform.localScale = new Vector3(randomScale, randomScale, randomScale);

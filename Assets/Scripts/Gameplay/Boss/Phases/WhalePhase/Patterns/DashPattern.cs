@@ -40,9 +40,6 @@ public class DashPattern : BossPattern {
 		
 
 		while(true){
-			state.test = isImmersed;
-			state.test2 = targetY;
-
 			time += Time.deltaTime;
 
 			if((time >= (timeTarget + state.targetChangeTime)) || (target.IsDead)){
@@ -58,6 +55,26 @@ public class DashPattern : BossPattern {
 
 			Vector3 whalePosition = whaleAI.WhaleTransform.position;
 			Vector3 targetDirection = target.transform.position - whalePosition;
+
+			RaycastHit hit;
+
+        	if (Physics.Raycast(whalePosition, targetDirection.normalized, out hit, targetDirection.sqrMagnitude, whaleAI.whaleReferences.toAvoidLayers)){
+				Vector3 hitPosition = hit.transform.position;
+				float radius = Vector3.Distance(hitPosition, hit.point);
+				Vector3 obstacle = whalePosition - hitPosition;
+				Quaternion angleToTarget = Quaternion.LookRotation(obstacle, targetDirection - hit.transform.position);
+				if(angleToTarget.y > 180){
+					angleToTarget.y -= 360;
+				}
+				float sign = Mathf.Sign(angleToTarget.y);
+				float x = obstacle.x * Mathf.Cos(sign*Mathf.PI/2) - obstacle.z * Mathf.Sin(sign*Mathf.PI/2);
+				float z = obstacle.z * Mathf.Cos(sign*Mathf.PI/2) + obstacle.x * Mathf.Sin(sign*Mathf.PI/2);
+				Vector3 lastDirection = (new Vector3(x, 0f, z)).normalized;
+				targetDirection = new Vector3(hitPosition.x + lastDirection.x * radius, 0f, hitPosition.z + lastDirection.z * radius) - whalePosition;
+			}
+
+			Debug.DrawRay(whalePosition + targetDirection, Vector3.up * 10f);
+
 			Quaternion angleDirection = Quaternion.LookRotation(targetDirection);
 			angleDirection.x = 0f;
 			angleDirection.z = 0f;

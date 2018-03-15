@@ -30,12 +30,13 @@ public class BackAttackPattern : BossPattern
 
     private IEnumerator BackAttack()
     {
-        for (int i = 0; i < state.attackAmount; i++)
+		int nbAttack = Random.Range(1, state.attackAmount+1);
+        for (int i = 0; i < nbAttack; i++)
         {
             target = GameManager.instance.shipMgr.ChoosePlayerToAttack();
+			Vector3 targetPosition = target.position;
 
-            whaleAI.WhaleChildTransform.localPosition = target.position + whaleAI.WhaleTransform.up * -state.startHeight;
-            whaleAI.WhaleChildTransform.localScale = Vector3.zero;
+            whaleAI.WhaleChildTransform.position = targetPosition + whaleAI.WhaleTransform.up * -state.startHeight;
 
             // Apply Random rotation...
             whaleAI.WhaleChildTransform.localRotation = Quaternion.Euler(0f, Random.Range(-180f, 180f), 0f);
@@ -90,9 +91,9 @@ public class BackAttackPattern : BossPattern
 
     private IEnumerator WhaleDive()
     {
-        Tween t = whaleAI.WhaleChildTransform.DOLocalMove(whaleAI.WhaleTransform.up * state.diveHeightEnd + whaleAI.WhaleTransform.forward * state.diveForwardEnd, state.divingDuration);
+        Tween t = whaleAI.WhaleChildTransform.DOMove(-whaleAI.WhaleTransform.up * state.diveDepthEnd, state.divingDuration);
         whaleAI.WhaleChildTransform.DOLocalRotate(state.diveRotationEnd, state.divingDuration);
-        whaleAI.WhaleChildTransform.DOScale(Vector3.zero, state.divingDuration);
+        // whaleAI.WhaleChildTransform.DOScale(Vector3.zero, state.divingDuration);
 
         whaleAI.WhaleAnimator.Play("Dash");
         whaleAI.WhaleAnimator.SetBool("Swim", true);

@@ -43,6 +43,8 @@ public class Ground : MonoBehaviour {
 
 	public WaveManager waveManager {get; private set;}
 
+	public int ZoneWaveId {get; private set;}
+
 	private Transform selfTransform;
 
 	private int lod;
@@ -145,7 +147,7 @@ public class Ground : MonoBehaviour {
 		
 		waveManager = new WaveManager();
 
-		waveManager.CreateZone(zoneAmplitude, zoneRotation, zoneWaveLength, zonePeriod);
+		ZoneWaveId = waveManager.CreateZone(0f, zoneRotation, zoneWaveLength, zonePeriod);
 		// waveManager.CreateZoneTest(zoneAmplitude * 2, zoneWaveLength * 2, zonePeriod);
 
 		int heightMapLod = 32 * ((int) Mathf.Pow(2, heigtMapPower));
