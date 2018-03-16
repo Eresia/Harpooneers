@@ -109,7 +109,7 @@ public class SplashTentaclesHITPattern : BossPattern {
             }
         }
 
-        tentaclesToUse[i].Dive(state.startPos, state.divingDuration);
+        tentaclesToUse[0].Dive(state.startPos, state.divingDuration);
 
         yield return new WaitForSeconds(state.divingDuration);
 
