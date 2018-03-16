@@ -36,16 +36,23 @@ public class TentacleBehaviour : MonoBehaviour {
     public void Spawning(float spawningDuration)
     {
         gameObject.SetActive(true);
-        spawningFX.Play();
+		if(spawningFX != null){
+			spawningFX.Play();
+		}
 
         GameManager.instance.audioManager.PlaySoundOneTime(bubbleSound, 0.5f);
     }
     
     public void Emerge(Vector3 startPos, Vector3 endPos, float emergingDuration)
     {
-        spawningFX.Stop();
+		if(spawningFX != null){
+        	spawningFX.Stop();
+		}
         childTransform.gameObject.SetActive(true);
-        bodyCollider.enabled = true;
+
+		if(bodyCollider){
+			bodyCollider.enabled = true;
+		}
 
         animator.SetTrigger("Spawn");
 
@@ -55,7 +62,9 @@ public class TentacleBehaviour : MonoBehaviour {
 
     public void FeedbackAttackArea()
     {
-        attackFx.Play();
+		if(attackFx != null){
+			attackFx.Play();
+		}
     }
 
     public void Dive(Vector3 endPos, float divingDuration)
@@ -116,7 +125,10 @@ public class TentacleBehaviour : MonoBehaviour {
     public void ResetTentacle()
     {
         gameObject.SetActive(false);
-        bodyCollider.enabled = false;
+		if(bodyCollider){
+			bodyCollider.enabled = false;
+		}
+        
         childTransform.gameObject.SetActive(false);
 
         childTransform.localPosition = Vector3.zero;
