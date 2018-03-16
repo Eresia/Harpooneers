@@ -9,6 +9,11 @@ public class XSmashTentacleState : BossState<XSmashTentaclesPattern> {
 
     public float bubblingDuration = 3f;
 
+    public float crossOffset = 4f;
+    public float diagonaleOffset = 12f;
+
+    //public float diagonaleOffset2 = 42f; // Cool effect LOL
+
     public Vector3 startPos;
 
     [Header("Emergence")]

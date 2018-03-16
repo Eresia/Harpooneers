@@ -133,6 +133,8 @@ public class GameManager : MonoBehaviour {
         bossMgr = FindObjectOfType<BossManager>();
 
         bossMgr.enabled = !onTuto;
+		lose = false;
+		win = false;
 
         shipMgr.SetupAllShips();
     }
@@ -168,6 +170,7 @@ public class GameManager : MonoBehaviour {
         bossMgr.DisplayLifeBar(true);
     }
 
+	[ContextMenu("GameOver")]
     public void GameOver()
     {
         if(IsGameOver)
