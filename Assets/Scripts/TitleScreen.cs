@@ -17,6 +17,8 @@ public class TitleScreen : MonoBehaviour
 
     public Animator[] panels;
 
+    public GameObject creditPanel;
+
     private Player[] players;
 
     private bool start;
@@ -83,6 +85,8 @@ public class TitleScreen : MonoBehaviour
             yield return delay;
         }
 
+        yield return new WaitForSeconds(0.5f);
 
+        creditPanel.SetActive(true);
     }
 }
