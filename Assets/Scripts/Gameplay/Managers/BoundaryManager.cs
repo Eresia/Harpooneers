@@ -41,6 +41,11 @@ public class BoundaryManager : MonoBehaviour {
         UpdateBoundaries();
     }
 
+	private void OnValidate()
+	{
+		UpdateBoundaries();
+	}
+
     public void UpdateBoundaries()
     {
         // Calculate new boundaries.
