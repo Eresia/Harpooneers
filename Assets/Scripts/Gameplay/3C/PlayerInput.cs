@@ -49,6 +49,9 @@ public class PlayerInput : MonoBehaviour
         player.AddInputEventDelegate(TogglePause, UpdateLoopType.Update, "Toggle Pause");
         player.AddInputEventDelegate(DisplayPlayerPosition, UpdateLoopType.Update, "Display Player");
 
+        // Button A for pause buttons
+        player.AddInputEventDelegate(ButtonPress, UpdateLoopType.Update, InputActionEventType.ButtonPressed, "Submit");
+
         // CUT
         //player.AddInputEventDelegate(ResurrectAlly, UpdateLoopType.Update, InputActionEventType.ButtonPressed, "Resurrect");
 
@@ -235,6 +238,13 @@ public class PlayerInput : MonoBehaviour
                 }                 
             }
         }
+    }
+
+    private void ButtonPress(InputActionEventData data)
+    {
+        int playerID = data.playerId;
+        GameManager.instance.PressButton(playerID);
+        return;
     }
 
     private void DisplayPlayerPosition(InputActionEventData data)
