@@ -19,7 +19,7 @@ public class Fragmentation : MonoBehaviour
     {
         _mycollider = GetComponent<MeshCollider>();
         _physicScript = GetComponent<PhysicMove>();
-        _movementScript = GetComponent<ConstantMovement>();
+       // _movementScript = GetComponent<ConstantMovement>();
     }
 
     void Start()
@@ -35,7 +35,7 @@ public class Fragmentation : MonoBehaviour
             col.enabled = false;
         }
 			
-        _movementScript.enabled = false;
+     //   _movementScript.enabled = false;
         _physicScript.enabled = false;
         _mycollider.enabled = false; 
         fractMesh.SetActive(true);
