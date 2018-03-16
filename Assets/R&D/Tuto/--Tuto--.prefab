@@ -382,6 +382,7 @@ MonoBehaviour:
   rockSpeed: 5
   rockDepth: 5
   TutoEndTime: 3
+  LDparent: {fileID: 0}
   waveAmplitude: 2
   waveAppearTime: 3
   Texts:
@@ -571,7 +572,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

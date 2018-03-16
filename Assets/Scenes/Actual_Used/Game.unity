@@ -439,7 +439,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1304983143867414, guid: cf60f7543f7e1db428fab33ef4b98f6d, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1779077029182796, guid: cf60f7543f7e1db428fab33ef4b98f6d, type: 2}
       propertyPath: m_IsActive
@@ -1458,6 +1458,11 @@ Prefab:
       propertyPath: phaseId
       value: -1
       objectReference: {fileID: 0}
+    - target: {fileID: 114362013403539180, guid: 067cdd2b7bc7c2f48bf143fbdd61132e,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 067cdd2b7bc7c2f48bf143fbdd61132e, type: 2}
   m_IsPrefabParent: 0
@@ -1970,6 +1975,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 21
       objectReference: {fileID: 0}
+    - target: {fileID: 114143919522140490, guid: c32e60b4a7a8b3f47b062ac21e415301,
+        type: 2}
+      propertyPath: LDparent
+      value: 
+      objectReference: {fileID: 1654564269}
     - target: {fileID: 114408099850786424, guid: c32e60b4a7a8b3f47b062ac21e415301,
         type: 2}
       propertyPath: m_havePropertiesChanged
@@ -1980,11 +1990,6 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114143919522140490, guid: c32e60b4a7a8b3f47b062ac21e415301,
-        type: 2}
-      propertyPath: LDparent
-      value: 
-      objectReference: {fileID: 1654564269}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c32e60b4a7a8b3f47b062ac21e415301, type: 2}
   m_IsPrefabParent: 0
@@ -4980,7 +4985,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4218446138449912, guid: 7cf863eee7051b04abfdcc107e391e67, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 155.3
+      value: 210.9
       objectReference: {fileID: 0}
     - target: {fileID: 4218446138449912, guid: 7cf863eee7051b04abfdcc107e391e67, type: 2}
       propertyPath: m_LocalPosition.y
