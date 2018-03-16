@@ -76,6 +76,8 @@ public class BackAttackPattern : BossPattern
              // Splash FX
             whaleAI.whaleReferences.PlaySplashFX();
 
+            GameManager.instance.camMgr.Shake();
+
             // Dive !!!
             yield return WhaleDive();
         }

@@ -146,7 +146,6 @@ public class Phase2AI : PhaseAI {
             if (lifepointsRatio < lifepointsToPassStep[step])
             {
                 step++;
-                Debug.Log("Next step");
             }
         }
     }

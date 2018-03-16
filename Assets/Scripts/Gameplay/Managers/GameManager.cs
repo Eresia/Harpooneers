@@ -99,6 +99,8 @@ public class GameManager : MonoBehaviour {
             return;
         }
 
+        DynamicGI.UpdateEnvironment();
+
         if (scene.buildIndex == 0)
         {
             SetupMainMenu();

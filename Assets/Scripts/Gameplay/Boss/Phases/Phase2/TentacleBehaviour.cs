@@ -45,8 +45,8 @@ public class TentacleBehaviour : MonoBehaviour {
     
     public void Emerge(Vector3 startPos, Vector3 endPos, float emergingDuration)
     {
-		if(spawningFX != null){
-            Debug.Log("Stop spawning.");
+		if(spawningFX != null)
+        {
         	spawningFX.Stop();
 		}
 
@@ -132,12 +132,16 @@ public class TentacleBehaviour : MonoBehaviour {
     public void ResetTentacle()
     {
         gameObject.SetActive(false);
+
 		if(bodyCollider){
 			bodyCollider.enabled = false;
 		}
-        
-        childTransform.gameObject.SetActive(false);
 
+        //transform.rotation = Quaternion.identity;
+        //transform.position = Vector3.zero;
+
+        childTransform.gameObject.SetActive(false);
         childTransform.localPosition = Vector3.zero;
+        childTransform.localRotation = Quaternion.identity;
     }
 }
