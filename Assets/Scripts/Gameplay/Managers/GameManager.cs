@@ -181,7 +181,12 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-	[ContextMenu("GameOver")]
+    public void PressButton(int playerID)
+    {
+        pauseScript.ButtonPress(playerID);
+    }
+
+    [ContextMenu("GameOver")]
     public void GameOver()
     {
         if(IsGameOver)
