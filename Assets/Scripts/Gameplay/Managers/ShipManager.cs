@@ -156,6 +156,9 @@ public class ShipManager : MonoBehaviour {
                 {
                     targetFound = true;
                 }
+				else{
+					playerIds.Remove(playerId);
+				}
             }
 
             else

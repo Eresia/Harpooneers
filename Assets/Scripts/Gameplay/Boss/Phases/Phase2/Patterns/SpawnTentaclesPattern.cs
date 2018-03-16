@@ -51,6 +51,7 @@ public class SpawnTentaclesPattern : BossPattern {
 
     private IEnumerator ActivateTentacles()
     {
+		GameManager.instance.shipMgr.LockInputs(1);
 		for(int i = 0; i < tentacles.Length; i++){
 			tentacles[i].Spawning(state.bubblingDuration);
 		}
@@ -76,6 +77,7 @@ public class SpawnTentaclesPattern : BossPattern {
 		for(int i = 0; i < tentacles.Length; i++){
 			tentacles[i].ResetTentacle();
 		}
+		GameManager.instance.shipMgr.UnLockInputs();
 
 		OnPatternFinished();
     }

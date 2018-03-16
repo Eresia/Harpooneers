@@ -46,7 +46,7 @@ public class GeyserPattern : BossPattern {
         if(!isDiving)
         {
             // Stop behaviour directly.
-            boss.StopAllCoroutines();
+            // boss.StopAllCoroutines();
 
             boss.StartCoroutine(WhaleDive());
         }

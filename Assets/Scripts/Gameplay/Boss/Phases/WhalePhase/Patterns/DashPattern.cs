@@ -7,6 +7,8 @@ public class DashPattern : BossPattern {
     private DashState state;
     private WhalePhaseAI whaleAI;
 
+	private bool isImmersed;
+
     public DashPattern(DashState state)
     {
         this.state = state;
@@ -25,6 +27,20 @@ public class DashPattern : BossPattern {
     protected override void ExecutePattern() {
 		whaleAI.Whale.SetActive(true);
 		boss.StartCoroutine(Move());
+		boss.StartCoroutine(TraceWaves());
+	}
+
+	private IEnumerator TraceWaves(){
+		while(true){
+			if(!isImmersed){
+				Vector2 pos = GameManager.instance.ground.GetSeaPosition(whaleAI.whaleReferences.waveOrigin.position);
+				GameManager.instance.ground.waveManager.CreateTraceImpact(pos, 50f, whaleAI.whaleReferences.waveOrigin.rotation.y, 1f, 0.01f, 1f, 1f, 3f);
+				yield return new WaitForSeconds(0.25f);
+			}
+			else{
+				yield return null;
+			}
+		}
 	}
 
     private IEnumerator Move()
@@ -34,7 +50,7 @@ public class DashPattern : BossPattern {
 		float time = 0;
 		float timeTarget = 0;
 		float timeBeforeImmerse = 0;
-		bool isImmersed = true;
+		isImmersed = true;
 		float targetY = -state.depth;
 
 		
@@ -72,8 +88,6 @@ public class DashPattern : BossPattern {
 				Vector3 lastDirection = (new Vector3(x, 0f, z)).normalized;
 				targetDirection = new Vector3(hitPosition.x + lastDirection.x * radius, 0f, hitPosition.z + lastDirection.z * radius) - whalePosition;
 			}
-
-			Debug.DrawRay(whalePosition + targetDirection, Vector3.up * 10f);
 
 			Quaternion angleDirection = Quaternion.LookRotation(targetDirection);
 			angleDirection.x = 0f;

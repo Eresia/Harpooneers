@@ -144,7 +144,6 @@ public class WaveManager{
 		int[] waveIds = Waves.Keys.ToArray();
 		for(int i = 0; i < waveIds.Length; i++){
 			if(IsTimeout(Waves[waveIds[i]])){
-				Debug.Log("Remove Wave");
 				Waves.Remove(waveIds[i]);
 			}
 		}

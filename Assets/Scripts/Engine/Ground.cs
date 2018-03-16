@@ -111,6 +111,8 @@ public class Ground : MonoBehaviour {
 	[Range(0, 1000)]
 	public float timeout;
 
+	public float waveRotation;
+
 	public Vector2 waveSize;
 
 	public RawImage rawImage;
@@ -236,7 +238,7 @@ public class Ground : MonoBehaviour {
 					float jFloat = ((hit.point.z / (4*ratio / lodPowPower)) + halfLod) - selfTransform.position.z;
 					if(leftClick){
 						// AddWave(Wave.CreateImpact(new Vector2(iFloat, jFloat), impactAmplitude, impactWaveLength, impactPeriod, time, waveSpeed, timeProgression, timeout));
-						waveManager.CreateTraceImpact(new Vector2(iFloat, jFloat), waveSize.x, 0f, impactAmplitude, impactWaveLength, impactPeriod, timeProgression, timeout);
+						waveManager.CreateTraceImpact(new Vector2(iFloat, jFloat), waveSize.x, waveRotation, impactAmplitude, impactWaveLength, impactPeriod, timeProgression, timeout);
 					}
 					else{
 						waveVortexId = waveManager.CreateVortex(new Vector2(iFloat, jFloat), impactAmplitude, impactRadius, vortexSmooth, impactWaveLength, impactPeriod, timeProgression, timeout);
