@@ -129,8 +129,6 @@ public class GameManager : MonoBehaviour {
             shipMgr = FindObjectOfType<ShipManager>();
         }
 
-        Debug.Log("ALLO !");
-
         audioManager.PlayTutoMusic();
     }
 

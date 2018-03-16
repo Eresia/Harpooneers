@@ -49,8 +49,6 @@ public class AudioManager : MonoBehaviour
 
     public void PlayTutoMusic()
     {
-        Debug.Log("MUSIC !!!");
-
         if (tutoMusic != null)
         {
             PlayMusic(tutoMusic, inGameMusicVolume);
