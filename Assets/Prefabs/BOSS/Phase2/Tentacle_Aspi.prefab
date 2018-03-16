@@ -468,6 +468,8 @@ GameObject:
   - component: {fileID: 114884812005478362}
   - component: {fileID: 114201796582991192}
   - component: {fileID: 65373824024520530}
+  - component: {fileID: 65679471210368818}
+  - component: {fileID: 114658002770679178}
   m_Layer: 11
   m_Name: BodyCollider
   m_TagString: Kraken
@@ -718,7 +720,7 @@ GameObject:
   m_Icon: {fileID: -6431860639581277017, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1996169599639676
 GameObject:
   m_ObjectHideFlags: 1
@@ -941,8 +943,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1092169083699372}
   m_LocalRotation: {x: -0.08710082, y: -0.7017226, z: -0.08710045, w: 0.701721}
-  m_LocalPosition: {x: 1.74, y: -7.65, z: 0}
-  m_LocalScale: {x: 3.3333335, y: 3.3333306, z: 3.3333292}
+  m_LocalPosition: {x: 2.4, y: -1.4, z: 0}
+  m_LocalScale: {x: 27.80634, y: 25, z: 40.366257}
   m_Children: []
   m_Father: {fileID: 4215155183914718}
   m_RootOrder: 4
@@ -1402,7 +1404,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 8, y: 5, z: 5}
+  m_Size: {x: 8.65, y: 14.06, z: 19.17}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65373824024520530
 BoxCollider:
@@ -1414,8 +1416,20 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 24.2, y: 40, z: 16}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 57, y: 40, z: 16}
+  m_Center: {x: 0, y: 7, z: 0}
+--- !u!65 &65679471210368818
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1710735979667978}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 57, y: 40, z: 16}
+  m_Center: {x: 0, y: 7, z: 0}
 --- !u!65 &65712872742281190
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1423,11 +1437,11 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1092169083699372}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 5, z: 5}
-  m_Center: {x: 0, y: 2, z: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65800689959000792
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1438,8 +1452,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 5, z: 5}
-  m_Center: {x: 0, y: 2, z: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &95383594334331420
 Animator:
   serializedVersion: 3
@@ -1510,10 +1524,12 @@ MonoBehaviour:
   animator: {fileID: 95383594334331420}
   bubbleSound: {fileID: 8300000, guid: 0836f3a9542befb45b12b21219506c8d, type: 3}
   attackSound: {fileID: 8300000, guid: 9a8b245289f00234ab0d975a34df5e72, type: 3}
-  attackCollider: {fileID: 65712872742281190}
+  attackCollider: {fileID: 0}
   bodyCollider: {fileID: 65373824024520530}
   harpoonScript: {fileID: 114201796582991192}
-  aspiBomb: {fileID: 114435699261154848}
+  aspiBombs:
+  - {fileID: 114435699261154848}
+  - {fileID: 114658002770679178}
   bombDamages: 10
 --- !u!114 &114544710027696006
 MonoBehaviour:
@@ -1527,6 +1543,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tentacle: {fileID: 114520668772474226}
+--- !u!114 &114658002770679178
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1710735979667978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0604aebf06f234842919992286516421, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114884812005478362
 MonoBehaviour:
   m_ObjectHideFlags: 1

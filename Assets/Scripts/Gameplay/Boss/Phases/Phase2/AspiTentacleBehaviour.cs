@@ -8,7 +8,7 @@ public class AspiTentacleBehaviour : TentacleBehaviour {
 
 	[Space]
 
-	public AspiBomb aspiBomb;
+	public AspiBomb[] aspiBombs;
 
 	public float bombDamages;
 

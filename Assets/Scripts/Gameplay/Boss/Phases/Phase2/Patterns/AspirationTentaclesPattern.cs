@@ -83,7 +83,10 @@ public class AspirationTentaclesPattern : BossPattern {
 		aspiTentacle = phase2.TentaclesAspi[0] as AspiTentacleBehaviour;
 		aspiTentacle.transform.position = position;
 		aspiTentacle.transform.rotation = Quaternion.Euler(new Vector3(0, -90, 0));
-		aspiTentacle.aspiBomb.OnExplodeAction = Hit;
+
+		foreach(AspiBomb bomb in aspiTentacle.aspiBombs){
+			bomb.OnExplodeAction = Hit;
+		}
 
 		position.z -= state.distanceBeetweenTentacles;
 		swipperTentacles[0] = phase2.TentaclesSwipper[0];
@@ -138,6 +141,13 @@ public class AspirationTentaclesPattern : BossPattern {
 
         aspiTentacle.Emerge(state.startPos, state.attackPos, state.emergingDuration);
 
+		foreach(AspiBomb bomb in aspiTentacle.aspiBombs){
+			foreach(Collider c in bomb.Colliders)
+			{
+				c.enabled = true;
+			}
+		}
+
         yield return new WaitForSeconds(state.emergingDuration);
 
 		aspiTentacle.BeginAttack();
@@ -179,7 +189,9 @@ public class AspirationTentaclesPattern : BossPattern {
 	}
 
 	public void Hit(){
+		aspiTentacle.animator.SetTrigger("Hit");
 		boss.HitBoss(aspiTentacle.bombDamages);
+		nbShock--;
 		if(nbShock == 0){
 			OnStopPattern();
 		}
