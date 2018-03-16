@@ -49,9 +49,9 @@ public class SplashTentaclesHITPattern : BossPattern {
         tentaclesToUse[0] = phase2.TentaclesEye;
         tentaclesToUse[0].transform.position = spawns[0];
 
-        Vector3 south = boss.bossMgr.south.position;
-        Vector3 dir = south - spawns[0];
-        tentaclesToUse[0].childTransform.localRotation = Quaternion.LookRotation(dir);
+        //Vector3 south = boss.bossMgr.south.position;
+        //Vector3 dir = south - spawns[0];
+        //tentaclesToUse[0].childTransform.localRotation = Quaternion.LookRotation(dir);
     }
 
     private Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Vector3 angles) {
