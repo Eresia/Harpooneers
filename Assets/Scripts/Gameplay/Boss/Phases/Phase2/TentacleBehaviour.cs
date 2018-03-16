@@ -46,8 +46,10 @@ public class TentacleBehaviour : MonoBehaviour {
     public void Emerge(Vector3 startPos, Vector3 endPos, float emergingDuration)
     {
 		if(spawningFX != null){
+            Debug.Log("Stop spawning.");
         	spawningFX.Stop();
 		}
+
         childTransform.gameObject.SetActive(true);
 
 		if(bodyCollider){
@@ -83,15 +85,15 @@ public class TentacleBehaviour : MonoBehaviour {
         animator.SetTrigger(anim);
     }
 
-    public void TriggerAttackAnim()
+    public void TriggerAttackAnim(bool doWave = false)
     {
         animator.SetTrigger("Attack");
         GameManager.instance.audioManager.PlaySoundOneTime(attackSound, 0.2f);
 
-        StartCoroutine(Attack());
+        StartCoroutine(Attack(doWave));
     }
 
-    private IEnumerator Attack()
+    private IEnumerator Attack(bool doWave = false)
     {
         yield return new WaitUntil(() => (animator.GetBool("IsAttacking")));
         
@@ -103,6 +105,13 @@ public class TentacleBehaviour : MonoBehaviour {
         if(attackCollider)
         {
             attackCollider.enabled = true;
+
+            if(doWave)
+            {
+                Vector2 pos = GameManager.instance.ground.GetSeaPosition(attackCollider.transform.position + attackCollider.transform.forward * 5f);
+                GameManager.instance.ground.waveManager.CreateImpact(pos, 5f, 0f, 0.04f, 2f, 1f, 10f);
+            }
+           
         }
 
         yield return new WaitUntil(() => (!animator.GetBool("IsAttacking")));

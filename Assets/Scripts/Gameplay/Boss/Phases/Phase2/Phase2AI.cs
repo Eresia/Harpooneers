@@ -105,6 +105,7 @@ public class Phase2AI : PhaseAI {
         tentacleEye.gameObject.SetActive(false);
         tentacleEye.harpoonScript.hitCallback = HitBoss;
         tentacleEye.eyeHarpoonScript.hitCallback = HitBoss;
+        tentacleEye.eyeBombScript.OnBombExplode = HitBoss;
 
         tentacleShark = Instantiate<TentacleBehaviour>(tentacleSharkPrefab, transform);
         tentacleShark.gameObject.SetActive(false);
@@ -128,6 +129,7 @@ public class Phase2AI : PhaseAI {
         else
         {
             nextState = Random.Range(0, noHittablePatternCount);
+            Debug.Log(nextState);
         }
 
         return nextState;

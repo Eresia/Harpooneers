@@ -39,8 +39,8 @@ public class XSmashTentaclesPattern : BossPattern {
     private void SpawnCross()
     {
         spawns[0] = boss.bossMgr.east.position;
-        spawns[1] = boss.bossMgr.north.position;
-        spawns[2] = boss.bossMgr.west.position;
+        spawns[1] = boss.bossMgr.west.position;
+        spawns[2] = boss.bossMgr.north.position;
         spawns[3] = boss.bossMgr.south.position;
 
         Vector3 center = phase2.bossMgr.center.position;
@@ -56,13 +56,18 @@ public class XSmashTentaclesPattern : BossPattern {
             // Focus the center.
             Vector3 lookCenter = center - spawns[i];
             tentaclesToUse[i].childTransform.localRotation = Quaternion.LookRotation(lookCenter);
+            
+            if(i < 2)
+            {
+                tentaclesToUse[i].transform.Translate(tentaclesToUse[i].childTransform.forward * state.crossOffset);
+            }
         }
     }
 
     /// <summary>
     /// Spawn 2 tentacles ON a circle with a minimum distance between the 2 tentacles.
     /// </summary>
-    private void SpawnCorners()
+    private void SpawnCorners(float diagonalOffset)
     {
         spawns[0] = new Vector3(boss.bossMgr.east.position.x, 0f, boss.bossMgr.north.position.z);
         spawns[1] = new Vector3(boss.bossMgr.west.position.x, 0f, boss.bossMgr.south.position.z);
@@ -82,6 +87,8 @@ public class XSmashTentaclesPattern : BossPattern {
             // Focus the center.
             Vector3 lookCenter = center - spawns[i];
             tentaclesToUse[i].childTransform.localRotation = Quaternion.LookRotation(lookCenter);
+
+            tentaclesToUse[i].transform.Translate(tentaclesToUse[i].childTransform.forward * diagonalOffset);
         }
     }
 
@@ -94,9 +101,9 @@ public class XSmashTentaclesPattern : BossPattern {
                 SpawnCross();
             }
 
-            else
+            else if(attack == 1)
             {
-                SpawnCorners();
+                SpawnCorners(state.diagonaleOffset);
             }
 
             for (int i = 0; i < state.tentacleCount; i++)
@@ -122,7 +129,7 @@ public class XSmashTentaclesPattern : BossPattern {
 
             for (int i = 0; i < state.tentacleCount; i++)
             {
-                tentaclesToUse[i].TriggerAttackAnim();
+                tentaclesToUse[i].TriggerAttackAnim(true); // DO WAVE
             }
 
             yield return new WaitUntil(() => (tentaclesToUse[0].animator.GetBool("End")));
