@@ -718,7 +718,7 @@ GameObject:
   m_Icon: {fileID: -6431860639581277017, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1996169599639676
 GameObject:
   m_ObjectHideFlags: 1
@@ -1514,7 +1514,7 @@ MonoBehaviour:
   bodyCollider: {fileID: 65373824024520530}
   harpoonScript: {fileID: 114201796582991192}
   aspiBomb: {fileID: 114435699261154848}
-  bombDamages: 20
+  bombDamages: 10
 --- !u!114 &114544710027696006
 MonoBehaviour:
   m_ObjectHideFlags: 1
