@@ -23,7 +23,7 @@ public class TentacleBehaviour : MonoBehaviour {
     public Collider bodyCollider;
     public HandleHarpoonWithEnnemy harpoonScript;
 
-    private void Awake()
+    protected void Awake()
     {
         childTransform.gameObject.SetActive(false);
 
@@ -36,16 +36,23 @@ public class TentacleBehaviour : MonoBehaviour {
     public void Spawning(float spawningDuration)
     {
         gameObject.SetActive(true);
-        spawningFX.Play();
+		if(spawningFX != null){
+			spawningFX.Play();
+		}
 
         GameManager.instance.audioManager.PlaySoundOneTime(bubbleSound, 0.5f);
     }
     
     public void Emerge(Vector3 startPos, Vector3 endPos, float emergingDuration)
     {
-        spawningFX.Stop();
+		if(spawningFX != null){
+        	spawningFX.Stop();
+		}
         childTransform.gameObject.SetActive(true);
-        bodyCollider.enabled = true;
+
+		if(bodyCollider){
+			bodyCollider.enabled = true;
+		}
 
         animator.SetTrigger("Spawn");
 
@@ -55,12 +62,17 @@ public class TentacleBehaviour : MonoBehaviour {
 
     public void FeedbackAttackArea()
     {
-        attackFx.Play();
+		if(attackFx != null){
+			attackFx.Play();
+		}
     }
 
     public void Dive(Vector3 endPos, float divingDuration)
     {
-        attackCollider.enabled = false;
+        if(attackCollider)
+        {
+            attackCollider.enabled = false;
+        }
 
         animator.SetTrigger("Despawn");
         childTransform.DOLocalMove(endPos, divingDuration);
@@ -105,15 +117,16 @@ public class TentacleBehaviour : MonoBehaviour {
         Vector3 dir = (target.position - childTransform.position);
         dir.y = 0f;
 
-        //Debug.DrawRay(phase2.Tentacles[i].transform.position, dir * 5f, Color.white, 1f);
-
         childTransform.DOLocalRotateQuaternion(Quaternion.LookRotation(dir), turnDuration);
     }
 
     public void ResetTentacle()
     {
         gameObject.SetActive(false);
-        bodyCollider.enabled = false;
+		if(bodyCollider){
+			bodyCollider.enabled = false;
+		}
+        
         childTransform.gameObject.SetActive(false);
 
         childTransform.localPosition = Vector3.zero;

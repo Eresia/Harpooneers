@@ -32,11 +32,10 @@ public class PlayerManager : MonoBehaviour {
     }
     
     public bool isDead = false;
-    
+
     private float _rezAmount;
     private float _allyDistance;
     private PlayerManager _allyToRez;
-    private PlayerManager[] _alliesList;
 
     private MovementBehaviour movement;
     private HarpoonLauncher harpoon;
@@ -48,7 +47,6 @@ public class PlayerManager : MonoBehaviour {
 
     private void Awake()
     {
-        _alliesList = FindObjectsOfType<PlayerManager>();
         movement = GetComponent<MovementBehaviour>();
         harpoon = GetComponent<HarpoonLauncher>();
 

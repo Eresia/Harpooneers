@@ -372,6 +372,11 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114976050090439790, guid: 8bf8a08baa3e9ed46913231ebede7132,
+        type: 2}
+      propertyPath: filePath
+      value: ShipNames/ShipNames.txt
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8bf8a08baa3e9ed46913231ebede7132, type: 2}
   m_IsPrefabParent: 0
@@ -3374,37 +3379,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 1297469070234390, guid: ffe9efaa29c336a468f47656dc4092d6, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114170656061699002, guid: ffe9efaa29c336a468f47656dc4092d6,
-        type: 2}
-      propertyPath: sceneMgr
-      value: 
-      objectReference: {fileID: 2042410657}
-    - target: {fileID: 114170656061699002, guid: ffe9efaa29c336a468f47656dc4092d6,
-        type: 2}
-      propertyPath: debug
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114170656061699002, guid: ffe9efaa29c336a468f47656dc4092d6,
-        type: 2}
-      propertyPath: shipManager
-      value: 
-      objectReference: {fileID: 550072436}
     - target: {fileID: 114170656061699002, guid: ffe9efaa29c336a468f47656dc4092d6,
         type: 2}
       propertyPath: shipMgr
       value: 
       objectReference: {fileID: 550072436}
-    - target: {fileID: 82332525857895286, guid: ffe9efaa29c336a468f47656dc4092d6,
-        type: 2}
-      propertyPath: spreadCustomCurve.m_RotationOrder
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114774312991598738, guid: ffe9efaa29c336a468f47656dc4092d6, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ffe9efaa29c336a468f47656dc4092d6, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &624081332 stripped

@@ -12,9 +12,7 @@ public class HandleHarpoonWithPlayer : HandleHarpoonHit
         {
             hitFX.Play();
         }
-
-		Debug.Log ("HIT");
-
+        
 		GameManager.instance.audioManager.PlaySoundOneTime (hit_sound, 1f);
     }
 

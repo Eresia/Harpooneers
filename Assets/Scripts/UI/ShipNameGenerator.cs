@@ -25,8 +25,10 @@ public class ShipNameGenerator : MonoBehaviour
     void OnEnable()
     {
         // Summary of modules
-        for(int i = 0; i < 4; i++)
-             moduleNames[i].text = shipSelect.modulesNameFields[i].text;
+        for (int i = 0; i < 4; i++)
+        {
+            moduleNames[i].text = shipSelect.modulesNameFields[i].text;
+        }
 
 
         int id = CalculateSetupID();
@@ -42,7 +44,7 @@ public class ShipNameGenerator : MonoBehaviour
 
     void ReadTextFile()
     {
-        StreamReader inp_stm = new StreamReader(filePath);
+        StreamReader inp_stm = new StreamReader(Application.dataPath + "/StreamingAssets/" + filePath);
 
         while (!inp_stm.EndOfStream)
         {

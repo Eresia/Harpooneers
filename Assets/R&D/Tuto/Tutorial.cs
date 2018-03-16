@@ -12,7 +12,6 @@ public class Tutorial : MonoBehaviour
     public TextMeshProUGUI Tuto;
 	public Image Frame;
     public TutoRock Rock;
-	public BossManager bossManager;
 
 	public GameObject tutoParent;
 
@@ -56,10 +55,10 @@ public class Tutorial : MonoBehaviour
 
 	public void KillTuto(){
 		StopCoroutine(progressionCoroutine);
-		StartCoroutine(EndTutoCoroutine());
+		StartCoroutine(EndTutoCoroutine(TutoEndTime));
 	}
 
-	private IEnumerator EndTutoCoroutine(){
+	private IEnumerator EndTutoCoroutine(float tutoEndTime){
 		Vector3 endPos = Rock.Mover.SelfTransform.position;
 		endPos.y -= 10f;
 
@@ -76,7 +75,7 @@ public class Tutorial : MonoBehaviour
 		Tuto.DOFade(0f, FrameSpawnTime);
 		GameManager.instance.shipMgr.ResurrectAll();
 		yield return new WaitWhile(() => DOTween.IsTweening(Frame));
-		yield return new WaitForSeconds(TutoEndTime);
+		yield return new WaitForSeconds(tutoEndTime);
 		GameManager.instance.OnEndTuto();
 		Destroy(tutoParent);
 	}
@@ -160,7 +159,7 @@ public class Tutorial : MonoBehaviour
         yield return PrintText(11);
         yield return new WaitForSeconds(ToyTime);
 
-		StartCoroutine(EndTutoCoroutine());
+		StartCoroutine(EndTutoCoroutine(TutoEndTime));
     }
 
     IEnumerator PrintText(int i)
