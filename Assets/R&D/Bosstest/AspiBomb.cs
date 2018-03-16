@@ -9,9 +9,12 @@ public class AspiBomb : MonoBehaviour {
 
 	public Collider[] Colliders {get; private set;}
 
-	private void Awake() {
+	private void Awake()
+    {
 		Colliders = GetComponents<Collider>();
-		foreach(Collider c in Colliders){
+
+		foreach(Collider c in Colliders)
+        {
 			c.enabled = false;
 		}
 	}

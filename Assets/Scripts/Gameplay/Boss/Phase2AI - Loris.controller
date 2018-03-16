@@ -13,25 +13,25 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: NextState
     m_Type: 3
     m_DefaultFloat: 0
-    m_DefaultInt: 0
+    m_DefaultInt: -1
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: PatternHit
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Blend
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -209,6 +209,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tentacleCount: 4
   bubblingDuration: 3
+  crossOffset: 4
+  diagonaleOffset: 12
   startPos: {x: 0, y: -24, z: 0}
   emergingDuration: 0.5
   attackPos: {x: 0, y: 0, z: 0}
@@ -236,6 +238,7 @@ MonoBehaviour:
   waitBeforeAttack: 0.5
   maxTime: 20
   divingDuration: 0.5
+  nbShock: 3
 --- !u!114 &114854219279528076
 MonoBehaviour:
   m_ObjectHideFlags: 1
