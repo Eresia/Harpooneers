@@ -27,21 +27,21 @@ public class DashPattern : BossPattern {
     protected override void ExecutePattern() {
 		whaleAI.Whale.SetActive(true);
 		boss.StartCoroutine(Move());
-		boss.StartCoroutine(TraceWaves());
+		// boss.StartCoroutine(TraceWaves());
 	}
 
-	private IEnumerator TraceWaves(){
-		while(true){
-			if(!isImmersed){
-				Vector2 pos = GameManager.instance.ground.GetSeaPosition(whaleAI.whaleReferences.waveOrigin.position);
-				GameManager.instance.ground.waveManager.CreateTraceImpact(pos, 50f, whaleAI.whaleReferences.waveOrigin.rotation.y, 1f, 0.01f, 1f, 1f, 3f);
-				yield return new WaitForSeconds(0.25f);
-			}
-			else{
-				yield return null;
-			}
-		}
-	}
+	// private IEnumerator TraceWaves(){
+	// 	while(true){
+	// 		if(!isImmersed){
+	// 			Vector2 pos = GameManager.instance.ground.GetSeaPosition(whaleAI.whaleReferences.waveOrigin.position);
+	// 			GameManager.instance.ground.waveManager.CreateTraceImpact(pos, 100f, whaleAI.whaleReferences.waveOrigin.rotation.y, 1f, 0.01f, 1f, 1f, 3f);
+	// 			yield return new WaitForSeconds(0.25f);
+	// 		}
+	// 		else{
+	// 			yield return null;
+	// 		}
+	// 	}
+	// }
 
     private IEnumerator Move()
     {

@@ -1,15 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Rewired;
 using UnityEngine;
-
-using Rewired;
 
 public class Pause : MonoBehaviour {
 
     public GameObject pauseGo;
 
     private Player pausePlayer;
-
+    
+	private void Awake() {
+		GameManager.instance.pauseScript = this;
+	}
+    
     void Start()
     {
         pauseGo.SetActive(false);

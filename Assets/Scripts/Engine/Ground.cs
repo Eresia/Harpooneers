@@ -123,6 +123,7 @@ public class Ground : MonoBehaviour {
 
 	private void Awake()
     {
+		GameManager.instance.ground = this;
         waveManager = new WaveManager();
         ZoneWaveId = waveManager.CreateZone(0f, zoneRotation, zoneWaveLength, zonePeriod);
 
@@ -473,8 +474,16 @@ public class Ground : MonoBehaviour {
 	}
 
 	private void OnDestroy() {
-		optionBuffer.Dispose();
-		pointBuffer.Dispose();
-		normaleBuffer.Dispose();
+		if(optionBuffer != null){
+			optionBuffer.Dispose();
+		}
+		
+		if(pointBuffer != null){
+			pointBuffer.Dispose();
+		}
+		
+		if(normaleBuffer != null){
+			normaleBuffer.Dispose();
+		}
 	}
 }
