@@ -17,7 +17,7 @@ public struct BoundariesData
 
 public class BoundaryManager : MonoBehaviour {
 
-    public Camera cam;
+    public Camera camTest;
     public LayerMask seaMask;
 
     public float horizontalOffset = 100f;
@@ -48,28 +48,28 @@ public class BoundaryManager : MonoBehaviour {
 
         RaycastHit hit;
 
-        if (Physics.Raycast(cam.ViewportPointToRay(new Vector3(0, 0)), out hit, 10000f, seaMask))
+        if (Physics.Raycast(camTest.ViewportPointToRay(new Vector3(0, 0)), out hit, 10000f, seaMask))
         {
             limits[0] = hit.point;
         }
 
-        if (Physics.Raycast(cam.ViewportPointToRay(new Vector3(0, 1)), out hit, 10000f, seaMask))
+        if (Physics.Raycast(camTest.ViewportPointToRay(new Vector3(0, 1)), out hit, 10000f, seaMask))
         {
             limits[1] = hit.point;
         }
 
-        if (Physics.Raycast(cam.ViewportPointToRay(new Vector3(1, 1)), out hit, 10000f, seaMask))
+        if (Physics.Raycast(camTest.ViewportPointToRay(new Vector3(1, 1)), out hit, 10000f, seaMask))
         {
             limits[2] = hit.point;
         }
 
-        if (Physics.Raycast(cam.ViewportPointToRay(new Vector3(1, 0)), out hit, 10000f, seaMask))
+        if (Physics.Raycast(camTest.ViewportPointToRay(new Vector3(1, 0)), out hit, 10000f, seaMask))
         {
             limits[3] = hit.point;
         }
 
         // Get center of the screen in world space.
-        if (Physics.Raycast(cam.ViewportPointToRay(new Vector3(0.5f, 0.5f)), out hit, 10000f, seaMask))
+        if (Physics.Raycast(camTest.ViewportPointToRay(new Vector3(0.5f, 0.5f)), out hit, 10000f, seaMask))
         {
             screenCenterInWorldSpace = hit.point;
         }
