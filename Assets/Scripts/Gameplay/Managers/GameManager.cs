@@ -148,7 +148,8 @@ public class GameManager : MonoBehaviour {
 
         shipMgr.SetupAllShips();
 
-        FadeMgr.FadeIn();
+        if(FadeMgr != null)
+            FadeMgr.FadeIn();
 
         audioManager.PlayTutoMusic();
     }

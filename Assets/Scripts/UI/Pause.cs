@@ -68,7 +68,7 @@ public class Pause : MonoBehaviour {
 
     public void ButtonPress(int playerID)
     {
-        if(playerID == playerIdControl)
+        if(_isPause && playerID == playerIdControl)
         {
             if (quitSelected)
             {
