@@ -5,6 +5,10 @@ using UnityEngine;
 public class Pause : MonoBehaviour {
 
     public GameObject pauseGo;
+
+	private void Awake() {
+		GameManager.instance.pauseScript = this;
+	}
     
     void Start()
     {

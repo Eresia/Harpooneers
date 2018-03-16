@@ -10,6 +10,10 @@ public class GameOver : MonoBehaviour
 
     public bool isGameOver;
 
+	private void Awake() {
+		GameManager.instance.gameOverScript = this;
+	}
+
     // Use this for initialization
     void Start()
     {

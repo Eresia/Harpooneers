@@ -123,6 +123,7 @@ public class Ground : MonoBehaviour {
 
 	private void Awake()
     {
+		GameManager.instance.ground = this;
         waveManager = new WaveManager();
         ZoneWaveId = waveManager.CreateZone(0f, zoneRotation, zoneWaveLength, zonePeriod);
 
