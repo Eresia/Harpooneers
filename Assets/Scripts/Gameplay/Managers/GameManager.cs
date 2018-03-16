@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour {
             return;
 		}
         
-        DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad(gameObject);
         Application.runInBackground = true;
 
         SetupGame();

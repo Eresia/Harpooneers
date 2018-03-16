@@ -473,8 +473,16 @@ public class Ground : MonoBehaviour {
 	}
 
 	private void OnDestroy() {
-		optionBuffer.Dispose();
-		pointBuffer.Dispose();
-		normaleBuffer.Dispose();
+		if(optionBuffer != null){
+			optionBuffer.Dispose();
+		}
+		
+		if(pointBuffer != null){
+			pointBuffer.Dispose();
+		}
+		
+		if(normaleBuffer != null){
+			normaleBuffer.Dispose();
+		}
 	}
 }
