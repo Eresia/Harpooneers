@@ -96,6 +96,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4006209058964796}
   - component: {fileID: 95786707873644356}
+  - component: {fileID: 114822938221286870}
   m_Layer: 0
   m_Name: Dolphin
   m_TagString: Untagged
@@ -203,6 +204,20 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114822938221286870
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1719844959226724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 377c85d9bdad13c4eb47a0b7f86ae9e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: {x: 0, y: 0, z: 0}
+  speed: 2
+  forwardDirection: 1
 --- !u!137 &137425168990759638
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

@@ -81,6 +81,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4942083504835996}
   - component: {fileID: 95668851753166260}
+  - component: {fileID: 114145150339722526}
   m_Layer: 0
   m_Name: Fish
   m_TagString: Untagged
@@ -174,6 +175,20 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114145150339722526
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1902627864667698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 377c85d9bdad13c4eb47a0b7f86ae9e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: {x: 0, y: 0, z: 0}
+  speed: 2
+  forwardDirection: 1
 --- !u!137 &137397419890671634
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
