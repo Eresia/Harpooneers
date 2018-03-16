@@ -66,7 +66,8 @@ public class InputInMainMenu : MonoBehaviour
 
     private void Awake()
     {
-        baseRotation = sceneCamera.rotation.x;
+        baseRotation = sceneCamera.rotation.eulerAngles.x;
+
         inCredits = false;
         nbOfPlayers = 0;
         playerReady = new bool[4];
@@ -231,7 +232,7 @@ public class InputInMainMenu : MonoBehaviour
                         if (nbOfPlayers == 0)
                             rdyText.SetActive(false);
 
-                        Debug.Log(nbOfPlayers);
+                      //  Debug.Log(nbOfPlayers);
 
                         prepareGamePanel.PlayerLeave(i);
                     }
