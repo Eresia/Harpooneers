@@ -5,7 +5,7 @@ AnimatorController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Phase2AI
+  m_Name: Phase2AI - Loris
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: EndPattern
@@ -13,25 +13,25 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: NextState
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: PatternHit
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Blend
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -230,7 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackCount: 2
   bubblingDuration: 5
-  startPos: {x: 0, y: 0, z: 0}
+  startPos: {x: 0, y: -24, z: 0}
   emergingDuration: 0.5
   attackPos: {x: 0, y: 0, z: 0}
   turnDuration: 1.5
@@ -1070,7 +1070,7 @@ AnimatorStateMachine:
     m_Position: {x: 240, y: 144, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102889705949303782}
-    m_Position: {x: 612, y: 120, z: 0}
+    m_Position: {x: 564, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102572780283113106}
     m_Position: {x: -120, y: 204, z: 0}

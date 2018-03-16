@@ -158,8 +158,6 @@ public class ChargerTentaclesPattern : BossPattern {
             tentaclesToUse[i].ResetTentacle();
         }
 
-        Debug.Log("STOP !");
-
         OnPatternFinished();
     }
 
