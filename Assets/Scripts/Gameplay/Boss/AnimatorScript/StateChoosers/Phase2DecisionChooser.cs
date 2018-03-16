@@ -11,6 +11,8 @@ public class Phase2DecisionChooser : BossAnimatorScript
         if (phase2 == null)
         {
             phase2 = animator.GetComponent<Phase2AI>();
+
+            phase2.bossMgr.DisplayLifeBar(true);
         }
 
         animator.SetInteger("NextState", phase2.DecideNextPhase());

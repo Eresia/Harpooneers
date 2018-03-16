@@ -114,7 +114,6 @@ public class BossManager : MonoBehaviour {
         CurrentPhaseGo = phases[phaseId];
         currentPhase = currentPhaseGo.GetComponent<PhaseAI>();
 
-        DisplayLifeBar(true);
         UpdateLifepoints();
     }
 

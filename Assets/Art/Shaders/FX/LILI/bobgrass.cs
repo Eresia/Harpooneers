@@ -5,7 +5,7 @@ using UnityEngine;
 public class bobgrass : MonoBehaviour {
     
     public GameObject targetobject;
-    private Material instancedMaterial;
+    public Material instancedMaterial;
 
     void Start()
     {
@@ -14,6 +14,6 @@ public class bobgrass : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-       // instancedMaterial.SetVector("_humanPos", targetobject.position);
+       instancedMaterial.SetVector("_humanPos", targetobject.transform.position);
     }
 }

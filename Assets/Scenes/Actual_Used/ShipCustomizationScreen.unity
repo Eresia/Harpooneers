@@ -11060,21 +11060,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114997595628422072, guid: 0427649b71f5bc245bb96b0c8d436a8e,
-        type: 2}
-      propertyPath: _userData.actions.Array.size
-      value: 21
-      objectReference: {fileID: 0}
-    - target: {fileID: 114997595628422072, guid: 0427649b71f5bc245bb96b0c8d436a8e,
-        type: 2}
-      propertyPath: _userData.joystickMaps.Array.data[1].actionElementMaps.Array.size
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114997595628422072, guid: 0427649b71f5bc245bb96b0c8d436a8e,
-        type: 2}
-      propertyPath: _userData.actionCategoryMap.list.Array.data[1].actionIds.Array.size
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 4413206932209708, guid: 0427649b71f5bc245bb96b0c8d436a8e, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -11106,71 +11091,6 @@ Prefab:
     - target: {fileID: 4413206932209708, guid: 0427649b71f5bc245bb96b0c8d436a8e, type: 2}
       propertyPath: m_RootOrder
       value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114997595628422072, guid: 0427649b71f5bc245bb96b0c8d436a8e,
-        type: 2}
-      propertyPath: _userData.actions.Array.data[20]._id
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 114997595628422072, guid: 0427649b71f5bc245bb96b0c8d436a8e,
-        type: 2}
-      propertyPath: _userData.actions.Array.data[20]._name
-      value: Tab - L Joystick
-      objectReference: {fileID: 0}
-    - target: {fileID: 114997595628422072, guid: 0427649b71f5bc245bb96b0c8d436a8e,
-        type: 2}
-      propertyPath: _userData.actions.Array.data[20]._type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114997595628422072, guid: 0427649b71f5bc245bb96b0c8d436a8e,
-        type: 2}
-      propertyPath: _userData.actions.Array.data[20]._descriptiveName
-      value: Action3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114997595628422072, guid: 0427649b71f5bc245bb96b0c8d436a8e,
-        type: 2}
-      propertyPath: _userData.actions.Array.data[20]._userAssignable
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114997595628422072, guid: 0427649b71f5bc245bb96b0c8d436a8e,
-        type: 2}
-      propertyPath: _userData.actions.Array.data[20]._categoryId
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114997595628422072, guid: 0427649b71f5bc245bb96b0c8d436a8e,
-        type: 2}
-      propertyPath: _userData.actionCategoryMap.list.Array.data[1].actionIds.Array.data[9]
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 114997595628422072, guid: 0427649b71f5bc245bb96b0c8d436a8e,
-        type: 2}
-      propertyPath: _userData.actionIdCounter
-      value: 29
-      objectReference: {fileID: 0}
-    - target: {fileID: 114997595628422072, guid: 0427649b71f5bc245bb96b0c8d436a8e,
-        type: 2}
-      propertyPath: _userData.actions.Array.data[17]._type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114997595628422072, guid: 0427649b71f5bc245bb96b0c8d436a8e,
-        type: 2}
-      propertyPath: _userData.joystickMaps.Array.data[1].actionElementMaps.Array.data[9]._actionId
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 114997595628422072, guid: 0427649b71f5bc245bb96b0c8d436a8e,
-        type: 2}
-      propertyPath: _userData.joystickMaps.Array.data[1].actionElementMaps.Array.data[9]._elementType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114997595628422072, guid: 0427649b71f5bc245bb96b0c8d436a8e,
-        type: 2}
-      propertyPath: _userData.joystickMaps.Array.data[1].actionElementMaps.Array.data[9]._elementIdentifierId
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114997595628422072, guid: 0427649b71f5bc245bb96b0c8d436a8e,
-        type: 2}
-      propertyPath: _userData.joystickMaps.Array.data[1].actionElementMaps.Array.data[9]._actionCategoryId
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0427649b71f5bc245bb96b0c8d436a8e, type: 2}

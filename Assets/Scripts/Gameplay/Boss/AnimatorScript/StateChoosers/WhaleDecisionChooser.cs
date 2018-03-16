@@ -8,13 +8,15 @@ public class WhaleDecisionChooser : StateChooser
 
 	private int actualPhase;
 
-	protected override int ChooseState(){
-
+	protected override int ChooseState()
+    {
 		if (whalePhase == null)
         {
             whalePhase = animator.GetComponent<WhalePhaseAI>();
 			actualPhase = 0;
-			return 0;
+            
+            whalePhase.bossMgr.DisplayLifeBar(true);
+            return 0;
         }
         
 		switch(actualPhase) {
