@@ -5,7 +5,7 @@ AnimatorController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Phase2AI - Loris
+  m_Name: Phase2AI
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: EndPattern
@@ -13,25 +13,25 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: NextState
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: PatternHit
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Blend
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackCount: 2
   tentacleCount: 2
-  bubblingDuration: 2.5
+  bubblingDuration: 5
   spawnRadius: 10
   minAngle: 45
   maxAngle: 315
@@ -229,13 +229,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCount: 2
-  bubblingDuration: 1
-  spawnRadius: 10
+  bubblingDuration: 5
   startPos: {x: 0, y: 0, z: 0}
   emergingDuration: 0.5
   attackPos: {x: 0, y: 0, z: 0}
-  turnDuration: 1
-  waitBeforeAttack: 3
+  turnDuration: 1.5
+  waitBeforeAttack: 8
   moveSpeed: 10
   divingDuration: 0.5
   tentacleCount: 1
@@ -675,7 +674,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: NextState
-    m_EventTreshold: 7
+    m_EventTreshold: 6
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102854713978481252}
   m_Solo: 0
@@ -723,7 +722,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: NextState
-    m_EventTreshold: 6
+    m_EventTreshold: 5
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102792872858872516}
   m_Solo: 0
@@ -771,7 +770,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: NextState
-    m_EventTreshold: 5
+    m_EventTreshold: 4
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102889705949303782}
   m_Solo: 0
@@ -1068,13 +1067,13 @@ AnimatorStateMachine:
     m_Position: {x: -132, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102851922653509786}
-    m_Position: {x: 276, y: 144, z: 0}
+    m_Position: {x: 240, y: 144, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102889705949303782}
     m_Position: {x: 612, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102572780283113106}
-    m_Position: {x: -96, y: 204, z: 0}
+    m_Position: {x: -120, y: 204, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102799164465752214}
     m_Position: {x: -60, y: 264, z: 0}
@@ -1086,7 +1085,7 @@ AnimatorStateMachine:
     m_Position: {x: 576, y: 204, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102854713978481252}
-    m_Position: {x: 432, y: 276, z: 0}
+    m_Position: {x: 396, y: 276, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

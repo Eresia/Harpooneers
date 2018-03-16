@@ -8,11 +8,8 @@ public class SplashTentacleHITState : BossState<SplashTentaclesHITPattern> {
 
     public int attackCount = 2;
 
-    public float bubblingDuration = 1f;
-
-    [Header("Spawn")]
-    public float spawnRadius = 10f;
-
+    public float bubblingDuration = 5f;
+    
     public Vector3 startPos;
 
     [Header("Emergence")]
