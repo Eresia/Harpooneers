@@ -1060,7 +1060,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1790471813461490}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -15, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4815162394548666}
@@ -2178,6 +2178,7 @@ MonoBehaviour:
   harpoonLauncher: {fileID: 114609724380578428}
   bombLauncher: {fileID: 0}
   timeBeforePause: 1
+  doPause: 0
 --- !u!114 &114355733020500592
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2488,7 +2489,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -911619119
+  randomSeed: -1805972864
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -2578,7 +2579,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.9269572, g: 0.9844924, b: 0.99264705, a: 1}
+      maxColor: {r: 0.3430471, g: 0.48192707, b: 0.99264705, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -16067,7 +16068,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 896146587
+  randomSeed: 196693348
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -22834,7 +22835,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1320178645
+  randomSeed: 1538210572
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -43180,7 +43181,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -800899306
+  randomSeed: 1109183617
   InitialModule:
     serializedVersion: 3
     enabled: 1

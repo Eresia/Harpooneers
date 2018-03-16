@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 114659542856081910}
   m_Layer: 11
   m_Name: BodyCollider
-  m_TagString: Untagged
+  m_TagString: Kraken
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1062,7 +1062,7 @@ ParticleSystem:
   stopAction: 0
   looping: 1
   prewarm: 1
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -1110,7 +1110,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1680734120
+  randomSeed: -381825608
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -14506,7 +14506,7 @@ ParticleSystem:
   stopAction: 0
   looping: 1
   prewarm: 1
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -14554,7 +14554,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1753004087
+  randomSeed: 909597489
   InitialModule:
     serializedVersion: 3
     enabled: 1
