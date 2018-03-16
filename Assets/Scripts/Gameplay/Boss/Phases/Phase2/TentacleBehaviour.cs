@@ -137,8 +137,8 @@ public class TentacleBehaviour : MonoBehaviour {
 			bodyCollider.enabled = false;
 		}
 
-        //transform.rotation = Quaternion.identity;
-        //transform.position = Vector3.zero;
+        transform.rotation = Quaternion.identity;
+        transform.position = Vector3.zero;
 
         childTransform.gameObject.SetActive(false);
         childTransform.localPosition = Vector3.zero;

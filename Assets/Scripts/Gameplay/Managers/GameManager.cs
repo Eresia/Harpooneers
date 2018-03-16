@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour {
 
 	public AudioManager audioManager;
 
+    public FadeInOut FadeMgr;
+
 	[Space]
 
 	public bool onTuto = true;
@@ -138,6 +140,8 @@ public class GameManager : MonoBehaviour {
 		win = false;
 
         shipMgr.SetupAllShips();
+
+        FadeMgr.FadeIn();
     }
 
     public void StartNewGame(int playerCount, bool[] playersReady)
@@ -145,7 +149,7 @@ public class GameManager : MonoBehaviour {
         nbOfPlayers = playerCount;
         players = playersReady;
 
-        sceneMgr.LoadGameScene();
+        FadeMgr.FadeOut(sceneMgr.LoadGameScene);
     }
 
     public void ReturnToMainMenu(bool goToCustomizationMenu)

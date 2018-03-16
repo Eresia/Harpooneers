@@ -1390,6 +1390,11 @@ Prefab:
       propertyPath: players.Array.data[3]
       value: 
       objectReference: {fileID: 1241417423}
+    - target: {fileID: 114213196037452486, guid: fc322aee88bbce94891b2ba5bf267fd4,
+        type: 2}
+      propertyPath: useDefaultConfig
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fc322aee88bbce94891b2ba5bf267fd4, type: 2}
   m_IsPrefabParent: 0
@@ -3638,9 +3643,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1794473460000920, guid: 20d2f651efa30be42b6c8ecd7b4c74d9, type: 2}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 114162888410084358, guid: 20d2f651efa30be42b6c8ecd7b4c74d9,
+        type: 2}
+      propertyPath: fadeDuration
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 20d2f651efa30be42b6c8ecd7b4c74d9, type: 2}

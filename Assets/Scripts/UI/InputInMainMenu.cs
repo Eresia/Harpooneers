@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Rewired;
+﻿using Rewired;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -21,10 +19,8 @@ public class TabsList
     public GameObject[] moduleSelectionGO;
 }
 
-
 public class InputInMainMenu : MonoBehaviour
 {
-
     public PrepareGamePanelScript prepareGamePanel;
 
     private Player[] players;
@@ -64,6 +60,13 @@ public class InputInMainMenu : MonoBehaviour
 
     private bool inCredits;
 
+    public bool InTitle
+    {
+        get { return inTitle; }
+        set { inTitle = value; }
+    }
+    private bool inTitle;
+
     private void Awake()
     {
         baseRotation = sceneCamera.rotation.eulerAngles.x;
@@ -82,7 +85,6 @@ public class InputInMainMenu : MonoBehaviour
             playerShips[i].playerID = i;
         }
 
-
         currentModuleTabIndex = new int[4];
 
         for (int i = 0; i < currentModuleTabIndex.Length; i++)
@@ -90,15 +92,13 @@ public class InputInMainMenu : MonoBehaviour
             currentModuleTabIndex[i] = 0;
         }
 
-
+        inTitle = true;
     }
 
     void Start()
     {
-
         rdyText.SetActive(false);
-
-
+        
         for (int i = 0; i < players.Length; i++)
         {
             NextModuleTab(i, 0);
@@ -125,10 +125,14 @@ public class InputInMainMenu : MonoBehaviour
             playerText[i].color = playerNameColors[i];
         }
     }
-
    
     private void Update()
     {
+        if(inTitle)
+        {
+            return;
+        }
+
         for (int i = 0; i < players.Length; i++)
         {
             if (players[i].GetAxisRaw("Module - L Joystick") < -0.5f)
