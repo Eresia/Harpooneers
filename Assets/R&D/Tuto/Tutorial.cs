@@ -26,6 +26,9 @@ public class Tutorial : MonoBehaviour
 	public float rockDepth = 5f;
 	public float TutoEndTime = 3f;
 
+    [Header("LD")]
+    public GameObject LDparent;
+
 	[Space]
 
 	public float waveAmplitude;
@@ -41,7 +44,8 @@ public class Tutorial : MonoBehaviour
 
     private void Start()
     {
-		GameManager.instance.tutorial = this;
+        LDparent.SetActive(false);
+        GameManager.instance.tutorial = this;
 		if(GameManager.instance.onTuto){
 			Tuto.text = "";
 			hasExploded = true;
@@ -77,7 +81,11 @@ public class Tutorial : MonoBehaviour
 		yield return new WaitWhile(() => DOTween.IsTweening(Frame));
 		yield return new WaitForSeconds(tutoEndTime);
 		GameManager.instance.OnEndTuto();
-		Destroy(tutoParent);
+
+        LDparent.SetActive(true);
+
+        Destroy(tutoParent);
+
 	}
 
     IEnumerator Progression()
