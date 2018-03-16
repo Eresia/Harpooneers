@@ -312,7 +312,7 @@ MonoBehaviour:
       _categoryId: 4
     - _id: 23
       _name: Module - L Joystick
-      _type: 1
+      _type: 0
       _descriptiveName: Action0
       _positiveDescriptiveName: 
       _negativeDescriptiveName: 
@@ -337,6 +337,24 @@ MonoBehaviour:
       _behaviorId: 0
       _userAssignable: 1
       _categoryId: 0
+    - _id: 28
+      _name: Tab - L Joystick
+      _type: 0
+      _descriptiveName: Action3
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 4
+    - _id: 29
+      _name: Credits
+      _type: 1
+      _descriptiveName: Credits
+      _positiveDescriptiveName: 
+      _negativeDescriptiveName: 
+      _behaviorId: 0
+      _userAssignable: 1
+      _categoryId: 4
     actionCategories:
     - _name: Default
       _descriptiveName: 
@@ -353,7 +371,7 @@ MonoBehaviour:
       - categoryId: 0
         actionIds: 0000000001000000020000000300000009000000080000000a0000000b0000000c0000000d000000190000001b000000
       - categoryId: 4
-        actionIds: 100000000f00000011000000120000001300000014000000150000001600000017000000
+        actionIds: 100000000f000000110000001200000013000000140000001500000016000000170000001c0000001d000000
     inputBehaviors:
     - _id: 0
       _name: Default
@@ -604,6 +622,28 @@ MonoBehaviour:
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
+      - _actionCategoryId: 4
+        _actionId: 28
+        _elementType: 0
+        _elementIdentifierId: 1
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 0
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
+      - _actionCategoryId: 4
+        _actionId: 29
+        _elementType: 1
+        _elementIdentifierId: 14
+        _axisRange: 0
+        _invert: 0
+        _axisContribution: 0
+        _keyboardKeyCode: 0
+        _modifierKey1: 0
+        _modifierKey2: 0
+        _modifierKey3: 0
     keyboardMaps: []
     mouseMaps:
     - id: 2
@@ -627,7 +667,7 @@ MonoBehaviour:
     customControllerMaps: []
     customControllers: []
     playerIdCounter: 5
-    actionIdCounter: 28
+    actionIdCounter: 30
     actionCategoryIdCounter: 5
     inputBehaviorIdCounter: 1
     mapCategoryIdCounter: 2

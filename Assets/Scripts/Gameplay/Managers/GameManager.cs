@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour {
     private bool gamePaused;
 
     public Pause pauseScript;
-  //  public GameOver gameOverScript;
+    public GameOver gameOverScript;
 
     /// <summary>
     /// Return the number of players for the current game.
@@ -176,7 +176,7 @@ public class GameManager : MonoBehaviour {
         }
 
         lose = true;
-        Debug.Log("GAME OVER !!!");
+        gameOverScript.DisplayGameOver();
     }
 
     public void GameFinished()

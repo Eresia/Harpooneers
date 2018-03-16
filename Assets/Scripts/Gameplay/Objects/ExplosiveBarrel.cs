@@ -52,7 +52,8 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
     {
         Vector3 resize = Vector3.one * bombStockModule.bombRadius * ExpFXSize;
         
-        radiusFX.transform.parent.localScale *= bombStockModule.bombRadius;
+		Vector3 forceRadius = new Vector3(0.02f, 0.02f, 1f);
+        radiusFX.transform.parent.localScale = forceRadius * bombStockModule.bombRadius;
         explosionFX.transform.localScale = resize;
     }
     

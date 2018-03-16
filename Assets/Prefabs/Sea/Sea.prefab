@@ -54,7 +54,7 @@ Transform:
   m_GameObject: {fileID: 1471877704634382}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 1}
+  m_LocalScale: {x: 15, y: 15, z: 1}
   m_Children: []
   m_Father: {fileID: 4260039452909052}
   m_RootOrder: 0
@@ -158,8 +158,8 @@ MonoBehaviour:
   testLayer:
     serializedVersion: 2
     m_Bits: 12288
-  zoneAmplitude: 0
-  zoneRotation: 0
+  zoneAmplitude: 10
+  zoneRotation: 1
   zoneWaveLength: 0.5
   zonePeriod: 5
   impactAmplitude: 2
@@ -169,5 +169,6 @@ MonoBehaviour:
   impactPeriod: 1
   timeProgression: 1
   timeout: 5
+  waveRotation: 10
   waveSize: {x: 20, y: 20}
   rawImage: {fileID: 0}
