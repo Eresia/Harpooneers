@@ -45,7 +45,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1123633267455820
 GameObject:
   m_ObjectHideFlags: 1
@@ -58,6 +58,23 @@ GameObject:
   - component: {fileID: 114223111522553894}
   m_Layer: 5
   m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1209460156408714
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224123662200950318}
+  - component: {fileID: 222254062578867892}
+  - component: {fileID: 114324875620179762}
+  m_Layer: 5
+  m_Name: Image (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,6 +106,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4803854058540876}
+  - component: {fileID: 114314366948406304}
   m_Layer: 5
   m_Name: GameOver
   m_TagString: Untagged
@@ -981,6 +999,45 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &114314366948406304
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1304983143867414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d94fdc9acc34848938ca0d965fa3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameOverGo: {fileID: 1062239048081492}
+--- !u!114 &114324875620179762
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1209460156408714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: 23fb3fa2a8c419a4497df80f990d3166, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!114 &114405133426466904
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1448,6 +1505,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1762833216188838}
+--- !u!222 &222254062578867892
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1209460156408714}
 --- !u!222 &222290717892632972
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -1567,6 +1630,24 @@ RectTransform:
   m_AnchoredPosition: {x: -5.4, y: 148.66}
   m_SizeDelta: {x: 950, y: 292}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224123662200950318
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1209460156408714}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 11}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
+  m_Children: []
+  m_Father: {fileID: 224530172879490422}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -220.3}
+  m_SizeDelta: {x: 78, y: 77}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224211043751696018
 RectTransform:
   m_ObjectHideFlags: 1
@@ -1673,7 +1754,7 @@ RectTransform:
   m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_Children: []
   m_Father: {fileID: 224530172879490422}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1695,6 +1776,7 @@ RectTransform:
   - {fileID: 224119080338187152}
   - {fileID: 224680806006488094}
   - {fileID: 224110617923915800}
+  - {fileID: 224123662200950318}
   - {fileID: 224530004087483864}
   m_Father: {fileID: 4803854058540876}
   m_RootOrder: 0
