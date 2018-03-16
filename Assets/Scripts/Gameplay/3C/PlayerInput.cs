@@ -25,6 +25,8 @@ public class PlayerInput : MonoBehaviour
 
     private int controllerDisconnected;
 
+    
+
     public int TutoStep
     {
         get { return tutoStep; }
@@ -222,7 +224,15 @@ public class PlayerInput : MonoBehaviour
         {
             if (data.GetButtonDown())
             {
-                GameManager.instance.PauseGame(data.playerId);
+                if(!GameManager.instance.gameOverScript.isGameOver)
+                {
+                    GameManager.instance.PauseGame(data.playerId);
+                }                    
+                else
+                {
+                    // If gameOver, start button to retry 
+                    GameManager.instance.gameOverScript.LoadScene(1);
+                }                 
             }
         }
     }
