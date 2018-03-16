@@ -11,11 +11,11 @@ public struct LDCategory{
 
 public class SpawnManager : MonoBehaviour {
 
-    public GameObject[] mouettePrefab;
-    public GameObject[] dauphinPrefab;
-    public GameObject[] poissonPrefab;
-    public GameObject[] rocherPrefab;
- 
+    public GameObject[] animalsPrefab;
+    public Transform[] animalsTransformPos;
+    public float spawnDelay;
+
+
     [Header("Icebergs")]
     public GameObject[] icebergPrefab;
     public Transform[] icebergSpawnPositions;
@@ -37,8 +37,9 @@ public class SpawnManager : MonoBehaviour {
 
     void Start()
     {
-      //  StartCoroutine(IcebergCoroutine());
-        StartCoroutine(LDCoroutine());
+        //  StartCoroutine(IcebergCoroutine());
+        //  StartCoroutine(LDCoroutine());
+        StartCoroutine(AnimalsCoroutine());
     }
 
 
@@ -113,5 +114,42 @@ public class SpawnManager : MonoBehaviour {
 
             yield return new WaitForSeconds(Random.Range(minLDSpawnTime, maxLDSpawnTime));
         }
+    }
+
+    IEnumerator AnimalsCoroutine()
+    {
+        while (true)
+        {
+            int prefabIndex = Random.Range(0, animalsPrefab.Length);
+            int transformIndex = Random.Range(0, animalsTransformPos.Length);
+
+
+            /* 
+            // Pas possible d'instancier 2 fois de suite le même prefab
+            while (prefabIndex == lastPrefabIndex)
+            {
+                prefabIndex = Random.Range(0, animalsPrefab.Length);
+            }
+            */
+            // Pas possible d'instancier 2 fois de suite au même endroit
+            while (transformIndex == lastTransformIndex)
+            {
+                transformIndex = Random.Range(0, spawnPositionsLD.Length);
+            }
+
+            GameObject inst = Instantiate(animalsPrefab[prefabIndex], animalsTransformPos[transformIndex].position, Quaternion.identity, transform);
+
+
+            inst.transform.rotation = animalsTransformPos[transformIndex].rotation;
+          //  inst.GetComponent<Animator>().speed = Random.Range(0.5f, 1f);
+
+            lastTransformIndex = transformIndex;
+            lastPrefabIndex = prefabIndex;
+
+            Destroy(inst, 60f);
+
+            yield return new WaitForSeconds(spawnDelay);
+        }
+
     }
 }
