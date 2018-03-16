@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour {
 	public AudioManager audioManager;
 
     public FadeInOut FadeMgr;
+    public EndScreenMgr endScreenMgr;
 
 	[Space]
 
@@ -33,6 +34,8 @@ public class GameManager : MonoBehaviour {
         get { return win || lose; }
     }
     private bool lose;
+
+    public bool IsEndScreen;
     private bool win;
 
     public bool IsPause
@@ -82,6 +85,8 @@ public class GameManager : MonoBehaviour {
         {
             players[i] = true;
         }
+        
+        SetupMainMenu();
     }
 
     private void OnEnable()
@@ -123,6 +128,10 @@ public class GameManager : MonoBehaviour {
         {
             shipMgr = FindObjectOfType<ShipManager>();
         }
+
+        Debug.Log("ALLO !");
+
+        audioManager.PlayTutoMusic();
     }
 
     /// <summary>
@@ -142,6 +151,8 @@ public class GameManager : MonoBehaviour {
         shipMgr.SetupAllShips();
 
         FadeMgr.FadeIn();
+
+        audioManager.PlayTutoMusic();
     }
 
     public void StartNewGame(int playerCount, bool[] playersReady)
@@ -152,10 +163,8 @@ public class GameManager : MonoBehaviour {
         FadeMgr.FadeOut(sceneMgr.LoadGameScene);
     }
 
-    public void ReturnToMainMenu(bool goToCustomizationMenu)
+    public void ReturnToMainMenu()
     {
-        // TODO store in a bool if we want to go directly in customization screen.
-
         sceneMgr.LoadMainMenuScene();
     }
     
@@ -197,7 +206,7 @@ public class GameManager : MonoBehaviour {
         lose = true;
         gameOverScript.DisplayGameOver();
     }
-
+    
     public void GameFinished()
     {
         if (IsGameOver)
@@ -206,12 +215,21 @@ public class GameManager : MonoBehaviour {
         }
 
         win = true;
-        Debug.Log("GAME FINISHED !!!");
+        IsEndScreen = false; // Wait the end screen to fade in.
+
+        FadeMgr.FadeOut(DisplayEndScreen);
+    }
+
+    public void DisplayEndScreen()
+    {
+        endScreenMgr.Display();
     }
 
 	public void OnEndTuto(){
 		onTuto = false;
 		bossMgr.enabled = true;
 		shipMgr.ResurrectAll();
+
+        audioManager.PlayFightMusic();
 	}
 }

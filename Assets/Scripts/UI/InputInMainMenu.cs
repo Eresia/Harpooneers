@@ -132,7 +132,7 @@ public class InputInMainMenu : MonoBehaviour
         {
             return;
         }
-
+        
         for (int i = 0; i < players.Length; i++)
         {
             if (players[i].GetAxisRaw("Module - L Joystick") < -0.5f)

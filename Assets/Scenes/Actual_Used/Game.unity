@@ -1779,26 +1779,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114301308640862076, guid: cf60f7543f7e1db428fab33ef4b98f6d,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114301308640862076, guid: cf60f7543f7e1db428fab33ef4b98f6d,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114094571594692092, guid: cf60f7543f7e1db428fab33ef4b98f6d,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114094571594692092, guid: cf60f7543f7e1db428fab33ef4b98f6d,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1508635868289804, guid: cf60f7543f7e1db428fab33ef4b98f6d, type: 2}
       propertyPath: m_Name
       value: SeaCamera
@@ -3536,10 +3516,40 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114162888410084358, guid: 20d2f651efa30be42b6c8ecd7b4c74d9,
+    - target: {fileID: 114770858615688146, guid: 20d2f651efa30be42b6c8ecd7b4c74d9,
         type: 2}
-      propertyPath: fadeDuration
-      value: 5
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114770858615688146, guid: 20d2f651efa30be42b6c8ecd7b4c74d9,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114770858615688146, guid: 20d2f651efa30be42b6c8ecd7b4c74d9,
+        type: 2}
+      propertyPath: m_text
+      value: Press start to go back to the port
+      objectReference: {fileID: 0}
+    - target: {fileID: 114770858615688146, guid: 20d2f651efa30be42b6c8ecd7b4c74d9,
+        type: 2}
+      propertyPath: m_textInfo.characterCount
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 114770858615688146, guid: 20d2f651efa30be42b6c8ecd7b4c74d9,
+        type: 2}
+      propertyPath: m_textInfo.spaceCount
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114770858615688146, guid: 20d2f651efa30be42b6c8ecd7b4c74d9,
+        type: 2}
+      propertyPath: m_textInfo.wordCount
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114350694538271064, guid: 20d2f651efa30be42b6c8ecd7b4c74d9,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 20d2f651efa30be42b6c8ecd7b4c74d9, type: 2}

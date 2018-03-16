@@ -155,6 +155,8 @@ MonoBehaviour:
   tutorial: {fileID: 0}
   ground: {fileID: 0}
   audioManager: {fileID: 114982158569423206}
+  FadeMgr: {fileID: 0}
+  endScreenMgr: {fileID: 0}
   onTuto: 1
   pauseScript: {fileID: 0}
   gameOverScript: {fileID: 0}
@@ -174,5 +176,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuMusic: {fileID: 0}
   menuMusicVolume: 0
-  inGameMusic: {fileID: 8300000, guid: 8cd0afa5fefcebb4c8c7bee9588f3f12, type: 3}
+  tutoMusic: {fileID: 8300000, guid: dc44a0d5d69b2c14f865d491384781f4, type: 3}
+  fightMusic: {fileID: 8300000, guid: 8cd0afa5fefcebb4c8c7bee9588f3f12, type: 3}
   inGameMusicVolume: 0.5

@@ -127,12 +127,12 @@ public class Ground : MonoBehaviour {
         waveManager = new WaveManager();
         ZoneWaveId = waveManager.CreateZone(0f, zoneRotation, zoneWaveLength, zonePeriod);
 
-        // StartCoroutine(AwakeCoroutine());
-		AwakeCoroutine();
+        StartCoroutine(AwakeCoroutine());
+		// AwakeCoroutine();
 	}
 
-	// private IEnumerator AwakeCoroutine()
-	private void AwakeCoroutine()
+	private IEnumerator AwakeCoroutine()
+	//private void AwakeCoroutine()
     {
 		selfTransform = GetComponent<Transform>();
 		lodPowPower = ((int) Mathf.Pow(2, lodPower));
@@ -143,16 +143,16 @@ public class Ground : MonoBehaviour {
 		points = new float[lod * lod];
 		normales = new Vector3[lod * lod];
 
-		// yield return null;
+		yield return null;
 
 		for(int i = 0; i < lod; i++){
 			for(int j = 0; j < lod; j++){
 				points[i*lod + j] = selfTransform.position.y;
 				normales[i*lod + j] = new Vector3(0f, 1f, 0f);
 			}
-			// if(i%1000 == 0){
-			// 	yield return null;
-			// }
+			if(i%1000 == 0){
+			    yield return null;
+			}
 		}
         
 		// waveManager.CreateZoneTest(zoneAmplitude * 2, zoneWaveLength * 2, zonePeriod);
@@ -176,7 +176,7 @@ public class Ground : MonoBehaviour {
 		frameOptions[0].ratio = (lodPowPower*ratio) / 4;
 		// frameOptions[0].ratio = 0.5f;
 
-		// yield return null;
+		yield return null;
 
 		pointBuffer = new ComputeBuffer(points.Length, sizeof(float));
 		normaleBuffer = new ComputeBuffer(normales.Length, 3 * sizeof(float));
@@ -195,7 +195,7 @@ public class Ground : MonoBehaviour {
 		seaCompute.SetBuffer(normaleKernel, "Normales", normaleBuffer);
 		seaCompute.SetTexture(normaleKernel, "NormaleMap", normaleMap);
 
-		// yield return null;
+		yield return null;
 
 		selfRenderer.material = GetComponent<Renderer>().material;
 		selfRenderer.material.SetTexture("_InputHeight", heightMap);

@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ScenesManager : MonoBehaviour {
-
-	public void LoadGameScene()
+    
+    public void LoadGameScene()
     {
         LoadScene(1);
     }

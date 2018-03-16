@@ -19,8 +19,9 @@ public class AudioManager : MonoBehaviour
 	public AudioClip menuMusic;
 	[Range(0f, 1f)]
 	public float menuMusicVolume;
-	public AudioClip inGameMusic;
-	[Range(0f, 1f)]
+	public AudioClip tutoMusic;
+    public AudioClip fightMusic;
+    [Range(0f, 1f)]
 	public float inGameMusicVolume;
 
 	[Space]
@@ -42,9 +43,27 @@ public class AudioManager : MonoBehaviour
 	void Start ()
 	{
 		if (menuMusic != null) {
-			PlayMusic (menuMusic, menuMusicVolume);
+			PlayMusic (menuMusic, inGameMusicVolume);
 		}
-	}
+    }
+
+    public void PlayTutoMusic()
+    {
+        Debug.Log("MUSIC !!!");
+
+        if (tutoMusic != null)
+        {
+            PlayMusic(tutoMusic, inGameMusicVolume);
+        }
+    }
+
+    public void PlayFightMusic()
+    {
+        if (fightMusic != null)
+        {
+            PlayMusic(fightMusic, menuMusicVolume);
+        }
+    }
 
 	void Update ()
 	{

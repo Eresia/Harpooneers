@@ -76,6 +76,16 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.instance.IsEndScreen)
+        {
+            if (player.GetButtonDown("Start"))
+            {
+                GameManager.instance.ReturnToMainMenu();
+            }
+
+            return;
+        }
+
         if (playerMgr.IsDead)
         {
             return;
