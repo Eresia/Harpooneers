@@ -15,6 +15,8 @@ public class TitleScreen : MonoBehaviour
     [Header("Values")]
     public float fadeDuration;
 
+    public Animator[] panels;
+
     private Player[] players;
 
     private bool start;
@@ -38,7 +40,7 @@ public class TitleScreen : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            if (players[i].GetButtonDown("Start") && !inputs.InTitle)
+            if (players[i].GetButtonDown("Submit") && inputs.InTitle)
             {
                 StartCoroutine(PressPlay());
             }
@@ -64,10 +66,23 @@ public class TitleScreen : MonoBehaviour
             StopCoroutine(Fade(0f, 0f));
         }
 
-        yield return Fade(0f, fadeDuration * 0.5f);
+        yield return Fade(0f, fadeDuration * 0.25f);
 
         inputs.InTitle = false;
+        
+        WaitForSeconds delay = new WaitForSeconds(0.25f);
 
-        // TODO Display PANALS !
+        foreach (Animator panel in panels)
+        {
+            panel.SetTrigger("playAnim");
+            // Feedback vagues
+
+            Vector2 pos = GameManager.instance.ground.GetSeaPosition(panel.transform.position + new Vector3(0f, 0f, 100f));
+            GameManager.instance.ground.waveManager.CreateImpact(pos, 0.5f, 0f, 0.01f, 1f, 1f, 5f);
+
+            yield return delay;
+        }
+
+
     }
 }

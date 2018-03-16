@@ -18,6 +18,8 @@ public class CameraManager : MonoBehaviour {
 
     void Awake()
     {
+        GameManager.instance.camMgr = this;
+
         // TODO WARNING Cam moves and rotates along the game SO change these values !!!
 
         originCamPos = cam.transform.position;
