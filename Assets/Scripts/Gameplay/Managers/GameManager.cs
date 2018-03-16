@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour {
     private bool gamePaused;
 
     public Pause pauseScript;
+  //  public GameOver gameOverScript;
 
     /// <summary>
     /// Return the number of players for the current game.
@@ -79,9 +80,6 @@ public class GameManager : MonoBehaviour {
         {
             players[i] = true;
         }
-
-		bossMgr.enabled = !onTuto;
-
     }
 
     private void OnEnable()
@@ -133,6 +131,8 @@ public class GameManager : MonoBehaviour {
         ground = FindObjectOfType<Ground>();
         camMgr = FindObjectOfType<CameraManager>();
         bossMgr = FindObjectOfType<BossManager>();
+
+        bossMgr.enabled = !onTuto;
 
         shipMgr.SetupAllShips();
     }

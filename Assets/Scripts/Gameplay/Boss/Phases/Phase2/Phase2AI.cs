@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Phase2AI : PhaseAI {
@@ -9,7 +8,7 @@ public class Phase2AI : PhaseAI {
     public TentacleBehaviour swipperPrefab;
     public TentacleBehaviour hammerPrefab;
     public TentacleBehaviour chargerPrefab;
-    public TentacleBehaviour eyeTentaclePrefab;
+    public EyeTentacleBehaviour eyeTentaclePrefab;
     public AspiTentacleBehaviour aspiTentaclePrefab;
     public SharkTentacleBehaviour tentacleSharkPrefab;
 
@@ -33,17 +32,17 @@ public class Phase2AI : PhaseAI {
     }
     private TentacleBehaviour[] tentaclesHammer;
 
-    public TentacleBehaviour TentaclesEye
+    public EyeTentacleBehaviour TentaclesEye
     {
-        get { return tentaclesEye; }
+        get { return tentacleEye; }
     }
-    private TentacleBehaviour tentaclesEye;
+    private EyeTentacleBehaviour tentacleEye;
 
-    public TentacleBehaviour[] TentaclesAspi
+    public AspiTentacleBehaviour[] TentaclesAspi
     {
         get { return tentaclesAspi; }
     }
-    private TentacleBehaviour[] tentaclesAspi;
+    private AspiTentacleBehaviour[] tentaclesAspi;
 
     public TentacleBehaviour TentacleShark
     {
@@ -81,7 +80,7 @@ public class Phase2AI : PhaseAI {
         tentaclesSwipper = new TentacleBehaviour[tentaclesNeeded];
         tentaclesHammer = new TentacleBehaviour[tentaclesNeeded];
         tentaclesCharger = new TentacleBehaviour[tentaclesNeeded];
-        tentaclesAspi = new TentacleBehaviour[tentaclesNeeded];
+        tentaclesAspi = new AspiTentacleBehaviour[tentaclesNeeded];
 
         for (int i = 0; i < tentaclesNeeded; i++)
         {
@@ -101,11 +100,11 @@ public class Phase2AI : PhaseAI {
             tentaclesAspi[i].gameObject.SetActive(false);
             tentaclesAspi[i].harpoonScript.hitCallback = HitBoss;
         }
-
-		tentaclesEye = null;
-        //tentaclesEye = Instantiate<TentacleBehaviour>(eyeTentaclePrefab, transform);
-        //tentaclesEye.gameObject.SetActive(false);
-        //tentaclesEye.harpoonScript.hitCallback = HitBoss;
+        
+        tentacleEye = Instantiate<EyeTentacleBehaviour>(eyeTentaclePrefab, transform);
+        tentacleEye.gameObject.SetActive(false);
+        tentacleEye.harpoonScript.hitCallback = HitBoss;
+        tentacleEye.eyeHarpoonScript.hitCallback = HitBoss;
 
         tentacleShark = Instantiate<TentacleBehaviour>(tentacleSharkPrefab, transform);
         tentacleShark.gameObject.SetActive(false);
@@ -118,7 +117,7 @@ public class Phase2AI : PhaseAI {
 
         passageCount++;
         bool hitPattern = (passageCount % (numberOfPatternsWithoutHit[step] + 1)) == 0;
-
+        
         if (hitPattern)
         {
             passageCount = 0;

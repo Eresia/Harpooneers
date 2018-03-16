@@ -6,30 +6,33 @@ using DG.Tweening;
 
 public class SplashTentaclesHITPattern : BossPattern {
 
-    // private SplashTentacleHITState state;
-    // private Phase2AI phase2;
+    private SplashTentacleHITState state;
+    private Phase2AI phase2;
 
-    // private Vector3[] spawns;
+    private Vector3[] spawns;
 
     private TentacleBehaviour[] tentaclesToUse;
 
     public SplashTentaclesHITPattern(SplashTentacleHITState state)
     {
-        // this.state = state;
+        this.state = state;
 
-        // spawns = new Vector3[state.tentacleCount];
+        spawns = new Vector3[state.tentacleCount];
+        tentaclesToUse = new TentacleBehaviour[state.tentacleCount];
     }
 
     public override void SetBoss(PhaseAI boss)
     {
         base.SetBoss(boss);
 
-        // phase2 = boss as Phase2AI;
+        phase2 = boss as Phase2AI;
     }
 
     protected override void ExecutePattern()
     {
         // Spawn 2 tentacles random around center.
+
+        SpawnTentacles();
         
         // woob wooob woooob
         boss.StartCoroutine(ActivateTentacles());
@@ -40,32 +43,15 @@ public class SplashTentaclesHITPattern : BossPattern {
     /// </summary>
     private void SpawnTentacles()
     {
-        /*
-        Vector3 center = phase2.bossMgr.center.position;
+        spawns[0] = boss.bossMgr.north.position;
+        spawns[0].z *= 0.5f;
 
-        // Random a position on a circle (in X and Z).
-        Vector3 randPos = Vector3.zero;
-        Vector2 randCircle = Random.insideUnitCircle.normalized * state.spawnRadius;
-        randPos.x = randCircle.x;
-        randPos.z = randCircle.y;
+        tentaclesToUse[0] = phase2.TentaclesEye;
+        tentaclesToUse[0].transform.position = spawns[0];
 
-        spawns[0] = center + randPos;
-
-        spawns[1] = RotatePointAroundPivot(spawns[0], Vector3.up, new Vector3(0f, Random.Range(state.minAngle, state.maxAngle), 0f));
-
-        // Store and spawn tentacles.
-        tentaclesToUse = new TentacleBehaviour[2];
-        for (int i = 0; i < 2; i++)
-        {
-            tentaclesToUse[i] = phase2.TentaclesHammer[i];
-
-            tentaclesToUse[i].transform.position = spawns[i];
-
-            // Focus the center.
-            Vector3 lookCenter = center - spawns[i];
-            tentaclesToUse[i].childTransform.localRotation = Quaternion.LookRotation(lookCenter);
-        }
-        */
+        Vector3 south = boss.bossMgr.south.position;
+        Vector3 dir = south - spawns[0];
+        tentaclesToUse[0].childTransform.localRotation = Quaternion.LookRotation(dir);
     }
 
     private Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Vector3 angles) {
@@ -79,58 +65,59 @@ public class SplashTentaclesHITPattern : BossPattern {
 
     IEnumerator ActivateTentacles()
     {
-        /*
+        SpawnTentacles();
+
+        for (int i = 0; i < state.tentacleCount; i++)
+        {
+            tentaclesToUse[i].Spawning(state.bubblingDuration);
+        }
+
+        yield return new WaitForSeconds(state.bubblingDuration);
+
+        for (int i = 0; i < state.tentacleCount; i++)
+        {
+            tentaclesToUse[i].Emerge(state.startPos, state.attackPos, state.emergingDuration);
+        }
+
+        yield return new WaitForSeconds(state.emergingDuration);
+
         for (int attack = 0; attack < state.attackCount; attack++)
         {
-            SpawnTentacles();
+            tentaclesToUse[0].childTransform.DOLocalRotate(tentaclesToUse[0].childTransform.localRotation.eulerAngles + new Vector3(0f, 90f, 0f), state.turnDuration * 0.33f);
 
-            for (int i = 0; i < state.tentacleCount; i++)
-            {
-                tentaclesToUse[i].Spawning(state.bubblingDuration);
-            }
+            yield return new WaitForSeconds(state.turnDuration * 0.33f);
 
-            yield return new WaitForSeconds(state.bubblingDuration);
+            tentaclesToUse[0].childTransform.DOLocalRotate(tentaclesToUse[0].childTransform.localRotation.eulerAngles + new Vector3(0f, -180f, 0f), state.turnDuration * 0.33f);
 
-            for (int i = 0; i < state.tentacleCount; i++)
-            {
-                tentaclesToUse[i].Emerge(state.startPos, state.attackPos, state.emergingDuration);
-            }
+            yield return new WaitForSeconds(state.turnDuration * 0.33f);
 
-            yield return new WaitForSeconds(state.emergingDuration);
+            tentaclesToUse[0].childTransform.DOLocalRotate(tentaclesToUse[0].childTransform.localRotation.eulerAngles + new Vector3(0f, 90f, 0f), state.turnDuration * 0.33f);
 
-            // Each tentacles focus a player.
-            for (int i = 0; i < state.tentacleCount; i++)
-            {
-                tentaclesToUse[i].FocusPlayer(state.turnDuration);
-            }
+            yield return new WaitForSeconds(state.turnDuration * 0.33f);
 
-            yield return new WaitForSeconds(state.turnDuration);
+            tentaclesToUse[0].FeedbackAttackArea();
 
             yield return new WaitForSeconds(state.waitBeforeAttack);
-
-            for (int i = 0; i < state.tentacleCount; i++)
-            {
-                tentaclesToUse[i].TriggerAttackAnim();
-            }
+            
+            tentaclesToUse[0].TriggerAttackAnim();
 
             yield return new WaitUntil(() => (tentaclesToUse[0].animator.GetBool("End")));
-            
+
             for (int i = 0; i < state.tentacleCount; i++)
             {
                 tentaclesToUse[i].animator.SetBool("End", false);
-
-                tentaclesToUse[i].Dive(state.startPos, state.divingDuration);
             }
+        }
 
-            yield return new WaitForSeconds(state.divingDuration);
+        tentaclesToUse[0].Dive(state.startPos, state.divingDuration);
 
-            // Reset pos.
-            for (int i = 0; i < state.tentacleCount; i++)
-            {
-                tentaclesToUse[i].ResetTentacle();
-            }
-            }
-            */
+        yield return new WaitForSeconds(state.divingDuration);
+
+        // Reset pos.
+        for (int i = 0; i < state.tentacleCount; i++)
+        {
+            tentaclesToUse[i].ResetTentacle();
+        }
 
         yield return null;
 

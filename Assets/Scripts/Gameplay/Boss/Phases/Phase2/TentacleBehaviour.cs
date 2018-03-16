@@ -23,7 +23,7 @@ public class TentacleBehaviour : MonoBehaviour {
     public Collider bodyCollider;
     public HandleHarpoonWithEnnemy harpoonScript;
 
-    private void Awake()
+    protected void Awake()
     {
         childTransform.gameObject.SetActive(false);
 
@@ -116,8 +116,6 @@ public class TentacleBehaviour : MonoBehaviour {
 
         Vector3 dir = (target.position - childTransform.position);
         dir.y = 0f;
-
-        //Debug.DrawRay(phase2.Tentacles[i].transform.position, dir * 5f, Color.white, 1f);
 
         childTransform.DOLocalRotateQuaternion(Quaternion.LookRotation(dir), turnDuration);
     }

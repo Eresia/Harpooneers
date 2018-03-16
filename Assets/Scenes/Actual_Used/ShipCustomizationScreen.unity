@@ -276,6 +276,11 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114976050090439790, guid: 8bf8a08baa3e9ed46913231ebede7132,
+        type: 2}
+      propertyPath: filePath
+      value: ShipNames/ShipNames.txt
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8bf8a08baa3e9ed46913231ebede7132, type: 2}
   m_IsPrefabParent: 0
@@ -2778,37 +2783,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 1297469070234390, guid: ffe9efaa29c336a468f47656dc4092d6, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114170656061699002, guid: ffe9efaa29c336a468f47656dc4092d6,
-        type: 2}
-      propertyPath: sceneMgr
-      value: 
-      objectReference: {fileID: 2042410657}
-    - target: {fileID: 114170656061699002, guid: ffe9efaa29c336a468f47656dc4092d6,
-        type: 2}
-      propertyPath: debug
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114170656061699002, guid: ffe9efaa29c336a468f47656dc4092d6,
-        type: 2}
-      propertyPath: shipManager
-      value: 
-      objectReference: {fileID: 550072436}
     - target: {fileID: 114170656061699002, guid: ffe9efaa29c336a468f47656dc4092d6,
         type: 2}
       propertyPath: shipMgr
       value: 
       objectReference: {fileID: 550072436}
-    - target: {fileID: 82332525857895286, guid: ffe9efaa29c336a468f47656dc4092d6,
-        type: 2}
-      propertyPath: spreadCustomCurve.m_RotationOrder
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114774312991598738, guid: ffe9efaa29c336a468f47656dc4092d6, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ffe9efaa29c336a468f47656dc4092d6, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &624153274 stripped
@@ -4156,6 +4136,11 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 141.47401
       objectReference: {fileID: 0}
+    - target: {fileID: 114976050090439790, guid: 8bf8a08baa3e9ed46913231ebede7132,
+        type: 2}
+      propertyPath: filePath
+      value: ShipNames/ShipNames.txt
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8bf8a08baa3e9ed46913231ebede7132, type: 2}
   m_IsPrefabParent: 0
@@ -4650,6 +4635,11 @@ Prefab:
     - target: {fileID: 1007562520648942, guid: 8bf8a08baa3e9ed46913231ebede7132, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114976050090439790, guid: 8bf8a08baa3e9ed46913231ebede7132,
+        type: 2}
+      propertyPath: filePath
+      value: ShipNames/ShipNames.txt
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8bf8a08baa3e9ed46913231ebede7132, type: 2}
@@ -7644,22 +7634,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2002728395}
   m_Mesh: {fileID: 4300000, guid: 3e49ce0dc2e4723448b9f15bede8bfb9, type: 3}
---- !u!1 &2042410656 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1297469070234390, guid: ffe9efaa29c336a468f47656dc4092d6,
-    type: 2}
-  m_PrefabInternal: {fileID: 620562419}
---- !u!114 &2042410657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2042410656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3decf80298567ff43beb5910649cfe1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2047849073
 Prefab:
   m_ObjectHideFlags: 0
@@ -8576,6 +8550,11 @@ Prefab:
     - target: {fileID: 1995866917777238, guid: 8bf8a08baa3e9ed46913231ebede7132, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114976050090439790, guid: 8bf8a08baa3e9ed46913231ebede7132,
+        type: 2}
+      propertyPath: filePath
+      value: ShipNames/ShipNames.txt
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8bf8a08baa3e9ed46913231ebede7132, type: 2}

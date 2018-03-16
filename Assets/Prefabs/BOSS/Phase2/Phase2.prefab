@@ -50,7 +50,7 @@ Animator:
   m_GameObject: {fileID: 1976522427162376}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 78acdf888ad36584c96f43af0c8d087d, type: 2}
+  m_Controller: {fileID: 9100000, guid: c4a985c0c9139544fa64637f75dde4b3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -77,7 +77,7 @@ MonoBehaviour:
     type: 2}
   chargerPrefab: {fileID: 114873807325633118, guid: 618f6944c05a9d8469df045859bbb75b,
     type: 2}
-  eyeTentaclePrefab: {fileID: 114730312700449272, guid: 04d937db97ed03c4b86fd2b7954a3062,
+  eyeTentaclePrefab: {fileID: 114890707845095260, guid: 04d937db97ed03c4b86fd2b7954a3062,
     type: 2}
   aspiTentaclePrefab: {fileID: 114520668772474226, guid: 8199fce887ec31847bbe9220f0f42174,
     type: 2}
@@ -85,7 +85,7 @@ MonoBehaviour:
     type: 2}
   tentaclesNeeded: 5
   noHittablePatternCount: 4
-  numberOfPatternsWithoutHit: 030000000400000005000000
+  numberOfPatternsWithoutHit: 020000000300000004000000
   lifepointsToPassStep:
   - 0.75
   - 0.4
