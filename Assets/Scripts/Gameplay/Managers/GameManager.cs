@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour {
     private bool gamePaused;
 
     public Pause pauseScript;
+  //  public GameOver gameOverScript;
 
     /// <summary>
     /// Return the number of players for the current game.
