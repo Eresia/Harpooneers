@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b930c3ecdd86349a83962a0fe03992, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLifepoints: 150
+  maxLifepoints: 200
   bossMgr: {fileID: 0}
   whaleReferences: {fileID: 0}
   whalePrefab: {fileID: 1890487500777386, guid: 063fc181f42e064499bf5e0fe39f60b5,
@@ -173,7 +173,7 @@ MonoBehaviour:
   numberOfPatternsWithoutHit: 2
   damageMinToHaveScream: 10
   whale_scream: {fileID: 8300000, guid: 6e820c0ae228ae5499e0a79755f4c919, type: 3}
-  whale_spawn: {fileID: 8300000, guid: 6e820c0ae228ae5499e0a79755f4c919, type: 3}
+  whale_spawn: {fileID: 8300000, guid: 06638536874cc0b4eac01e4d7e9161cf, type: 3}
   endPhaseTime: 4
   resetDepth: 13
 --- !u!198 &198101071928520332
