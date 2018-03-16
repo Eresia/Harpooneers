@@ -83,10 +83,18 @@ public class SplashTentaclesHITPattern : BossPattern {
 
         for (int attack = 0; attack < state.attackCount; attack++)
         {
-            //tentaclesToUse[0].childTransform.DOLocalRotate(new Vector3(0f, 359f, 0f), state.turnDuration);
+            tentaclesToUse[0].childTransform.DOLocalRotate(tentaclesToUse[0].childTransform.localRotation.eulerAngles + new Vector3(0f, 90f, 0f), state.turnDuration * 0.33f);
 
-            //yield return new WaitForSeconds(state.turnDuration);
-        
+            yield return new WaitForSeconds(state.turnDuration * 0.33f);
+
+            tentaclesToUse[0].childTransform.DOLocalRotate(tentaclesToUse[0].childTransform.localRotation.eulerAngles + new Vector3(0f, -180f, 0f), state.turnDuration * 0.33f);
+
+            yield return new WaitForSeconds(state.turnDuration * 0.33f);
+
+            tentaclesToUse[0].childTransform.DOLocalRotate(tentaclesToUse[0].childTransform.localRotation.eulerAngles + new Vector3(0f, 90f, 0f), state.turnDuration * 0.33f);
+
+            yield return new WaitForSeconds(state.turnDuration * 0.33f);
+
             tentaclesToUse[0].FeedbackAttackArea();
 
             yield return new WaitForSeconds(state.waitBeforeAttack);
@@ -94,14 +102,14 @@ public class SplashTentaclesHITPattern : BossPattern {
             tentaclesToUse[0].TriggerAttackAnim();
 
             yield return new WaitUntil(() => (tentaclesToUse[0].animator.GetBool("End")));
-        }
-            
-        for (int i = 0; i < state.tentacleCount; i++)
-        {
-            tentaclesToUse[i].animator.SetBool("End", false);
 
-            tentaclesToUse[i].Dive(state.startPos, state.divingDuration);
+            for (int i = 0; i < state.tentacleCount; i++)
+            {
+                tentaclesToUse[i].animator.SetBool("End", false);
+            }
         }
+
+        tentaclesToUse[i].Dive(state.startPos, state.divingDuration);
 
         yield return new WaitForSeconds(state.divingDuration);
 

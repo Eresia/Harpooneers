@@ -1243,7 +1243,7 @@ Prefab:
         type: 2}
       propertyPath: lifepointsFilling
       value: 
-      objectReference: {fileID: 2143910666}
+      objectReference: {fileID: 615305327}
     - target: {fileID: 114362013403539180, guid: 067cdd2b7bc7c2f48bf143fbdd61132e,
         type: 2}
       propertyPath: phaseTransitionMgr
@@ -1575,6 +1575,12 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 466890440}
   m_Script: {fileID: 11500000, guid: cb45d3370d9afdc4fa0dbf3ac9a4502e, type: 3}
+--- !u!114 &615305327 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114173769449893062, guid: 20d2f651efa30be42b6c8ecd7b4c74d9,
+    type: 2}
+  m_PrefabInternal: {fileID: 1402082912}
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1001 &627393715
 Prefab:
   m_ObjectHideFlags: 0
@@ -5117,9 +5123,3 @@ Transform:
   m_PrefabParentObject: {fileID: 4767433834814272, guid: 04d937db97ed03c4b86fd2b7954a3062,
     type: 2}
   m_PrefabInternal: {fileID: 1688226479}
---- !u!114 &2143910666 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114227175962324476, guid: 20d2f651efa30be42b6c8ecd7b4c74d9,
-    type: 2}
-  m_PrefabInternal: {fileID: 1402082912}
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
