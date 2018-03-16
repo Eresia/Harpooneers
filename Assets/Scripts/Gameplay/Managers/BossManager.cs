@@ -41,6 +41,8 @@ public class BossManager : MonoBehaviour {
 
     private PhaseAI currentPhase;
 
+    public bool hasSpawn;
+
     private void Awake()
     {
 		GameManager.instance.bossMgr = this;
@@ -114,6 +116,7 @@ public class BossManager : MonoBehaviour {
         CurrentPhaseGo = phases[phaseId];
         currentPhase = currentPhaseGo.GetComponent<PhaseAI>();
 
+        hasSpawn = false;
         UpdateLifepoints();
     }
 

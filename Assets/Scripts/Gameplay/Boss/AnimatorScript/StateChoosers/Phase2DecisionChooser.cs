@@ -12,6 +12,7 @@ public class Phase2DecisionChooser : BossAnimatorScript
         {
             phase2 = animator.GetComponent<Phase2AI>();
 
+            phase2.bossMgr.hasSpawn = true;
             phase2.bossMgr.DisplayLifeBar(true);
         }
 

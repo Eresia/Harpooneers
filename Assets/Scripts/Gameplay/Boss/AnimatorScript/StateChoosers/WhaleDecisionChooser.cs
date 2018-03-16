@@ -14,7 +14,8 @@ public class WhaleDecisionChooser : StateChooser
         {
             whalePhase = animator.GetComponent<WhalePhaseAI>();
 			actualPhase = 0;
-            
+
+            whalePhase.bossMgr.hasSpawn = true;
             whalePhase.bossMgr.DisplayLifeBar(true);
             return 0;
         }

@@ -159,7 +159,10 @@ public class GameManager : MonoBehaviour {
         pauseScript.PauseGame(playerID);
         gamePaused = true;
 
-        bossMgr.DisplayLifeBar(false);
+        if (bossMgr.hasSpawn)
+        {
+            bossMgr.DisplayLifeBar(false);
+        }
     }
 
     public void UnPauseGame()
@@ -167,7 +170,10 @@ public class GameManager : MonoBehaviour {
         pauseScript.UnPauseGame();
         gamePaused = false;
 
-        bossMgr.DisplayLifeBar(true);
+        if (bossMgr.hasSpawn)
+        {
+            bossMgr.DisplayLifeBar(true);
+        }
     }
 
 	[ContextMenu("GameOver")]
