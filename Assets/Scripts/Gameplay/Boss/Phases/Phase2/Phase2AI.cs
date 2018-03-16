@@ -10,7 +10,7 @@ public class Phase2AI : PhaseAI {
     public TentacleBehaviour chargerPrefab;
     public EyeTentacleBehaviour eyeTentaclePrefab;
     public AspiTentacleBehaviour aspiTentaclePrefab;
-    public TentacleBehaviour tentacleSharkPrefab;
+    public SharkTentacleBehaviour tentacleSharkPrefab;
 
     public int tentaclesNeeded;
 
@@ -106,10 +106,9 @@ public class Phase2AI : PhaseAI {
         tentacleEye.harpoonScript.hitCallback = HitBoss;
         tentacleEye.eyeHarpoonScript.hitCallback = HitBoss;
 
-		tentacleShark = null;
-        //tentacleShark = Instantiate<TentacleBehaviour>(tentacleSharkPrefab, transform);
-        //tentacleShark.gameObject.SetActive(false);
-        //tentacleShark.harpoonScript.hitCallback = HitBoss;
+        tentacleShark = Instantiate<TentacleBehaviour>(tentacleSharkPrefab, transform);
+        tentacleShark.gameObject.SetActive(false);
+        tentacleShark.harpoonScript.hitCallback = HitBoss;
     }
 
     public int DecideNextPhase()
