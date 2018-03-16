@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 114422800963901186}
   m_Layer: 0
   m_Name: BodyCollider
-  m_TagString: Kraken
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -807,7 +807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6e650634ed5954daed77fa4d60aaf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 1
+  damageAmount: 0
   hitFX: {fileID: 0}
   hit_sound: {fileID: 8300000, guid: 6ef5d8cc08d8e804ebd2fb79df81ff0b, type: 3}
 --- !u!114 &114873807325633118

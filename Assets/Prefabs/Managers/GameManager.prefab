@@ -20,9 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4507314145147650}
   - component: {fileID: 114170656061699002}
-  - component: {fileID: 114774312991598738}
   - component: {fileID: 114982158569423206}
   - component: {fileID: 82173439072912002}
+  - component: {fileID: 114080815976795864}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -123,6 +123,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &114080815976795864
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1297469070234390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3decf80298567ff43beb5910649cfe1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114170656061699002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -134,9 +145,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c53b7e0dbb3ba045a26b3a1d872862e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 1
+  debug: 0
   actualPlayer: -1
-  sceneMgr: {fileID: 114774312991598738}
+  sceneMgr: {fileID: 114080815976795864}
   boundaryMgr: {fileID: 0}
   shipMgr: {fileID: 0}
   camMgr: {fileID: 0}
@@ -144,22 +155,11 @@ MonoBehaviour:
   tutorial: {fileID: 0}
   ground: {fileID: 0}
   audioManager: {fileID: 114982158569423206}
-  onTuto: 0
+  onTuto: 1
   pauseScript: {fileID: 0}
   nbOfPlayers: 4
   shipConfigs: []
   players: 
---- !u!114 &114774312991598738
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1297469070234390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3decf80298567ff43beb5910649cfe1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114982158569423206
 MonoBehaviour:
   m_ObjectHideFlags: 1

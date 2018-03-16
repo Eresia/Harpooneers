@@ -227,26 +227,19 @@ public class InputInMainMenu : MonoBehaviour
 
             else if (players[i].GetButtonDown("Start"))
             {
-                if (playerReady[i])
-                {
-                    // Player 1 start the game if all players are ready !
-                    if (i == 0)
-                    {
-                        // All players are ready and number of players are minimum 2 !
-                        if (nbOfPlayers > 1 && nbOfPlayers == nbOfPlayersReady)
-                        {
-                            GameManager.instance.StartNewGame(nbOfPlayers, playerReady);
-                        }
-                    }
-                }
-
                 // Player is now ready.
-                else if (playerHasJoined[i])
+                if (playerHasJoined[i])
                 {
                     playerReady[i] = true;
                     nbOfPlayersReady++;
                     
                     prepareGamePanel.PlayerReady(i);
+
+                    // All players are ready and number of players are minimum 2 !
+                    if (nbOfPlayers > 1 && nbOfPlayers == nbOfPlayersReady)
+                    {
+                        GameManager.instance.StartNewGame(nbOfPlayers, playerReady);
+                    }
                 }
             }
 

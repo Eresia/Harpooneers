@@ -79,9 +79,6 @@ public class GameManager : MonoBehaviour {
         {
             players[i] = true;
         }
-
-		bossMgr.enabled = !onTuto;
-
     }
 
     private void OnEnable()
@@ -133,6 +130,8 @@ public class GameManager : MonoBehaviour {
         ground = FindObjectOfType<Ground>();
         camMgr = FindObjectOfType<CameraManager>();
         bossMgr = FindObjectOfType<BossManager>();
+
+        bossMgr.enabled = !onTuto;
 
         shipMgr.SetupAllShips();
     }

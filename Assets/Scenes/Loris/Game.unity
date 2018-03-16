@@ -1680,11 +1680,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 646802119}
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
---- !u!1 &652854701 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1731216871336192, guid: fa89473b9ad3cf748b5c81e255e12e83,
-    type: 2}
-  m_PrefabInternal: {fileID: 1386791031}
 --- !u!1 &712353342
 GameObject:
   m_ObjectHideFlags: 0
@@ -3251,16 +3246,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114474514742804016, guid: fa89473b9ad3cf748b5c81e255e12e83,
-        type: 2}
-      propertyPath: mouettePrefab.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114474514742804016, guid: fa89473b9ad3cf748b5c81e255e12e83,
-        type: 2}
-      propertyPath: icebergPrefab.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4882015118831720, guid: fa89473b9ad3cf748b5c81e255e12e83, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3293,11 +3278,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 20
       objectReference: {fileID: 0}
-    - target: {fileID: 114474514742804016, guid: fa89473b9ad3cf748b5c81e255e12e83,
-        type: 2}
-      propertyPath: icebergPrefab.Array.data[0]
-      value: 
-      objectReference: {fileID: 652854701}
     - target: {fileID: 1032850534525554, guid: fa89473b9ad3cf748b5c81e255e12e83, type: 2}
       propertyPath: m_IsActive
       value: 0
