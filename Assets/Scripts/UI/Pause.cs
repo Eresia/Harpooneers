@@ -12,7 +12,7 @@ public class Pause : MonoBehaviour {
     public Button menuButton;
     public Button quitButton;
 
-    public Image[] buttonsImages;
+    public Sprite[] buttonsImages;
 
     private bool _isPause;
     
@@ -38,17 +38,17 @@ public class Pause : MonoBehaviour {
     {
         if(_isPause)
         {
-            if (player.GetAxis("Move Vertical") > 0)
-            {
-                menuButton.gameObject.SetActive(true);
-            }
             if (player.GetAxis("Move Vertical") < 0)
             {
-                quitButton.gameObject.SetActive(true);
-                quitButton.gameObject.SetActive(false);
+                menuButton.image.sprite = buttonsImages[0];
+                quitButton.image.sprite = buttonsImages[3];
             }
-        }
-        
+            if (player.GetAxis("Move Vertical") > 0)
+            {
+                menuButton.image.sprite = buttonsImages[1];
+                quitButton.image.sprite = buttonsImages[2];
+            }
+        }        
 
     }
 
