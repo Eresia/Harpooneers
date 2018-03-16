@@ -45,6 +45,7 @@ public class SpawnTentaclesPattern : BossPattern {
 
 		for(int i = -2; i < tentacles.Length - 2; i++){
 			tentacles[i+2].transform.position = position - new Vector3(i * state.tentacleSeparations, 0, state.offset);
+			tentacles[i+2].transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
 		}
 	}
 
