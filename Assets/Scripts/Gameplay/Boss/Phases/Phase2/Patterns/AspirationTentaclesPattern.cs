@@ -20,9 +20,12 @@ public class AspirationTentaclesPattern : BossPattern {
 
 	private WaveOptions wave;
 
+	private int nbShock;
+
     public AspirationTentaclesPattern(AspirationTentacleState state)
     {
         this.state = state;
+		nbShock = state.nbShock;
 		swipperCount = 2;
 		tentacleCoroutines = new Coroutine[2];
 
@@ -177,7 +180,9 @@ public class AspirationTentaclesPattern : BossPattern {
 
 	public void Hit(){
 		boss.HitBoss(aspiTentacle.bombDamages);
-		OnStopPattern();
+		if(nbShock == 0){
+			OnStopPattern();
+		}
 	}
 
     protected override void OnStopPattern()

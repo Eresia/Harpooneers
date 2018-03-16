@@ -26,6 +26,8 @@ public class AspirationTentacleState : BossState<AspirationTentaclesPattern>
 
     public float divingDuration;
 
+	public int nbShock = 3;
+
     protected override AspirationTentaclesPattern Init()
     {
         return new AspirationTentaclesPattern(this);
