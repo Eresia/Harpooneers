@@ -236,7 +236,7 @@ MonoBehaviour:
   emergingDuration: 0.5
   attackPos: {x: 0, y: 0, z: 0}
   waitBeforeAttack: 0.5
-  maxTime: 60
+  maxTime: 20
   divingDuration: 0.5
   nbShock: 3
 --- !u!114 &114854219279528076
@@ -1168,10 +1168,10 @@ AnimatorStateMachine:
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 24, y: 24, z: 0}
-  m_EntryPosition: {x: 288, y: -84, z: 0}
+  m_EntryPosition: {x: 264, y: -84, z: 0}
   m_ExitPosition: {x: 528, y: 48, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: 1102792872858872516}
+  m_DefaultState: {fileID: 1102378999376625852}
 --- !u!1109 &1109464391388196850
 AnimatorTransition:
   m_ObjectHideFlags: 1

@@ -166,7 +166,9 @@ public class AspirationTentaclesPattern : BossPattern {
         }
 
 		aspiTentacle.animator.SetBool("End", false);
-		aspiTentacle.attackCollider.enabled = false;
+		if(aspiTentacle.attackCollider){
+			aspiTentacle.attackCollider.enabled = false;
+		}
 		aspiTentacle.Dive(state.startPos, state.divingDuration);
 
         yield return new WaitForSeconds(state.divingDuration);
