@@ -25,6 +25,8 @@ public class MovementBehaviour : MonoBehaviour {
     private bool isBumpInScreen;
     private bool isOutOfScreen;
 
+    private PlayerManager playerMgr;
+
     private void Reset()
     {
         physicMove = GetComponent<PhysicMove>();
@@ -33,7 +35,7 @@ public class MovementBehaviour : MonoBehaviour {
     private void Awake()
     {
         initialDir = targetDir = Quaternion.identity;
-		//GameManager.instance.audioManager.CreatePersistantSound (AudioManager.PossibleSound.MOVE, move_player_sound,0.1f);
+        playerMgr = GetComponent<PlayerManager>();
     }
 
     public void Move(Vector3 inputDir) {
@@ -57,6 +59,12 @@ public class MovementBehaviour : MonoBehaviour {
 
     private void FixedUpdate()
     {
+        if(playerMgr.IsDead)
+        {
+            transform.position = GameManager.instance.boundaryMgr.LimitPosition(transform.position);
+            return;
+        }
+
         if(initialDir != targetDir)
         {
             // Turn boat.
@@ -92,7 +100,7 @@ public class MovementBehaviour : MonoBehaviour {
             isBumpInScreen = true;
             isOutOfScreen = false;
 
-            GetComponent<PlayerManager>().Death();
+            playerMgr.Death();
 
             Vector3 dir = (GameManager.instance.boundaryMgr.screenCenterInWorldSpace - transform.position).normalized;
 

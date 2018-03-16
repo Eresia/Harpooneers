@@ -100,8 +100,8 @@ public class BoundaryManager : MonoBehaviour {
         float xMin = Mathf.Lerp(trapezeData.xBottomLeft, trapezeData.xTopLeft, t);
         float xMax = Mathf.Lerp(trapezeData.xBottomRight, trapezeData.xTopRight, t);
         
-        clampedPos.x = Mathf.Clamp(clampedPos.x, xMin - xMin * horizontalOffset, xMax - xMax * horizontalOffset);
-        clampedPos.z = Mathf.Clamp(clampedPos.z, trapezeData.zBottom - trapezeData.zBottom * verticalOffset, trapezeData.zTop - trapezeData.zTop * verticalOffset);
+        clampedPos.x = Mathf.Clamp(clampedPos.x, xMin, xMax);
+        clampedPos.z = Mathf.Clamp(clampedPos.z, trapezeData.zBottom, trapezeData.zTop);
 
         return clampedPos;
     }
