@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using DG.Tweening;
 
 
 [System.Serializable]
@@ -53,8 +54,20 @@ public class InputInMainMenu : MonoBehaviour
 
     public GameObject rdyText;
 
+    public Transform sceneCamera;
+
+    public float creditRotation;
+
+    public float timeToCredits;
+
+    private float baseRotation;
+
+    private bool inCredits;
+
     private void Awake()
     {
+        baseRotation = sceneCamera.rotation.x;
+        inCredits = false;
         nbOfPlayers = 0;
         playerReady = new bool[4];
         playerHasJoined = new bool[4];
@@ -241,6 +254,22 @@ public class InputInMainMenu : MonoBehaviour
                         GameManager.instance.StartNewGame(nbOfPlayers, playerReady);
                     }
                 }
+            }
+            else if (players[i].GetButtonDown("Credits"))
+            {
+                Vector3 actualRotation = sceneCamera.rotation.eulerAngles;
+                if (inCredits)
+                {
+                    actualRotation.x = baseRotation;
+                    sceneCamera.DORotate(actualRotation, timeToCredits);
+                }
+                else
+                {
+                    actualRotation.x = creditRotation;
+                    sceneCamera.DORotate(actualRotation, timeToCredits);
+                }
+
+                inCredits = !inCredits;
             }
 
             /*
