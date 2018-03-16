@@ -134,7 +134,6 @@ public class GameManager : MonoBehaviour {
         camMgr = FindObjectOfType<CameraManager>();
         bossMgr = FindObjectOfType<BossManager>();
 
-        bossMgr.enabled = !onTuto;
 		lose = false;
 		win = false;
 

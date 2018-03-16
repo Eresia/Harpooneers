@@ -52,12 +52,14 @@ public class Tutorial : MonoBehaviour
 			// Get all fishing boats to lock inputs.
 		}
 		else{
-			Destroy(tutoParent);
+			StartCoroutine(EndTutoCoroutine(0));
 		}
     }
 
 	public void KillTuto(){
-		StopCoroutine(progressionCoroutine);
+		if(progressionCoroutine != null){
+			StopCoroutine(progressionCoroutine);
+		}
 		StartCoroutine(EndTutoCoroutine(TutoEndTime));
 	}
 
@@ -154,6 +156,7 @@ public class Tutorial : MonoBehaviour
         //Death & Resurect
         yield return PrintText(8);
         yield return new WaitForSeconds(TimeBetweenTextTransitions);
+		GameManager.instance.shipMgr.ResurrectAll();
         GameManager.instance.shipMgr.ChoosePlayerManagerToAttack().Death();
         yield return PrintText(9);
         yield return new WaitUntil(AllPlayerAlive);

@@ -46,6 +46,7 @@ public class BossManager : MonoBehaviour {
     private void Awake()
     {
 		GameManager.instance.bossMgr = this;
+		enabled = false;
         phaseTransitionMgr.OnTransitionFinished = BeginPhase;
 
         SetupPhases();
