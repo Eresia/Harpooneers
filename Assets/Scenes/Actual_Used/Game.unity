@@ -437,6 +437,18 @@ Prefab:
       propertyPath: m_fontSizeBase
       value: 18
       objectReference: {fileID: 0}
+    - target: {fileID: 1779077029182796, guid: cf60f7543f7e1db428fab33ef4b98f6d, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1304983143867414, guid: cf60f7543f7e1db428fab33ef4b98f6d, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1304983143867414, guid: cf60f7543f7e1db428fab33ef4b98f6d, type: 2}
+      propertyPath: m_Name
+      value: harpoo
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cf60f7543f7e1db428fab33ef4b98f6d, type: 2}
   m_IsPrefabParent: 0
@@ -1932,7 +1944,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 716677142}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 22.1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 16634944}
@@ -4266,7 +4278,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4493171840694980, guid: 8d447a651bdff9d4f851fefa8a7a864c, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4493171840694980, guid: 8d447a651bdff9d4f851fefa8a7a864c, type: 2}
       propertyPath: m_LocalPosition.y
@@ -4296,6 +4308,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114301401480464612, guid: 8d447a651bdff9d4f851fefa8a7a864c,
+        type: 2}
+      propertyPath: bombLauncher
+      value: 
+      objectReference: {fileID: 16634945}
     - target: {fileID: 114231393646165644, guid: 8d447a651bdff9d4f851fefa8a7a864c,
         type: 2}
       propertyPath: _bombScript
@@ -4316,11 +4333,6 @@ Prefab:
       propertyPath: directionImage
       value: 
       objectReference: {fileID: 802090460}
-    - target: {fileID: 114301401480464612, guid: 8d447a651bdff9d4f851fefa8a7a864c,
-        type: 2}
-      propertyPath: bombLauncher
-      value: 
-      objectReference: {fileID: 16634945}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8d447a651bdff9d4f851fefa8a7a864c, type: 2}
   m_IsPrefabParent: 0
