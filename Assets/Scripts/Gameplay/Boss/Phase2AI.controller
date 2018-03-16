@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tentacleCount: 1
-  bubblingDuration: 3
+  bubblingDuration: 2.5
   startPos: {x: 0, y: -24, z: 0}
   emergingDuration: 0.5
   attackPos: {x: 0, y: 0, z: 0}
@@ -167,15 +167,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackCount: 2
   tentacleCount: 2
-  bubblingDuration: 2.5
+  bubblingDuration: 3
   spawnRadius: 10
   minAngle: 45
   maxAngle: 315
   startPos: {x: 0, y: -24, z: 0}
-  emergingDuration: 0.5
-  attackPos: {x: 0, y: 0, z: 0}
-  turnDuration: 0.5
-  waitBeforeAttack: 0.5
+  emergingDuration: 0.75
+  attackPos: {x: 0, y: -5, z: 0}
+  turnDuration: 1
+  waitBeforeAttack: 0.75
   divingDuration: 1
 --- !u!114 &114671761881577010
 MonoBehaviour:
