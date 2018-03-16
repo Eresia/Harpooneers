@@ -375,10 +375,9 @@ MonoBehaviour:
   Rock: {fileID: 114862164405428658}
   tutoParent: {fileID: 1993068680731868}
   TimeBetweenLetters: 0.025
-  TimeBetweenTextTransitions: 1
+  TimeBetweenTextTransitions: 4
   StartTime: 3
   FrameSpawnTime: 1
-  IntroTime: 2
   ToyTime: 3
   rockSpeed: 5
   rockDepth: 5
@@ -386,26 +385,27 @@ MonoBehaviour:
   waveAmplitude: 2
   waveAppearTime: 3
   Texts:
-  - "Welcome fellow fishermen ! \\As it is your first day of work, I\u2019ll explain
-    to you the basics of navigation."
-  - You can move your boat with <sprite index=5>.
-  - The waves will affect your deplacement, keep that in mind as you sail.
-  - Your harpoon is your main tool. To aim, use <sprite index=2>. Fire by simply releasing
-    it !
-  - 'You can hook just about anything : rocks, icebergs and even your sailor companions
-    !\Try on that rock.'
-  - Once Hooked, you can pull yourself towards your harpoon by pressing <sprite index=1>
-    (Watchout for rocks though).
-  - By pressing <sprite index=4>, you can drop a bomb behind you. Please be careful
-    as it will explode on first contact.\Try blow up one !
-  - "Don\u2019t forget that bomb generate waves that can work with (or against) you."
-  - "Against big fishes, your ship will not withstand any hit so watchout. For the
-    sake of knowledge, I\u2019ll kill one of you."
-  - When your ship gets destroyed, your teammates have to reach for the wreck to get
-    you a new one.
-  - "The strong waves can mix you up till you\u2019re lost. So use <sprite index=3>
-    to spot your ship."
-  - You now know everything.\ Good Luck Sailor !
+  - "Welcome fellow fishermen ! \\As it\u2019s your first day of work, I\u2019ll explain
+    to you the basics of navigation. "
+  - 'You can move your boat with <sprite index=5>. '
+  - 'The waves will affect your movements, keep that in mind as you sail. '
+  - 'Your harpoon is your main tool. To aim, use <sprite index=2>. Fire by simply
+    releasing the stick ! '
+  - "You can cling on to anything: rocks, icebergs and even your fellow fishermen\u2019s
+    ships !\\Try on that Iceberg. "
+  - Once Hooked, you can launch yourself by pressing <sprite index=1>.
+  - "By pressing <sprite index=4>, you can drop a bomb behind you. Please be careful
+    as it will explode on contact (Ships won\u2019t be affected).\\Try to blow one
+    up ! "
+  - "Don\u2019t forget that bomb generate waves that will push your ship away from
+    the center of the blast. "
+  - 'Against big fishes, your ship will not withstand any hit so be careful.\Allow
+    me to destroy one of yours for the sake of explanation. '
+  - 'When your ship gets destroyed, your teammates have to reach the shipwreck to
+    repair it. '
+  - 'The strong waves can easily get you lost. If so, use <sprite index=3> to spot
+    your ship. '
+  - 'You now know the ropes any fisherman needs.\Good Luck Sailor ! '
 --- !u!114 &114365319505674244
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -518,7 +518,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: -14.674393, z: 0, w: -13.32782}
   m_textInfo:
     textComponent: {fileID: 114408099850786424}
     characterCount: 0
@@ -571,7 +571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -680,10 +680,10 @@ RectTransform:
   m_Father: {fileID: 224219037664051742}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.3}
-  m_AnchorMax: {x: 0.5, y: 0.7}
-  m_AnchoredPosition: {x: -10, y: 0}
-  m_SizeDelta: {x: 1000, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -10, y: 90}
+  m_SizeDelta: {x: 1000, y: -180}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &224219037664051742
 RectTransform:
@@ -702,7 +702,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.15622266}
   m_AnchorMax: {x: 0.5, y: 0.15622266}
   m_AnchoredPosition: {x: 0, y: -120}
-  m_SizeDelta: {x: 1300, y: 250}
+  m_SizeDelta: {x: 1400, y: 300}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &224311369248308766
 RectTransform:

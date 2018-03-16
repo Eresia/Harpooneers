@@ -20,7 +20,6 @@ public class Tutorial : MonoBehaviour
     public float TimeBetweenTextTransitions = 1f;
 	public float StartTime = 3f;
 	public float FrameSpawnTime = 1f;
-    public float IntroTime = 5f;
     public float ToyTime = 5f;
     public float rockSpeed = 5f;
 	public float rockDepth = 5f;
@@ -98,7 +97,7 @@ public class Tutorial : MonoBehaviour
 
         //Intro
         yield return PrintText(0);
-        yield return new WaitForSeconds(IntroTime);
+        yield return new WaitForSeconds(TimeBetweenTextTransitions);
 
         PassToStep(1);        //Unlock Move
 
