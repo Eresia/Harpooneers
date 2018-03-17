@@ -11,10 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a231427ff99d79488565fd983cacb24, type: 3}
   m_Name: 3_FastReloadHarpoon
   m_EditorClassIdentifier: 
-  moduleName: FastReload Harpon
+  moduleName: Daedalus
   moduleId: 3
-  description: Reloading Quick
-  fireSpeed: 65
-  returnSpeed: 40
-  fireDistance: 9
-  tractionSpeed: 14
+  description: The double barrel of this harpoon allows a quicker reload, at the expense
+    of its range.
+  fireSpeed: 100
+  returnSpeed: 75
+  fireDistance: 25
+  tractionSpeed: 31

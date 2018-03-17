@@ -11,10 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a231427ff99d79488565fd983cacb24, type: 3}
   m_Name: 2_LightHarpoon
   m_EditorClassIdentifier: 
-  moduleName: Light Harpoon
+  moduleName: Last Whisper
   moduleId: 2
-  description: Firing Quick
-  fireSpeed: 78
-  returnSpeed: 12
-  fireDistance: 11
-  tractionSpeed: 18
+  description: "You better pray no one uses this bad boy to shoot you instead of a
+    fish, because its incredible speed wouldn\u2019t let you see it coming. If, by
+    some miracle you managed to dodge it though, its long reload would give you some
+    time to escape."
+  fireSpeed: 100
+  returnSpeed: 75
+  fireDistance: 25
+  tractionSpeed: 31

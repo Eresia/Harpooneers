@@ -11,11 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c0880e239be2d34095e526734855c6f, type: 3}
   m_Name: 2_Coque_Standard
   m_EditorClassIdentifier: 
-  moduleName: Standard hull
+  moduleName: Amikiri
   moduleId: 2
-  description: Default coque
+  description: This pretty standard hull is a classic. Offering a decent speed, maneuverability
+    and sloshing, this is the perfect equipment for sailors who are eager to tackle
+    the sea.
   moveSpeedMax: 0.004
-  turnSpeed: 8
+  turnSpeed: 3
   hitboxSize: 1
-  drag: 3
-  waveSensibility: 10
+  drag: 2.5
+  waveSensibility: 300

@@ -17,6 +17,8 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
 
     [Header("FX")]
     public GameObject radiusFX;
+    [Range(0,1)]
+    public float ExpFXSize = 1;
     public ParticleSystem explosionFX;
     public ParticleSystem fuseFX;
 
@@ -28,6 +30,10 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
     private Collider _myCollider;
 
     private bool hasAlreadyExplode;
+
+	public AudioClip explosion_sound;
+
+    public float repulsionForce;
 
     public void Awake()
     {
@@ -44,9 +50,10 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
     // Scale fx depending the bomb radius.
     public void SetupBombFX()
     {
-        Vector3 resize = Vector3.one * bombStockModule.bombRadius;
+        Vector3 resize = Vector3.one * bombStockModule.bombRadius * ExpFXSize;
         
-        radiusFX.transform.parent.localScale *= bombStockModule.bombRadius;
+		Vector3 forceRadius = new Vector3(0.02f, 0.02f, 1f);
+        radiusFX.transform.parent.localScale = forceRadius * bombStockModule.bombRadius;
         explosionFX.transform.localScale = resize;
     }
     
@@ -67,7 +74,7 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
         radiusFX.SetActive(true);
 
         // Spawn Position
-        gameObject.transform.position = spawnPosition + new Vector3(0f, 0.25f,0f);
+        gameObject.transform.position = spawnPosition + new Vector3(0f, 0.25f, 0f);
 
         //Initial Force
         physicsScript.AddForce(movementDirection);
@@ -94,10 +101,15 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
 
     private IEnumerator Explosion(float delay)
     {
+        // Feedback that the bomb will explodes.
         if (delay > 0)
+        {
             fuseFX.Play();
+        }
 
         yield return new WaitForSeconds(delay);
+        
+        fuseFX.Stop();
 
         // Deal damage with an overlap sphere
         Collider[] colliders = Physics.OverlapSphere(transform.position, bombStockModule.bombRadius, damageableLayer);
@@ -107,14 +119,17 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
             {
                 continue;
             }
-
+         
             c.SendMessage("OnExplode", SendMessageOptions.DontRequireReceiver);
+
+            // Player/Object Repulsion
+            if(c.tag == "Player")
+            {
+                Vector3 repulsDir = c.transform.position - transform.position;
+                c.transform.parent.parent.GetComponent<PhysicMove>().AddForce(repulsDir.normalized * repulsionForce);
+            }
         }
 
-        // Shockwave on the sea.
-        GameManager.instance.ground.CreateImpact(transform.position);
-
-        //_myRigidbody.angularVelocity = Vector3.zero;
         gameObject.transform.rotation = Quaternion.identity;
 
         // Disable physic.
@@ -126,15 +141,19 @@ public class ExplosiveBarrel : MonoBehaviour, IResetable {
         radiusFX.SetActive(false);
 
         explosionFX.Play();
-        fuseFX.Stop();
+        GameManager.instance.audioManager.PlaySoundOneTime(explosion_sound, 0.1f);
+
+
+        // Waves generation
+        Vector2 pos = GameManager.instance.ground.GetSeaPosition(transform.position);
+        GameManager.instance.ground.waveManager.CreateImpact(pos, 0.5f, 0f, 0.05f, 2f, .5f, 5f);
 
         StartCoroutine(DeactiveGameObject());
     }
 
+
     public void OnExplode()
     {
-        Debug.Log(gameObject + " EXPLODE");
-
         if(hasAlreadyExplode)
         {
             return;

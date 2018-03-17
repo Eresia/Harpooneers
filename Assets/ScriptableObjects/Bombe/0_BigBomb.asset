@@ -11,8 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8730f6129caaa354caeaf072520f0dae, type: 3}
   m_Name: 0_BigBomb
   m_EditorClassIdentifier: 
-  moduleName: Big Bomb
+  moduleName: Nuclear Bob
   moduleId: 0
-  description: Big Boom
+  description: The special composition of the powder in this barrel makes the bomb
+    surprisingly lightweight, hence easy to be carried away by the waves, but also
+    devastating with an expanded blast radius.
   bombRadius: 7
-  bombWavesResistance: 15
+  bombWavesResistance: 200

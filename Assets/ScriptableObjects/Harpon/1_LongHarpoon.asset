@@ -11,10 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a231427ff99d79488565fd983cacb24, type: 3}
   m_Name: 1_LongHarpoon
   m_EditorClassIdentifier: 
-  moduleName: Long Harpoon
+  moduleName: Kaya
   moduleId: 1
-  description: Far Away Hit
-  fireSpeed: 45
-  returnSpeed: 22
-  fireDistance: 21
-  tractionSpeed: 13
+  description: Known through the seven seas, this weapon has a legendary range. However,
+    the weight of its projectiles makes them rather slow compared to more classic
+    harpoons.
+  fireSpeed: 100
+  returnSpeed: 75
+  fireDistance: 25
+  tractionSpeed: 31

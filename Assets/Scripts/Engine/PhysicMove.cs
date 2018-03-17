@@ -8,8 +8,6 @@ public class PhysicMove : MonoBehaviour {
 
 	public float friction;
 
-	public float limitSpeed;
-
 	public float gravity;
 
 	public Transform SelfTransform {get; private set;}

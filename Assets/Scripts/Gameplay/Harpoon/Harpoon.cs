@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(LineRenderer))]
 public class Harpoon : MonoBehaviour {
@@ -59,6 +56,14 @@ public class Harpoon : MonoBehaviour {
 
     private Vector3 harpoonPivotDir;
 
+    public Transform ropeAttach;
+
+	public AudioClip pull_sound;
+
+    public ParticleSystem bloodFx;
+    public ParticleSystem krakenBloodFX;
+    public ParticleSystem impactFx;
+
     // Current gameObject where the harpoon is attached.
     private IHarpoonable iHarpoonable;
 
@@ -66,7 +71,6 @@ public class Harpoon : MonoBehaviour {
     {
 		selfTransform = GetComponent<Transform>();
 		lineRenderer = GetComponent<LineRenderer>();
-       
     }
 
 	private void Update()
@@ -81,8 +85,9 @@ public class Harpoon : MonoBehaviour {
 			case State.LAUNCHING:
 				selfPos += direction * Time.deltaTime;
 				selfTransform.position = selfPos;
+                selfTransform.rotation = Quaternion.LookRotation(transform.position - launcherPos);
 
-				if(distance > maxDistance)
+                if (distance > maxDistance)
                 {
 					Cut();
 				}
@@ -105,8 +110,9 @@ public class Harpoon : MonoBehaviour {
 
 			case State.RETURN:
 				float movement = returnSpeed * Time.deltaTime;
+                selfTransform.rotation = Quaternion.LookRotation(transform.position - launcher.harpoonMuzzle.position);
 
-				if(distance < movement)
+                if (distance < movement)
                 {
 					launcher.EndReturn();
 
@@ -125,7 +131,7 @@ public class Harpoon : MonoBehaviour {
 		}
 
         // Move the line renderer depending the harpoon and the harpoon muzzle pos.
-        lineRenderer.SetPosition(0, selfPos);
+        lineRenderer.SetPosition(0, ropeAttach.position);
         lineRenderer.SetPosition(1, launcher.harpoonMuzzle.position);
 
         // TODO remove when material will be set.
@@ -149,6 +155,8 @@ public class Harpoon : MonoBehaviour {
 
         lineRenderer.SetPosition(0, from);
         lineRenderer.SetPosition(1, from);
+
+     //   harpoonMeshGo.transform.LookAt()
     }
 
 	public void Cut(){
@@ -183,6 +191,7 @@ public class Harpoon : MonoBehaviour {
             {
 				actualDistance = maxDistance;
                 doSling = true;
+				GameManager.instance.audioManager.PlaySoundOneTime (pull_sound, 0.1f);
             }
 
             else
@@ -192,14 +201,22 @@ public class Harpoon : MonoBehaviour {
 		}
 	}
 
-	public void Pull(){
-		if(state == State.GRIPPED){
+	public void Pull()
+    {
+		if(state == State.GRIPPED)
+        {
+            Cut();
+            launcher.physicMove.AddForce((harpoonPivotDir + launcher.physicMove.Velocity.normalized) * 25f);
+
+            // Old behaviour.
+            /*
 			actualDistance -= tractionSpeed * Time.deltaTime;
 			if(actualDistance < minDistance){
 				Cut();
-			}
-		}
-	}
+            }
+            */
+        }
+    }
 
     // Try to attach to a collider.
     private void OnTriggerEnter(Collider other)
@@ -219,7 +236,7 @@ public class Harpoon : MonoBehaviour {
             selfTransform.parent = parentTransform;
 
             Vector3 targetPos = selfTransform.position;
-            targetPos.y = 0f;
+            targetPos.y = launcher.harpoonMuzzle.position.y;
 
             selfTransform.position = targetPos;
 
@@ -232,6 +249,20 @@ public class Harpoon : MonoBehaviour {
             if (iHarpoonable != null)
             {
                 iHarpoonable.OnHarpoonAttach(this);
+            }
+
+            // Feedback on hit
+            impactFx.Play();
+
+            // Feedback on whale hit
+            if (other.tag == "Whale")
+            {
+                bloodFx.Play();
+            }
+            // Feedback on whale hit
+            if (other.tag == "Kraken")
+            {
+                krakenBloodFX.Play();
             }
         }
     }

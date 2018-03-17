@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4272105478897566}
-  - component: {fileID: 114403135655656750}
+  - component: {fileID: 114926960549148790}
   m_Layer: 0
   m_Name: InputInMainMenu
   m_TagString: Untagged
@@ -40,7 +40,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114403135655656750
+--- !u!114 &114926960549148790
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -48,11 +48,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1721962743117466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebfe8e4931c63d443bc3fe8d57dc59dc, type: 3}
+  m_Script: {fileID: 11500000, guid: f00b96007bb90684e8b11b16241d7b71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   prepareGamePanel: {fileID: 0}
-  nbOfPlayers: 0
+  nbOfPlayers: 4
   nbOfPlayersReady: 0
   playerShips:
   - {fileID: 0}
@@ -105,15 +105,38 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-  - inputs:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-  - inputs:
-    - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
   - inputs:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - inputs:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  - inputs:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  timeBetweenJoystickInput: 0.25
+  playerText:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  playerNameColors:
+  - {r: 1, g: 0.93103445, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0.76551723, a: 1}
+  - {r: 0, g: 1, b: 0.21379304, a: 1}
+  rdyText: {fileID: 0}
+  sceneCamera: {fileID: 0}
+  creditRotation: 60.299
+  timeToCredits: 1

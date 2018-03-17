@@ -23,9 +23,7 @@ public class ShipSelection : MonoBehaviour {
     public Text[]moduleDescriptionFields;
 
     private ShipConfiguration currentConfig;
-    public int currentTabID;
-    
-
+    public int currentTabID;    
 
     void Awake()
     {
@@ -45,14 +43,12 @@ public class ShipSelection : MonoBehaviour {
         {
             go.GetComponent<MeshRenderer>().material = shipMaterials[playerID];
         }
-
-
     }
+
+
     // Use this for initialization
     void Start () {
         RandomizeShip();
-
-       // GameManager.instance.shipMgr.harpoonsScriptObjs[currentHarpoonID].name;
     }
 
     public void PreviousModule()
@@ -147,6 +143,12 @@ public class ShipSelection : MonoBehaviour {
 
         modulesNameFields[1].text = GameManager.instance.shipMgr.coquesScriptObjs[currentCoqueID].moduleName;
         moduleDescriptionFields[1].text = GameManager.instance.shipMgr.coquesScriptObjs[currentCoqueID].description;
+
+        // Feedback vagues
+
+        Vector2 pos = GameManager.instance.ground.GetSeaPosition(coquesGoArray[currentCoqueID].transform.position - new Vector3(0f,0f,-100f));
+        GameManager.instance.ground.waveManager.CreateImpact(pos, 2f, 0f, 0.01f, 0.5f, 1f, 5f);
+        
     }
 
     public void UpdateCabin()
@@ -199,5 +201,7 @@ public class ShipSelection : MonoBehaviour {
         currentConfig.bombStockId = currentBombID;
 
         GameManager.instance.shipConfigs[playerID] = currentConfig;
+
+        
     }
 }

@@ -11,11 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c0880e239be2d34095e526734855c6f, type: 3}
   m_Name: 0_Coque_Feather
   m_EditorClassIdentifier: 
-  moduleName: Feather hull
+  moduleName: Alcyon
   moduleId: 0
-  description: Default coque
-  moveSpeedMax: 0.006
-  turnSpeed: 8
+  description: This hull is commonly used by swift ships who focus on getting quickly
+    to fishing spots. However, its weak resistance to the waves requires steady and
+    calm sailors to maneuver it properly.
+  moveSpeedMax: 0.004
+  turnSpeed: 3
   hitboxSize: 1
-  drag: 3
-  waveSensibility: 20
+  drag: 2.5
+  waveSensibility: 300

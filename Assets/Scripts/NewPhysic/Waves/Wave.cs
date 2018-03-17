@@ -1,33 +1,49 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+
+public enum WaveType{
+	IMPACT = 0,
+	RECT_IMPACT = 1,
+	ZONE = 2,
+	ZONE_TEST = 3,
+	VORTEX = 4,
+	TRACE_IMPACT = 5
+}
 
 public struct WaveOptions{
 	public uint type;
 	public Vector2 position;
+	public float rotation;
+	public Vector2 size;
+	public uint state;
+	public float stateTimeChange;
 	public float amplitude;
-	public float waveLength;
-	public float period;
+	public float radius;
+	public float smooth;
 	public float waveNumber;
 	public float angularFrequency;
-	public float distanceDigress;
-	public float timeDigress;
+	public float progression;
 	public float time;
 	public float timeout;
 
-	public WaveOptions(uint type, Vector2 position, float amplitude, float waveLength, float period, float time, float distanceDigress = 0f, float timeDigress= 0f, float timeout= 0f){
-		this.type = type;
+	public WaveOptions(WaveType type, Vector2 position, float rotation, float amplitude, float radius, float smooth, float waveLength, float period, float time, Vector2 size = new Vector2(), float timeProgression= 0f, float timeout= 0f){
+		this.type = (uint) type;
 		this.position = position;
+		this.rotation = rotation * Mathf.Deg2Rad;
+		this.size = size;
 		this.amplitude = amplitude;
-		this.waveLength = waveLength;
-		this.period = period;
-		this.distanceDigress = distanceDigress;
-		this.timeDigress = timeDigress;
+		this.radius = radius;
+		this.smooth = smooth;
+		this.progression = timeProgression;
 		this.time = time;
 		this.timeout = timeout;
+		this.state = 0;
+		this.stateTimeChange = 0f;
 
-		this.waveNumber = (2 * Mathf.PI) / this.waveLength;
-		this.angularFrequency = (2 * Mathf.PI) / this.period;
+		this.waveNumber = (2 * Mathf.PI) / waveLength;
+		this.angularFrequency = (2 * Mathf.PI) / period;
 	}
 }
 
@@ -36,27 +52,109 @@ struct FrameOptions{
 	public uint nbWaves;
 	public float maxWaveHeight;
 	public uint lod;
+	public float ratio;
 	public uint heigtMapRatio;
-	public Vector3 trash;
+	public Vector2 trash;
 };
 
-public class Wave{
+public class WaveManager{
 
-	public static WaveOptions CreateImpact(Vector2 position, float amplitude, float waveLength, float period, float time, float distanceDigress, float timeDigress, float timeout){
-		return new WaveOptions(0, position, amplitude, waveLength, period, time, distanceDigress, timeDigress, timeout);
+	public float ActualTime {get; private set;}
+
+	public Dictionary<int, WaveOptions> Waves {get; private set;}
+
+	private int actualId;
+
+	public WaveManager(){
+		ResetTime();
+		actualId = 0;
+		Waves = new Dictionary<int, WaveOptions>();
 	}
 
-	public static WaveOptions CreateZone(Vector2 position, float amplitude, float waveLength, float period, float time){
-		return new WaveOptions(1, position, amplitude, waveLength, period, time);
+	public int CreateImpact(Vector2 position, float amplitude, float radius, float waveLength, float period, float timeDigress, float timeout){
+		WaveOptions newWave = new WaveOptions(WaveType.IMPACT, position, 0f, amplitude, radius, 0f, waveLength, period, ActualTime, new Vector2(), timeDigress, timeout);
+		Waves.Add(actualId, newWave);
+		actualId++;
+		return actualId -1;
 	}
 
-	public static bool IsTimeout(WaveOptions wave, float time){
-		if(wave.type != 1){
-			return (time - wave.time) > wave.timeout;
+	public int CreateRectImpact(Vector2 position, Vector2 size, float rotation, float amplitude, float waveLength, float period, float timeDigress, float timeout){
+		WaveOptions newWave = new WaveOptions(WaveType.RECT_IMPACT, position, rotation, amplitude, 0f, 0f, waveLength, period, ActualTime, size, timeDigress, timeout);
+		Waves.Add(actualId, newWave);
+		actualId++;
+		return actualId -1;
+	}
+
+	public int CreateZone(float amplitude, float rotation, float waveLength, float period){
+		WaveOptions newWave = new WaveOptions(WaveType.ZONE, new Vector2(), rotation, amplitude, 0f, 0f, waveLength, period, ActualTime);
+		Waves.Add(actualId, newWave);
+		actualId++;
+		return actualId -1;
+	}
+
+	// public int CreateZoneTest(float amplitude, float waveLength, float period){
+	// 	WaveOptions newWave = new WaveOptions(WaveType.ZONE_TEST, new Vector2(), amplitude, 0f, 0f, waveLength, period, ActualTime + 1);
+	// 	Waves.Add(actualId, newWave);
+	// 	actualId++;
+	// 	return actualId -1;
+	// }
+
+	public int CreateVortex(Vector2 position, float amplitude, float radius, float smooth, float waveLength, float period, float timeDigress, float timeout){
+		WaveOptions newWave = new WaveOptions(WaveType.VORTEX, position, 0f, amplitude, radius, smooth, waveLength, period, ActualTime, new Vector2(), timeDigress, timeout);
+		Waves.Add(actualId, newWave);
+		actualId++;
+		return actualId -1;
+	}
+
+	public int CreateTraceImpact(Vector2 position, float size, float rotation, float amplitude, float waveLength, float period, float timeDigress, float timeout){
+		WaveOptions newWave = new WaveOptions(WaveType.TRACE_IMPACT, position, rotation, amplitude, 0f, 0f, waveLength, period, ActualTime, new Vector2(size, 0), timeDigress, timeout);
+		Waves.Add(actualId, newWave);
+		actualId++;
+		return actualId -1;
+	}
+
+	public void ChangeWave(int id, WaveOptions wave){
+		if(Waves.ContainsKey(id)){
+			Waves[id] = wave;
 		}
-		else{
+	}
+
+	public void IncrementWaveState(int waveId){
+		if(Waves.ContainsKey(waveId)){
+			WaveOptions wave = Waves[waveId];
+			wave.state += 1;
+			wave.time = ActualTime;
+			Waves[waveId] = wave;
+		}
+	}
+
+	public bool IsTimeout(WaveOptions wave){
+		if((wave.type == ((uint) WaveType.ZONE)) || (wave.type == ((uint) WaveType.ZONE_TEST))){
 			return false;
 		}
+		else if(wave.type == ((uint) WaveType.VORTEX)){
+			return ((wave.state == 1) && ((ActualTime - wave.stateTimeChange) > wave.timeout));
+		}
+		else{
+			return ((ActualTime - wave.time) > wave.timeout);
+		}
+	}
+
+	public void RefreshWaves(){
+		int[] waveIds = Waves.Keys.ToArray();
+		for(int i = 0; i < waveIds.Length; i++){
+			if(IsTimeout(Waves[waveIds[i]])){
+				Waves.Remove(waveIds[i]);
+			}
+		}
+	}
+
+	public void ResetTime(){
+		ActualTime = 0f;
+	}
+
+	public void IncrementTime(float deltaTime){
+		ActualTime += deltaTime;
 	}
 }
 

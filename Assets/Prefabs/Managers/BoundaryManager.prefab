@@ -55,5 +55,17 @@ MonoBehaviour:
   seaMask:
     serializedVersion: 2
     m_Bits: 4096
-  horizontalOffset: 0.02
-  verticalOffset: 0.05
+  horizontalOffset: 8
+  verticalOffset: 8
+  resetHorizontalOffset: -0.125
+  resetVerticalOffset: -0.125
+  forceWhenKillByBOundaries: 50
+  trapezeData:
+    xBottomLeft: -34.356247
+    xBottomRight: 25.956228
+    xTopLeft: -88.33589
+    xTopRight: 79.93584
+    zBottom: -16.863438
+    zTop: 52.76474
+    height: 69.628174
+  screenCenterInWorldSpace: {x: -4.20001, y: 0.049999475, z: 1.5081179}

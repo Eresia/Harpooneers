@@ -15,7 +15,7 @@ public class PhysicObject : MonoBehaviour {
 
 	public void MoveOnBoard(PhysicMove mover) {
 		Vector2 pos2 = new Vector2(mover.SelfTransform.position.x, mover.SelfTransform.position.z);
-		Ground.TransformInfo info = GameManager.instance.ground.GetTransformInfo(pos2, mover.SelfTransform.rotation.eulerAngles.y);
+		Ground.TransformInfo info = GameManager.instance.ground.GetTransformInfo(pos2);
 		selfTransform.up = info.normal;
 		Vector3 eulerAngles = selfTransform.localEulerAngles;
 		float y = mover.SelfTransform.rotation.eulerAngles.y;

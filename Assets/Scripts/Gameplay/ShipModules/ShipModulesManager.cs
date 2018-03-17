@@ -51,9 +51,9 @@ public class ShipModulesManager : MonoBehaviour {
         bombsGoArray[config.bombStockId].SetActive(true);
 
         harpoonsGoArray[config.harpoonId].GetComponent<MeshRenderer>().material = shipMaterial;
-        coquesGoArray[config.harpoonId].GetComponent<MeshRenderer>().material = shipMaterial;
-        cabinsGoArray[config.harpoonId].GetComponent<MeshRenderer>().material = shipMaterial;
-        bombsGoArray[config.harpoonId].GetComponent<MeshRenderer>().material = shipMaterial;
+        coquesGoArray[config.coqueId].GetComponent<MeshRenderer>().material = shipMaterial;
+        cabinsGoArray[config.cabinId].GetComponent<MeshRenderer>().material = shipMaterial;
+        bombsGoArray[config.bombStockId].GetComponent<MeshRenderer>().material = shipMaterial;
 
 
 
@@ -64,7 +64,6 @@ public class ShipModulesManager : MonoBehaviour {
 
             // Configure coque and impact move physic.
             _movementScript.coqueModule = shipMgr.coquesScriptObjs[config.coqueId];
-            _movementScript.physicMove.limitSpeed = _movementScript.coqueModule.moveSpeedMax;
             _movementScript.physicMove.friction = _movementScript.coqueModule.drag;
             _movementScript.physicMove.gravity = _movementScript.coqueModule.waveSensibility;
 

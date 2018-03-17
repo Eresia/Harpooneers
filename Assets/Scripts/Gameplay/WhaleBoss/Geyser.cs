@@ -4,82 +4,100 @@ using UnityEngine;
 using DG.Tweening;
 
 public class Geyser : MonoBehaviour {
-
-
+    
     public GameObject playerTarget;
-    public ParticleSystem geyserExplosion;
-
+    public ParticleSystem bubbleFX;
+    public ParticleSystem geyserFX;
+    
+    public bool IsFinished
+    {
+        get { return isFinished; }
+        set { isFinished = value; }
+    }
+    private bool isFinished;
 
     [Space(20)]
-    public float moveSpeed;
     public int numberOfExplosions;
+    public float[] moveSpeed;
     public float[] movementDuration;
     public float[] waitingDuration;
     public float[] radius;
     public float[] waveAmplitude;
 
     public LayerMask damageableLayer;
-
-    // private Vector3 initialPosition;
+    
     private Vector3 destinationVector;
     private bool isMoving = true;
     private float elapsedTime = 0;
     private int numberOfExplosionsDone = 0;
 
-    
-
-
-    void Awake()
+    private void OnEnable()
     {
-        // initialPosition = transform.position;
+        ResetGeyser();
     }
-    void Start ()
+
+    void ResetGeyser()
     {
-        FollowPlayer();
+        bubbleFX.Play();
+
+        numberOfExplosionsDone = 0;
+        elapsedTime = 0;
+        isMoving = true;
+
+        transform.localScale = new Vector3(radius[0], radius[0], radius[0]);
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+
+    // Update is called once per frame
+    void Update ()
     {
-
-
-        if (numberOfExplosionsDone >= numberOfExplosions)
+        if(playerTarget == null)
         {
-            Destroy(gameObject);
+            return;
         }
 
+        // Disable.
+        if (numberOfExplosionsDone >= numberOfExplosions)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
+        // Follow player.
         if (elapsedTime < movementDuration[numberOfExplosionsDone])
         {
             elapsedTime += Time.deltaTime;
+            
+            destinationVector = new Vector3(playerTarget.transform.position.x, this.transform.position.y, playerTarget.transform.position.z);
             transform.LookAt(destinationVector);
-            destinationVector = new Vector3(playerTarget.transform.position.x, this.transform.position.y, playerTarget.transform.position.z);        
-            transform.position += transform.forward * moveSpeed * Time.deltaTime;
-            Debug.DrawRay(transform.position, destinationVector);
+            transform.position += transform.forward * moveSpeed[numberOfExplosionsDone] * Time.deltaTime;
+
+            //Debug.DrawRay(transform.position, destinationVector.normalized * 5f, Color.red, 0.5f);
         }
+
+        // Trigger explosion.
         else
         {
             if(isMoving)
+            {
                 StartCoroutine(GeyserPause());
+            } 
         }
 	}
-
-  public void FollowPlayer()
-    {
-        
-    }
 
    IEnumerator GeyserPause()
     {
         isMoving = false;
         yield return new WaitForSeconds(waitingDuration[numberOfExplosionsDone]);
-        GeyserActivation();
+        
+        bubbleFX.Stop();
+        StartCoroutine(GeyserActivation());
     }
 
-    public void GeyserActivation()
+    public IEnumerator GeyserActivation()
     {
-        
         GameManager.instance.ground.CreateImpact(transform.position);
-        geyserExplosion.Play();
+        geyserFX.Play();
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius[numberOfExplosionsDone], damageableLayer);
         foreach (Collider c in colliders)
@@ -92,17 +110,17 @@ public class Geyser : MonoBehaviour {
             }
         }
 
+        yield return new WaitWhile(() => (geyserFX.isPlaying));
+
         numberOfExplosionsDone++;
 
-        if (numberOfExplosionsDone >= numberOfExplosions)
+        if(numberOfExplosionsDone < numberOfExplosions)
         {
-            Destroy(gameObject);
-        }
-
-        else if(numberOfExplosionsDone < numberOfExplosions)
-        {
+            bubbleFX.Play();
             isMoving = true;
             elapsedTime = 0;
+
+            transform.localScale = new Vector3(radius[numberOfExplosionsDone], radius[numberOfExplosionsDone], radius[numberOfExplosionsDone]);
         }
     }
 

@@ -13,17 +13,19 @@ public class GroundGeneration {
 		}
 		Ground sea = GameObject.FindObjectOfType<Ground>();
 		
-		Transform seaTransform = sea.GetComponent<Transform>();
+		// Transform seaTransform = sea.GetComponent<Transform>();
 
-		int lod = 32 * ((int) Mathf.Pow(2, sea.lodPower));
+		// int lod = 32 * ((int) Mathf.Pow(2, sea.lodPower));
 
-		sea.points = new float[lod * lod];
+		// sea.points = new float[lod * lod];
+		// sea.normales = new Vector3[lod * lod];
 
-		for(int i = 0; i < lod; i++){
-			for(int j = 0; j < lod; j++){
-				sea.points[i*lod + j] = seaTransform.position.y;
-			}
-		}
+		// for(int i = 0; i < lod; i++){
+		// 	for(int j = 0; j < lod; j++){
+		// 		sea.points[i*lod + j] = seaTransform.position.y;
+		// 		sea.normales[i*lod + j] = new Vector3(0f, 1f, 0f);
+		// 	}
+		// }
 
 		// sea.points[5 * sea.lod.y + 8] = 1f;
 		// sea.points[6 * sea.lod.y + 8] = 1f;
@@ -43,7 +45,7 @@ public class GroundGeneration {
 			return false;
 		}
 
-		sea.points = new float[0];
+		// sea.points = new float[0];
 
 		EditorUtility.SetDirty(sea);
 		EditorSceneManager.MarkAllScenesDirty();

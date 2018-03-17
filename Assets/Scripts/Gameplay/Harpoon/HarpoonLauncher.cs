@@ -58,16 +58,18 @@ public class HarpoonLauncher : MonoBehaviour {
 
 	private bool isLaunching;
 
-	private float timeBeforeLaunch;
-
 	private float power;
 
 	private Vector3 lastDirection;
  
     public Transform harpoonPivot;
     public Transform harpoonMuzzle;
+    public ParticleSystem harpoonLaunchFX;
+
     public Image directionImage;
     private int playerID;
+
+   
 
     private void Awake()
 	{
@@ -97,8 +99,8 @@ public class HarpoonLauncher : MonoBehaviour {
 
 	public void LaunchHarpoon(Vector3 direction){
 
-		if(harpoon == null){
-            
+		if(harpoon == null)
+        {
 			if(direction.sqrMagnitude > joystickError)
             {
 				if(!isLaunching)
@@ -106,23 +108,27 @@ public class HarpoonLauncher : MonoBehaviour {
 					BeginLaunching();
 				}
 
-				if(power == 1f)
+                // Cut behaviour.
                 {
-					if(timeBeforeLaunch >= castTimeMax)
+                    /*
+                    if(power == 1f)
                     {
-						EndLaunching(direction, power);
-						return ;
-					}
+                        if(timeBeforeLaunch >= castTimeMax)
+                        {
+                            EndLaunching(direction, power);
+                            return ;
+                        }
 
-					timeBeforeLaunch += Time.deltaTime;
-				}
+                        timeBeforeLaunch += Time.deltaTime;
+                    }
 
-				else
-                {
-					power = Mathf.Min(1f, power + (Time.deltaTime / castTime));
-				}
+                    else
+                    {
+                        power = Mathf.Min(1f, power + (Time.deltaTime / castTime));
+                    }*/
+                }
 
-				DisplayLaunching(direction, power);
+				DisplayLaunching(direction, 1f);
 				lastDirection = direction;
 			}
 
@@ -167,7 +173,6 @@ public class HarpoonLauncher : MonoBehaviour {
 	private void BeginLaunching(){
 		isLaunching = true;
 		power = 0f;
-		timeBeforeLaunch = 0f;
 		directionObject.gameObject.SetActive(true);
 	}
 
@@ -204,8 +209,13 @@ public class HarpoonLauncher : MonoBehaviour {
             direction = TryToAutoAim(direction);
         }
 
-        harpoon.Launch(this, harpoonPivot.position, direction * harpoonModule.fireSpeed + physicMove.Velocity, distanceToReach, harpoonModule.returnSpeed);
-	}
+        Debug.DrawRay(harpoonPivot.position, direction * 20f, Color.red, 1f);
+
+        //   harpoon.Launch(this, harpoonPivot.position, direction * harpoonModule.fireSpeed + physicMove.Velocity, distanceToReach, harpoonModule.returnSpeed);
+        harpoon.Launch(this, harpoonMuzzle.transform.position, direction * harpoonModule.fireSpeed + new Vector3(physicMove.Velocity.x, 0f, physicMove.Velocity.z), distanceToReach, harpoonModule.returnSpeed);
+
+        harpoonLaunchFX.Play();
+    }
 
     private Vector3 TryToAutoAim(Vector3 currentDir)
     {
