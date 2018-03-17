@@ -60,6 +60,8 @@ public class InputInMainMenu : MonoBehaviour
 
     private bool inCredits;
 
+    private bool startGame;
+
     public bool InTitle
     {
         get { return inTitle; }
@@ -218,7 +220,7 @@ public class InputInMainMenu : MonoBehaviour
             else if (players[i].GetButtonDown("Cancel"))
             {
                 // Player is not ready anymore.
-                if (playerReady[i])
+                if (playerReady[i] && !startGame)
                 {
                     nbOfPlayersReady--;
                     playerReady[i] = false;
@@ -234,9 +236,9 @@ public class InputInMainMenu : MonoBehaviour
                         playerHasJoined[i] = false;
                         nbOfPlayers--;
                         if (nbOfPlayers == 0)
+                        {
                             rdyText.SetActive(false);
-
-                      //  Debug.Log(nbOfPlayers);
+                        }
 
                         prepareGamePanel.PlayerLeave(i);
                     }
@@ -256,6 +258,7 @@ public class InputInMainMenu : MonoBehaviour
                     // All players are ready and number of players are minimum 2 !
                     if (nbOfPlayers > 1 && nbOfPlayers == nbOfPlayersReady)
                     {
+                        startGame = true;
                         GameManager.instance.StartNewGame(nbOfPlayers, playerReady);
                     }
                 }
@@ -263,11 +266,13 @@ public class InputInMainMenu : MonoBehaviour
             else if (players[i].GetButtonDown("Credits"))
             {
                 Vector3 actualRotation = sceneCamera.rotation.eulerAngles;
+
                 if (inCredits)
                 {
                     actualRotation.x = baseRotation;
                     sceneCamera.DORotate(actualRotation, timeToCredits);
                 }
+
                 else
                 {
                     actualRotation.x = creditRotation;
@@ -321,6 +326,7 @@ public class InputInMainMenu : MonoBehaviour
             // playerTabs[playerID].moduleSelectionGO[i].SetActive(false);
              playerTabs[playerID].tabs[i].enabled = false;
         }
+
         playerShips[playerID].currentTabID = currentModuleTabIndex[playerID];
         // playerTabs[playerID].moduleSelectionGO[currentModuleTabIndex[playerID]].gameObject.SetActive(true);
 

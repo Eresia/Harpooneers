@@ -42,8 +42,10 @@ public class TitleScreen : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            if (players[i].GetButtonDown("Submit") && inputs.InTitle)
+            if (players[i].GetButtonDown("Submit") && !start)
             {
+                start = true;
+
                 StartCoroutine(PressPlay());
             }
         }
@@ -68,9 +70,7 @@ public class TitleScreen : MonoBehaviour
             StopCoroutine(Fade(0f, 0f));
         }
 
-        yield return Fade(0f, fadeDuration * 0.25f);
-
-        inputs.InTitle = false;
+        yield return Fade(0f, fadeDuration * 0.5f);
         
         WaitForSeconds delay = new WaitForSeconds(0.25f);
 
@@ -84,8 +84,11 @@ public class TitleScreen : MonoBehaviour
 
             yield return delay;
         }
-
-        yield return new WaitForSeconds(0.5f);
+        
+        // Wait until the last panel anim is finished.
+        yield return new WaitUntil(() => (panels[panels.Length - 1].GetBool("End")));
+        
+        inputs.InTitle = false;
 
         creditPanel.SetActive(true);
     }

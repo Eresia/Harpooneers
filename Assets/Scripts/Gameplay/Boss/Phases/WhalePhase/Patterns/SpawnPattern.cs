@@ -2,12 +2,12 @@
 using System.Collections;
 using DG.Tweening;
 
-public class SpawnPattern : BossPattern {
+public class SpawnWhalePattern : BossPattern {
 
     private SpawnState state;
     private WhalePhaseAI whaleAI;
 
-    public SpawnPattern(SpawnState spawnState)
+    public SpawnWhalePattern(SpawnState spawnState)
     {
         this.state = spawnState;
     }
@@ -23,10 +23,16 @@ public class SpawnPattern : BossPattern {
 		whaleAI.StartCoroutine(Spawn());
 	}
 
-	private IEnumerator Spawn(){
-		GameManager.instance.shipMgr.LockInputs(1);
-		// Move the FX containers.
-		Vector3 pos = boss.bossMgr.north.position + new Vector3(0, 0, -state.offset);
+	private IEnumerator Spawn()
+    {
+        GameManager.instance.shipMgr.LockInputs(1);
+
+        yield return GameManager.instance.cinematicMgr.Play("The Whale");
+
+        GameManager.instance.audioManager.PlaySoundOneTime(state.spawnSound, 0.3f);
+
+        // Move the FX containers.
+        Vector3 pos = boss.bossMgr.north.position + new Vector3(0, 0, -state.offset);
         Quaternion rot = Quaternion.Euler(0f, 180f, 0f);
         whaleAI.FXTransform.transform.position = pos;
         whaleAI.FXTransform.transform.rotation = rot;
@@ -49,9 +55,12 @@ public class SpawnPattern : BossPattern {
 
 		tween = whaleAI.WhaleTransform.DOMove(pos - new Vector3(0, state.endDepth, 0), state.WaitToSurface);
         yield return new WaitWhile(tween.IsPlaying);
+        
+        yield return GameManager.instance.cinematicMgr.Stop();
 
-		GameManager.instance.shipMgr.UnLockInputs();
-		OnPatternFinished();
+        GameManager.instance.shipMgr.UnLockInputs();
+
+        OnPatternFinished();
 	}
 
     protected override void OnStopPattern()

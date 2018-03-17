@@ -37,22 +37,28 @@ public class SpawnTentaclesPattern : BossPattern {
     {
 		Vector3 position = GameManager.instance.bossMgr.north.position;
 		tentacles = new TentacleBehaviour[5];
-		tentacles[0] = phase2.TentaclesAspi[0];
-		tentacles[1] = phase2.TentaclesCharger[0];
+		tentacles[0] = phase2.TentaclesHammer[0];
+        tentacles[1] = phase2.TentaclesCharger[0];
 		tentacles[2] = phase2.TentaclesEye;
-		tentacles[3] = phase2.TentaclesHammer[0];
-		tentacles[4] = phase2.TentaclesSwipper[0];
-
-		for(int i = -2; i < tentacles.Length - 2; i++){
-			tentacles[i+2].transform.position = position - new Vector3(i * state.tentacleSeparations, 0, state.offset);
-			tentacles[i+2].transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+		tentacles[3] = phase2.TentaclesAspi[0];
+        tentacles[4] = phase2.TentaclesSwipper[0];
+   
+		for(int i = -2; i < tentacles.Length - 2; i++)
+        {
+			tentacles[i+2].transform.position = position - new Vector3(i * state.tentacleSeparations, 0, state.offset + 4f * Mathf.Abs(-i));
+			tentacles[i+2].transform.rotation = Quaternion.LookRotation(boss.bossMgr.south.position - tentacles[i + 2].transform.position);
 		}
 	}
 
     private IEnumerator ActivateTentacles()
     {
 		GameManager.instance.shipMgr.LockInputs(1);
-		for(int i = 0; i < tentacles.Length; i++){
+
+        yield return GameManager.instance.cinematicMgr.Play("The Kraken");
+
+        GameManager.instance.audioManager.PlaySoundOneTime(state.spawnSound, 0.3f);
+
+        for (int i = 0; i < tentacles.Length; i++){
 			tentacles[i].Spawning(state.bubblingDuration);
 		}
 
@@ -77,7 +83,10 @@ public class SpawnTentaclesPattern : BossPattern {
 		for(int i = 0; i < tentacles.Length; i++){
 			tentacles[i].ResetTentacle();
 		}
-		GameManager.instance.shipMgr.UnLockInputs();
+
+        yield return GameManager.instance.cinematicMgr.Stop();
+
+        GameManager.instance.shipMgr.UnLockInputs();
 
 		OnPatternFinished();
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SplashTentacleHITState : BossState<SplashTentaclesHITPattern> {
+public class EyeTentacleState : BossState<EyeTentaclePattern> {
 
     // Target joueur sur un cercle, emerge, tourne vers le joeuur et tourne en orbite.
 
@@ -27,8 +27,8 @@ public class SplashTentacleHITState : BossState<SplashTentaclesHITPattern> {
     [HideInInspector]
     public int tentacleCount = 1;
 
-    protected override SplashTentaclesHITPattern Init()
+    protected override EyeTentaclePattern Init()
     {
-        return new SplashTentaclesHITPattern(this);
+        return new EyeTentaclePattern(this);
     }
 }

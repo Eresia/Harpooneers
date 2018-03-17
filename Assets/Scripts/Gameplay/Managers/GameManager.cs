@@ -10,40 +10,30 @@ public class GameManager : MonoBehaviour {
 	public int actualPlayer;
 
     public ScenesManager sceneMgr;
-    public BoundaryManager boundaryMgr;
-    public ShipManager shipMgr;
     public CameraManager camMgr;
-    public BossManager bossMgr;
-	public Tutorial tutorial;
-
-    public Ground ground;
-
 	public AudioManager audioManager;
 
+    // Only in game components.
+    public Tutorial tutorial;
+
+    public BossManager bossMgr;
+    public ShipManager shipMgr;
+    public BoundaryManager boundaryMgr;
+    public Ground ground;
+
+    public CinematicMgr cinematicMgr;
     public FadeInOut FadeMgr;
     public EndScreenMgr endScreenMgr;
 
 	[Space]
 
-	public bool onTuto = true;
+	public bool tuToEnabled = true;
 
 	public static GameManager instance {get; private set;}
-
-    public bool IsGameOver
-    {
-        get { return win || lose; }
-    }
-    private bool lose;
-
+    
     public bool IsEndScreen;
     private bool win;
-
-    public bool IsPause
-    {
-        get { return gamePaused; }
-    }
-    private bool gamePaused;
-
+    
     public Pause pauseScript;
     public GameOver gameOverScript;
 
@@ -142,8 +132,7 @@ public class GameManager : MonoBehaviour {
         ground = FindObjectOfType<Ground>();
         camMgr = FindObjectOfType<CameraManager>();
         bossMgr = FindObjectOfType<BossManager>();
-
-		lose = false;
+        
 		win = false;
 
         shipMgr.SetupAllShips();
@@ -170,7 +159,6 @@ public class GameManager : MonoBehaviour {
     public void PauseGame(int playerID)
     {             
         pauseScript.PauseGame(playerID);
-        gamePaused = true;
 
         if (bossMgr.hasSpawn)
         {
@@ -181,7 +169,6 @@ public class GameManager : MonoBehaviour {
     public void UnPauseGame()
     {
         pauseScript.UnPauseGame();
-        gamePaused = false;
 
         if (bossMgr.hasSpawn)
         {
@@ -193,22 +180,20 @@ public class GameManager : MonoBehaviour {
     {
         pauseScript.ButtonPress(playerID);
     }
-
-    [ContextMenu("GameOver")]
+    
     public void GameOver()
     {
-        if(IsGameOver)
+        if(gameOverScript.isGameOver)
         {
             return;
         }
-
-        lose = true;
+    
         gameOverScript.DisplayGameOver();
     }
     
     public void GameFinished()
     {
-        if (IsGameOver)
+        if (!win)
         {
             return;
         }
@@ -225,7 +210,7 @@ public class GameManager : MonoBehaviour {
     }
 
 	public void OnEndTuto(){
-		onTuto = false;
+		tuToEnabled = false;
 		bossMgr.enabled = true;
 		shipMgr.ResurrectAll();
 

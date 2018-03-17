@@ -50,16 +50,14 @@ public class WhalePhaseAI : PhaseAI {
     {
         base.Awake();
 
-        SpawnWhale();
+        SetupWhale();
     }
 
     // Spawn and setup whale correctly.
-    private void SpawnWhale()
+    private void SetupWhale()
     {
         whale = Instantiate(whalePrefab);
         whale.SetActive(false);
-
-		GameManager.instance.audioManager.PlaySoundOneTime(whale_spawn, 0.3f);
 
         whaleReferences = whale.GetComponent<WhaleReferences>();
 

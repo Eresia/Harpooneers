@@ -67,9 +67,13 @@ public abstract class PhaseAI : MonoBehaviour {
         }
     }
 
-	public virtual IEnumerator EndPhaseCoroutine(){
+	public virtual IEnumerator EndPhaseCoroutine()
+    {
 		yield return OnPhaseFinishedCoroutine();
-		OnPhaseFinished();
+
+        bossMgr.DisplayLifeBar(false);
+
+        OnPhaseFinished();
 	}
 
 	public abstract IEnumerator OnPhaseFinishedCoroutine();

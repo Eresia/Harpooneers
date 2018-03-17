@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SpawnState : BossState<SpawnPattern>
+public class SpawnState : BossState<SpawnWhalePattern>
 {
 	public float offset = 4f;
 
@@ -16,8 +16,8 @@ public class SpawnState : BossState<SpawnPattern>
 
     public AudioClip spawnSound;
 
-	protected override SpawnPattern Init()
+	protected override SpawnWhalePattern Init()
     {
-        return new SpawnPattern(this);
+        return new SpawnWhalePattern(this);
 	}
 }

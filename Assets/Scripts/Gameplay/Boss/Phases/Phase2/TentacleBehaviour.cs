@@ -88,7 +88,6 @@ public class TentacleBehaviour : MonoBehaviour {
     public void TriggerAttackAnim(bool doWave = false)
     {
         animator.SetTrigger("Attack");
-        GameManager.instance.audioManager.PlaySoundOneTime(attackSound, 0.2f);
 
         StartCoroutine(Attack(doWave));
     }
@@ -102,11 +101,13 @@ public class TentacleBehaviour : MonoBehaviour {
             attackFx.Stop();
         }
 
-        if(attackCollider)
+        GameManager.instance.audioManager.PlaySoundOneTime(attackSound, 0.2f);
+
+        if (attackCollider)
         {
             attackCollider.enabled = true;
 
-            if(doWave)
+            if (doWave)
             {
                 Vector2 pos = GameManager.instance.ground.GetSeaPosition(attackCollider.transform.position + attackCollider.transform.forward * 5f);
                 GameManager.instance.ground.waveManager.CreateImpact(pos, 5f, 0f, 0.04f, 2f, 1f, 10f);

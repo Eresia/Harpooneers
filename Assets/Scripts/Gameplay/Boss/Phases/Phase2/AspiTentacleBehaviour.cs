@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using DG.Tweening;
-
 public class AspiTentacleBehaviour : TentacleBehaviour {
 
 	[Space]
@@ -12,7 +10,8 @@ public class AspiTentacleBehaviour : TentacleBehaviour {
 
 	public float bombDamages;
 
-    public void BeginAttack(){
+    public void BeginAttack()
+    {
 		animator.SetTrigger("Eat");
 	}
 }

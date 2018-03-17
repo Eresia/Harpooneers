@@ -19,6 +19,8 @@ public class SpawnTentacleState : BossState<SpawnTentaclesPattern>
     public float patternTime = 5f;
     public float divingDuration;
 
+    public AudioClip spawnSound;
+
     protected override SpawnTentaclesPattern Init()
     {
         return new SpawnTentaclesPattern(this);

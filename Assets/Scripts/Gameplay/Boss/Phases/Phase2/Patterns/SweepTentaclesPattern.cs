@@ -57,7 +57,7 @@ public class SweepTentaclesPattern : BossPattern {
 
             // Focus the center.
             Vector3 lookCenter = center - spawns[i];
-            tentaclesToUse[i].childTransform.localRotation = Quaternion.LookRotation(lookCenter);
+            tentaclesToUse[i].transform.localRotation = Quaternion.LookRotation(lookCenter);
         }
     }
 

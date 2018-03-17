@@ -45,25 +45,30 @@ public class Tutorial : MonoBehaviour
     {
         LDparent.SetActive(false);
         GameManager.instance.tutorial = this;
-		if(GameManager.instance.onTuto){
+		if(GameManager.instance.tuToEnabled){
 			Tuto.text = "";
 			hasExploded = true;
 			progressionCoroutine = StartCoroutine(Progression());
 			// Get all fishing boats to lock inputs.
 		}
+
 		else{
 			StartCoroutine(EndTutoCoroutine(0));
 		}
     }
 
-	public void KillTuto(){
-		if(progressionCoroutine != null){
+	public void SkipTuto()
+    {
+		if(progressionCoroutine != null)
+        {
 			StopCoroutine(progressionCoroutine);
 		}
+
 		StartCoroutine(EndTutoCoroutine(TutoEndTime));
 	}
 
-	private IEnumerator EndTutoCoroutine(float tutoEndTime){
+	private IEnumerator EndTutoCoroutine(float tutoEndTime)
+    {
 		Vector3 endPos = Rock.Mover.SelfTransform.position;
 		endPos.y -= 10f;
 
@@ -73,12 +78,14 @@ public class Tutorial : MonoBehaviour
 		GameManager.instance.ground.waveManager.ChangeWave(waveId, wave);
 
 		Rock.Mover.enabled = false;
-
 		Rock.Mover.SelfTransform.DOMove(endPos, 10f / rockSpeed);
-        //Start Boss
-		Frame.DOFade(0f, FrameSpawnTime);
+
+        GameManager.instance.shipMgr.ResurrectAll();
+
+        // Activate Boss
+        Frame.DOFade(0f, FrameSpawnTime);
 		Tuto.DOFade(0f, FrameSpawnTime);
-		GameManager.instance.shipMgr.ResurrectAll();
+        
 		yield return new WaitWhile(() => DOTween.IsTweening(Frame));
 		yield return new WaitForSeconds(tutoEndTime);
 		GameManager.instance.OnEndTuto();
@@ -86,24 +93,23 @@ public class Tutorial : MonoBehaviour
         LDparent.SetActive(true);
 
         Destroy(tutoParent);
-
 	}
 
     IEnumerator Progression()
     {
 		yield return new WaitForSeconds(StartTime);
 
-		//UI
+		// UI
 		Frame.DOFade(1f, FrameSpawnTime);
 		yield return new WaitWhile(() => DOTween.IsTweening(Frame));
 
-        //Intro
+        // Intro
         yield return PrintText(0);
         yield return new WaitForSeconds(TimeBetweenTextTransitions);
 
-        PassToStep(1);        //Unlock Move
+        PassToStep(1);        // Unlock Move
 
-        //Movement
+        // Movement
         yield return PrintText(1);
         yield return new WaitForSeconds(ToyTime);
 		

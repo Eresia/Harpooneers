@@ -21,18 +21,9 @@ public class PlayerInput : MonoBehaviour
 
     private Player player; // Rewired player.
 
-    public bool doPause; // Do the pause if the delay is repected.
+    private int controllerDisconnected; // Handle controller disconnection to freeze/unfreeeze the game.
 
-    private int controllerDisconnected;
-
-    
-
-    public int TutoStep
-    {
-        get { return tutoStep; }
-        set { tutoStep = value; }
-    }
-    private int tutoStep;
+    public int TutoStep { get; set; }
 
     void Awake()
     {
@@ -91,7 +82,7 @@ public class PlayerInput : MonoBehaviour
             return;
         }
 
-        if(tutoStep < 1)
+        if(TutoStep < 1)
         {
             return;
         }
@@ -106,7 +97,7 @@ public class PlayerInput : MonoBehaviour
             movement.Move(moveDir.normalized);
         }
 
-        if (tutoStep < 2)
+        if (TutoStep < 2)
         {
             return;
         }
@@ -147,7 +138,7 @@ public class PlayerInput : MonoBehaviour
             return;
         }
 
-        if(tutoStep < 3)
+        if(TutoStep < 3)
         {
             return;
         }
@@ -212,41 +203,36 @@ public class PlayerInput : MonoBehaviour
     // UTILITY :
     private void TogglePause(InputActionEventData data)
     {
-		//If on Tuto
+		// Skip tuto.
 		if (data.GetButtonDown())
         {
-			if(GameManager.instance.onTuto){
-				GameManager.instance.tutorial.KillTuto();
-				return ;
+			if(GameManager.instance.tuToEnabled)
+            {
+				GameManager.instance.tutorial.SkipTuto();
+
+				return;
 			}
 		}
 		
-
-        // If game is paused : direct unpause.
-        if (GameManager.instance.IsPause)
+        // Already in pause.
+        if(GameManager.instance.pauseScript.IsPause)
         {
-            if (data.GetButtonDown())
-            {
-                GameManager.instance.UnPauseGame();
-                doPause = false;
-            }
+            return;
         }
-
-        // If game is unpaused.
-        else
+        
+        if (data.GetButtonDown())
         {
-            if (data.GetButtonDown())
+            // Pause the game if game isn't over.
+            if(!GameManager.instance.gameOverScript.isGameOver)
             {
-                if(!GameManager.instance.gameOverScript.isGameOver)
-                {
-                    GameManager.instance.PauseGame(data.playerId);
-                }                    
-                else
-                {
-                    // If gameOver, start button to retry 
-                    GameManager.instance.gameOverScript.LoadScene(1);
-                }                 
+                GameManager.instance.PauseGame(data.playerId);
             }
+
+            // If gameOver, start button to retry
+            else
+            {
+                GameManager.instance.sceneMgr.LoadGameScene();
+            }                 
         }
     }
 
@@ -275,13 +261,12 @@ public class PlayerInput : MonoBehaviour
     // You can get information about the controller that was connected via the args parameter
     void OnControllerConnected(ControllerStatusChangedEventArgs args)
     {
-        // Unpause the game if the game was stopped because one or more controllers has(ve) been disconnected.
+        // Unfreeze the game if the game was stopped because one or more controllers has been disconnected.
         controllerDisconnected--;
 
-        if (GameManager.instance.IsPause && controllerDisconnected == 0)
+        if (controllerDisconnected == 0)
         {
-            //GameManager.instance.PauseGame(-1);
-            Time.timeScale = 0f;
+            Time.timeScale = 1f;
         }
     }
 
@@ -289,14 +274,12 @@ public class PlayerInput : MonoBehaviour
     // You can get information about the controller that was disconnected via the args parameter
     void OnControllerDisconnected(ControllerStatusChangedEventArgs args)
     {
-        // Pause the game if at least one controller has been disconnected.
+        // Freeze the game if at least one controller has been disconnected.
+        controllerDisconnected++;
 
-        if (!GameManager.instance.IsPause)
+        if (controllerDisconnected == 1)
         {
-            controllerDisconnected++;
-
-            // GameManager.instance.PauseGame(-1);
-            Time.timeScale = 1f;
+            Time.timeScale = 0f;
         }
     }
 

@@ -4,16 +4,16 @@ using UnityEngine;
 
 using DG.Tweening;
 
-public class SplashTentaclesHITPattern : BossPattern {
+public class EyeTentaclePattern : BossPattern {
 
-    private SplashTentacleHITState state;
+    private EyeTentacleState state;
     private Phase2AI phase2;
 
     private Vector3[] spawns;
 
     private TentacleBehaviour[] tentaclesToUse;
 
-    public SplashTentaclesHITPattern(SplashTentacleHITState state)
+    public EyeTentaclePattern(EyeTentacleState state)
     {
         this.state = state;
 
@@ -48,10 +48,9 @@ public class SplashTentaclesHITPattern : BossPattern {
 
         tentaclesToUse[0] = phase2.TentaclesEye;
         tentaclesToUse[0].transform.position = spawns[0];
-
-        //Vector3 south = boss.bossMgr.south.position;
-        //Vector3 dir = south - spawns[0];
-        //tentaclesToUse[0].childTransform.localRotation = Quaternion.LookRotation(dir);
+    
+        Vector3 dir = boss.bossMgr.south.position - spawns[0];
+        tentaclesToUse[0].transform.rotation = Quaternion.LookRotation(dir);
     }
 
     private Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Vector3 angles) {

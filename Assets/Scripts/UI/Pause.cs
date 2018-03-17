@@ -1,16 +1,13 @@
-﻿using Rewired;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+
+using Rewired;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class Pause : MonoBehaviour {
 
     public GameObject pauseGo;
-
-    private Player player; // Rewired player.
-
-   
+    
     public Button menuButton;
     public Button quitButton;
 
@@ -19,12 +16,15 @@ public class Pause : MonoBehaviour {
 
     public Sprite[] buttonsImages;
 
-    private bool _isPause;
+    public bool IsPause { get; private set; }
+
     private bool quitSelected;
 
     private int playerIdControl;
-    
-    private void Awake() {
+    private Player player; // Rewired player.
+
+    private void Awake()
+    {
 		GameManager.instance.pauseScript = this;
 	}
     
@@ -35,57 +35,63 @@ public class Pause : MonoBehaviour {
 
     public void PauseGame(int playerID)
     {
-
         playerIdControl = playerID;
-        pauseGo.SetActive(true);
-        _isPause = true;
         player = ReInput.players.GetPlayer(playerID);
+
+        pauseGo.SetActive(true);
+        IsPause = true;
 
         Time.timeScale = 0f;
 
         quitSelected = false;
+
         ChangeButtonFocus();
     }
 
     private void Update()
     {
-        if(_isPause)
+        if(IsPause)
         {
             if (player.GetAxis("Move Vertical") < 0)
             {
                 quitSelected = true;
             }
+
             if (player.GetAxis("Move Vertical") > 0)
             {
-                
                 quitSelected = false;
             }
 
             ChangeButtonFocus();
-        }        
 
+            if(player.GetButtonDown("Toggle Pause"))
+            {
+                UnPauseGame();
+            }
+        }
     }
 
     public void ButtonPress(int playerID)
     {
-        if(_isPause && playerID == playerIdControl)
+        if(IsPause && playerID == playerIdControl)
         {
             if (quitSelected)
             {
-               
                 Application.Quit();
             }
+
             else
             {
-                SceneManager.LoadScene(0);
+                GameManager.instance.sceneMgr.LoadMainMenuScene();
             }
         }  
     }
 
     public void UnPauseGame()
     {
+        IsPause = false;
+
         pauseGo.SetActive(false);
-        _isPause = false;
         Time.timeScale = 1f;
     }
 
@@ -99,6 +105,7 @@ public class Pause : MonoBehaviour {
             menuText.color = new Color(1, 1f, 1f);
             quitText.color = new Color(1, 0.75f, 0.5f);
         }
+
         else
         {
             menuButton.image.sprite = buttonsImages[1];

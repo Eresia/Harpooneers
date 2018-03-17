@@ -129,7 +129,6 @@ public class Phase2AI : PhaseAI {
         else
         {
             nextState = Random.Range(0, noHittablePatternCount);
-            Debug.Log(nextState);
         }
 
         return nextState;
