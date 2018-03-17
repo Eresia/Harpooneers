@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour {
 
 	[Space]
 
-	public bool tuToEnabled = true;
+	public bool tutoEnabled = true;
 
 	public static GameManager instance {get; private set;}
     
@@ -210,7 +210,7 @@ public class GameManager : MonoBehaviour {
     }
 
 	public void OnEndTuto(){
-		tuToEnabled = false;
+		tutoEnabled = false;
 		bossMgr.enabled = true;
 		shipMgr.ResurrectAll();
 

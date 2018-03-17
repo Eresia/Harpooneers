@@ -45,7 +45,7 @@ public class Tutorial : MonoBehaviour
     {
         LDparent.SetActive(false);
         GameManager.instance.tutorial = this;
-		if(GameManager.instance.tuToEnabled){
+		if(GameManager.instance.tutoEnabled){
 			Tuto.text = "";
 			hasExploded = true;
 			progressionCoroutine = StartCoroutine(Progression());

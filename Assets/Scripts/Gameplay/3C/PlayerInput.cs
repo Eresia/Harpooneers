@@ -206,7 +206,7 @@ public class PlayerInput : MonoBehaviour
 		// Skip tuto.
 		if (data.GetButtonDown())
         {
-			if(GameManager.instance.tuToEnabled)
+			if(GameManager.instance.tutoEnabled)
             {
 				GameManager.instance.tutorial.SkipTuto();
 
