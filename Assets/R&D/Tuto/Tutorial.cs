@@ -41,6 +41,8 @@ public class Tutorial : MonoBehaviour
 
 	private Coroutine progressionCoroutine;
 
+    public bool IsSkipping { get; private set; }
+
     private void Start()
     {
         LDparent.SetActive(false);
@@ -69,6 +71,8 @@ public class Tutorial : MonoBehaviour
 
 	private IEnumerator EndTutoCoroutine(float tutoEndTime)
     {
+        IsSkipping = true;
+
 		Vector3 endPos = Rock.Mover.SelfTransform.position;
 		endPos.y -= 10f;
 

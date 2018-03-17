@@ -191,9 +191,10 @@ public class GameManager : MonoBehaviour {
         gameOverScript.DisplayGameOver();
     }
     
+    [ContextMenu("FAKE END")]
     public void GameFinished()
     {
-        if (!win)
+        if (win)
         {
             return;
         }

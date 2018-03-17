@@ -20,7 +20,7 @@ public class Pause : MonoBehaviour {
 
     private bool quitSelected;
 
-    private int playerIdControl;
+    public int playerIdControl;
     private Player player; // Rewired player.
 
     private void Awake()
@@ -63,11 +63,6 @@ public class Pause : MonoBehaviour {
             }
 
             ChangeButtonFocus();
-
-            if(player.GetButtonDown("Toggle Pause"))
-            {
-                UnPauseGame();
-            }
         }
     }
 

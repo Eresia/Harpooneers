@@ -203,29 +203,38 @@ public class PlayerInput : MonoBehaviour
     // UTILITY :
     private void TogglePause(InputActionEventData data)
     {
-		// Skip tuto.
-		if (data.GetButtonDown())
+        if (GameManager.instance.tutoEnabled && !GameManager.instance.tutorial.IsSkipping)
         {
-			if(GameManager.instance.tutoEnabled)
+            // Skip tuto.
+            if (data.GetButtonDown())
             {
+                Debug.Log("SKIP tuto !");
+			
 				GameManager.instance.tutorial.SkipTuto();
-
 				return;
 			}
 		}
 		
         // Already in pause.
-        if(GameManager.instance.pauseScript.IsPause)
-        {
-            return;
-        }
+        
         
         if (data.GetButtonDown())
         {
             // Pause the game if game isn't over.
             if(!GameManager.instance.gameOverScript.isGameOver)
             {
-                GameManager.instance.PauseGame(data.playerId);
+                if (GameManager.instance.pauseScript.IsPause)
+                {
+                    if (playerId == GameManager.instance.pauseScript.playerIdControl)
+                    {
+                        GameManager.instance.UnPauseGame();
+                    }
+                }
+
+                else
+                {
+                    GameManager.instance.PauseGame(data.playerId);
+                }
             }
 
             // If gameOver, start button to retry

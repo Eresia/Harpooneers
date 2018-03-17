@@ -256,7 +256,7 @@ public class InputInMainMenu : MonoBehaviour
                     prepareGamePanel.PlayerReady(i);
 
                     // All players are ready and number of players are minimum 2 !
-                    if (nbOfPlayers > 1 && nbOfPlayers == nbOfPlayersReady)
+                    if (nbOfPlayers > 0 && nbOfPlayers == nbOfPlayersReady)
                     {
                         startGame = true;
                         GameManager.instance.StartNewGame(nbOfPlayers, playerReady);
